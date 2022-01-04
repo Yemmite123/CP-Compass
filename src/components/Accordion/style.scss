@@ -1,0 +1,25 @@
+.cp-accordion {
+  padding-top: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #C4C4C4;
+
+  .content {
+    transition: ease-out 500ms;
+  }
+
+  .add-height {
+    height: auto;
+  }
+
+  .no-height {
+    overflow: hidden;
+    height: 0;
+  }
+
+  img {
+    transition: transform 0.6s ease;
+  }
+  .rotate {
+    transform: rotate(180deg);
+  }
+}

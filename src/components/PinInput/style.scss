@@ -1,0 +1,21 @@
+.pin-input {
+  input {
+    border: 1px solid rgba(8, 121, 201, 0.96);
+    box-sizing: border-box;
+    border-radius: 4px;
+    text-align: center;
+    width: 56px;
+    height: 56px;
+    font-size: 30px;
+    padding: 15px;
+
+    @media screen and (max-width: 428px) {
+      width: 40px;
+      height: 40px;
+    } 
+  }
+}
+
+input.error{
+  border: 1px solid #d34242;
+}

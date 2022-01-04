@@ -1,0 +1,89 @@
+.wallet-dashboard-page {
+  .cp-modal {
+    .dialogue {
+      width: 35%;
+      overflow-y: scroll;
+      max-height: 500px;
+      @media screen and (max-width: 676px) {
+        width: 65%; 
+      }  
+      @media screen and (max-width: 676px) {
+        width: 65%; 
+      }  
+      @media screen and (max-width: 500px) {
+        width: 75%; 
+      } 
+      @media screen and (max-width: 428px) {
+        width: 90%; 
+      } 
+    }
+  }
+
+  .bvn-active {
+    position: absolute !important;
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    top: 70px;
+
+    .dialogue {
+      width: 35%;
+
+      @media screen and (max-width: 676px) {
+        width: 65%; 
+      }  
+      @media screen and (max-width: 500px) {
+        width: 75%; 
+      } 
+      @media screen and (max-width: 428px) {
+        width: 90%; 
+      } 
+    }
+  }
+  .overview {
+    margin-top: 20px;
+
+    h3 {
+      font-size: 21px;
+      color: #3A4080;
+    }
+    .label {
+      font-size: 10px;
+      line-height: 5px;
+      text-transform: uppercase;
+      color: #3F9ADA;
+    }
+    .balance-figure {
+      font-weight: bold;
+      font-size: 28px;
+      color: #000000;
+    }
+    button {
+      border-radius: 2px;
+    }
+    button.btn-white {
+      border: 2px solid #3A4080;
+      box-sizing: border-box;
+      border-radius: 2px;
+      color: #3A4080;
+    }
+  }
+
+  .transactions {
+    margin-top: 40px;
+
+    .transactions-header {
+      border-bottom: 1px solid #E5E5E5;
+      h3 {
+        font-size: 18px;
+        color: #414141;
+      }
+    }
+
+    .transaction-info {
+      h4 {
+        text-transform: capitalize;
+      }
+    }
+  }
+}

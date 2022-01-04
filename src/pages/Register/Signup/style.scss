@@ -1,0 +1,89 @@
+.register-page {
+  overflow: auto;
+  box-sizing: border-box;
+  padding-bottom: 25px;
+
+  .box {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(93, 101, 172, 0.15);
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin-top: 0%;
+    width: 38%;
+    height: 839px;
+
+    @media screen and (max-width: 800px) {
+      width: 65%; 
+    } 
+
+    @media screen and (max-width: 676px) {
+      width: 65%; 
+    }  
+
+    @media screen and (max-width: 500px) {
+      width: 75%; 
+    } 
+    @media screen and (max-width: 428px) {
+      width: 90%; 
+    }
+
+    .left-section {
+      // background-color: #eeeeee;
+      // background-image: url('../../../assets/images/signup-cp.svg');
+      // background-size: cover;
+      // background-repeat: no-repeat;
+      // height: inherit;
+
+      @media screen and (max-width: 767px) {
+        display: none;
+      }  
+      img {
+        object-fit: cover;
+      }
+    }
+    p {
+      font-style: normal;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 16px;
+      color: #141414;
+    }
+    .form-section {
+      margin-top: 50px;
+      
+    }
+    .form {
+      padding: 10px 90px;
+      margin-left: auto;
+      margin-right: auto;
+
+      @media screen and (max-width: 1000px) {
+        padding: 0 35px;
+      }  
+    }
+
+    h3 {
+      font-family: Sofia Pro;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 24px;
+      line-height: 24px;
+      color: #3A4080;
+    }
+    .notice {
+      p {
+        margin-left: auto;
+        margin-right: auto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 21px;
+
+
+        text-align: center;
+
+        color: #141414;
+      }
+    }
+  }
+}

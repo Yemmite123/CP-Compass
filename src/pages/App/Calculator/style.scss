@@ -1,0 +1,16 @@
+.investment-calculator-page {
+  .cp-modal {
+    .dialogue {
+      width: 30%;
+      @media screen and (max-width: 676px) {
+        width: 65% !important; 
+      }  
+      @media screen and (max-width: 500px) {
+        width: 75% !important; 
+      } 
+      @media screen and (max-width: 428px) {
+        width: 90% !important; 
+      } 
+    }
+  }
+}

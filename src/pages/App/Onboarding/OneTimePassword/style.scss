@@ -1,0 +1,65 @@
+.one-time-password-page {
+  overflow: auto;
+
+  >h3 {
+    font-size: 18px;
+    line-height: 22px;
+    text-transform: uppercase;
+    color: #3A4080;
+    margin-top: 10vh;
+  }
+
+  .box {
+    width: 35%;
+    background: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    box-sizing: border-box;
+    border-radius: 4px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 54px;
+    padding: 50px 30px;
+    margin-top: 5vh;
+
+    @media screen and (max-width: 676px) {
+      width: 65%; 
+    }  
+    @media screen and (max-width: 500px) {
+      width: 75%; 
+    } 
+    @media screen and (max-width: 428px) {
+      width: 90%; 
+    } 
+
+    .boxes {
+      width: 70%;
+      height: 56px;
+
+      @media screen and (max-width: 500px) {
+        width: 75%; 
+      } 
+      @media screen and (max-width: 428px) {
+        width: 100%; 
+      } 
+    }
+    h3 {
+      font-size: 24px;
+      line-height: 29px;
+      color: rgba(4, 68, 114, 0.96);
+    }
+    p {
+      font-size: 14px;
+      line-height: 21px;
+      color: #414141;
+    }
+    a{
+      font-size: 14px;
+    }
+    .otp-error {
+      color: #d34242;
+      font-size: 12px;
+      margin-top: 10px;
+      text-align: left;
+    }
+  }
+}

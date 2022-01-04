@@ -1,0 +1,12 @@
+.portfolio-termed-investment {
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+  .portfolio-item {
+    height: 300px;
+
+    @media screen and (max-width: 768px) {
+      height: auto;
+    }  
+  }
+}

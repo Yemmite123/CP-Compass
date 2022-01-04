@@ -1,0 +1,11 @@
+.site-suspense {
+  position: relative;
+  height: 100vh;
+
+  &:hover p {
+    transform: rotate(360deg) scale(2);
+  } 
+  p {
+    transition: transform 1s ease;
+  }
+}

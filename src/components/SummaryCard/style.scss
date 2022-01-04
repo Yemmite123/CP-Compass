@@ -1,0 +1,59 @@
+.summary{
+    min-width: 265px;
+    flex: 1;
+    height: 158px;
+    padding: 24px 25px;
+    border-radius: 6px;
+    color: #ffffff;
+    position: relative;
+
+    &__type{
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 117.3%;
+        letter-spacing: 0.24px;
+        margin-bottom: 12px;
+    }
+
+    &__image{
+        position: absolute;
+        top: 17px;
+        right: 8px;
+        mix-blend-mode: overlay;
+    }
+
+    &__value{
+        font-weight: 600;
+        font-size: 26px;
+        line-height: 26px;
+        letter-spacing: 0.5px;
+        margin-bottom: 9px;
+    }
+
+    &__trend-value{
+        font-weight: 600;
+        font-size: 14px;
+        margin: 0 8px;
+    }
+
+    &__trend-period{
+        font-size: 14px;
+        font-weight: 300;
+    }
+
+    &__trend-arrow--down{
+        transform: rotateX(180deg);
+    }
+
+    &__icon{
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        bottom: 15px;
+        right: 22px;
+    }
+}

@@ -1,0 +1,21 @@
+.deposit-page {
+  .cp-modal {
+    .dialogue {
+      width: 35%;
+      overflow-y: scroll;
+      max-height: 500px;
+      @media screen and (max-width: 676px) {
+        width: 65%; 
+      }  
+      @media screen and (max-width: 676px) {
+        width: 65%; 
+      }  
+      @media screen and (max-width: 500px) {
+        width: 75%; 
+      } 
+      @media screen and (max-width: 428px) {
+        width: 90%; 
+      } 
+    }
+  }
+}

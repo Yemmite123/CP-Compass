@@ -1,0 +1,22 @@
+.blog-item {
+
+  img {
+    position: relative;
+    width: 100%;
+    object-fit: cover;
+    height: 172px;
+    background-color: #F9FAFC;
+  }
+  .content {
+    min-height: 170px;
+    overflow: hidden;
+  }
+
+  .blog-description {
+    font-size: 16px;
+    font-weight: 400;
+  }
+  .blog-info {
+
+  }
+}

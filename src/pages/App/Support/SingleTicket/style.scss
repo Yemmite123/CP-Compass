@@ -1,0 +1,73 @@
+.single-ticket-page {
+  margin-bottom: 50px;
+
+  .cp-modal {
+    .dialogue {
+      background-color: transparent !important;
+      border: 0;
+      text-align: center;
+      width: 40%;
+      @media screen and (max-width: 676px) {
+        width: 75% !important; 
+      }  
+      @media screen and (max-width: 500px) {
+        width: 85% !important; 
+      } 
+      @media screen and (max-width: 428px) {
+        width: 90% !important; 
+      } 
+    }
+  }
+
+  .ticket-title {
+    text-transform: capitalize;
+  }
+  .message-container {
+    height: 55vh;
+    overflow: scroll;
+  }
+  .message-area {
+    form {
+      width: 90%;
+
+      input {
+        height: 60px;
+      }
+    }
+
+    .send-message {
+      width: 5%;
+      img {
+        margin-left: -2px;
+      }
+    }
+
+    textarea {
+      resize: none;
+    }
+    .attachment-section {
+      width: 5%;
+    }
+  }
+
+  .file {
+    visibility: hidden;
+    height: 0;
+  }
+  .file-items {
+    background-color: #a3d8ff;
+    color: #488DBE;
+    border-radius: 4px;
+    padding: 5px;
+    font-size: 12px;
+    margin-right: 5px;
+    text-align: center;
+
+    .remove-item {
+      background: #eb8877;
+      color: #a53a27;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  }
+}

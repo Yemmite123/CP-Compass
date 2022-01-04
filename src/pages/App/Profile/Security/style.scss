@@ -1,0 +1,31 @@
+.security-page {
+  margin-top: 50px;
+  .cp-modal {
+    .dialogue {
+      width: 30%;
+
+      @media screen and (max-width: 676px) {
+        width: 65%; 
+      }  
+      @media screen and (max-width: 500px) {
+        width: 75%; 
+      } 
+      @media screen and (max-width: 428px) {
+        width: 90%; 
+      } 
+    }
+  }
+
+  .password-section, .pin-section {
+    h3 {
+      font-size: 18px;
+      line-height: 24px;
+      color: #414141;
+      border-bottom: 2px solid #E5E5E5;
+    }
+  }
+
+  .pin-section {
+    margin-top: 30px;
+  }
+}

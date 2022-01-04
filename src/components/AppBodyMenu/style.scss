@@ -1,0 +1,28 @@
+.app-body-memu {
+  border-bottom: 1px solid var(--lighter-grey);
+  padding-bottom: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  @media screen and (max-width: 440px) {
+    flex-direction: column;
+    padding-bottom: 6px;
+  }
+
+  & a {
+    margin: 0 10px 10px 0;
+  }
+
+  &__menu-item {
+    font-weight: 600;
+    font-size: 16px;
+    color: #7e7e7e;
+    padding: 9px 16px;
+    white-space: nowrap;
+
+    &--active > div {
+      color: var(--blue) !important;
+      background: rgba(8, 121, 201, 0.08);
+      border-radius: 3px;
+    }
+  }
+}

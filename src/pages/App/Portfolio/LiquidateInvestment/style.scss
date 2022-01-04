@@ -1,0 +1,90 @@
+.liquidate-investment-page {
+  .cp-modal {
+    overflow: scroll;
+    padding-bottom: 25px;
+    .dialogue {
+      width: 50%;
+      @media screen and (max-width: 1250px) {
+        width: 55%; 
+      }  
+      @media screen and (max-width: 990px) {
+        width: 65%; 
+      }  
+      @media screen and (max-width: 676px) {
+        width: 75%; 
+      }  
+      @media screen and (max-width: 500px) {
+        width: 80%; 
+      } 
+      @media screen and (max-width: 428px) {
+        width: 90%;
+        padding: 50px 30px;
+      } 
+    }
+  }
+
+  .liquidation-table {
+    width: 60%;
+    margin: 0 auto;
+    border: 1px solid #3A4080;
+ 
+    @media screen and (max-width: 990px) {
+      width: 85%;
+    }
+    @media screen and (max-width: 676px) {
+      width: 85%;
+    }
+    @media screen and (max-width: 500px) {
+      width: 90%;
+    }
+    @media screen and (max-width: 428px) {
+      width: 100%;
+    } 
+
+    .liquidation-header {
+      background-color: #3A4080;
+      padding: 20px;
+    }
+
+    .liquidation-body {
+      padding: 10px 15px;
+
+      .row {
+        padding: 10px;
+        border-bottom: 1px solid #E5E5E5;
+      }
+
+      .row:nth-child(5) {
+        border-bottom: 0;
+      }
+    }
+  }
+
+  .transaction-modal {
+    .dialogue {
+      width: 30%;
+      @media screen and (max-width: 1250px) {
+        width: 55%; 
+      }  
+      @media screen and (max-width: 990px) {
+        width: 65%; 
+      }  
+      @media screen and (max-width: 676px) {
+        width: 75%; 
+      }  
+      @media screen and (max-width: 500px) {
+        width: 80%; 
+      } 
+      @media screen and (max-width: 428px) {
+        width: 90%;
+        padding: 50px 30px;
+      } 
+      .pin-section {
+        width: 75%;
+        @media screen and (max-width: 428px) {
+          width: 100%;
+        } 
+      }
+    }
+  }
+}

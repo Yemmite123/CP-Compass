@@ -1,0 +1,18 @@
+.all-transactions-page {
+  .cp-modal {
+    .dialogue {
+      overflow-y: scroll;
+      max-height: 350px;
+      width: 35%;
+      @media screen and (max-width: 676px) {
+        width: 65%; 
+      }  
+      @media screen and (max-width: 500px) {
+        width: 75%; 
+      } 
+      @media screen and (max-width: 428px) {
+        width: 90%; 
+      } 
+    }
+  }
+}

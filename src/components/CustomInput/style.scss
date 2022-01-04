@@ -1,0 +1,123 @@
+.custom-input {
+  width: 100%;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  height: 52px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  font-weight: 300;
+  position: relative;
+
+  &__input {
+    font-size: 16px;
+    font-weight: 300;
+    width: inherit;
+    border: none;
+    background-color: #ffffff;
+
+    &:focus {
+      outline: transparent;
+    }
+  }
+
+  &__label {
+    font-size: 16px;
+    position: absolute;
+    margin: 0;
+    line-height: 1;
+    transition: transform 0.2s;
+    width: 79%;
+    padding: 0 15px 0 0;
+    color: rgba(65, 65, 65, 0.8);
+    background-color: #ffffff;
+    z-index: 2;
+
+    &--top {
+      font-size: 11px;
+      width: fit-content;
+      top: 0;
+      transform: translateY(-50%);
+      padding: 0 6px;
+    }
+  }
+
+  &__error {
+    font-size: 12px;
+    position: absolute;
+    top: 52px;
+    left: 0;
+    color: var(--error-color);
+    height: 30px;
+    overflow: hidden;
+  }
+
+  &__phone {
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    & select {
+      width: 60px;
+      font-size: 16px;
+      font-weight: 300;
+      border: none;
+    }
+
+    & input {
+      margin-left: 5px;
+      height: 16px;
+      border-left: 1px solid grey;
+      padding-left: 10px;
+    }
+  }
+
+  &:focus-within {
+    border: 1px solid var(--focus-color);
+
+    & input {
+      color: var(--light-black);
+    }
+
+    & label {
+      @extend .custom-input__label--top;
+      color: var(--blue);
+    }
+  }
+
+  &__filled {
+    border: 1px solid var(--blue);
+
+    & label {
+      color: var(--blue);
+    }
+  }
+
+  &__disabled {
+    border: 1px solid var(--disabled-blue);
+
+    & input {
+      color: rgba(65, 65, 65, 0.5);
+    }
+
+    & label {
+      color: var(--disabled-blue);
+    }
+  }
+
+  &__errored {
+    border: 1px solid var(--error-color);
+
+    & label {
+      color: var(--error-color);
+    }
+  }
+}
+
+.react-date-picker__wrapper {
+  border: none;
+}
+
+.react-date-picker__calendar{
+  z-index: 5;
+}

@@ -1,0 +1,62 @@
+.phone-textbox {
+    &:focus-within fieldset {
+      border: 1px solid #3F9ADA;
+      transition: ease-in 500ms;
+    }
+  
+    .disabled-input legend {
+      color: #d5d5d5;
+    }
+    .disabled-input {
+      border: 1px solid #d5d5d5;
+    }
+    .error {
+      border: 1px solid #d34242;
+    }
+    .label-error {
+      color: #d34242
+    }
+    &:focus-within legend {
+      color: #3F9ADA;
+      transition: ease-in-out 500ms;
+    }
+    fieldset {
+      min-width: 0;
+      padding: 10px;
+      margin: 0;
+      border: 1px solid #E5E5E5;
+      border-radius: 5px;
+    }
+    legend {
+      max-width: fit-content;
+      font-size: 1.5rem;
+      line-height: inherit;
+      color: #E5E5E5;
+      white-space: normal;
+      text-align: left;
+      font-size: 12px;
+      margin-left: 5px;
+      margin-bottom: -5px;
+    }
+    input {
+      width: 100%;
+      height: auto;
+      outline: none;
+      border: 0;
+      background: transparent;
+      padding-left: 5px;
+    }
+    .input-error {
+      text-align: left;
+      font-size: 12px;
+      color: #d34242 !important;
+    }
+  select {
+    border-right: 1px solid #cecece;
+    border-left: 0;
+    border-top: 0;
+    border-bottom: 0;
+    width: 65px;
+    padding-right: 5px;
+  }
+}

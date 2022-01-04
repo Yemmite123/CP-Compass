@@ -1,0 +1,72 @@
+.insights-category-page {
+  .blog-info-main {
+    background-color: rgba(245, 246, 250, 0.6);
+    height: 100%;
+  }
+
+  .profile-photo {
+    position: relative;
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+    object-fit: cover;
+  }
+
+  .main-blog-img-container {
+    height: 260px;
+
+    .main-blog-img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .blog-category-Blockchain {
+    color: #2EB26B;
+    background-color: rgba(46, 178, 107, 0.15);
+    padding: 10px 15px;
+  }
+
+  .blog-category-Business {
+    color: #b1ae52;
+    background-color: #e4e077;
+    padding: 10px 15px;
+  }
+
+  .blog-category-Bitcoin {
+    color: #6152BD;
+    background-color: rgba(97, 82, 189, 0.15);
+    padding: 10px 15px;
+  }
+
+  .bar-Blockchain {
+    background-color: #2EB26B;
+    padding: 2px;
+    height: 80%;
+  }
+
+  .bar-Business {
+    background-color: #b1ae52;
+    padding: 2px;
+    height: 80%;
+  }
+
+  .bar-Bitcoin {
+    background-color: #6152BD;
+    height: 80%;
+    padding: 2px;
+  }
+
+  .Bitcoin {
+    color: #6152BD;
+  }
+
+  .Business {
+    color: #b1ae52;
+  }
+
+  .Blockchain {
+    color: #2EB26B;
+  }
+}

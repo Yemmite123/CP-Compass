@@ -1,0 +1,70 @@
+.single-fund-page {
+  width: 75%;
+
+  .send-email-section {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding: 10px;
+    width: 60%;
+    @media screen and (max-width: 978px) {
+      width: 100%;
+    }
+  }
+
+  .download-section {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px dashed #B1DBFC;
+    width: 60%;
+
+    @media screen and (max-width: 978px) {
+      width: 100%;
+    }
+  }
+
+  .cp-modal {
+    z-index: 1000;
+    left: 110px;
+    overflow-y: scroll;
+    
+    @media screen and (max-width: 978px) {
+      left: 0; 
+    }  
+    .dialogue {
+      margin-top: 2%;
+      width: 70% !important;
+      @media screen and (max-width: 676px) {
+        width: 75% !important; 
+      }  
+      @media screen and (max-width: 500px) {
+        width: 85% !important; 
+      } 
+      @media screen and (max-width: 428px) {
+        width: 90% !important; 
+      } 
+    }
+
+    .content {
+      width: 90%;
+      margin-right: auto;
+      margin-left: auto;
+
+      @media screen and (max-width: 600px) {
+        width: 100% !important; 
+      } 
+      @media screen and (max-width: 428px) {
+        width: 100% !important; 
+      } 
+    }
+  }
+
+  .fund-image {
+    height: 300px;
+    position: relative;
+    width: 100%;
+    object-fit: cover;
+    background-color: #F9FAFC;
+  }
+}

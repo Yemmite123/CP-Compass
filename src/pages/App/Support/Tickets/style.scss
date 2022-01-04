@@ -1,0 +1,32 @@
+.tickets-page {
+  .cp-modal {
+    .dialogue {
+      width: 60%;
+      @media screen and (max-width: 676px) {
+        width: 75% !important; 
+      }  
+      @media screen and (max-width: 500px) {
+        width: 85% !important; 
+      } 
+      @media screen and (max-width: 428px) {
+        width: 90% !important; 
+      } 
+    }
+  }
+
+  .file {
+    visibility: hidden;
+  }
+  .file-items {
+    background-color: #a3d8ff;
+    color: #488DBE;
+    border-radius: 4px;
+    padding: 5px;
+    font-size: 12px;
+    margin-right: 5px;
+  }
+
+  .table-class {
+    overflow: scroll;
+  }
+}

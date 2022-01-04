@@ -1,0 +1,19 @@
+.action{
+    height: 122px;
+    border-radius: 4px;
+    // border: 1px solid rgba(20, 87, 175, 0.4);
+    border: 1px solid #E1E4FF;
+    padding: 16px 23px 19px 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+
+    &__text{
+        margin: 20px 0 0 0;
+        font-size: 14px;
+        line-height: 14px;
+        color: var(--blue);
+        width: 155px;
+    }
+}

@@ -1,0 +1,36 @@
+.risk-page {
+  margin-top: 50px;
+  margin-bottom: 50px;
+
+  .cp-modal {
+    .dialogue {
+      width: 35%;
+      overflow-y: scroll;
+      max-height: 500px;
+      @media screen and (max-width: 676px) {
+        width: 65%; 
+      }  
+      @media screen and (max-width: 676px) {
+        width: 65%; 
+      }  
+      @media screen and (max-width: 500px) {
+        width: 75%; 
+      } 
+      @media screen and (max-width: 428px) {
+        width: 90%; 
+      } 
+    }
+  }
+
+  .user-img-container {
+    border-radius: 50px;
+    width: 70px;
+    height: 70px;
+    overflow: hidden;
+    
+    .user-img {
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "name": "cpinvest-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@babel/plugin-syntax-jsx": "^7.10.4",
+    "@babel/plugin-transform-react-jsx": "^7.10.4",
+    "@craco/craco": "^5.6.4",
+    "@loadable/component": "^5.13.1",
+    "@material-ui/core": "^4.11.0",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "axios": "^0.21.1",
+    "chart.js": "^2.9.3",
+    "date-fns": "^2.16.1",
+    "env-cmd": "^10.1.0",
+    "jwt-decode": "^3.1.2",
+    "moment": "^2.27.0",
+    "node-sass": "^4.14.1",
+    "p-min-delay": "^3.1.0",
+    "rc-slider": "^9.3.1",
+    "react": "^16.13.1",
+    "react-chartjs-2": "^2.10.0",
+    "react-circular-progressbar": "^2.0.3",
+    "react-date-picker": "^8.0.6",
+    "react-doc-viewer": "^0.1.0",
+    "react-dom": "^16.13.1",
+    "react-driftjs": "^1.1.11",
+    "react-number-format": "^4.4.4",
+    "react-password-strength-bar": "^0.3.2",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^3.4.3",
+    "react-share": "^4.3.1",
+    "react-spring": "^8.0.27",
+    "react-test-renderer": "^16.13.1",
+    "redux": "^4.0.5",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
+    "sass-loader": "^9.0.2",
+    "save-dev": "0.0.1-security",
+    "socket.io-client": "^2.3.1",
+    "whatwg-fetch": "^3.4.0"
+  },
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "build:staging": "env-cmd -f .env.staging craco build",
+    "build:testing": "env-cmd -f .env.development craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
+    "babel-loader": "^8.1.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.4",
+    "redux-mock-store": "^1.5.4"
+  }
+}

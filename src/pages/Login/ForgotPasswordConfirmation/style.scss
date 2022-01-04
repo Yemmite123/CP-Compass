@@ -1,0 +1,46 @@
+.forgot-password-confirmation-page {
+  background-color: #E5E5E5;
+  height: 100vh;
+  overflow: auto;
+  background-image: url('../../../assets/images/password-bg.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  .box {
+    width: 35%;
+    background: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    box-sizing: border-box;
+    border-radius: 4px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 50px 30px;
+    margin-top: 10vh;
+
+    @media screen and (max-width: 990px) {
+      width: 65%; 
+    }
+    @media screen and (max-width: 676px) {
+      width: 65%; 
+    }
+    @media screen and (max-width: 428px) {
+      width: 90%; 
+    } 
+
+    h3 {
+      font-size: 16px;
+      color: rgba(8, 121, 201, 0.96);
+      margin-top: 15px;
+    }
+
+    p {
+      color: #7E7E7E;
+      font-size: 12px;
+    }
+
+    .bottom-section {
+      color: #414141;
+      font-weight: bold;
+    }
+  }
+}

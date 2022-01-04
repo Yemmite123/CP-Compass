@@ -1,0 +1,347 @@
+import React from "react";
+import { withRouter } from "react-router-dom";
+import moment from "moment";
+import { connect } from "react-redux";
+import { getActionLoadingState } from "#/store/selectors";
+import { addNextOfKinDetails } from "#/store/profile/actions";
+import actionTypes from "#/store/profile/actionTypes";
+import Alert from "#/components/Alert";
+import Modal from "#/components/Modal";
+import CustomInput from "#/components/CustomInput";
+import {
+  validateFields,
+  serializeErrors,
+  genderOption,
+  relationshipOption,
+} from "#/utils";
+import "./style.scss";
+
+class NextOfKin extends React.Component {
+  state = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    gender: "",
+    phone: "",
+    dateOfBirth: new Date(),
+    relationship: "",
+    motherMaidenName: "",
+    contactAddress: "",
+    nationality: "",
+    errors: null,
+    countryCode: "+234",
+    isBvnModal: false,
+  };
+
+  componentDidMount() {
+    this.setValues();
+  }
+
+  setValues = () => {
+    const { userInfo } = this.props;
+    if (userInfo) {
+      this.setState({
+        firstName: userInfo && userInfo.firstName ? userInfo.firstName : "",
+        lastName: userInfo && userInfo.lastName ? userInfo.lastName : "",
+        email: userInfo && userInfo.email ? userInfo.email : "",
+        phone: userInfo && userInfo.phone ? userInfo.phone : "",
+        gender: userInfo && userInfo.gender ? userInfo.gender : "",
+        dateOfBirth:
+          userInfo && userInfo.dateOfBirth
+            ? new Date(userInfo.dateOfBirth.split("T")[0])
+            : "",
+        relationship:
+          userInfo && userInfo.relationship ? userInfo.relationship : "",
+        motherMaidenName:
+          userInfo && userInfo.motherMaidenName
+            ? userInfo.motherMaidenName
+            : "",
+        contactAddress:
+          userInfo && userInfo.contactAddress ? userInfo.contactAddress : "",
+        nationality:
+          userInfo && userInfo.nationality ? userInfo.nationality : "",
+        countryCode:
+          userInfo && userInfo.countryCode ? userInfo.countryCode : "+234",
+      });
+    }
+  };
+
+  handleChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
+  };
+
+  handleChangeDate = (item, date) => {
+    this.setState({ [item]: date });
+  };
+
+  handleGenderChange = (event) => {
+    const { value } = event.target;
+    this.setState({ gender: value });
+  };
+
+  handleRelationshipChange = (event) => {
+    const { value } = event.target;
+    this.setState({ relationship: value });
+  };
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+
+    if (!this.props.isBvnActive) {
+      return this.toggleBvnModal();
+    }
+
+    const { addNextOfKinDetails } = this.props;
+    const {
+      firstName,
+      lastName,
+      email,
+      phone,
+      dateOfBirth,
+      motherMaidenName,
+      contactAddress,
+      nationality,
+      relationship,
+      gender,
+      countryCode,
+    } = this.state;
+
+    this.setState({ errors: null });
+
+    const data = this.state;
+    const required = [];
+    const errors = validateFields(data, required);
+
+    if (Object.keys(errors).length > 0) {
+      return this.setState({ errors });
+    }
+    const payload = {
+      firstName,
+      lastName,
+      email,
+      phone,
+      dateOfBirth: moment(dateOfBirth).format("YYYY-MM-DD"),
+      motherMaidenName,
+      contactAddress,
+      nationality,
+      relationship,
+      gender,
+      countryCode,
+    };
+    addNextOfKinDetails(payload);
+  };
+
+  handleBvnSetup = () => {
+    this.props.history.push("/app/onboarding");
+  };
+
+  toggleBvnModal = () => {
+    this.setState((prevState) => ({ isBvnModal: !prevState.isBvnModal }));
+  };
+
+  render() {
+    const {
+      isBvnModal,
+      firstName,
+      lastName,
+      email,
+      phone,
+      dateOfBirth,
+      motherMaidenName,
+      contactAddress,
+      nationality,
+      errors,
+      gender,
+      relationship,
+      countryCode,
+    } = this.state;
+    const { loading, error, data } = this.props;
+    const errorObject = serializeErrors(error);
+
+    return (
+      <div className="section-container">
+        {isBvnModal && (
+          <Modal classes="bvn-active" onClose={this.toggleBvnModal}>
+            <div className="text-center">
+              <h3 className="text-deep-blue">
+                Please Setup your BVN to continue
+              </h3>
+              <button
+                className="btn btn-primary btn-sm btn-block mt-4"
+                onClick={this.handleBvnSetup}
+              >
+                Setup BVN
+              </button>
+            </div>
+          </Modal>
+        )}
+
+        <div>
+          <h2 className="section-header">Next of Kin</h2>
+          <p className="section-description">
+            Your next of kin will be contacted in any case that we notice
+            inactivity on your account after a period of 6 months.
+          </p>
+          <form onSubmit={this.handleSubmit} className="section-form">
+            <CustomInput
+              name="firstName"
+              label="First name"
+              value={firstName}
+              onChange={this.handleChange}
+              error={
+                errors
+                  ? errors.firstName
+                  : errorObject && errorObject["firstName"]
+              }
+            />
+            <CustomInput
+              name="lastName"
+              label="Last name"
+              value={lastName}
+              onChange={this.handleChange}
+              error={
+                errors
+                  ? errors.lastName
+                  : errorObject && errorObject["lastName"]
+              }
+            />
+            <CustomInput
+              name="gender"
+              label="Gender"
+              value={gender}
+              onChange={this.handleGenderChange}
+              type="select"
+              options={genderOption}
+              error={
+                errors ? errors.gender : errorObject && errorObject["gender"]
+              }
+            />
+            <CustomInput
+              name="dateOfBirth"
+              label="Date of birth"
+              value={dateOfBirth}
+              type="date"
+              onChange={(date) => this.handleChangeDate("dateOfBirth", date)}
+              error={
+                errors
+                  ? errors.dateOfBirth
+                  : errorObject && errorObject["dateOfBirth"]
+              }
+              maxDate={new Date()}
+            />
+            <CustomInput
+              name="relationship"
+              label="Relationship"
+              value={relationship}
+              onChange={this.handleRelationshipChange}
+              type="select"
+              options={relationshipOption}
+              error={
+                errors
+                  ? errors.relationship
+                  : errorObject && errorObject["relationship"]
+              }
+            />
+            <CustomInput
+              name="email"
+              label="Email Address"
+              value={email}
+              onChange={this.handleChange}
+              error={
+                errors ? errors.email : errorObject && errorObject["email"]
+              }
+            />
+            <CustomInput
+              name="phone"
+              label="Phone number"
+              type="phone"
+              value={phone}
+              countryCodeValue={countryCode}
+              onChange={this.handleChange}
+              error={
+                errors
+                  ? errors.phoneNumber
+                  : errorObject && errorObject["phone"]
+              }
+            />
+            <CustomInput
+              name="motherMaidenName"
+              label="Mother's maiden name"
+              value={motherMaidenName}
+              onChange={this.handleChange}
+              error={
+                errors
+                  ? errors.motherMaidenName
+                  : errorObject && errorObject["motherMaidenName"]
+              }
+            />
+            <CustomInput
+              name="contactAddress"
+              label="Contact Address"
+              value={contactAddress}
+              onChange={this.handleChange}
+              error={
+                errors
+                  ? errors.contactAddress
+                  : errorObject && errorObject["contactAddress"]
+              }
+            />
+            <CustomInput
+              name="nationality"
+              label="Nationality"
+              value={nationality}
+              onChange={this.handleChange}
+              error={
+                errors
+                  ? errors.nationality
+                  : errorObject && errorObject["nationality"]
+              }
+            />
+            <div className="section-form__button-area">
+              {error && typeof error === "string" && (
+                <p className="text-error text-left">{error}</p>
+              )}
+              {data && (
+                <Alert alert={{ type: "success", message: data.message }} />
+              )}
+              <button className="btn-default" disabled={loading}>
+                Save changes
+                {loading && (
+                  <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
+                )}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = (state) => {
+  const {
+    app: {
+      profile: {
+        userProfile: { data: userData },
+        nextOfKin: { error, data },
+      },
+    },
+  } = state;
+  return {
+    loading: getActionLoadingState(state, actionTypes.ADD_NEXT_OF_KIN_REQUEST),
+    error,
+    data,
+    isBvnActive: userData && userData.bvn ? true : false,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addNextOfKinDetails: (payload) => dispatch(addNextOfKinDetails(payload)),
+  };
+};
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(NextOfKin)
+);

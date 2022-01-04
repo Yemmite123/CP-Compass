@@ -1,0 +1,17 @@
+.id-type-area{
+  width: 452px;
+  margin-bottom: 35px;
+
+  & > div{
+    width: 344px;
+    margin-left: auto;
+  }
+
+  @media screen and (max-width: 500px){
+    width: 300px;
+
+    & > div{
+      margin: 0;
+    }
+  }
+}
