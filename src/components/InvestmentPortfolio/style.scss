@@ -1,0 +1,56 @@
+.investment-portfolio {
+
+  .portfolio-status {
+    p {
+      width: fit-content;
+      padding: 2px 10px;
+      font-size: small;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 7px;
+      text-transform: capitalize;
+    }
+  }
+  .status-active {
+    background-color: #C3F5CE;
+    color: #2EB26B;
+  }
+  .status-cancelled {
+    background-color: #FFBCAB;
+    color: #DC2222;
+  }
+  .status-terminated {
+    background-color: #FFE9A3;
+    color: #E7A52E;
+  }
+  .status-matured {
+    background-color: #BEDAFF;
+    color: #3A4080;
+  }
+  .status-booked {
+    background-color: #BEC8F7;
+    color: #5E54AC;
+  }
+
+  
+  .progress-section {
+    .text-small {
+      @media screen and (max-width: 1200px) {
+        font-size: 10px
+      }
+      @media screen and (max-width: 768px) {
+        font-size: 12px;
+      }
+    }
+
+    .text-large {
+      @media screen and (max-width: 1200px) {
+        font-size: 18px;
+        margin-bottom: 0;
+      }
+      @media screen and (max-width: 768px) {
+        font-size: 22px;
+      }
+    }
+  }
+}

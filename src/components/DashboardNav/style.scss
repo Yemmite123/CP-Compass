@@ -1,0 +1,39 @@
+.dashboard-nav  {
+  border-bottom: 1px solid var(--lighter-grey);
+  height: 88px;
+  padding: 0 59px 0 59px;
+
+  @media only screen and (max-width: 678px) {
+    padding: 0 15px 0 15px;
+  }
+
+  .title {
+    text-transform: capitalize;
+    font-size: 24px;
+    height: 24px;
+    font-weight: 600;
+    color: #3A4080;
+    line-height: 38px;
+
+    @media screen and (max-width: 877px) {
+      display: none;
+    }
+  }
+  .user-img {
+    border-radius: 50px;
+    width: 35px;
+    height: 35px;
+    overflow: hidden;
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+  .nav-logo, .hamburger{
+    display: none;
+
+    @media screen and (max-width: 877px) {
+      display: inline-flex;
+    }
+  }
+}

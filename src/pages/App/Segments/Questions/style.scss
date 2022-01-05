@@ -1,0 +1,123 @@
+.questions-page {
+  background: #ffffff;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  overflow: scroll;
+
+  .cp-modal {
+    z-index: 1024;
+    .dialogue {
+      width: 40%;
+
+      @media screen and (max-width: 676px) {
+        width: 65% !important; 
+      }  
+      @media screen and (max-width: 500px) {
+        width: 75% !important; 
+      } 
+      @media screen and (max-width: 428px) {
+        width: 90% !important; 
+      } 
+
+      .segment-img {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        border-radius: 5%;
+        object-fit: cover;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .questions {
+    margin-bottom: 50px;
+
+    .progress {
+      border-radius: 0 !important;
+      position: absolute;
+      height: 10px;
+      width: 45%;
+      z-index: 1020;
+    }
+    .question-header {
+      width: 45%;
+      margin-right: auto;
+      margin-left: auto;
+      margin-top: 5%;
+
+      @media screen and (max-width: 676px) {
+        width: 65% !important; 
+      }  
+      @media screen and (max-width: 500px) {
+        width: 75% !important; 
+      } 
+      @media screen and (max-width: 428px) {
+        width: 90% !important; 
+      } 
+    }
+
+    &__one {
+      transition: all .5s;
+    }
+
+    &--active {
+      margin-right: auto;
+      margin-left: auto;
+      width: 45%;
+
+      @media screen and (max-width: 676px) {
+        width: 65% !important; 
+      }  
+      @media screen and (max-width: 500px) {
+        width: 75% !important; 
+      } 
+      @media screen and (max-width: 428px) {
+        width: 90% !important; 
+      } 
+    }
+
+    &--inactive {
+      margin-right: auto;
+      width: 40%;
+    }
+
+    &--others {
+      background: #FFFFFF;
+      border: 1px solid #E5E5E5;
+      box-sizing: border-box;
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 10px 15px;
+      min-height: 60px;
+
+      p {
+        color: #7E7E7E
+      }
+      input {
+        border: 0;
+        border-bottom: 1px solid #7E7E7E;
+      }
+    }
+    .others {
+      p {
+        color: #7E7E7E
+      }
+      input {
+        border: 0;
+        border-bottom: 1px solid #7E7E7E;
+      }
+    }
+    .selected {
+      border: 1px solid #3A4080;
+      p {
+        color: #3A4080;
+      }
+    }
+  }
+  
+}

@@ -1,0 +1,74 @@
+.risk-questions-page {
+  background: #ffffff;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  overflow: scroll;
+
+  .cp-modal {
+    z-index: 1024;
+    .dialogue {
+      width: 40%;
+
+      @media screen and (max-width: 676px) {
+        width: 65% !important; 
+      }  
+      @media screen and (max-width: 500px) {
+        width: 75% !important; 
+      } 
+      @media screen and (max-width: 428px) {
+        width: 90% !important; 
+      } 
+
+      img {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        border-radius: 5%;
+        object-fit: cover;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .questions {
+    margin-bottom: 50px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 5%;
+    width: 50%;
+
+    @media screen and (max-width: 676px) {
+      width: 65% !important; 
+    }  
+    @media screen and (max-width: 500px) {
+      width: 80% !important; 
+    } 
+    @media screen and (max-width: 428px) {
+      width: 95% !important; 
+    } 
+
+    .progress {
+      border-radius: 0 !important;
+      position: absolute;
+      height: 10px;
+      width: 50%;
+      z-index: 1020;
+
+      @media screen and (max-width: 676px) {
+        width: 65% !important; 
+      }  
+      @media screen and (max-width: 500px) {
+        width: 80% !important; 
+      } 
+      @media screen and (max-width: 428px) {
+        width: 95% !important; 
+      } 
+    }
+  }
+
+  
+}

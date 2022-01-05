@@ -1,0 +1,29 @@
+.custom-dropdown-menu{
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+
+  &__box{
+      min-width: 100px;
+      padding-left: 0;
+      background-color: #FFFFFF;
+      border: 1px solid #ECF3FF;
+      border-radius: 2px;
+      position: absolute;
+      right: 0;
+      padding: 5px 0;
+      z-index: 1;
+  }
+
+  &__item{
+      list-style: none;
+      font-size: 12px;
+      height: 35px;
+      padding: 8px 17px;
+
+      &:hover{
+          background-color: rgba(18, 39, 140, 0.05);
+          cursor: pointer;
+      }
+  }
+}

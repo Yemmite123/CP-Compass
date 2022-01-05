@@ -1,0 +1,45 @@
+.single-portfolio-page {
+
+  .cp-modal {
+    .dialogue {
+      width: 30%;
+      @media screen and (max-width: 676px) {
+        width: 65% !important; 
+      }  
+      @media screen and (max-width: 500px) {
+        width: 75% !important; 
+      } 
+      @media screen and (max-width: 428px) {
+        width: 90% !important; 
+      } 
+    }
+  }
+  
+  &--active {
+    background-color: #C3F5CE;
+    color: #2EB26B;
+  }
+
+  &--inactive {
+    background-color: #FFE9A3;
+    color: #E7A52E;
+  }
+
+  &--booked {
+    background-color: #eeeeee;
+    color: #bbbbbb
+  }
+
+  .progress {
+    height: 0.4rem !important;
+  }
+
+  .right-side-text {
+    text-align: right;
+
+    @media screen and (max-width: 327px) {
+    text-align: left;
+      
+    } 
+  }
+}

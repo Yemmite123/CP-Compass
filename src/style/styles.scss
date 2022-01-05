@@ -1,0 +1,48 @@
+@import "bootstrap.min.css";
+@import "modules.scss";
+@import "fonts";
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  --blue: #3A4080;
+  --disabled-blue: rgba(8, 121, 201, 0.5);
+  --grey: #909090;
+  --light-grey: #DADADA;
+  --lighter-grey: #F0F0F0;
+  --light-black: #414141;
+  --focus-color: #D48C06;
+  --error-color: #d34242;
+}
+
+body {
+  font-family: "SofiaPro";
+  margin: 0;
+  box-sizing: border-box;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+a {
+  color: rgba(8, 121, 201, 0.96);
+  text-decoration: none;
+}
+
+a:hover {
+  color: rgba(8, 121, 201, 0.96);
+  text-decoration: none;
+}
+
+@media screen and (min-width: 1260px) {
+  .container {
+    max-width: 1250px;
+  }
+}
+
+ul {
+  list-style: none;
+}

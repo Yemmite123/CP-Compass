@@ -1,0 +1,39 @@
+import React from 'react';
+import moment from 'moment';
+import './style.scss';
+
+const MainBlogItem = ({ item, category, navigateToItem, navigateToCategory }) => {
+
+  const handleSingleItem = () => {
+    navigateToItem(item)
+  }
+
+  return (
+    <div className="main-blog-item border-bottom">
+          <div className="row mt-3 no-gutters pb-4">
+          <div className="col-md-4">
+        <div className="main-blog-item-img-container">
+          <img src={item.image} alt="feature" className="img-fluid main-blog-img" />
+        </div>
+        </div>
+        <div className="col-md-8">
+        <div className="blog-info-item-main px-4">
+          <div className="content mb-3">
+            <h4 className="cursor-pointer font-weight-normal" onClick={handleSingleItem}>{item.title}</h4>
+            <div className="d-flex align-items-center my-3">
+              <img src={item.user?.pictureUrl} alt="feature" className="img-fluid profile-photo" />
+              <p className="text-grey text-small mb-0 ml-2">{item.user.firstName} {item.user.lastName} on {moment(item.created_at).format('MMMM Do YYYY')}</p>
+            </div>
+            <p className="blog-description">{item.description.length > 80 ? `${item.description.substring(0, 80)}...` : item.description}</p>
+          </div>
+          <span className={`blog-category-${item.category?.name} cursor-pointer`} onClick={null}>
+            {item.category?.name}
+          </span>
+        </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default MainBlogItem;

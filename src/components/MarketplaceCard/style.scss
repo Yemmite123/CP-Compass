@@ -1,0 +1,41 @@
+#marketplace-card {
+  background-color: #EBF4FB;
+  padding: 5px;
+  height: 170px;
+  border-radius: 6px;
+
+  .img-cover {
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+
+    height: 100%;
+    border: 1px solid #eeeeee;
+    background-color: #cccccc;
+
+    img {
+      border-bottom-left-radius: 5px;
+      border-top-left-radius: 5px;
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .details-text {
+
+  }
+
+  .investment-name {
+    color: #55376C;
+    font-size: 18px;
+
+    &::first-letter {
+      text-transform: capitalize;
+    }
+  }
+
+  .investment-description {
+    font-size: 14px;
+  }
+
+}

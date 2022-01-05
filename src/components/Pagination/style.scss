@@ -1,0 +1,31 @@
+$scale: 16;
+.cp-pagination{
+    background-color: transparent;
+    border-bottom: 1px solid #d1d1d1;
+    padding: 10px 10px;
+    display: flex;
+    font-size: 14rem/$scale;
+
+    &__limit{
+        margin-right: auto;
+    }
+
+    & select{
+        height: 20rem/$scale;
+        font-size: 12rem/$scale;
+        font-weight: 700;
+        border: 1px solid #7E7E7E;
+        border-radius: 2px;
+    }
+
+    &__arrow{
+        position: relative;
+        top: 3px;
+        color: #7E7E7E;
+
+        &--active{
+            color: #3A4080;
+            cursor: pointer;
+        }
+    }
+}

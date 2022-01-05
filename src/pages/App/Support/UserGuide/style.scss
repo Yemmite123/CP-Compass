@@ -1,0 +1,15 @@
+.user-guide-page {
+  .guide-item {
+    background-color: #F9FAFC;
+    height: 315px;
+  }
+
+  .attachment-img {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 10px;
+    padding: 5px;
+  }
+}

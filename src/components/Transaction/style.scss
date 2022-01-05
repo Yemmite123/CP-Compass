@@ -1,0 +1,35 @@
+.transaction-container {
+  
+  .details {
+    h3 {
+      font-weight: normal;
+      font-size: 16px;
+      color: #3A4080;
+    }
+    p {
+      font-size: 11px;
+      color: #7E7E7E;
+    }
+  }
+
+  .amount-details {
+    .credit {
+      color: #2EB26B;
+    }
+    .debit {
+      color: #BC1F1F
+    }
+    .invest {
+      color: #3F9ADA
+    }
+    h3 {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 17px;
+    }
+    p {
+      font-size: 11px;
+      color: #7E7E7E;
+    }
+  }
+}

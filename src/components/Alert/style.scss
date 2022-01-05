@@ -1,0 +1,39 @@
+.cp-alert {
+  .alert {
+    position: relative;
+    padding: 10px 28px;
+    border-radius: 8px;
+    color: black;
+
+    .icon {
+        position: relative;
+        margin-right: 25px;
+    }
+}
+
+.alert-danger {
+    background-color: #FFF3F3;
+    border-color: #FFF3F3;
+}
+
+.alert-success {
+    background-color: #F2FFF8;
+    border-color: #F2FFF8;
+}
+
+.alert-warning {
+    background-color: #FFFAEC;
+    border-color: #FFFAEC;
+}
+
+.alert-primary {
+    background-color: #F9FBFF;
+    border-color: #F9FBFF;
+}
+
+.alert-sad,
+.alert-confused {
+    background-color: #FFFBFB;
+    border-color: #FFFBFB;
+}
+}

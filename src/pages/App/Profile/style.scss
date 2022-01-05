@@ -1,0 +1,76 @@
+.profile-page {
+  .cp-modal {
+    .dialogue {
+      width: 35%;
+      overflow-y: scroll;
+      max-height: 500px;
+      @media screen and (max-width: 676px) {
+        width: 65%; 
+      }  
+      @media screen and (max-width: 676px) {
+        width: 65%; 
+      }  
+      @media screen and (max-width: 500px) {
+        width: 75%; 
+      } 
+      @media screen and (max-width: 428px) {
+        width: 90%; 
+      } 
+    }
+  }
+  
+  .section-details {
+    h3 {
+      font-weight: 500;
+      font-size: 24px;
+      color: rgba(4, 68, 114, 0.96);
+    }
+    p{
+      font-size: 12px;
+      line-height: 16px;
+      color: #414141;
+    }
+  }
+}
+
+.section-container{
+  margin-top: 35px;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--lighter-grey);
+  }
+}
+
+.section-header {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--blue);
+  margin: 0;
+}
+
+.section-description {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--light-black);
+  margin: 4px 0 28px 0;
+}
+
+.section-form {
+  padding-bottom: 35px;
+  display: grid;
+  grid-template-columns: minmax(250px, 1fr) minmax(250px, 1fr) minmax(250px, 1fr);
+  gap: 37px 25px;
+
+  @media screen and (max-width: 1151px) {
+    grid-template-columns: minmax(250px, 1fr) minmax(250px, 1fr);
+  }
+
+  @media screen and (max-width: 589px) {
+    grid-template-columns: 1fr;
+  }
+
+  &__button-area{
+    grid-column: 1 / -1;
+  }
+}

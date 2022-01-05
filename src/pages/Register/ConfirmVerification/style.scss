@@ -1,0 +1,52 @@
+.confirm-email-page {
+  overflow: auto;
+
+  .box{
+    width: 35%;
+    background: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    box-sizing: border-box;
+    border-radius: 4px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 54px;
+    padding: 50px 30px;
+    margin-top: 15vh;
+
+    @media screen and (max-width: 990px) {
+      width: 65%; 
+    }
+    @media screen and (max-width: 676px) {
+      width: 65%; 
+    }
+    @media screen and (max-width: 428px) {
+      width: 90%; 
+    } 
+
+    h4 {
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 23px;
+      color: rgba(8, 121, 201, 0.96);
+    }
+
+    p {
+      color: #414141;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 24px;
+      text-align: center;
+    }
+
+    button {
+      width: 100%
+    }
+
+    .bottom-section {
+      span {
+        color: rgba(8, 121, 201, 0.96);
+        cursor: pointer;
+      }
+    }
+  }
+}

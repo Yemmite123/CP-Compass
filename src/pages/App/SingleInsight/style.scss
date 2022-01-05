@@ -1,0 +1,65 @@
+.single-insight-page {
+  hr{
+    color: #F0F0F0;
+    margin-top: 30px;
+  }
+  .feature-img {
+    position: relative;
+    width: 100%;
+    object-fit: cover;
+    height: 300px;
+    background-color: #F9FAFC;
+  }
+
+  .cp-modal {
+    .dialogue {
+      width: 35%;
+
+      @media screen and (max-width: 979px) {
+        width: 65%; 
+      } 
+      @media screen and (max-width: 676px) {
+        width: 65%; 
+      }  
+      @media screen and (max-width: 500px) {
+        width: 75%; 
+      } 
+      @media screen and (max-width: 428px) {
+        width: 90%;
+      }
+    }
+  }
+
+  .profile-photo {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    object-fit: cover;
+  }
+
+  .comment-box {
+    width: 100%;
+    form {
+      width: 100%;
+    }
+    textarea {
+      width: 100%;
+      background: #FFFFFF;
+      border: 2px solid #EEEEEE;
+    }
+  }
+
+  .social-share {
+    svg {
+      opacity: .5;
+      filter: grayscale(100%);
+
+      &:hover {
+        transition: ease-in 200ms;
+        opacity: 1;
+        filter: none;
+      }
+    }
+  }
+}

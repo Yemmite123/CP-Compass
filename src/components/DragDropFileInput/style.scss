@@ -1,0 +1,57 @@
+.file-input-box{
+  height: 100px;
+  border: 0.5px dashed #3A4080;
+  box-sizing: border-box;
+  border-radius: 6px;
+  position: relative;
+
+  &__label{
+      display: inline;
+      position: relative;
+      color: #616161;
+      top: -35px;
+      font-size: 18px;
+      transform: translateX(-100%);
+  }
+
+  &__button{
+      display: block;
+      margin: 20px auto 10px;
+      width: max-content;
+      border-radius: 4px;
+      padding: 7px 13px;
+      cursor: pointer;
+
+      & span{
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 114%;
+          margin-left: 11px;
+      }
+
+      &~input{
+          display: none;
+      }
+  }
+
+  &__info{
+      font-size: 12px;
+      color: #000000;
+      display: block;
+      margin: 0 auto;
+      text-align: center;
+  }
+
+  &+.error{
+      img{
+          max-width: 16px;
+          margin-right: 12px;
+      }
+
+      p{
+          font-size: 14px;
+          color: #BD1111;
+          line-height: 14px;
+      }
+  }
+}

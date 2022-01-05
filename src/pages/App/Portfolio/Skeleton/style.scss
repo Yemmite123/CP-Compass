@@ -1,0 +1,77 @@
+.portfolio-skeleton {
+  .card-container {
+    min-height: 150px;
+
+    .label {
+      width: 200px;
+      height: 35px;
+      border-radius: 9px;
+      background-color: #e6e6e6;
+      margin-top: 20px;
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        left: -150px;
+        height: 100%;
+        width: 250px;
+        background: linear-gradient(to right, #e6e6e6 30%, #f0f0f0 50%, #e6e6e6 100%);
+        animation: load 1s cubic-bezier(0.4, 0.5, 0.7, 0.5) infinite;
+      }
+    }
+
+    .min-label {
+      width: 100px;
+      height: 15px;
+      border-radius: 8px;
+      background-color: #e6e6e6;
+      margin-top: 20px;
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        left: -150px;
+        height: 100%;
+        width: 250px;
+        background: linear-gradient(to right, #e6e6e6 30%, #f0f0f0 50%, #e6e6e6 100%);
+        animation: load 1s cubic-bezier(0.4, 0.5, 0.7, 0.5) infinite;
+      }
+    }
+
+    .circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 100%;
+      background-color: #e6e6e6;
+      margin-top: 5px;
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        left: -150px;
+        height: 100%;
+        width: 250px;
+        background: linear-gradient(to right, #e6e6e6 30%, #f0f0f0 50%, #e6e6e6 100%);
+        animation: load 1s cubic-bezier(0.4, 0.5, 0.7, 0.5) infinite;
+      }
+    }
+  }
+
+  @keyframes load {
+    from {
+        left: -150px;
+    }
+    to   {
+        left: 100%;
+    }
+}
+}
