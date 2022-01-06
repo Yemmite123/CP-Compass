@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom'
 import { getActionLoadingState } from "#/store/selectors";
 import actionTypes from "#/store/onboarding/actionTypes";
 import { confirmIdentity } from '#/store/onboarding/actions';
+import AuthNav from "#/components/AuthNav";
 import './style.scss';
 
 class ConfirmIdentity extends React.Component {
@@ -32,7 +33,7 @@ class ConfirmIdentity extends React.Component {
     const { data, loading, error } = this.props;
     return (
       <div className="confirm-identity-page text-center">
-        <h3>ACCOUNT SETUP</h3>
+        <AuthNav/>
         <div className="box">
           <div className="container">
             <h3 className="mt-3">Confirm your identity</h3>

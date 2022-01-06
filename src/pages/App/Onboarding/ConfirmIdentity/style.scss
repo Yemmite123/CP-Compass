@@ -1,14 +1,6 @@
 .confirm-identity-page {
   overflow: auto;
 
-  >h3 {
-    font-size: 18px;
-    line-height: 22px;
-    text-transform: uppercase;
-    color: #3A4080;
-    margin-top: 10vh;
-  }
-
   .box {
     width: 35%;
     background: #FFFFFF;
@@ -17,8 +9,7 @@
     border-radius: 4px;
     margin-left: auto;
     margin-right: auto;
-    padding: 40px 30px;
-    margin-top: 5vh;
+    padding: 30px 30px;
 
     @media screen and (max-width: 676px) {
       width: 65%; 
@@ -43,15 +34,7 @@
         width: 90%; 
       }
     }
-    h3 {
-      font-size: 24px;
-      color: rgba(4, 68, 114, 0.96);
-    }
 
-    p {
-      font-size: 14px;
-      color: #414141;
-    }
     .text-deep-blue {
       cursor: pointer;
     }

@@ -1,23 +1,20 @@
 .new-password-page {
-  background-color: #E5E5E5;
+  background-color: #e5e5e54d;
   height: 100vh;
   overflow: auto;
   background-image: url('../../../assets/images/password-bg.svg');
   background-size: cover;
   background-repeat: no-repeat;
   
-  h3 {
-    margin-top: 10vh;
-  }
   .box {
-    width: 35%;
+    width: 40%;
     background: #FFFFFF;
     border: 1px solid #E5E5E5;
     box-sizing: border-box;
-    border-radius: 4px;
+    border-radius: 9px;
     margin-left: auto;
     margin-right: auto;
-    padding: 50px 30px;
+    padding: 35px 52px;
     margin-top: 5vh;
 
     @media screen and (max-width: 990px) {

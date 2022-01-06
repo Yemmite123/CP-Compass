@@ -5,6 +5,7 @@ import { submitPin  } from "#/store/onboarding/actions";
 import actionTypes from "#/store/onboarding/actionTypes";
 import { getActionLoadingState } from "#/store/selectors";
 import PinInput from '#/components/PinInput';
+import AuthNav from "#/components/AuthNav";
 import './style.scss';
 
 class TransactionPin extends React.Component {
@@ -53,27 +54,22 @@ class TransactionPin extends React.Component {
 
     return (
       <div className="transaction-pin-page text-center">
-        <h3>ACCOUNT SETUP</h3>
+        <AuthNav/>
         <div className="box text-left">
           <div className="container">
-            <h3 className="mt-3">Set your transaction PIN</h3>
+            <h3 className="mt-3 text-center font-bolder text-blue">Set your transaction PIN</h3>
             <p>Keep your account and investments safe by setting a transction PIN.</p>
-            <div className="row">
-              <div className="col-md-3">
-                <p>Enter your 4-digit PIN</p>
-              </div>
-              <div className="col-md-9">
+            <div className="row justify-content-center">
+              <div className="col-md-10">
                 <div className="w-100">
                   <PinInput onChange={this.handlePin} error={errors} />
                 </div>
               </div>
             </div>
-            <div className="row mt-3">
-              <div className="col-md-3">
-                <p>Confirm your 4-digit PIN</p>
-              </div>
-              <div className="col-md-9">
+            <div className="row mt-4 justify-content-center">
+              <div className="col-md-10">
                 <div className="w-100">
+                   <p>Confirm transaction PIN.</p>
                   <PinInput onChange={this.handleConfirmPin} error={errors} />
                 </div>
               </div>

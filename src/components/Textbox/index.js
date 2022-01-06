@@ -3,15 +3,28 @@ import './style.scss';
 
 const Textbox = ({ label, onChange, defaultValue, name, value, placeholder, boxClasses, type, error, iconUrl, onIconClick, disabled, min, required, max, maxlength }) => {
 
-  return(
+  return (
     <div className={`${boxClasses} textbox`} tabIndex="1">
-      <fieldset className={`${error && 'error'} ${disabled && 'disabled-input'}`}>
-        <legend id="label-legend" className={` pl-2 pr-2 ${error && 'label-error'}`}>{label}</legend>
-        <div className="d-flex">
+      <fieldset
+        className={`${error && "error"} ${disabled && "disabled-input"}`}
+      >
+        {/* <legend id="label-legend" className={` pl-2 pr-2 ${error && 'label-error'}`}>{label}</legend> */}
+        <div className="d-flex position-relative">
+          <span className={`position-absolute d-none ${error && 'label-error'}`}>{placeholder}</span>
           <input
             autoComplete="off"
             min={min && min}
-            onChange={onChange}
+            onChange={(e) => {
+              if (e.target.value){
+                e.target.parentNode.children[0].classList.add("active")
+                e.target.classList.add("active")
+              }
+              else{
+                e.target.parentNode.children[0].classList.remove("active");
+                e.target.classList.remove("active");
+              }
+              onChange(e);
+            }}
             name={name}
             value={value}
             placeholder={placeholder}
@@ -22,18 +35,22 @@ const Textbox = ({ label, onChange, defaultValue, name, value, placeholder, boxC
             maxLength={maxlength && maxlength}
             defaultValue={defaultValue}
           />
-          {error && 
-            <img src={error && require("#/assets/icons/error-icon.svg")} alt="textbox-error"/>
-          }
-          {
-            iconUrl && <img src={iconUrl} alt="textbox-icon" onClick={onIconClick}/>
-          }
+          {error && (
+            <img
+              src={error && require("#/assets/icons/error-icon.svg")}
+              alt="textbox-error"
+            />
+          )}
+          {iconUrl && (
+            <img src={iconUrl} alt="textbox-icon" onClick={onIconClick} />
+          )}
         </div>
-        
       </fieldset>
-      <p className={`${error ? 'd-block' : 'd-none'} input-error mt-1`}>{error}</p>
+      <p className={`${error ? "d-block" : "d-none"} input-error mt-1`}>
+        {error}
+      </p>
     </div>
-  )
+  );
 }
 
 export default Textbox;

@@ -120,6 +120,7 @@ button:disabled {
 }
 
 //font
+
 .font-light {
     font-weight: 200;
 }
@@ -135,6 +136,15 @@ button:disabled {
 .font-bold {
     font-weight: 700;
 }
+
+.font-bolder{
+    font-weight: bolder;
+}
+
+.font-small {
+    font-size: small;
+}
+
 
 //texts
 .text-black {
@@ -247,4 +257,20 @@ button:disabled {
 
 .strike-through {
     text-decoration: line-through;
+}
+
+//utility
+.d-none{
+    display: none!important
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
 }

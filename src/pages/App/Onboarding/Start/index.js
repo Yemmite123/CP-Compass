@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom'
+import AuthNav from "#/components/AuthNav";
 import './style.scss';
 
 class StartOnboarding extends React.Component {
@@ -11,6 +12,7 @@ class StartOnboarding extends React.Component {
 
     return (
       <div className="start-onboarding-page text-center">
+        <AuthNav />
         <div className="box">
           <div className="container">
             <img src={require('#/assets/icons/setup-icon.svg')}  alt="setup"/>

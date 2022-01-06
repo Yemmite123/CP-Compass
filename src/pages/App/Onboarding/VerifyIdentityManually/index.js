@@ -8,6 +8,7 @@ import { confirmIdentity } from '#/store/onboarding/actions';
 import Textbox from '#/components/Textbox';
 import Alert from '#/components/Alert';
 import DateBox from '#/components/DateBox';
+import AuthNav from "#/components/AuthNav";
 import { validateFields, serializeErrors } from '#/utils';
 import './style.scss';
 
@@ -57,10 +58,10 @@ class VerifyIdentityManually extends React.Component {
 
     return (
       <div className="verify-identity-manually-page text-center">
-        <h3>ACCOUNT SETUP</h3>
+        <AuthNav/>
         <div className="box">
           <div className="container">
-            <h3 className="mt-3">BVN Verification</h3>
+            <h3 className="mt-3 text-blue font-bolder">BVN Verification</h3>
             <p>Please enter your BVN credentials</p>
             <form onSubmit={this.handleSubmit}>
               <Textbox

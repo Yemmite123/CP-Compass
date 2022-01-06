@@ -90,11 +90,9 @@ class Signup extends React.Component {
     const errorObject = serializeErrors(error);
     
     return (
-      <div className="register-page vh-100">
+      <div className="register-page">
         <div className="box ml-auto mr-auto">
           <div className="row no-gutters">
-            {/* <div className="col-md-1 left-section">
-            </div> */}
             <div className="col-md-12 text-center">
               <div className="form-section">
                 <div>
@@ -187,13 +185,13 @@ class Signup extends React.Component {
                       </a>
                   </p>
                 </div>
-                <hr />
-                <div className="sign-in mt-4">
-                  <p>Have an account already? <Link to="/login"><b>Sign in</b></Link></p>
-                </div>
+               
               </div>
             </div>
           </div>
+        </div>
+        <div className="sign-in mt-4 text-center">
+          <p>Have an account already? <Link to="/login"><b>Sign in</b></Link></p>
         </div>
       </div>
     )

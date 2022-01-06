@@ -32,12 +32,12 @@ class ForgotPasswordConfirmation extends React.Component {
         <AuthNav />
         <div className="box">
           <div className="container">
-            <img src={require("#/assets/icons/confirmation-blue.svg")} alt="confirmation"/>
-            <h3>Your password reset link has been sent!</h3>
-            <p>A password reset link has been sent to the email your provided, if it exists with us. 
+            <img className="mb-2" src={require("#/assets/icons/confirmation-blue.svg")} alt="confirmation"/>
+            <h4 className="font-bolder text-blue">Your password reset link has been sent!</h4>
+            <p className='font-small'>A password reset link has been sent to the email your provided, if it exists with us. 
                 Please check your inbox for the link and more instructions on how to gain access to your account
             </p>
-            <button className="btn btn-sm btn-white w-100" onClick={this.handleResendLink} disabled={loading}>
+            <button className="btn btn-sm btn-primary w-100 mt-3" onClick={this.handleResendLink} disabled={loading}>
               Resend reset link
               {loading &&
                 <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>

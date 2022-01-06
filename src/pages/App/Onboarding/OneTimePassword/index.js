@@ -5,6 +5,7 @@ import { getActionLoadingState } from "#/store/selectors";
 import actionTypes from "#/store/onboarding/actionTypes";
 import { submitOtp } from '#/store/onboarding/actions';
 import PinInput from '#/components/PinInput';
+import AuthNav from "#/components/AuthNav";
 import './style.scss';
 
 class OneTimePassword extends React.Component {
@@ -40,10 +41,10 @@ class OneTimePassword extends React.Component {
     const { error, loading } = this.props;
     return (
       <div className="one-time-password-page text-center">
-        <h3>ACCOUNT SETUP</h3>
+        <AuthNav/>
         <div className="box">
           <div className="container">
-            <h3 className="mt-3">Enter One-Time Password (OTP)</h3>
+            <h3 className="mt-3 text-blue font-bold">Enter One-Time Password (OTP)</h3>
             <p>A One-Time Password has been sent to the email and phone number attached to your Bank Verification Number (BVN). Please enter the 4-digit number sent.</p>
             <div className="ml-auto mr-auto w-100">
               <PinInput onChange={this.handlePin} error={errors} />

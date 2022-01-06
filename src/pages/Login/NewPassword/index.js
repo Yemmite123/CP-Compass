@@ -85,9 +85,11 @@ class NewPassword extends React.Component {
     return (
       <div className="new-password-page text-center">
         <AuthNav />
-        <h3>Set a new password</h3>
+
         <div className="box">
           <div className="container">
+            <h3 className="text-blue font-bolder">Set a new password</h3>
+            <p className='mb-4'>Start your journey into financial freedom</p>
             <form autoComplete="off" onSubmit={this.handleSubmit}>
               <Textbox
                 onChange={this.handleChange}
@@ -99,9 +101,16 @@ class NewPassword extends React.Component {
                 type={passwordType}
                 iconUrl={require("#/assets/icons/view-password.svg")}
                 onIconClick={this.handlePasswordType}
-                error={errors ? errors.password : (errorObject && errorObject['password'])}
+                error={
+                  errors
+                    ? errors.password
+                    : errorObject && errorObject["password"]
+                }
               />
-              <PasswordStrengthBar password={password} className={`${showSignal ? 'd-block' : 'd-none'} mt-2`} />
+              <PasswordStrengthBar
+                password={password}
+                className={`${showSignal ? "d-block" : "d-none"} mt-2`}
+              />
               <Textbox
                 onChange={this.handleChange}
                 name="confirm"
@@ -114,19 +123,26 @@ class NewPassword extends React.Component {
                 onIconClick={this.handleConPasswordType}
                 error={errors && errors.confirm}
               />
-              <button className="btn btn-sm btn-primary w-100 mt-3" disabled={loading}>
+              <button
+                className="btn btn-sm btn-primary w-100 mt-3"
+                disabled={loading}
+              >
                 Create new password
-                {loading &&
+                {loading && (
                   <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
-                }
+                )}
               </button>
             </form>
-            {data && <Alert alert={{ type: 'success', message: data.message }}/>}
-            {error && typeof error === 'string' && <p className="text-error text-left">{error}</p>}
+            {data && (
+              <Alert alert={{ type: "success", message: data.message }} />
+            )}
+            {error && typeof error === "string" && (
+              <p className="text-error text-left">{error}</p>
+            )}
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 

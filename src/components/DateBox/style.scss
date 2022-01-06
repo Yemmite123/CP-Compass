@@ -15,9 +15,23 @@
     }
   }
   &:focus-within fieldset {
-    border: 1px solid #3F9ADA;
+    border: 1px solid #3a4080;
     transition: ease-in 500ms;
   }
+
+   span {
+     display: inline !important;
+     font-size: .8rem;
+     top: -1.3rem;
+   }
+
+
+   &:focus-within fieldset{
+     span {
+       color: #3A4080;
+     }
+
+   }
 
   .disabled-input legend {
     color: #d5d5d5;
@@ -31,13 +45,10 @@
   .label-error {
     color: #d34242
   }
-  &:focus-within legend {
-    color: #3F9ADA;
-    transition: ease-in-out 500ms;
-  }
+
   fieldset {
     min-width: 0;
-    padding: 10px;
+    padding: 27px 10px 6px 18px;
     margin: 0;
     border: 1px solid #E5E5E5;
     border-radius: 5px;

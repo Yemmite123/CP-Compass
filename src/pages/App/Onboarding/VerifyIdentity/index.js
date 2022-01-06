@@ -9,6 +9,7 @@ import { getActionLoadingState } from "#/store/selectors";
 import actionTypes from "#/store/onboarding/actionTypes";
 import { verifyIdentity } from '#/store/onboarding/actions';
 import { validateFields, serializeErrors } from '#/utils';
+import AuthNav from "#/components/AuthNav";
 import './style.scss';
 
 class VerifyIdentity extends React.Component {
@@ -54,10 +55,10 @@ class VerifyIdentity extends React.Component {
 
     return (
       <div className="verify-identity-page text-center">
-        <h3>ACCOUNT SETUP</h3>
+        <AuthNav/>
         <div className="box">
           <div className="container">
-            <h3 className="mt-3">Verify your identity</h3>
+            <h3 className="mt-3 text-blue font-bolder">Verify your identity</h3>
             <p>Please provide your Bank Verification Number (BVN) and date of birth to verify your identity and validate your profile.</p>
             <form onSubmit={this.handleSubmit}>
               <Textbox

@@ -23,7 +23,7 @@ class ConfirmEmailVerification extends React.Component {
         <div className="box">
           <div className="container">
               <img src={require('#/assets/icons/envelope-mail.svg')} alt="envelope"/>
-              <h4 className="mt-3">Verify your email address</h4>
+              <h4 className="mt-3 text-blue font-bolder">Verify your email address</h4>
               <p className="mt-2">A verification link has been sent to <b>{email}</b> Please check your inbox to verify using the link sent.</p>
               <button className="btn btn-sm btn-primary" onClick={this.navigateToLogin}>
                 I have verified my email

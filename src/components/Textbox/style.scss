@@ -16,14 +16,38 @@
   .label-error {
     color: #d34242
   }
-  &:focus-within legend {
-    color: #3A4080;
-    transition: ease-in-out 500ms;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 16px;
+
+  span.active{
+    display: inline !important;
+    font-size: .8rem;
+    top: -0.7rem;
   }
+
+  input.active{
+    position: relative;
+    top: 0.3rem;
+  }
+
+  &:focus-within {
+    span{
+      display: inline !important;
+      transition: top 5s ease-out 0s;
+      font-size: .8rem;
+      top: -0.7rem;
+      color: #3A4080;
+    }
+
+    input{
+      position: relative;
+      top: 0.3rem;
+    }
+
+    input::placeholder{
+      color: transparent;
+    }
+  }
+
+
   fieldset {
     min-width: 0;
     padding: 17px;
@@ -33,6 +57,11 @@
     box-sizing: border-box;
     // margin-bottom: 15px;
   }
+
+  span{
+    padding: 1px 2px;
+  }
+
   legend {
     max-width: fit-content;
     font-size: 1.5rem;
@@ -52,6 +81,8 @@
     background: transparent;
     
   }
+
+
   .input-error {
     text-align: left;
     font-size: 12px;

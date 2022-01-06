@@ -49,16 +49,13 @@ class ForgotPassword extends React.Component {
         <AuthNav />
         <div className="box">
           <div className="container">
-            <div className="row">
-              <div className="col-md-5 left-section">
-                <h3 className="mt-4">Reset your password</h3>
-                <div className="bottom-section mt-4">
-                  <p>
-                    Cancel password reset? <span></span>
-                    <Link to="/login"><b>Sign in</b></Link>
-                  </p>
-                </div>
-              </div>
+            <div>
+              <h4 className="mt-4 font-bolder text-blue">
+                Reset your password
+              </h4>
+              <p className='font-small'>Please input an email registered to your account</p>
+            </div>
+            <div className="row justify-content-center">
               <div className="col-md-7 right-section">
                 <form autoComplete="off" onSubmit={this.handleSubmit}>
                   <Textbox
@@ -69,22 +66,36 @@ class ForgotPassword extends React.Component {
                     placeholder="Email address"
                     boxClasses="mt-3"
                     type="email"
-                    error={errors ? errors.email : (errorObject && errorObject['email'])}
-
-                  />
-                  <button className="btn btn-sm btn-primary w-100 mt-3" disabled={loading}>
-                    Send me a reset link
-                    {loading &&
-                      <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
+                    error={
+                      errors
+                        ? errors.email
+                        : errorObject && errorObject["email"]
                     }
+                  />
+                  <button
+                    className="btn btn-sm btn-primary w-100 mt-3"
+                    disabled={loading}
+                  >
+                    Send me a reset link
+                    {loading && (
+                      <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
+                    )}
                   </button>
                 </form>
+                <div className="bottom-section mt-4">
+                  <p>
+                    Cancel password reset? <span></span>
+                    <Link to="/login">
+                      <b>Sign in</b>
+                    </Link>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
