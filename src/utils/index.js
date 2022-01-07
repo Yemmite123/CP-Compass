@@ -621,6 +621,16 @@ export const industiesList = [
 ];
 
 export const closeOffCanvas = (name) => {
-  console.log(document.querySelector(`.${name}`).classList.remove("show"));
-  document.querySelector(".offcanvas-backdrop").remove();
+  let offcanvas = document.querySelector(`.${name}`);
+  let overlay = document.querySelector(".offcanvas-backdrop");
+
+  overlay.style.opacity = "0";
+  offcanvas.style.transform = "translateX(100%)";
+
+  setTimeout(() => {
+    offcanvas.classList.remove("show");
+    offcanvas.style.transform = "";
+    overlay.style.opacity = "";
+    overlay.remove();
+  }, 300);
 };
