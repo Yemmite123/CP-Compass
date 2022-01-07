@@ -2,7 +2,6 @@
   .cp-modal {
     .dialogue {
       width: 35%;
-      overflow-y: scroll;
       max-height: 500px;
       @media screen and (max-width: 676px) {
         width: 65%; 
@@ -74,6 +73,7 @@
 
     .transactions-header {
       border-bottom: 1px solid #E5E5E5;
+      padding: .7rem 0 .85rem;
       h3 {
         font-size: 18px;
         color: #414141;

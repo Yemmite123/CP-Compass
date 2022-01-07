@@ -20,7 +20,7 @@
   span.active{
     display: inline !important;
     font-size: .8rem;
-    top: -0.7rem;
+    transform: translateY(-0.7rem);
   }
 
   input.active{
@@ -31,9 +31,8 @@
   &:focus-within {
     span{
       display: inline !important;
-      transition: top 5s ease-out 0s;
       font-size: .8rem;
-      top: -0.7rem;
+      transform: translateY(-0.7rem);
       color: #3A4080;
     }
 
@@ -62,17 +61,6 @@
     padding: 1px 2px;
   }
 
-  legend {
-    max-width: fit-content;
-    font-size: 1.5rem;
-    line-height: inherit;
-    color: #9B9B9B;
-    white-space: normal;
-    text-align: left;
-    font-size: 16px;
-    margin-left: 5px;
-    margin-bottom: -5px;
-  }
   input {
     width: 100%;
     height: auto;

@@ -35,11 +35,6 @@ const BankTransferModal = ({ details, closeTransferModal, confirmPayment }) => {
                 <p className="bank-value text-right">{details? details.BankName : 'no bank name yet'}</p>
               </div>
             </div>
-            <div>
-              <button onClick={confirmPayment} className="btn btn-md btn-primary">
-                I have made payment
-              </button>
-            </div>
           </div>
         </div>
     </div>

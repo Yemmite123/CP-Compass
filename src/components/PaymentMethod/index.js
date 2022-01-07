@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import TitleCard from "#/components/TitleCard";
 import './style.scss'
 
 const PaymentMethod = ({ onSelect, selected, label, imgUrl, imgBlue, value, balance }) => {
@@ -6,20 +7,19 @@ const PaymentMethod = ({ onSelect, selected, label, imgUrl, imgBlue, value, bala
   const ref = useRef();
 
   return (
-    <div className="payment-types" id={value} ref={ref} onClick={onSelect}>
-      <div id={value} className={`payment-method d-flex justify-content-between ${selected && 'selected'} mt-2`}>
-        <div id={value} className="d-flex align-items-center">
-          <img id={value} src={selected ? imgBlue : imgUrl} alt="payment method" className="mr-3"/>
-          <div>
-            <p id={value} className="mb-0">{label}</p>
-            {value === 'wallet' && balance &&  <p className="text-grey text-x-small mb-0">Available balance <span className="text-deep-blue">&#x20A6; {balance}</span></p>}
-          </div>
-        </div>
-        {selected && <img src={require("#/assets/icons/check-blue.svg")} alt="check"/>}
-      </div>
+    <div onClick={onSelect} id={value} className={`payment-type ${selected && "selected"}`}>
+      <TitleCard
+        id={value} 
+        title={label}
+        backgroundColor={"#fff"}
+        backgroundImage={""}
+        iconName={imgUrl}
+        heading={"h6"}
+        borderColor={selected ? "#3A4080" : "black"}
+        textColor={selected ? "#3A4080" : "black" }
+      />
     </div>
-    
-  )
+  );
 }
 
 export default PaymentMethod;

@@ -3,7 +3,7 @@ import './style.scss';
 
 const SummaryCard = ({title, total, percentageDiff, backgroundImage, iconColor, iconName}) => {
   return (
-    <div className="summary" data-color={backgroundImage} style={{backgroundImage}}>
+    <div className="summary" data-color={backgroundImage} style={{backgroundImage, backgroundSize: "cover"}}>
         <p className="summary__type">{title}</p>
         <p className="summary__value">&#x20A6;{total}</p>
         {percentageDiff !== 'N/A' && <p className="summary__trend">

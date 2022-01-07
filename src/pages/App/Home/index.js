@@ -103,96 +103,103 @@ class Home extends React.Component {
                 />
             </div>
 
-            <div className="section">
-              <h3 className="section__title">Quick Actions</h3>
-              <div className="section__cards">
-                <QuickActionCard
-                  onclick={this.setupInvestment}
-                  title="Setup Investments Plans"
-                  iconName="setup-investment"
-                />
-                <QuickActionCard
-                  onclick={() => this.props.history.push('marketplace/financial-instruments')}
-                  title={<span>Invest in <br></br> Financial Instruments</span>}
-                  iconName="light-bulb"
-                />
-                <QuickActionCard
-                  onclick={this.setupCustomInvestment}
-                  title={<span>Create a custom <br></br> Investment Plan</span>}
-                  iconName="custom-plan"
-                />
-                <QuickActionCard
-                  onclick={() => this.props.history.push('profile/segments')}
-                  title={<span>Join a tribe and <br></br> start investing</span>}
-                  iconName="tribe"
-                />
-              </div>
-            </div>
-           
-
-            <div className="section mb-5">
-              <h3 className="section__title">Portfolio</h3>
-              <div className="portfolio">
-                <div className="portfolio__block assets">
-                  <div className="assets__top">
-                    <h6>ASSET ALLOCATION</h6>
-                    <Link to='/app/portfolio'>
-                      {!userHasNoFinancialHistory && <span>View details <img src={require(`#/assets/icons/right-caret.svg`)} alt="caret"/></span>}
-                    </Link>
-                  </div>
-                  {userHasNoFinancialHistory ?
-                    <div className="d-flex justify-content-center align-items-center h-75">
-                      <p className="text-grey m-2">No Investment data yet</p>
+            <div className="row">
+              <div className="col-lg-6">
+                <div className="section mb-5">
+                    <h3 className="section__title">Portfolio</h3>
+                    <div className="portfolio">
+                      <div className="portfolio__block assets">
+                        <div className="assets__top">
+                          <h6>ASSET ALLOCATION</h6>
+                          <Link to='/app/portfolio'>
+                            {!userHasNoFinancialHistory && <span>View details <img src={require(`#/assets/icons/right-caret.svg`)} alt="caret"/></span>}
+                          </Link>
+                        </div>
+                        {userHasNoFinancialHistory ?
+                          <div className="d-flex justify-content-center align-items-center h-75">
+                            <p className="text-grey m-2">No Investment data yet</p>
+                          </div>
+                            :
+                        <div className="assets__chart-box">
+                          <div>
+                            <div className="assets__chart" style={{background: `conic-gradient(#738AFE ${portfolioPercentage}%, #A0A2EC ${portfolioPercentage}%)`}}>
+                              <div>
+                                <span>Actual Value</span>
+                              </div>
+                            </div>
+                            <div className="assets__chart-bottom mb-2">
+                              <span>Total</span> <br></br>
+                              <span className="font-medium">&#x20A6;{formatCurrency(walletValue + portfolioValue)} / 100%</span>
+                            </div>
+                          </div>
+                          <div className="assets__legend">
+                            <div className="assets__legend-block">
+                              <span className="assets__legend-key--investment"></span>
+                              <span>Termed Investments</span>
+                              <span className="assets__legend-value">&#x20A6;{formatCurrency(portfolioValue)} / {portfolioPercentage.toFixed(2)}%</span>
+                            </div>
+                            <div className="assets__legend-block">
+                              <span className="assets__legend-key--wallet"></span>
+                              <span>Wallet</span>
+                              <span className="assets__legend-value">&#x20A6;{formatCurrency(walletValue)} / {walletPercentage.toFixed(2)}%</span>
+                            </div>
+                          </div>
+                        </div>}
+                      </div>             
                     </div>
-                      :
-                  <div className="assets__chart-box">
-                    <div>
-                      <div className="assets__chart" style={{background: `conic-gradient(#738AFE ${portfolioPercentage}%, #A0A2EC ${portfolioPercentage}%)`}}>
-                        <div>
-                          <span>Actual Value</span>
+                </div>
+              </div>
+              <div className="col-lg-6">
+                <div className="row">
+                  <div className="col-12">
+                    <div className="section">
+                      <div className="">
+                        <h3 className="section__title">Quick Actions</h3>
+                        <div className="section__cards">
+                          <QuickActionCard
+                            onclick={this.setupInvestment}
+                            title="Setup Investments Plans"
+                            iconName="setup-investment"
+                          />
+                          <QuickActionCard
+                            onclick={() => this.props.history.push('marketplace/financial-instruments')}
+                            title={<span>Invest in <br></br> Financial Instruments</span>}
+                            iconName="light-bulb"
+                          />
+                          <QuickActionCard
+                            onclick={this.setupCustomInvestment}
+                            title={<span>Create a custom <br></br> Investment Plan</span>}
+                            iconName="custom-plan"
+                          />
+                          <QuickActionCard
+                            onclick={() => this.props.history.push('profile/segments')}
+                            title={<span>Join a tribe and <br></br> start investing</span>}
+                            iconName="tribe"
+                          />
                         </div>
                       </div>
-                      <div className="assets__chart-bottom mb-2">
-                        <span>Total</span> <br></br>
-                        <span className="font-medium">&#x20A6;{formatCurrency(walletValue + portfolioValue)} / 100%</span>
-                      </div>
-                    </div>
-                    <div className="assets__legend">
-                      <div className="assets__legend-block">
-                        <span className="assets__legend-key--investment"></span>
-                        <span>Termed Investments</span>
-                        <span className="assets__legend-value">&#x20A6;{formatCurrency(portfolioValue)} / {portfolioPercentage.toFixed(2)}%</span>
-                      </div>
-                      <div className="assets__legend-block">
-                        <span className="assets__legend-key--wallet"></span>
-                        <span>Wallet</span>
-                        <span className="assets__legend-value">&#x20A6;{formatCurrency(walletValue)} / {walletPercentage.toFixed(2)}%</span>
-                      </div>
-                    </div>
-                  </div>}
-                </div>
-
-                
-                
-                <div className="portfolio__block invite">
-                  
-                  <div className="invite__image">
-                    <img src={require(`#/assets/images/compass-app.svg`)} className="" alt="hand holding phone with compass app on screen"/>
-                  </div>
-                  <div className="invite__body">
-                    <h6 className="invite__heading">Join our large <br></br> tribe of Investors</h6>
-                    <img src={require(`#/assets/icons/arc.svg`)} className="invite__arc" alt="arc"/>
-                    <p className="invite__info">
-                      An app built to suit your lifestyle, specially designed for you! 
-                      Features to help you hit your short or long term goals.
-                    </p>
-                    <div>
-                      <a href="#"><img src={require(`#/assets/icons/play-store.png`)} className="invite__link" alt="google play store"/></a>
-                      <a href="#"><img src={require(`#/assets/icons/app-store.png`)} className="invite__link" alt="apple app store"/></a>
                     </div>
                   </div>
-                </div>
-                
+                  <div className="col-12">
+                    <div className="portfolio__block invite">
+                        <div className="invite__image">
+                          <img src={require(`#/assets/images/compass-app.svg`)} className="" alt="hand holding phone with compass app on screen"/>
+                        </div>
+                        <div className="invite__body">
+                          <h6 className="invite__heading">Join our large <br></br> tribe of Investors</h6>
+                          <img src={require(`#/assets/icons/arc.svg`)} className="invite__arc" alt="arc"/>
+                          <p className="invite__info">
+                            An app built to suit your lifestyle, specially designed for you! 
+                            Features to help you hit your short or long term goals.
+                          </p>
+                          <div>
+                            <a href="#"><img src={require(`#/assets/icons/play-store.png`)} className="invite__link" alt="google play store"/></a>
+                            <a href="#"><img src={require(`#/assets/icons/app-store.png`)} className="invite__link" alt="apple app store"/></a>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div> 
               </div>
             </div>
           </>

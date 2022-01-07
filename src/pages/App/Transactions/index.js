@@ -78,7 +78,7 @@ class Transactions extends React.Component {
             <Back />
           </div>
           <div className="col-md-8 text-center">
-            <h3 className="text-medium text-deep-blue ">Transaction History</h3>
+            <h3 className="text-medium text-deep-blue ">TRANSACTION HISTORY</h3>
           </div>
         </div>
         <div className="card p-3 mt-2">

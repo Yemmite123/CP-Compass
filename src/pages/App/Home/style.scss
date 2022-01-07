@@ -79,7 +79,7 @@
     
     &__cards{
       display: grid;
-      grid-template-columns: auto auto auto auto;
+      grid-template-columns: auto auto;
       gap: 20px;
 
       @media only screen and (max-width: 1190px) {
@@ -181,8 +181,9 @@
 }
 
 .assets {
-  width: 50%;
+  width: 100%;
   margin-right: 18px;
+  padding-bottom: 1rem;
 
   @media only screen and (max-width: 1280px) {
     width: 100%;
@@ -309,7 +310,8 @@
 
 .invite {
   display: flex;
-  width: 50%;
+  width: 100%;
+  margin-top: 1rem;
 
   @media only screen and (max-width: 1280px) {
     width: 100%;
