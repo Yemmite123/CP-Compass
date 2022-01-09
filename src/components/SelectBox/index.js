@@ -8,10 +8,10 @@ const SelectBox = (
   return(
     <div className={`${boxClasses} selectbox`} tabIndex="1">
       <fieldset className={`${error && 'error'} ${disabled && 'disabled-input'}`}>
-        <legend id="label-legend" className={` pl-2 pr-2 ${error && 'label-error'}`}>{label}</legend>
-        <div className="d-flex">
+        {/* <legend id="label-legend" className={` pl-2 pr-2 ${error && 'label-error'}`}>{label}</legend> */}
+        <div className="d-flex position-relative">
           <select autoComplete="off" onChange={onChange} name={name} value={defaultValue} placeholder={placeholder} defaultValue={actualDefaultValue} required={required} type={type} disabled={disabled && disabled} readOnly={readonly}>
-            <option value=''>...select...</option>
+            {/* <option value=''>{defaultValue}</option> */}
             {
               options && options.map(option => (
                 <option key={Math.random()*1000} value={option[value]}>{option[optionName]}</option>

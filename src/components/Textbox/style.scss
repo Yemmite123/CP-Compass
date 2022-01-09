@@ -21,6 +21,7 @@
     display: inline !important;
     font-size: .8rem;
     transform: translateY(-0.7rem);
+    visibility: visible;
   }
 
   input.active{
@@ -34,6 +35,7 @@
       font-size: .8rem;
       transform: translateY(-0.7rem);
       color: #3A4080;
+      visibility: visible;
     }
 
     input{
@@ -59,6 +61,7 @@
 
   span{
     padding: 1px 2px;
+    visibility: hidden;
   }
 
   input {

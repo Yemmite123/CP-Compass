@@ -18,6 +18,10 @@
     }
   }
 
+  .transaction-detail-modal{
+    width: 375px;
+  }
+
   .bvn-active {
     position: absolute !important;
     width: 100%;
@@ -84,6 +88,11 @@
       h4 {
         text-transform: capitalize;
       }
+    }
+
+    .card{
+      padding-left: 2.5rem !important;
+      padding-right: 2.5rem!important;
     }
   }
 }

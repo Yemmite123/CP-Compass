@@ -11,11 +11,10 @@ const Back = ({ ...props }) => {
   return (
     <div onClick={handleBack} className="go-back d-flex">
       <img
-        src={require("#/assets/icons/back-arrow.svg")}
+        src={require("#/assets/icons/back.svg")}
         alt="transfer logo"
         className="mr-2"
       />
-      <p className="mb-0 text-blue">Back</p>
     </div>
   )
 }

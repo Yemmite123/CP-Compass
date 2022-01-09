@@ -10,7 +10,7 @@ const Textbox = ({ label, onChange, defaultValue, name, value, placeholder, boxC
       >
         {/* <legend id="label-legend" className={` pl-2 pr-2 ${error && 'label-error'}`}>{label}</legend> */}
         <div className="d-flex position-relative">
-          <span className={`position-absolute d-none ${error && 'label-error'}`}>{placeholder}</span>
+        { label ? <span className={`position-absolute ${error && 'label-error'}`}>{placeholder}</span> : "" }
           <input
             autoComplete="off"
             min={min && min}

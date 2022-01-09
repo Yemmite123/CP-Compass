@@ -17,6 +17,7 @@ class TermedInvestments extends React.Component {
   }
 
   handleSingleInvestment = (investment) => {
+    console.log(investment)
     this.props.history.push({
       pathname: `/app/marketplace/termed-investment/${investment.id}`,
       state: { investment, routeName: 'Marketplace' },
@@ -34,7 +35,7 @@ class TermedInvestments extends React.Component {
           {investments &&
           investments.investments?.data.length > 0 ?
           investments.investments?.data.map(investment => (
-            <div className="col-md-3 pl-0" key={Math.random()*1000} >
+            <div className="col-md-3 pl-0 mt-3" key={Math.random()*1000} >
               <MarketplaceCard 
                 item={investment} 
                 handleSelect={() => this.handleSingleInvestment(investment)}

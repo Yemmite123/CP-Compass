@@ -59,14 +59,14 @@ export const fundingSource = [
   {
     label: "Debit Card",
     value: "card",
-    imgUrl: require("#/assets/icons/card-grey.svg"),
-    imgBlue: require("#/assets/icons/card-blue.svg"),
+    imgUrl: "card-grey",
+    imgBlue: "card-blue",
   },
   {
     label: "Wallet",
     value: "wallet",
-    imgUrl: require("#/assets/icons/funding-wallet-grey.svg"),
-    imgBlue: require("#/assets/icons/funding-wallet-blue.svg"),
+    imgUrl: "funding-wallet-grey",
+    imgBlue: "funding-wallet-blue",
   },
 ];
 
@@ -619,6 +619,13 @@ export const industiesList = [
   "Transportation",
   "Utilities",
 ];
+
+export const openOffCanvas = (name) => {
+  document.querySelector(`.${name}`).classList.toggle("show");
+  let offcanvasOverlay = document.createElement("div");
+  offcanvasOverlay.classList.add("offcanvas-backdrop", "show", "fade");
+  document.body.lastChild.after(offcanvasOverlay);
+}
 
 export const closeOffCanvas = (name) => {
   let offcanvas = document.querySelector(`.${name}`);

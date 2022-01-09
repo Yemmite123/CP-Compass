@@ -1,18 +1,18 @@
 import React from 'react';
+import './style.scss';
 
 const DebitCard = (props) => {
   const { card, handleSelect } = props;
 
   return (
-    <div className="d-flex justify-content-between align-items-center mb-3">
-      <div className="d-flex align-items-start">
-        <img src={require('#/assets/icons/bank-card.svg')} className="img-fluid mr-3" alt="card"/>
-        <div>
-          <p className="text-deep-blue text-medium mb-0 cursor-pointer" onClick={() => handleSelect(card)}>**** **** **** {card.last4} </p>
-          <p className="text-grey mb-0">{card.bank} ({card.brand})</p>
-        </div>
+    <div className={`d-flex p-3 mb-2 cursor-pointer debit-card`} onClick={() => handleSelect(card)}>
+      <div className="d-flex mr-3">
+        <img src={require(`#/assets/icons/bank-card.svg`)} width={"35px"} alt="icon" />
       </div>
-      <img src={require('#/assets/icons/right-arrow.svg')} className="img-fluid cursor-pointer" alt="card" onClick={() => handleSelect(card)}/>
+      <div className="d-flex flex-column justify-content-center">
+        <h5 className="text-center  mb-0">**** **** **** {card.last4}</h5>
+        <p className="text-grey text-left mb-0 card-brand">{card.bank} ({card.brand})</p>
+      </div>
     </div>
   )
 }

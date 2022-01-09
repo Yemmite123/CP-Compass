@@ -1,7 +1,13 @@
 .selectbox {
   &:focus-within fieldset {
-    border: 1px solid #3F9ADA;
+    border: 1px solid #3a4080;
     transition: ease-in 500ms;
+
+    span {
+      color: #3A4080;
+      visibility: hidden;
+    }
+
   }
   .error {
     border: 1px solid #d34242;
@@ -13,9 +19,19 @@
     color: #3F9ADA;
     transition: ease-in-out 500ms;
   }
+
+  span {
+    display: inline !important;
+    visibility: hidden;
+    font-size: .8rem;
+    top: -1.3rem;
+  }
+
   fieldset {
     min-width: 0;
     padding: 10px;
+    padding-top: 18px;
+    padding-bottom: 18px;
     margin: 0;
     border: 1px solid #E5E5E5;
     border-radius: 5px;

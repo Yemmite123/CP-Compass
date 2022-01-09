@@ -1,23 +1,32 @@
 .single-investment-page {
-  .card-container {
-    margin-bottom: 50px;
+  // .card-container {
+  //   margin-bottom: 50px;
 
-    .img-section {
-      max-height: 200px
-    }
+  //   .img-section {
+  //     max-height: 200px
+  //   }
     
-    .investment-item {
-      min-height: 160px;
-    }
-  }
+  //   .investment-item {
+  //     min-height: 160px;
+  //   }
+  // }
 
   .investment-img {
     position: relative;
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     border-radius: 5%;
     object-fit: cover;
     margin-right: 10px;
+  }
+
+  .investment-item{
+    width: 269px;
+    height: 249px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: auto;
   }
   
   .bvn-active {

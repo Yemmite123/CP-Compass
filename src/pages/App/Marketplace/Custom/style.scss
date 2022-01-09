@@ -1,5 +1,20 @@
 .predefined-page {
+
+  .payment-method{
+    border: 1px solid black;
+    border-radius: .2rem;
+    cursor: pointer;
+
+    &.selected{
+      border-color: #3A4080;
+      color: #3A4080!important;
+    }
+  }
+
   .cp-modal {
+    h5{
+      font-size: 18px!important;
+    }
     .dialogue {
       width: 40%;
       @media screen and (max-width: 979px) {

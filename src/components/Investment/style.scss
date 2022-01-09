@@ -1,10 +1,37 @@
 .investment-card {
+  display: flex;
+  justify-content: center;
   .card-container {
-    border: 1px solid rgba(4, 68, 114, 0.96);
-    min-height: 160px;
+    border: 1px solid grey;
+    width: 269px;
+    height: 249px;
   }
 
   .progress {
-    height: 0.4rem !important;
+    height: 20px !important;
+    border-radius: 16px !important;
+  }
+
+  .progress-bar{
+    border-radius: 16px !important;
+  }
+
+  .status{
+    &.active{
+      background-color: #EBFFEF;
+      color: #2EB26B;
+    }
+    &.matured{
+      background-color: #E2F3FF;
+      color: #0879C9;
+    }
+    &.terminated{
+      background-color: #FFF6D9;
+      color: #E7A52E;
+    }
+  }
+
+  p{
+    font-size: 12px;
   }
 }

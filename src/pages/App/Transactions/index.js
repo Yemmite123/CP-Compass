@@ -81,7 +81,7 @@ class Transactions extends React.Component {
             <h3 className="text-medium text-deep-blue ">TRANSACTION HISTORY</h3>
           </div>
         </div>
-        <div className="card p-3 mt-2">
+        <div className="card px-5 py-3 mt-2">
           {loading &&
             <div className="d-flex justify-content-center mt-5">
               <div className="spinner-border text-primary spinner-border-md text-center"></div>
@@ -117,7 +117,7 @@ class Transactions extends React.Component {
               </div>
             )}
 
-          <div className="text-center d-flex justify-content-between align-items-center mt-3">
+          <div className="text-center mt-5 d-flex justify-content-between align-items-center mt-3">
             <div>
               <button className="btn btn-primary btn-sm mr-2" onClick={this.fetchPrevious} disabled={loading || this.state.page === 1}>
                 Prev

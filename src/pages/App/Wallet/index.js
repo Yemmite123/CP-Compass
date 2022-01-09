@@ -18,7 +18,7 @@ import TitleCard from "#/components/TitleCard";
 import WalletSkeleton from "./Skeleton";
 import Deposit from "#/pages/App/Deposit";
 import Withdraw from "#/pages/App/Withdraw";
-import { formatDate, closeOffCanvas } from "#/utils";
+import { formatDate, openOffCanvas } from "#/utils";
 import "./style.scss";
 
 class Wallet extends React.Component {
@@ -46,15 +46,7 @@ class Wallet extends React.Component {
     if (!this.props.isBvnActive) {
       return this.toggleBvnModal();
     }
-
-    document.querySelector("#withdraw-offcanvas").classList.toggle("show");
-    if (!document.querySelector(".offcanvas-backdrop")) {
-      let offcanvasOverlay = document.createElement("div");
-      offcanvasOverlay.classList.add("offcanvas-backdrop", "show", "fade");
-      document.body.lastChild.after(offcanvasOverlay);
-    } else {
-      document.querySelector(".offcanvas-backdrop").remove();
-    }
+    openOffCanvas("withdraw-offcanvas");
   };
 
   handleTransactionSelect = (transaction) => {
@@ -203,7 +195,7 @@ class Wallet extends React.Component {
                       Object.keys(walletDetails.transactions).map((day) => {
                         return (
                           <div key={day} className="transaction-info">
-                            <h4 className="text-deep-blue text-small mt-3">
+                            <h4 className="text-small mt-3">
                               {formatDate(day)}
                             </h4>
                             <div
