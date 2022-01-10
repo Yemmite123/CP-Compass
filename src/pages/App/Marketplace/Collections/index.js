@@ -573,13 +573,10 @@ class Collections extends React.Component {
                     type="text"
                     label="Amount"
                     placeholder="Amount"
-                    name="amount"
-                    value={formatStringToCurrency(amount)}
-                    error={
-                      errors
-                        ? errors.amount
-                        : errorObject && errorObject["amount"]
-                    }
+                    name="finalAmount"
+                    value={formatStringToCurrency(finalAmount)}
+                    error={errors ? errors.finalAmount : (errorObject && errorObject['amount'])}
+                    
                   />
                 </div>
                 <div className="mt-4">
@@ -637,23 +634,20 @@ class Collections extends React.Component {
                   </p>
                 </div>
                 <div className="mt-4">
-                  {fundingSource.map((method) => (
-                    <div
-                      id={method.value}
-                      className={`d-flex p-3 mb-2 ${
-                        selectedMethod === method.value ? "selected" : ""
-                      } payment-method`}
-                      onClick={this.handleSelectMethod}
-                    >
-                      <div className="d-flex mr-3">
-                        <img
-                          src={require(`#/assets/icons/${method.imgUrl}.svg`)}
-                          alt="icon"
-                        />
-                      </div>
-                      <h5 className="text-center mb-0">{method.label}</h5>
+                {fundingSource.map(method => (
+                  <div id={method.value} className={`d-flex p-3 mb-2 ${selectedMethod === method.value ? "selected" : ""} payment-method`} onClick={this.handleSelectMethod}>
+                    <div className="d-flex mr-3">
+                      <img src={require(`#/assets/icons/${method.imgUrl}.svg`)} alt="icon" />
                     </div>
-                  ))}
+                    <div>
+                    <h6 className="text-left mb-0 font-bolder">{method.label}</h6>
+                    { method.value === "card" ? 
+                     cards &&
+                     cards.cards.length > 0 && <p className='text-grey mb-0'>{cards.cards[0].brand} ending in <span className='text-blue'> **** {cards.cards[0].last4}</span></p> : 
+                      <p className='text-grey mb-0'>Available balance <span className='text-blue'> &#x20A6; {walletDetails && walletDetails.wallet.NGN ? walletDetails.wallet.NGN : 0}</span></p>}
+                    </div>
+                  </div>
+                ))}        
                 </div>
                 <div className="mt-4">
                   {selectedMethodError && (
@@ -716,7 +710,7 @@ class Collections extends React.Component {
                   >
                     <div className="d-flex mr-3">
                       <img
-                        src={require(`#/assets/icons/add-card.svg`)}
+                        src={require('#/assets/icons/plus-circle.svg')}
                         width={"35px"}
                         alt="icon"
                       />
@@ -865,7 +859,7 @@ class Collections extends React.Component {
                 type="text"
                 label="Frequency amount"
                 placeholder="Set frequency amount"
-                name="frequencyAmount"
+                name="amount"
                 value={formatStringToCurrency(amount)}
                 error={
                   errors

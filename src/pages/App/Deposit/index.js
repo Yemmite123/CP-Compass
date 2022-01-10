@@ -5,10 +5,11 @@ import Textbox from "#/components/Textbox";
 import PaymentMethod from "#/components/PaymentMethod";
 import OffCanvas from "#/components/OffCanvas";
 import Modal from "#/components/Modal";
+import DebitCard from '#/components/DebitCard';
 import { getActionLoadingState } from "#/store/selectors";
 import actionTypes from "#/store/wallet/actionTypes";
 import { displayTransferModal } from "#/store/ui/actions";
-import { getCards, depositFunds } from "#/store/wallet/actions";
+import { getCards, depositFunds, depositFundsCard } from "#/store/wallet/actions";
 import { paymentMethods, closeOffCanvas } from "#/utils";
 import {
   validateFields,
@@ -17,14 +18,19 @@ import {
   formatCurrencyToString,
 } from "#/utils";
 import "./style.scss";
+import { TumblrShareButton } from "react-share";
 
 class Deposit extends React.Component {
   state = {
     amount: "",
     errors: null,
     selectedMethod: null,
+    selectedMethodError: null,
+    selectedCard: null,
+    newPayment: false,
     selectionError: null,
     showNoBvn: false,
+    showCardsModal: false
   };
 
   componentDidMount() {
@@ -47,6 +53,35 @@ class Deposit extends React.Component {
   handleSelectMethod = (event) => {
     this.setState({ selectedMethod: event.target.id });
   };
+
+  toggleAllCardsModal = (e) => {
+    e.preventDefault();
+    this.setState({showCardsModal : !this.state.showCardsModal });
+  }
+
+  handleSelectCard = (card) => {
+    this.setState({newPayment: false});
+    this.setState({ selectedCard: card, type: 'card' });
+  }
+
+  handleNewPayment = () => {
+    this.setState({newPayment: TumblrShareButton});
+  }
+
+    // handles for when a funcding source is selected
+  handleSelectedFundingSource = (e) => {
+    if (this.state.newPayment)
+    {
+      const payload = { amount: this.state.amount, currency: "NGN"}
+      this.props.depositFunds(payload)
+
+      return this.toggleAllCardsModal(e)
+    }
+
+    const payload = { amount: this.state.amount, cardId: this.state.selectedCard }
+    this.props.depositFundsCard(payload, this.props.history)
+    return this.toggleAllCardsModal(e)
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -79,19 +114,8 @@ class Deposit extends React.Component {
 
     if (this.props.cards && this.props.cards.cards.length > 0) {
       closeOffCanvas("deposit-offcanvas");
-      return this.props.history.push({
-        pathname: "/app/wallet/cards",
-        state: { amount: formatCurrencyToString(this.state.amount) },
-      });
+      this.toggleAllCardsModal(e)
     }
-    const payload = {
-      amount: formatCurrencyToString(this.state.amount),
-      currency: "NGN",
-    };
-
-  
-    //check for cards before this
-    this.props.depositFunds(payload);
   };
 
   handleBvnSetup = () => {
@@ -103,13 +127,58 @@ class Deposit extends React.Component {
   };
 
   render() {
-    const { amount, selectedMethod, errors, selectionError, showNoBvn } =
+    const { amount, selectedMethod, errors, selectionError, showNoBvn, showCardsModal } =
       this.state;
-    const { error, loading, walletDetails } = this.props;
+    const { error, loading, cards, walletDetails, payLoading } = this.props;
     const errorObject = serializeErrors(error);
 
     return (
       <div className="deposit-page">
+        { showCardsModal &&
+          <Modal>
+            <div className="text-right pb-3">
+              <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleAllCardsModal} className="cursor-pointer" />
+            </div>
+            <div className="px-3">
+              <div className="d-flex justify-content-center">
+                <img src={require('#/assets/icons/bank-transfer.svg')} alt="bank" className="pb-3"/>
+              </div>
+              <div className="text-center">
+                <div className='mb-3'>
+                  <h5 className="text-blue font-bolder">Choose a bank card</h5>
+                  <p>You are about to add money to your customized investment</p>
+                </div>
+                <div className="mt-4">
+                {
+                  cards &&
+                  cards.cards.length > 0 &&
+                  cards.cards.map(card => (
+                    <DebitCard card={card} handleSelect={this.handleSelectCard} key={card.id} />
+                  ))
+                }
+                
+                <div className={`d-flex p-3 mb-2 cursor-pointer debit-card`} onClick={this.handleNewPayment}>
+                  <div className="d-flex mr-3">
+                    <img src={require('#/assets/icons/plus-circle.svg')} alt="icon" width={"35px"}/>
+                  </div>
+                  <div className="d-flex flex-column justify-content-center">
+                    <h5 className="text-center  mb-0">Add new card</h5>
+                  </div>
+                </div>
+                </div>
+                <div className="mt-4">
+                  {/* {selectedMethodError && <p className="text-error mt-2">{selectedMethodError}</p>} */}
+                  <button className="btn btn-primary btn-block py-3 mt-3" onClick={this.handleSelectedFundingSource} disabled={payLoading}>
+                    Proceed
+                  {payLoading &&
+                      <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
+                    }
+                  </button>
+                </div>
+              </div>
+            </div>
+          </Modal>
+        }
         <OffCanvas title="" position="end" id="deposit-offcanvas">
           <div className="px-3 h-100 d-flex flex-column flex-grow-1">
             <div className="mt-3 mb-2">
@@ -157,10 +226,6 @@ class Deposit extends React.Component {
                   </div>
                 </div>
                 <div className="w-100">
-                  {error && <p className="text-error text-left">{error}</p>}
-                  {selectionError && (
-                    <p className="text-error text-left">{selectionError}</p>
-                  )}
                   <button
                     className="btn w-100 btn-sm btn-primary btn-md-block"
                     onClick={this.handleSubmit}
@@ -179,7 +244,7 @@ class Deposit extends React.Component {
         {showNoBvn && (
           <Modal classes="bvn-active" onClose={this.toggleBvnModal}>
             <div className="text-center">
-              <h3 className="text-deep-blue">
+              <h3 className="text-blue">
                 Please Setup your BVN to continue
               </h3>
               <button
@@ -219,6 +284,7 @@ const mapDispatchToProps = (dispatch) => {
     displayTransferModal: () => dispatch(displayTransferModal()),
     getCards: () => dispatch(getCards()),
     depositFunds: (payload) => dispatch(depositFunds(payload)),
+    depositFundsCard: (payload, history) => dispatch(depositFundsCard(payload, history))
   };
 };
 
