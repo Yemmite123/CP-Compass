@@ -358,7 +358,13 @@ class Collections extends React.Component {
                 <h5 className="text-blue font-bolder">
                   Confirm Investment Setup
                 </h5>
-                <p>To achieve your target of <b>N{formatCurrency(target)}</b>, you have decided to save <b>N{formatCurrency(amount)} {frequency}</b>.
+                <p>
+                  To achieve your target of <b>N{formatCurrency(target)}</b>,
+                  you have decided to save{" "}
+                  <b>
+                    N{formatCurrency(amount)} {frequency}
+                  </b>
+                  .
                 </p>
               </div>
               <div className="d-flex flex-column align-items-center">
@@ -460,12 +466,12 @@ class Collections extends React.Component {
                 <div className="px-3 mt-4">
                   <p className="text-black mb-0">
                     Your {state?.investment.name} plan has been setup{" "}
-                    {(
+                    {
                       <span>
                         <span className="text-blue font-weight-bold">pay</span>{" "}
                         so
                       </span>
-                    )}{" "}
+                    }{" "}
                     you can start enjoying returns on your principal.
                   </p>
                   <button
@@ -787,7 +793,8 @@ class Collections extends React.Component {
             </div>
           </Modal>
         )}
-        <OffCanvas title=""
+        <OffCanvas
+          title=""
           position="end"
           id={`offcanvas-${state?.investment.id}`}
         >
@@ -883,8 +890,13 @@ class Collections extends React.Component {
               {entryError && (
                 <p className="text-error mt-2 mr-3">{entryError}</p>
               )}
-               <button className="w-100 py-3 btn btn-primary btn-md-block" onClick={(e) => { closeOffCanvas(state?.investment.id); this.handleComfirmation(e)}}>
-
+              <button
+                className="w-100 py-3 btn btn-primary btn-md-block"
+                onClick={(e) => {
+                  closeOffCanvas(`offcanvas-${state?.investment.id}`);
+                  this.handleComfirmation(e);
+                }}
+              >
                 Save changes
               </button>
             </div>

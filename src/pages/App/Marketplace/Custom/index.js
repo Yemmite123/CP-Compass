@@ -690,7 +690,7 @@ class Custom extends React.Component {
             </div>
             <div className="mt-4 pb-3">
               {entryError && <p className="text-error mt-2 mr-3">{entryError}</p>}
-              <button className="w-100 py-3 btn btn-primary btn-md-block" onClick={(e) => { closeOffCanvas(state?.investment.id); this.handleComfirmation(e)}}>
+              <button className="w-100 py-3 btn btn-primary btn-md-block" onClick={(e) => { closeOffCanvas(`offcanvas-${state?.investment.id}`); this.handleComfirmation(e)}}>
                 Save changes
                 {calcLoading &&
                   <div className="spinner-border text-white spinner-border-sm ml-2"></div>
