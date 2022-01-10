@@ -95,10 +95,10 @@ class App extends Component {
             </Route>
             <div className="dashboard">
               {alert && <FloatingToastAlert alert={alert} />}
-              <DashboardMenu 
+              {!this.props.history.location.pathname.split('/').includes('onboarding') && <DashboardMenu 
                 openMenu={openMenu} 
                 handleToggleMenu={this.handleToggleMenu}
-              />
+              /> }
               {!this.props.history.location.pathname.split('/').includes('onboarding') &&
                 <>
                   <div className="dashboard-main">
