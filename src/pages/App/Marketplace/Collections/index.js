@@ -114,6 +114,12 @@ class Collections extends React.Component {
     if (Object.keys(errors).length > 0) {
       return this.setState({ errors });
     }
+
+    const {
+      location: { state },
+    } = this.props.history;
+    
+    closeOffCanvas(`offcanvas-${state?.investment.id}`);
     this.toggleConfirmationModal();
   };
 
@@ -892,10 +898,9 @@ class Collections extends React.Component {
               )}
               <button
                 className="w-100 py-3 btn btn-primary btn-md-block"
-                onClick={(e) => {
-                  closeOffCanvas(`offcanvas-${state?.investment.id}`);
-                  this.handleComfirmation(e);
-                }}
+                onClick={
+                  this.handleComfirmation
+                }
               >
                 Save changes
               </button>

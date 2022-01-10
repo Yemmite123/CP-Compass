@@ -621,23 +621,28 @@ export const industiesList = [
 ];
 
 export const openOffCanvas = (name) => {
-  document.querySelector(`.${name}`).classList.toggle("show");
+  document.querySelector(`.${name}`).classList.add("show");
   let offcanvasOverlay = document.createElement("div");
   offcanvasOverlay.classList.add("offcanvas-backdrop", "show", "fade");
   document.body.lastChild.after(offcanvasOverlay);
-}
+};
 
 export const closeOffCanvas = (name) => {
   let offcanvas = document.querySelector(`.${name}`);
-  let overlay = document.querySelector(".offcanvas-backdrop");
+  let overlay = document.querySelectorAll(".offcanvas-backdrop");
 
-  overlay.style.opacity = "0";
+  overlay.forEach((val) => {
+    val.style.opacity = "0";
+  });
+
   offcanvas.style.transform = "translateX(100%)";
 
   setTimeout(() => {
     offcanvas.classList.remove("show");
     offcanvas.style.transform = "";
-    overlay.style.opacity = "";
-    overlay.remove();
+    overlay.forEach((val) => {
+      val.style.opacity = "0";
+      val.remove();
+    });
   }, 300);
 };

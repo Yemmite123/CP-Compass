@@ -124,10 +124,16 @@ class Predefined extends React.Component {
     if (entryError) {
       return this.setState({ entryError });
     }
+
+    const {
+      location: { state },
+    } = this.props.history;
+
     this.props.calculateInvestment(info)
     .then(data => {
       this.setState({ installment: data.installment, expectedTotalReturns: data.expectedTotalReturns }, () => {
-        this.toggleConfirmationModal()
+        closeOffCanvas(`offcanvas-${state?.investment.id}`);
+        this.toggleConfirmationModal();
       })
     })
   }
@@ -633,7 +639,7 @@ class Predefined extends React.Component {
             </div>           
             <div className="mt-4 pb-3">
               {entryError && <p className="text-error mt-2 mr-3">{entryError}</p>}
-              <button className="w-100 py-3 btn btn-primary btn-md-block" onClick={(e) => { closeOffCanvas(`offcanvas-${state?.investment.id}`); this.handleComfirmation(e)}}>
+              <button className="w-100 py-3 btn btn-primary btn-md-block" onClick={this.handleComfirmation}>
                 Save changes
                 {calcLoading &&
                   <div className="spinner-border text-white spinner-border-sm ml-2"></div>
