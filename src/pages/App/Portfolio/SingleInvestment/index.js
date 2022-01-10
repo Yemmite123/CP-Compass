@@ -16,6 +16,11 @@ import DebitCard from '#/components/DebitCard';
 import Textbox from '#/components/Textbox';
 import Transaction from '#/components/Transaction';
 import PinInput from '#/components/PinInput';
+import SummaryCard from '#/components/SummaryCard';
+import Back from '#/components/Back';
+import WalletBG from "#/assets/images/walletBG.svg";
+import InvestmentBG from "#/assets/images/InvestmentBG.svg";
+import ReturnsBG from "#/assets/images/ReturnsBG.svg";
 import { formatCurrency, validateFields, fundingSource, serializeErrors, transactionType, formatCurrencyToString,
   formatStringToCurrency } from '#/utils';
 import './style.scss';
@@ -358,42 +363,51 @@ class SingleInvestment extends React.Component {
             {error && typeof error === 'string' && <p className="text-error mt-2">{error}</p>}
           </Modal>
         }
-
-        <div className="d-flex justify-content-between">
-          <div onClick={()=> this.props.history.push('/app/portfolio')} className="cursor-pointer">
-            <img
-              src={require("#/assets/icons/back-arrow.svg")}
-              alt="transfer logo"
-              className="mr-2"
-            />
-            Back
+        <div className="row mb-3">
+          <div className="col-4">
+            <Back />
           </div>
-          <p className={`pl-3 pr-3 text-small text-capitalize single-portfolio-page--${investment?.order_status}`}>{investment?.order_status}</p>
+          <div className="col-4">
+            <h3 className='text-uppercase text-center'>{investment ? investment.title : ''}</h3>
+          </div>
+          <div className="col-4 text-right">
+            <span className={`pl-3 pr-3 text-small text-capitalize single-portfolio-page--${investment?.order_status}`}>{investment?.order_status}</span>            
+          </div>
         </div>
-        <div className="row mt-2">
-          <div className="col-md-4 mt-2">
-            <Card classes="text-center p-4 border-blue">
-              <p className="text-small text-grey">Amount Invested</p>
-              <h3 className="text-blue">&#x20A6; {investment ? formatCurrency(investment.balance) : 0}</h3>
-            </Card>
-          </div>
-          <div className="col-md-4 mt-2">
-            <Card classes="text-center p-4 border-blue">
-              <p className="text-small text-grey">Interest</p>
-              <h3 className="text-blue">&#x20A6; {investment ? formatCurrency(investment.accruedInterest) : 0}</h3>
-            </Card>
-          </div>
-          <div className="col-md-4 mt-2">
-            <Card classes="text-center p-4 bg-default">
-              <p className="text-small text-white">Interest Rate P.A.</p>
-              <h3 className="text-white">{investment ? investment.interestRate : 0}%</h3>
-            </Card>
-          </div>
+        <div className="summary-container">
+          <SummaryCard className="BG"
+            title="Amount Invested"
+            showCurrency={true}
+            total={`${investment ? formatCurrency(investment.balance) : 0}`}
+            percentageDiff="N/A"
+            backgroundImage= {`url(${WalletBG})`}
+            iconColor="#871523" 
+            iconName="white-wallet"
+          />
+
+          <SummaryCard
+            title="Interest"
+            showCurrency={true}
+            total={`${investment ? investment.accruedInterest : 0}`}
+            percentageDiff={"N/A"}
+            backgroundImage= {`url(${InvestmentBG})`}
+            iconColor="#B0500E" 
+            iconName="money"
+          />
+          <SummaryCard
+            title="Intrest Rate P.A"
+            showCurrency={false}
+            total={`${investment ? investment.interestRate : 0}%`}
+            percentageDiff={"N/A"}
+            backgroundImage= {`url(${ReturnsBG})`} 
+            iconColor="#3F2256" 
+            iconName="money-arrow"
+          />
         </div>
         <Card classes="mt-4 card">
           <div className="row">
             <div className="col-md-4 text-center mt-2">
-              <img src={require('#/assets/icons/top-up.svg')}
+              <img src={require('#/assets/icons/plus-circle.svg')}
                 alt="plus"
                 className={`img-fluid ${['active', 'booked'].includes(investment?.order_status) ? 'cursor-pointer' : 'cursor-block disabled'}`}
                 onClick={['active', 'booked'].includes(investment?.order_status) ? this.handleSelectAmount : null}
@@ -437,64 +451,67 @@ class SingleInvestment extends React.Component {
 
         <div className="row mt-3">
           <div className="col-md-4 mt-2">
-            <div className="card p-3 min-height-small">
-              <p className="border-bottom text-deep-blue text-small">Payment Amount</p>
-              <h3>&#x20A6;{investment ? formatCurrency(investment.installment) : 0} <span className="text-blue text-small">/{investment && investment.frequency}</span></h3>
-              <p className="font-light">Next Deposit Date - <b>{investment && investment.nextPaymentDate ? moment(investment.nextPaymentDate).format('MMM D, YYYY') : 'Not Available'}</b></p>
+            <div className="card p-3 px-4 min-height-small  d-flex flex-column justify-content-between">
+              <h5 className="text-blue">Payment Amount</h5>
+              <div>
+                <h3>&#x20A6;{investment ? formatCurrency(investment.installment) : 0} <span className="text-blue text-small">/{investment && investment.frequency}</span></h3>
+                <p className="">Next Deposit Date - <b>{investment && investment.nextPaymentDate ? moment(investment.nextPaymentDate).format('MMM D, YYYY') : 'Not Available'}</b></p>
+              </div>
             </div>
           </div>
           <div className="col-md-4 mt-2">
-            <div className="card p-3 min-height-small">
-              <p className="border-bottom text-deep-blue text-small">Investment Progress</p>
-              <div className="d-flex justify-content-between align-items-end flex-wrap">
-                <h3>{investment ? investment.percentageCompletion : 0}%</h3>
-                <div>
-                  <p className="right-side-text text-grey text-small mb-0">Target</p>
+            <div className="card p-3 px-4 min-height-small d-flex flex-column justify-content-between">
+              <div>
+                <h5 className="text-blue">Investment Progress</h5>
+                <div className="progress">
+                  <div
+                    className="progress-bar bg-success"
+                    style={{ width: `${investment ? investment.percentageCompletion : 0}%` }}
+                    role="progressbar"
+                    aria-valuenow={investment ? investment.percentageCompletion : 0}
+                    aria-valuemin="0"
+                    aria-valuemax="100">
+                      {investment ? investment.percentageCompletion : 0}%
+                  </div>
+                </div>
+              </div>
+              <div className="">
+                  <p className="text-grey text-small mb-0">Target</p>
                   <h3>&#x20A6;{investment ? formatCurrency(investment.targetAmount) : 0}</h3>
-                </div>
               </div>
-              <div className="progress">
-                <div
-                  className="progress-bar bg-success"
-                  style={{ width: `${investment ? investment.percentageCompletion : 0}%` }}
-                  role="progressbar"
-                  aria-valuenow={investment ? investment.percentageCompletion : 0}
-                  aria-valuemin="0"
-                  aria-valuemax="100">
-                </div>
-              </div>
-              <p className="text-grey text-small mt-2 mb-0">Your saving determine your plan progress</p>
             </div>
           </div>
           <div className="col-md-4 mt-2">
-            <div className="card p-3 min-height-small">
-              <p className="border-bottom text-deep-blue text-small">Investment Info</p>
-              <div className="d-flex justify-content-between flex-wrap">
-                <div>
-                  <p className="font-light text-small mb-0">Investment Name</p>
-                  <h5 className="font-normal">{investment ? investment.title : ''}</h5>
+            <div className="card p-3 px-4 min-height-small d-flex flex-column justify-content-between">
+              <h5 className="text-blue">Investment Info</h5>
+              <div>
+                <div className="d-flex justify-content-between flex-wrap">
+                  <div>
+                    <h5 className="text-small font-normal text-grey mb-0">Investment Name</h5>
+                    <h5 className="font-normal text-capitalize">{investment ? investment.title : ''}</h5>
+                  </div>
+                  <div className="right-side-text">
+                    <h5 className="font-normal text-small text-grey mb-0">Target Amount</h5>
+                    <h5 className="font-normal">&#x20A6;{investment ? formatCurrency(investment.targetAmount) : 0}</h5>
+                  </div>
                 </div>
-                <div className="right-side-text">
-                  <p className="font-light text-small mb-0">Target Amount</p>
-                  <h5 className="font-normal">&#x20A6;{investment ? formatCurrency(investment.targetAmount) : 0}</h5>
-                </div>
-              </div>
-              <div className="d-flex justify-content-between">
-                <div>
-                  <p className="font-light text-small mb-0">Target Date</p>
-                  <h5 className="font-normal">{investment && investment.endDate ? moment(investment.endDate).format('MMM D, YYYY') : 'No end date'}</h5>
-                </div>
-                <div className="right-side-text">
-                  <p className="font-light text-small mb-0">Start Date</p>
-                  <h5 className="font-normal">{investment && investment.startDate ? moment(investment.startDate).format('MMM D, YYYY') : 'N/A'}</h5>
+                <div className="d-flex justify-content-between">
+                  <div>
+                    <p className="font-light text-grey text-small mb-0">Target Date</p>
+                    <h5 className="font-normal">{investment && investment.endDate ? moment(investment.endDate).format('MMM D, YYYY') : 'No end date'}</h5>
+                  </div>
+                  <div className="right-side-text">
+                    <p className="font-light text-small text-grey mb-0">Start Date</p>
+                    <h5 className="font-normal">{investment && investment.startDate ? moment(investment.startDate).format('MMM D, YYYY') : 'N/A'}</h5>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="mt-4 card p-3">
-          <p className="border-bottom text-deep-blue text-small">Transactions</p>
+        <div className="mt-4 card p-5">
+          <h5 className="mb-3 text-blue">Transactions</h5>
           {investment && investment.transactions?.length > 0 ?
             investment.transactions?.map(transaction => (
               <Transaction

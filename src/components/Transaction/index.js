@@ -8,7 +8,7 @@ const Transaction = (props) => {
   const { transaction, handleSelect } = props;
 
   return (
-    <div className="transaction-container  border-bottom py-3">
+    <div className="transaction-container py-3">
       <div className="d-flex justify-content-between flex-wrap">
         <div className="d-flex mr-3">
           <img src={transactionType(transaction.type)} width='35px' className="img-fluid mr-5" alt="transaction type"/>

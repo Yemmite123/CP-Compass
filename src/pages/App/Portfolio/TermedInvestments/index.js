@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from "react-router-dom";
-import InvestmentPortfolio from '#/components/InvestmentPortfolio';
+import InvestmentItem from '#/components/Investment';
 import Card from '#/components/Card';
 import PortfolioSkeleton from '../Skeleton';
 import './style.scss';
@@ -23,9 +23,7 @@ class TermedInvestments extends React.Component {
           {
             investments && investments.length > 0 ? investments.map(investment => (
               <div className="col-lg-6 mt-2" key={investment.id}>
-                <Card classes="card portfolio-item cursor-pointer" onclick={() => this.handleClickItem(investment.id)}>
-                  <InvestmentPortfolio item={investment} navigateToItem={this.handleClickItem} />
-                </Card>
+                  <InvestmentItem investment={investment} navigateToInvestment={this.handleClickItem} />
               </div>
             ))
             :

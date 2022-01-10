@@ -110,7 +110,7 @@ class Investment extends React.Component {
           </div>
 
           <div className="row mt-2">
-            <div className="col-md-4 mt-4">
+            <div className="col-md-3 mt-4">
               <Card classes="bg-default investment-item cursor-pointer" onclick={this.handleNewInvestment} backgroundImage={`url(${HexBG})`}>
                 <div className="text-right" onClick={this.handleNewInvestment}>
                   <img src={require('#/assets/icons/plus-circle.svg')} alt="plus" className="img-fluid" onClick={this.handleNewInvestment} />
@@ -120,7 +120,7 @@ class Investment extends React.Component {
             </div>
             {investmentList && 
               investmentList.investments?.map((investment) => {
-                return (<div className="col-md-4 mt-4" key={investment.id}>
+                return (<div className="col-md-3 mt-4" key={investment.id}>
                   <InvestmentItem investment={investment} navigateToInvestment={this.handleNavigatetoInvestment} />
                 </div>)
               })

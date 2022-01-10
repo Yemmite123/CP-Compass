@@ -18,6 +18,12 @@
     }
   }
 
+  .new-payment{
+    &.selected{
+      border: 2px solid var(--blue);
+    }
+  }
+
   .deposit-offcanvas{
     .h6{
       font-size: 14px!important;

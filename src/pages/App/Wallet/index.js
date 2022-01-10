@@ -127,6 +127,7 @@ class Wallet extends React.Component {
                     <div className="col-12">
                       <SummaryCard
                         className="BG"
+                        showCurrency={true}
                         title="Wallet balance"
                         total={
                           walletDetails && walletDetails.wallet.NGN
@@ -188,7 +189,10 @@ class Wallet extends React.Component {
                         className="text-blue mb-0 cursor-pointer"
                         onClick={this.navigateTotransactions}
                       >
-                        View details{" >"}
+                        { "View details "}
+                        <svg width="5" strokeWidth={"2px"} height="9" viewBox="0 0 5 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 8L4 4.5L1 1" stroke="#3A4080" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
                       </p>
                     </div>
                     {walletDetails ? (

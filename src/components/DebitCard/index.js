@@ -2,10 +2,10 @@ import React from 'react';
 import './style.scss';
 
 const DebitCard = (props) => {
-  const { card, handleSelect } = props;
+  const { card, selected, handleSelect } = props;
 
   return (
-    <div className={`d-flex p-3 mb-2 cursor-pointer debit-card`} onClick={() => handleSelect(card)}>
+    <div className={`d-flex p-3 mb-2 cursor-pointer debit-card  ${selected ? "selected" : ""}`} onClick={() => handleSelect(card)}>
       <div className="d-flex mr-3">
         <img src={require(`#/assets/icons/bank-card.svg`)} width={"35px"} alt="icon" />
       </div>

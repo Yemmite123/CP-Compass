@@ -19,6 +19,7 @@ const Investment = (props) => {
           aria-valuenow={investment.percentageCompletion}
           aria-valuemin="0"
           aria-valuemax="100">
+            {investment.percentageCompletion}% 
           </div>
         </div>
         <div className="d-flex justify-content-between mt-4">
@@ -28,7 +29,7 @@ const Investment = (props) => {
           </div>
           <div>
             <p className="mb-0 text-grey">Target met</p>
-            <p className="mb-0">{investment.percentageCompletion}% <span className="text-black text-small">(&#x20A6;{formatCurrency(investment.balance)})</span></p>
+            <p className="mb-0"><span className="text-black text-small">&#x20A6;{formatCurrency(investment.balance)}</span></p>
           </div>
         </div>
         <div className="d-flex justify-content-between mt-4">

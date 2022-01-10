@@ -76,7 +76,6 @@
     margin-top: 40px;
 
     .transactions-header {
-      border-bottom: 1px solid #E5E5E5;
       padding: .7rem 0 .85rem;
       h3 {
         font-size: 18px;
@@ -88,6 +87,10 @@
       h4 {
         text-transform: capitalize;
       }
+    }
+
+    .card-container{
+      box-shadow: none;
     }
 
     .card{

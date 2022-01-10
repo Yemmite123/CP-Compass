@@ -5,4 +5,8 @@
     .card-brand{
         font-size: 0.8rem;
     }
+
+    &.selected{
+        border: 2px solid var(--blue);
+    }
 }

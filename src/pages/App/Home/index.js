@@ -78,6 +78,7 @@ class Home extends React.Component {
             <div className="summary-container">
                 <SummaryCard className="BG"
                   title="Wallet balance"
+                  showCurrency={true}
                   total={dashboard?.dashboard?.wallet?.NGN ? dashboard?.dashboard?.wallet?.NGN : '0.00'}
                   percentageDiff="N/A"
                   backgroundImage= {`url(${WalletBG})`}
@@ -87,6 +88,7 @@ class Home extends React.Component {
 
                 <SummaryCard
                   title="Total Investment"
+                  showCurrency={true}
                   total={dashboard ? formatCurrency(dashboard?.dashboard?.portfolios.portfolioWorth?.amount) : '0.00'}
                   percentageDiff={dashboard?.dashboard.portfolios.portfolioWorth?.percentageDiff}
                   backgroundImage= {`url(${InvestmentBG})`}
@@ -95,6 +97,7 @@ class Home extends React.Component {
                 />
                 <SummaryCard
                   title="Total Returns"
+                  showCurrency={true}
                   total={dashboard ? formatCurrency(dashboard?.dashboard.portfolios.totalReturns?.amount) : '0.00'}
                   percentageDiff={dashboard?.portfolios?.totalReturns ? dashboard.portfolios.totalReturns.percentageDiff : 0}
                   backgroundImage= {`url(${ReturnsBG})`} 

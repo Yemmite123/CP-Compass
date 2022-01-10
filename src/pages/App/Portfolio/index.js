@@ -61,20 +61,20 @@ class Portfolio extends React.Component {
           &&
         <>
           <div className="portfiolio-page">
+            <div className="d-flex justify-content-between align-items-center mt-0 flex-wrap">
+                <DashboardBodyMenu menus={menus} classes="mt-0" />
+                <select className="selectbox p-1 text-small border-grey text-black" defaultValue={selectedStatus} name="selectedStatus" onChange={this.handleChangestatus}>
+                  <option value="all">All</option>
+                  <option value="active">Active</option>
+                  <option value="booked">Booked</option>
+                  <option value="matured">Matured</option>
+                  <option value="cancelled">Cancelled</option>
+                  <option value="terminated">Terminated</option>
+                </select>
+              </div>
             <div className="row">
-              <div className="col-md-8 mt-3">
-                <div className="card p-3">
-                  <div className="d-flex justify-content-between align-items-center mt-0 flex-wrap">
-                    <DashboardBodyMenu menus={menus} classes="mt-0" />
-                    <select className="selectbox p-1 text-small border-grey text-black" defaultValue={selectedStatus} name="selectedStatus" onChange={this.handleChangestatus}>
-                      <option value="all">All</option>
-                      <option value="active">Active</option>
-                      <option value="booked">Booked</option>
-                      <option value="matured">Matured</option>
-                      <option value="cancelled">Cancelled</option>
-                      <option value="terminated">Terminated</option>
-                    </select>
-                  </div>
+              <div className="col-md-6 mt-3">
+                <div className="">
                   <div className="mt-2">
                     <Switch>
                       <Route path={`${path}/termed-investments`}>
@@ -87,7 +87,7 @@ class Portfolio extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="col-md-4 mt-3">
+              <div className="col-md-6 mt-3">
                 <div className="card p-4">
                   <h3 className="text-deep-blue text-small">Portfolio Allocation</h3>
                   <div className="mt-4">
@@ -98,56 +98,61 @@ class Portfolio extends React.Component {
                     :
                     <Doughnut data={portfolioPie(walletValue, data?.portfolios?.portfolioWorth.amount )} options={portfolioPieOptions} />
                   }
-                    <Card classes="border-blue mt-3">
-                      <p className="text-grey text-small mb-0">Total Portfolio Value</p>
-                      <p className="text-deep-blue text-large mb-0">&#x20A6;{data && data.portfolios?.portfolioWorth ? formatCurrency(data.portfolios?.portfolioWorth.amount) : 0}</p>
-                      <div className="d-flex mt-2 align-items-baseline">
-                        <img
-                          src={isNegative(data && data?.portfolios?.portfolioWorth.percentageDiff) === 'neutral' 
-                          ? require('#/assets/icons/flatline.svg') :
-                            isNegative(data && data?.portfolios?.totalReturns.percentageDiff)
-                            ? require('#/assets/icons/fall-red-small.svg')
-                            : require('#/assets/icons/rise-green.svg')
-                          }
-                          className="img-fluid mr-2"
-                          alt="difference" />
-                        <p
-                          className={`text-small  mr-2 mb-0 
+                  <div className="row">
+                    <div className="col-lg-6 col-md-6">
+                      <Card classes="border-blue mt-3">
+                        <p className="text-grey text-small mb-0">Total Portfolio Value</p>
+                        <p className="text-deep-blue text-large mb-0">&#x20A6;{data && data.portfolios?.portfolioWorth ? formatCurrency(data.portfolios?.portfolioWorth.amount) : 0}</p>
+                        <div className="d-flex mt-2 align-items-baseline">
+                          <img
+                            src={isNegative(data && data?.portfolios?.portfolioWorth.percentageDiff) === 'neutral' 
+                            ? require('#/assets/icons/flatline.svg') :
+                              isNegative(data && data?.portfolios?.totalReturns.percentageDiff)
+                              ? require('#/assets/icons/fall-red-small.svg')
+                              : require('#/assets/icons/rise-green.svg')
+                            }
+                            className="img-fluid mr-2"
+                            alt="difference" />
+                          <p
+                            className={`text-small  mr-2 mb-0 
+                            ${isNegative(data && data?.portfolios?.portfolioWorth.percentageDiff) === 'neutral' ? 'text-grey' :
+                            isNegative(data && data?.portfolios?.portfolioWorth.percentageDiff) ? 'text-red' : 'text-green'}
+                            `}
+                          >
+                            {data && data?.portfolios?.portfolioWorth.percentageDiff}%
+                          </p>
+                          <p 
+                          className={`text-small mb-0 
                           ${isNegative(data && data?.portfolios?.portfolioWorth.percentageDiff) === 'neutral' ? 'text-grey' :
                           isNegative(data && data?.portfolios?.portfolioWorth.percentageDiff) ? 'text-red' : 'text-green'}
-                          `}
-                        >
-                          {data && data?.portfolios?.portfolioWorth.percentageDiff}%
-                        </p>
-                        <p 
-                        className={`text-small mb-0 
-                        ${isNegative(data && data?.portfolios?.portfolioWorth.percentageDiff) === 'neutral' ? 'text-grey' :
-                        isNegative(data && data?.portfolios?.portfolioWorth.percentageDiff) ? 'text-red' : 'text-green'}
-                        `}>
-                          (Last 7 days)
-                    </p>
-                      </div>
-                    </Card>
-
-                    <Card classes="bg-default mt-3">
-                      <p className="text-white text-small mb-0">Total Returns</p>
-                      <p className="text-white text-large mb-0">&#x20A6;{data && data.portfolios?.totalReturns ? formatCurrency(data.portfolios?.totalReturns.amount) : 0}</p>
-                      <div className="d-flex mt-2 align-items-baseline">
-                        <img
-                          src={isNegative(data && data?.portfolios?.portfolioWorth.percentageDiff === 'neutral') 
-                          ? require('#/assets/icons/flatline-white.svg') :
-                            isNegative(data && data?.portfolios?.totalReturns.percentageDiff)
-                            ? require('#/assets/icons/fall-white-small.svg')
-                            : require('#/assets/icons/rise-white-small.svg')
-                          }
-                          className="img-fluid mr-2"
-                          alt="difference" />
-                        <p className="text-small text-white mr-2 mb-0">
-                          {data && data.portfolios?.totalReturns ? data.portfolios?.totalReturns.percentageDiff : 0}%
-                        </p>
-                        <p className="text-small text-white mb-0">(Last 7 days)</p>
-                      </div>
-                    </Card>
+                          `}>
+                            (Last 7 days)
+                      </p>
+                        </div>
+                      </Card>
+                    </div>
+                    <div className="col-lg-6 col-md-6">
+                      <Card classes="bg-default mt-3">
+                        <p className="text-white text-small mb-0">Total Returns</p>
+                        <p className="text-white text-large mb-0">&#x20A6;{data && data.portfolios?.totalReturns ? formatCurrency(data.portfolios?.totalReturns.amount) : 0}</p>
+                        <div className="d-flex mt-2 align-items-baseline">
+                          <img
+                            src={isNegative(data && data?.portfolios?.portfolioWorth.percentageDiff === 'neutral') 
+                            ? require('#/assets/icons/flatline-white.svg') :
+                              isNegative(data && data?.portfolios?.totalReturns.percentageDiff)
+                              ? require('#/assets/icons/fall-white-small.svg')
+                              : require('#/assets/icons/rise-white-small.svg')
+                            }
+                            className="img-fluid mr-2"
+                            alt="difference" />
+                          <p className="text-small text-white mr-2 mb-0">
+                            {data && data.portfolios?.totalReturns ? data.portfolios?.totalReturns.percentageDiff : 0}%
+                          </p>
+                          <p className="text-small text-white mb-0">(Last 7 days)</p>
+                        </div>
+                      </Card>
+                    </div>
+                  </div>
                   </div>
                 </div>
               </div>

@@ -14,6 +14,10 @@
       } 
     }
   }
+
+  .card{
+    box-shadow: none;
+  }
   
   &--active {
     background-color: #C3F5CE;
@@ -31,7 +35,14 @@
   }
 
   .progress {
-    height: 0.4rem !important;
+    height: 25px !important;
+    border-radius: 1rem;
+
+    .progress-bar{
+      border-radius: 1rem;
+      text-align: right;
+      padding-right: 10px;
+    }
   }
 
   .right-side-text {
@@ -41,5 +52,20 @@
     text-align: left;
       
     } 
+  }
+
+  .summary-container{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 39px;
+  
+    @media only screen and (max-width: 1190px) {
+      grid-template-columns: auto auto;
+      gap: 30px;
+    }
+  
+    @media only screen and (max-width: 678px) {
+      grid-template-columns: auto;
+    }
   }
 }

@@ -5,11 +5,15 @@ import Textbox from "#/components/Textbox";
 import PaymentMethod from "#/components/PaymentMethod";
 import OffCanvas from "#/components/OffCanvas";
 import Modal from "#/components/Modal";
-import DebitCard from '#/components/DebitCard';
+import DebitCard from "#/components/DebitCard";
 import { getActionLoadingState } from "#/store/selectors";
 import actionTypes from "#/store/wallet/actionTypes";
 import { displayTransferModal } from "#/store/ui/actions";
-import { getCards, depositFunds, depositFundsCard } from "#/store/wallet/actions";
+import {
+  getCards,
+  depositFunds,
+  depositFundsCard,
+} from "#/store/wallet/actions";
 import { paymentMethods, closeOffCanvas } from "#/utils";
 import {
   validateFields,
@@ -18,7 +22,6 @@ import {
   formatCurrencyToString,
 } from "#/utils";
 import "./style.scss";
-import { TumblrShareButton } from "react-share";
 
 class Deposit extends React.Component {
   state = {
@@ -30,7 +33,7 @@ class Deposit extends React.Component {
     newPayment: false,
     selectionError: null,
     showNoBvn: false,
-    showCardsModal: false
+    showCardsModal: false,
   };
 
   componentDidMount() {
@@ -56,32 +59,35 @@ class Deposit extends React.Component {
 
   toggleAllCardsModal = (e) => {
     e.preventDefault();
-    this.setState({showCardsModal : !this.state.showCardsModal });
-  }
+    this.setState({ showCardsModal: !this.state.showCardsModal });
+  };
 
   handleSelectCard = (card) => {
-    this.setState({newPayment: false});
-    this.setState({ selectedCard: card, type: 'card' });
-  }
+    this.setState({ newPayment: false });
+    this.setState({ selectedCard: card, type: "card" });
+  };
 
   handleNewPayment = () => {
-    this.setState({newPayment: TumblrShareButton});
-  }
+    this.setState({ newPayment: true });
+    this.setState({ selectedCard: null, type: "card" });
+  };
 
-    // handles for when a funcding source is selected
+  // handles for when a funcding source is selected
   handleSelectedFundingSource = (e) => {
-    if (this.state.newPayment)
-    {
-      const payload = { amount: this.state.amount, currency: "NGN"}
-      this.props.depositFunds(payload)
-
-      return this.toggleAllCardsModal(e)
+    if (this.state.newPayment) {
+      const payload = { amount: this.state.amount, currency: "NGN" };
+      this.props.depositFunds(payload);
+      return this.toggleAllCardsModal(e);
     }
 
-    const payload = { amount: this.state.amount, cardId: this.state.selectedCard }
-    this.props.depositFundsCard(payload, this.props.history)
-    return this.toggleAllCardsModal(e)
-  }
+    const payload = {
+      amount: this.state.amount,
+      cardId: this.state.selectedCard.id,
+    };
+
+    this.props.depositFundsCard(payload, this.props.history);
+    return this.toggleAllCardsModal(e);
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -114,7 +120,7 @@ class Deposit extends React.Component {
 
     if (this.props.cards && this.props.cards.cards.length > 0) {
       closeOffCanvas("deposit-offcanvas");
-      this.toggleAllCardsModal(e)
+      this.toggleAllCardsModal(e);
     }
   };
 
@@ -127,58 +133,86 @@ class Deposit extends React.Component {
   };
 
   render() {
-    const { amount, selectedMethod, errors, selectionError, showNoBvn, showCardsModal } =
-      this.state;
+    const {
+      amount,
+      selectedMethod,
+      errors,
+      selectionError,
+      showNoBvn,
+      showCardsModal,
+    } = this.state;
     const { error, loading, cards, walletDetails, payLoading } = this.props;
     const errorObject = serializeErrors(error);
 
     return (
       <div className="deposit-page">
-        { showCardsModal &&
+        {showCardsModal && (
           <Modal>
             <div className="text-right pb-3">
-              <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleAllCardsModal} className="cursor-pointer" />
+              <img
+                src={require("#/assets/icons/close.svg")}
+                alt="close"
+                onClick={this.toggleAllCardsModal}
+                className="cursor-pointer"
+              />
             </div>
             <div className="px-3">
               <div className="d-flex justify-content-center">
-                <img src={require('#/assets/icons/bank-transfer.svg')} alt="bank" className="pb-3"/>
+                <img
+                  src={require("#/assets/icons/bank-transfer.svg")}
+                  alt="bank"
+                  className="pb-3"
+                />
               </div>
               <div className="text-center">
-                <div className='mb-3'>
+                <div className="mb-3">
                   <h5 className="text-blue font-bolder">Choose a bank card</h5>
-                  <p>You are about to add money to your customized investment</p>
+                  <p>
+                    You are about to add money to your customized investment
+                  </p>
                 </div>
                 <div className="mt-4">
-                {
-                  cards &&
-                  cards.cards.length > 0 &&
-                  cards.cards.map(card => (
-                    <DebitCard card={card} handleSelect={this.handleSelectCard} key={card.id} />
-                  ))
-                }
-                
-                <div className={`d-flex p-3 mb-2 cursor-pointer debit-card`} onClick={this.handleNewPayment}>
-                  <div className="d-flex mr-3">
-                    <img src={require('#/assets/icons/plus-circle.svg')} alt="icon" width={"35px"}/>
+                  {cards &&
+                    cards.cards.length > 0 &&
+                    cards.cards.map((card) => (
+                      <DebitCard
+                        card={card}
+                        handleSelect={this.handleSelectCard}
+                        selected={this.state.selectedCard === card}
+                        key={card.id}
+                      />
+                    ))}
+
+                  <div className={`d-flex p-3 mb-2 cursor-pointer debit-card new-payment ${this.state.newPayment ? "selected" : ""}`} onClick={this.handleNewPayment} >
+                    <div className="d-flex mr-3">
+                      <img
+                        src={require("#/assets/icons/plus-circle.svg")}
+                        alt="icon"
+                        width={"35px"}
+                      />
+                    </div>
+                    <div className="d-flex flex-column justify-content-center">
+                      <h5 className="text-center  mb-0">Add new card</h5>
+                    </div>
                   </div>
-                  <div className="d-flex flex-column justify-content-center">
-                    <h5 className="text-center  mb-0">Add new card</h5>
-                  </div>
-                </div>
                 </div>
                 <div className="mt-4">
                   {/* {selectedMethodError && <p className="text-error mt-2">{selectedMethodError}</p>} */}
-                  <button className="btn btn-primary btn-block py-3 mt-3" onClick={this.handleSelectedFundingSource} disabled={payLoading}>
+                  <button
+                    className="btn btn-primary btn-block py-3 mt-3"
+                    onClick={this.handleSelectedFundingSource}
+                    disabled={payLoading}
+                  >
                     Proceed
-                  {payLoading &&
+                    {payLoading && (
                       <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
-                    }
+                    )}
                   </button>
                 </div>
               </div>
             </div>
           </Modal>
-        }
+        )}
         <OffCanvas title="" position="end" id="deposit-offcanvas">
           <div className="px-3 h-100 d-flex flex-column flex-grow-1">
             <div className="mt-3 mb-2">
@@ -244,9 +278,7 @@ class Deposit extends React.Component {
         {showNoBvn && (
           <Modal classes="bvn-active" onClose={this.toggleBvnModal}>
             <div className="text-center">
-              <h3 className="text-blue">
-                Please Setup your BVN to continue
-              </h3>
+              <h3 className="text-blue">Please Setup your BVN to continue</h3>
               <button
                 className="btn btn-primary btn-sm btn-block mt-4"
                 onClick={this.handleBvnSetup}
@@ -284,7 +316,8 @@ const mapDispatchToProps = (dispatch) => {
     displayTransferModal: () => dispatch(displayTransferModal()),
     getCards: () => dispatch(getCards()),
     depositFunds: (payload) => dispatch(depositFunds(payload)),
-    depositFundsCard: (payload, history) => dispatch(depositFundsCard(payload, history))
+    depositFundsCard: (payload, history) =>
+      dispatch(depositFundsCard(payload, history)),
   };
 };
 

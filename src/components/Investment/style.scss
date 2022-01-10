@@ -1,9 +1,8 @@
 .investment-card {
-  display: flex;
-  justify-content: center;
   .card-container {
-    border: 1px solid grey;
-    width: 269px;
+    border: 1px solid #E1E4FF;
+    box-shadow: none!important;
+    max-width: 269px;
     height: 249px;
   }
 
@@ -14,6 +13,8 @@
 
   .progress-bar{
     border-radius: 16px !important;
+    text-align: right;
+    padding-right: 10px;
   }
 
   .status{
