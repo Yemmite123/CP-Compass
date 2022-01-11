@@ -22,7 +22,7 @@ class TermedInvestments extends React.Component {
         <div className="row">
           {
             investments && investments.length > 0 ? investments.map(investment => (
-              <div className="col-lg-6 mt-2" key={investment.id}>
+              <div className="col-lg-6 mt-4" key={investment.id}>
                   <InvestmentItem investment={investment} navigateToInvestment={this.handleClickItem} />
               </div>
             ))

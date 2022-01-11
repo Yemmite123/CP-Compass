@@ -13,8 +13,9 @@ import Card from '#/components/Card';
 import Textbox from '#/components/Textbox';
 import Modal from '#/components/Modal';
 import PinInput from '#/components/PinInput';
+import OffCanvas from "#/components/OffCanvas";
 import { formatCurrency, serializeErrors, validateFields,
-  formatStringToCurrency, formatCurrencyToString } from '#/utils'
+  formatStringToCurrency, formatCurrencyToString, openOffCanvas, closeOffCanvas } from '#/utils'
 import './style.scss';
 
 class LiquidateInvestment extends React.Component {
@@ -82,6 +83,8 @@ class LiquidateInvestment extends React.Component {
     if(investment?.order_status === 'booked') {
       return this.setState({  amount: '0' }, () => this.handleLiquidationDetails());
     }
+
+    closeOffCanvas("liquidate-offcanvas");
     return this.handleLiquidationDetails();
   }
 
@@ -151,156 +154,166 @@ class LiquidateInvestment extends React.Component {
     return (
       <div className="liquidate-investment-page">
         {confirmationModal &&
-          <Modal onClose={this.toggleConfirmationModal}>
-          <div className="text-center">
-            <h3 className="text-deep-blue text-medium">Terms and Conditions</h3>
-            <p className="text-small">By liquidating your investment, you confirm to the following terms:
-              You would bear <b> a penalty of {investment.endDate ? predefinedLiquidationPenalty?.current : 0}% on your interest earned </b>on the investment.
-              Interest accruing on the portion of the investment you are liquidating would stop.
-            </p>
-            <div className="liquidation-table">
-              <div className="liquidation-header">
-                <h3 className="text-white text-medium mb-0">Liquidation Details</h3>
-              </div>
-              <div className="liquidation-body">
-                <div className="row">
-                  <div className="col-md-6 text-left">
-                    <p className="mb-0 text-small">Liquidation Amount</p>
-                  </div>
-                  <div className="col-md-6 text-right">
-                    <p className="mb-0 text-small">&#x20A6;{formatCurrency(amount)}</p>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-6 text-left">
-                    <p className="mb-0 text-small">Penalty</p>
-                  </div>
-                  <div className="col-md-6 text-right">
-                  <p className="mb-0 text-small">
-                    &#x20A6;{investment.endDate ? this.state.penalty : '0.00'}
-                  </p>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-6 text-left">
-                    <p className="mb-0 text-small">Interest to get</p>
-                  </div>
-                  <div className="col-md-6 text-right">
-                  <p className="mb-0 text-small">
-                  &#x20A6;{formatCurrency(this.state.interestToGet )}
-                  </p>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-6 text-left">
-                    <p className="mb-0 text-small">Investment Balance</p>
-                  </div>
-                  <div className="col-md-6 text-right">
-                  <p className="mb-0 text-small">
-                    &#x20A6;{formatCurrency(this.state.investmentBalance)}
-                  </p>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-6 text-left">
-                    <p className="mb-0 text-small">Amount you will get</p>
-                  </div>
-                  <div className="col-md-6 text-right">
-                  <p className="mb-0 text-small">
-                    &#x20A6;{formatCurrency(this.state.amountToGet)}
-                  </p>
-                  </div>
-                </div>
+        <Modal onClose={this.toggleConfirmationModal}>
+           <div className="text-right pb-3">
+              <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleConfirmationModal}/>
+            </div>
+          <div className="text-center confirmation-modal">
+            <div className="px-5 mb-4">
+              <h3 className="text-blue font-bolder info mb-3">Liquidation Information</h3>
+              <div className="px-4">
+                <p className="text-small">By liquidating your investment, you confirm to the following terms:
+                  You would bear <b> a penalty of {investment.endDate ? predefinedLiquidationPenalty?.current : 0}% on your interest earned </b>on the investment.
+                  Interest accruing on the portion of the investment you are liquidating would stop.
+                </p>
               </div>
             </div>
-            <div className="w-100 text-center">
-              <p className="mt-3 text-small font-weight-bold">Are you sure you want to liquidate</p>
-              <button className="btn btn-sm btn-primary" onClick={this.handleEnterPin}>
-                Yes
-              </button>
-              <p className="text-blue mt-3 cursor-pointer" onClick={this.toggleConfirmationModal}>No, go back</p>
+            <div>
+              <div className="liquidation-table">
+                <div className="liquidation-header">
+                  <h3 className="text-white text-medium mb-0">Liquidation Details</h3>
+                </div>
+                <div className="liquidation-body">
+                  <div className="row">
+                    <div className="col-md-6 text-left">
+                      <p className="mb-0 text-small">Liquidation Amount</p>
+                    </div>
+                    <div className="col-md-6 text-right">
+                      <p className="mb-0 text-small">&#x20A6;{formatCurrency(amount)}</p>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-6 text-left">
+                      <p className="mb-0 text-small">Penalty</p>
+                    </div>
+                    <div className="col-md-6 text-right">
+                    <p className="mb-0 text-small">
+                      &#x20A6;{investment.endDate ? this.state.penalty : '0.00'}
+                    </p>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-6 text-left">
+                      <p className="mb-0 text-small">Interest to get</p>
+                    </div>
+                    <div className="col-md-6 text-right">
+                    <p className="mb-0 text-small">
+                    &#x20A6;{formatCurrency(this.state.interestToGet )}
+                    </p>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-6 text-left">
+                      <p className="mb-0 text-small">Investment Balance</p>
+                    </div>
+                    <div className="col-md-6 text-right">
+                    <p className="mb-0 text-small">
+                      &#x20A6;{formatCurrency(this.state.investmentBalance)}
+                    </p>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-6 text-left">
+                      <p className="mb-0 text-small">Amount you will get</p>
+                    </div>
+                    <div className="col-md-6 text-right">
+                    <p className="mb-0 text-small">
+                      &#x20A6;{formatCurrency(this.state.amountToGet)}
+                    </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="d-flex flex-column align-items-center mt-4">
+                <button className="btn py-3 btn-primary" onClick={this.handleEnterPin}>
+                  Yes, liquidate 
+                </button>
+                <p className="text-blue mt-3 mb-0 cursor-pointer" onClick={this.toggleConfirmationModal}>No, go back</p>
+              </div>
             </div>
           </div>
         </Modal>
         }
         {showPinModal &&
-          <Modal classes="transaction-modal" onClose={this.toggleTransactionPinModal}>
-            <div className="text-center">
-              <h3>Enter Transaction PIN</h3>
-              <div className="pin-section ml-auto mr-auto mt-3">
-                <PinInput onChange={this.handlePin} error={pinError}/>
+            <Modal classes="transaction-modal" onClose={this.toggleTransactionPinModal}>
+            <div className="text-right pb-3">
+              <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleTransactionPinModal}/>
+            </div>
+            <div className="px-5">
+              <div className="d-flex justify-content-center">
+                <img src={require('#/assets/icons/bank-transfer.svg')} alt="bank" className="pb-3"/>
               </div>
-              <button className="btn btn-sm btn-primary btn-block mt-5" onClick={this.handleTransactionVerification} disabled={pinLoading}>
-                Confirm Liquidation
-                {pinLoading &&
-                  <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
-                }
-                {loading &&
-                  <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
-                }
-              </button>
-              {pinError && <p className="text-error mt-2">{pinError}</p>}
-              {confirmPinError && <p className="text-error mt-2">{confirmPinError}</p>}
-              {error && <p className="text-error mt-2">{error}</p>}
+              <div className="text-center">
+                <div className='mb-3'>
+                  <h5 className="text-blue font-bolder">Enter Transaction PIN</h5>
+                </div>
+                <div className="w-100 ml-auto mr-auto">
+                  <PinInput onChange={this.handlePin} error={pinError} />
+                </div>
+                <div className="px-3 mt-4">
+                <button className="btn py-3 btn-primary btn-block mt-3" onClick={this.handleTransactionVerification} disabled={pinLoading}>
+                  Confirm Setup
+                  {pinLoading &&
+                    <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
+                  }
+                </button>
+                <p className="text-blue mt-3" onClick={this.toggleTransactionPinModal}>Cancel Setup</p>
+
+                {pinError && <p className="text-error mt-2">{pinError}</p>}
+                {confirmPinError && <p className="text-error mt-2">{confirmPinError}</p>}
+                </div>
+              </div>
             </div>
           </Modal>
         }
-        <div className="row">
-          <div className="col-md-2">
-            <Back />
-          </div>
-          <div className="col-md-5 text-center">
-            <h3 className="text-medium text-deep-blue ">Liquidate Investment</h3>
-          </div>
-        </div>
-        <Card classes="card mt-3 col-md-10">
-          <form>
-            <div className="row align-items-center">
-              <div className="col-md-6">
-                <p className="text-black text-medium">How much do you want to liquidate into your wallet?</p>
-              </div>
-              <div className="col-md-6">
-                <Textbox
-                  onChange={this.handleChange}
-                  type="text"
-                  label="Amount"
-                  placeholder="Amount"
-                  name="amount"
-                  value={formatStringToCurrency(amount)}
-                  error={errors ? errors.amount : (errorObject && errorObject['amount'])}
-                />
-                <p className="text-grey text-x-small mb-0">Investment balance <span className="text-deep-blue">
-                  &#x20A6; {investment && formatCurrency(investment?.balance)}
-                </span>
-              </p>
-              </div>
+        <OffCanvas title="" position="end" id="liquidate-offcanvas">
+          <div className="px-3 h-100 d-flex flex-column flex-grow-1">
+            <div className="mt-3 mb-2">
+              <h3 className="font-bolder text-blue">Liquidate Goal</h3>
+              
             </div>
 
-            <div className="row mt-4">
-              <div className="col-md-6">
-                <p className="text-black text-medium">State reason for liquidation</p>
-              </div>
-              <div className="col-md-6">
-                <textarea
-                  onChange={this.handleChange}
-                  rows={5}
-                  name="reason"
-                  value={reason}
-                  className="w-100 border-faint border-radius-default"
-                />
-              </div>
-            </div>
-
-            <div className="text-right mt-3 d-flex justify-content-end">
-              <button className="btn btn-sm btn-primary btn-md-block" onClick={this.handleLiquidate}>
-                Proceed
-                {detailsLoading &&
-                  <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
+            <div className="mt-5">
+              <p>How much do you want to liquidate?</p>
+              <Textbox
+                onChange={this.handleChange}
+                type="text"
+                label="Amount"
+                placeholder="Amount"
+                name="amount"
+                value={formatStringToCurrency(amount)}
+                error={
+                  errors ? errors.amount : errorObject && errorObject["amount"]
                 }
-              </button>
+              />
             </div>
-          </form>
-        </Card>
+            <div className="mt-5 d-flex flex-column flex-grow-1">
+              <div className="d-flex pb-2 flex-column flex-grow-1 justify-content-between">
+                <div className="w-100">
+                  <p>State reason for this liquidation</p>
+                  <div className="">
+                        <textarea
+                        onChange={this.handleChange}
+                        rows={5}
+                        name="reason"
+                        value={reason}
+                        className="w-100 border-faint border-radius-default"
+                      />
+                  </div>
+                </div>
+                <div className="w-100">
+                  <button className="btn w-100 btn-sm btn-primary btn-md-block" onClick={this.handleLiquidate} >
+                    Proceed
+                    {detailsLoading &&
+                      <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
+                    }
+                  </button>
+                  {error && typeof error === 'string' && <p className="text-error mt-2">{error}</p>}
+                </div>
+              </div>
+            </div>
+          </div>
+        </OffCanvas>
       </div>
     )
   }

@@ -339,7 +339,7 @@ class Predefined extends React.Component {
             </div>
             <div className="px-5">
               <div className="d-flex justify-content-center">
-                <img src={require('#/assets/icons/bank-transfer.svg')} alt="bank" className="pb-3"/>
+                <img src={require('#/assets/icons/transaction.svg')} alt="bank" className="pb-3"/>
               </div>
               <div className="text-center">
                 <div className='mb-3'>
@@ -371,7 +371,7 @@ class Predefined extends React.Component {
             </div>
             <div className="px-5">
               <div className="d-flex justify-content-center">
-                <img src={require('#/assets/icons/complete-success.svg')} alt="bank" className="pb-3"/>
+                <img src={require('#/assets/icons/investment-cup.svg')} alt="bank" className="pb-3"/>
               </div>
               <div className="text-center">
                 <div className='mb-3'>
@@ -424,7 +424,7 @@ class Predefined extends React.Component {
             </div>
             <div className="px-2">
               <div className="d-flex justify-content-center">
-                <img src={require('#/assets/icons/bank-transfer.svg')} alt="bank" className="pb-3"/>
+                <img src={require('#/assets/icons/naira-sign.svg')} alt="bank" className="pb-3"/>
               </div>
               <div className="text-center">
                 <div className='mb-3'>

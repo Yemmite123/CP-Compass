@@ -2,31 +2,73 @@
   .cp-modal {
     overflow: scroll;
     padding-bottom: 25px;
+
+    .info{
+      font-size: 20px;
+    }
+
     .dialogue {
       width: 50%;
+      
+      .confirmation-modal{
+        button{
+          width: 60%;
+        }
+      }
+
       @media screen and (max-width: 1250px) {
         width: 55%; 
+        .confirmation-modal{
+          button{
+            width: 55%;
+         }
+        }
       }  
       @media screen and (max-width: 990px) {
         width: 65%; 
+        
+        .confirmation-modal{
+          button{
+            width: 85%;
+          }
+        }
       }  
       @media screen and (max-width: 676px) {
         width: 75%; 
+
+        .confirmation-modal{
+          button{
+            width: 85%;
+          }
+        }
       }  
       @media screen and (max-width: 500px) {
         width: 80%; 
+        .confirmation-modal{
+          button{
+            width: 90%;
+          }
+        }
       } 
       @media screen and (max-width: 428px) {
         width: 90%;
         padding: 50px 30px;
+        .confirmation-modal{
+          button{
+            width: 100%;
+          }
+        }
       } 
     }
   }
+
+  
 
   .liquidation-table {
     width: 60%;
     margin: 0 auto;
     border: 1px solid #3A4080;
+    border-radius: 5px;
  
     @media screen and (max-width: 990px) {
       width: 85%;

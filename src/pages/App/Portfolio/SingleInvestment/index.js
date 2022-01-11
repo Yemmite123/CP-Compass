@@ -21,8 +21,10 @@ import Back from '#/components/Back';
 import WalletBG from "#/assets/images/walletBG.svg";
 import InvestmentBG from "#/assets/images/InvestmentBG.svg";
 import ReturnsBG from "#/assets/images/ReturnsBG.svg";
+import OffCanvas from "#/components/OffCanvas";
+import LiquidateInvestment from "#/pages/App/Portfolio/LiquidateInvestment"
 import { formatCurrency, validateFields, fundingSource, serializeErrors, transactionType, formatCurrencyToString,
-  formatStringToCurrency } from '#/utils';
+  formatStringToCurrency, openOffCanvas, closeOffCanvas } from '#/utils';
 import './style.scss';
 
 class SingleInvestment extends React.Component {
@@ -35,7 +37,7 @@ class SingleInvestment extends React.Component {
     showAutomateModal: false,
     showTransactionModal: false,
     selectedMethod: '',
-    selectedMethodError: null,
+    selectedMethodError: '',
     errors: null,
     cardId: null,
     selectedTransaction: null,
@@ -77,22 +79,32 @@ class SingleInvestment extends React.Component {
     this.setState({ selectedMethod: event.target.id });
   }
 
-  handleSelectAmount = () => {
-    // this.toggleTransactionPinModal()
-    this.toggleAmountModal()
+  toggleOffCanvas = () => {
+    openOffCanvas("single-investment-offcanvas");
   }
 
   handleTopUp = () => {
     const { amount } = this.state;
 
-    const required = ['amount'];
-    const errors = validateFields({ amount }, required)
+    let required = ['amount'];
+    let errors = validateFields({ amount}, required)
 
     if (Object.keys(errors).length > 0) {
       return this.setState({ errors });
     }
-    this.toggleAmountModal();
-    this.toggleTransactionPinModal()
+
+    const { selectedMethod } = this.state;
+
+    required = ['selectedMethod'];
+    errors = validateFields({ selectedMethod }, required);
+    if (Object.keys(errors).length > 0) {
+      return this.setState({ selectedMethodError: 'please select a payment method' });
+    }
+
+    // open transaction modal
+    this.setState({ selectedMethodError: '' });
+    closeOffCanvas("single-investment-offcanvas");
+    this.toggleTransactionPinModal();
   }
 
   // handles for when a funcding source is selected
@@ -104,29 +116,14 @@ class SingleInvestment extends React.Component {
     if (Object.keys(errors).length > 0) {
       return this.setState({ selectedMethodError: 'please select a method' });
     }
-    if (selectedMethod === 'wallet') {
-      this.toggleFundingModal()
-      return this.props.investment?.autoCharge === 0 || this.props.investment?.autoChargeChannel !== selectedMethod ? this.toggleAutomateModal() : this.handlePay();
-    }
-    this.toggleFundingModal();
-    this.toggleAllCardsModal()
   }
 
   handleSelectCard = (card) => {
-    const { selectedMethod } = this.state
-
-    this.setState({ cardId: card.id }, () => {
-      this.toggleAllCardsModal()
-      return this.props.investment?.autoCharge === 0 || this.props.investment?.autoChargeChannel !== selectedMethod ? this.toggleAutomateModal() : this.handlePay();
-    })
-  }
-
-  handleNewCardSelect = () => {
-    this.toggleAllCardsModal()
-    return this.props.investment?.autoCharge === 0 ? this.toggleAutomateModal() : this.handlePay();
+    this.setState({ cardId: card.id });
   }
 
   handlePay = (autoCharge) => {
+    this.toggleAutomateModal();
     const { amount, selectedMethod, cardId } = this.state;
     const { params } = this.props.match;
     const payment = { method: selectedMethod, reoccurring: cardId ? true : false, cardId: cardId && cardId };
@@ -165,8 +162,9 @@ class SingleInvestment extends React.Component {
     }
     confirmPin({ pin: initialPin })
       .then(data => {
+        // close transaction modal
         this.toggleTransactionPinModal()
-        this.toggleFundingModal();
+        this.toggleAllCardsModal();
     })
   }
 
@@ -175,10 +173,7 @@ class SingleInvestment extends React.Component {
     const { params } = this.props.match;
     const { investment } = this.props;
 
-    return this.props.history.push({
-      pathname: `/app/portfolio/liquidate/${params.investmentId}`,
-      state: { investment: investment, routeName: 'Liquidate Investment' },
-    })
+    openOffCanvas("liquidate-offcanvas");
   }
 
   toggleModal = () => {
@@ -202,6 +197,7 @@ class SingleInvestment extends React.Component {
   }
 
   toggleAutomateModal = () => {
+    this.setState(prevState => ({ showCardsModal: false }));
     this.setState(prevState => ({ showAutomateModal: !prevState.showAutomateModal }));
   }
 
@@ -213,154 +209,113 @@ class SingleInvestment extends React.Component {
     const errorObject = serializeErrors(error);
 
     return (
+      <>
       <div className="single-portfolio-page">
         {showPinModal &&
           <Modal classes="transaction-modal" onClose={this.toggleTransactionPinModal}>
-            <div className="text-center">
-              <h3>Enter Transaction PIN</h3>
-              <div className="pin-section ml-auto mr-auto mt-3">
-                <PinInput onChange={this.handlePin} error={pinError}/>
-              </div>
-              <button className="btn btn-sm btn-primary btn-block mt-5" onClick={this.handleTransactionVerification} disabled={pinLoading}>
-                Continue
-                {pinLoading &&
-                  <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
-                }
-              </button>
-              {pinError && <p className="text-error mt-2">{pinError}</p>}
-              {confirmPinError && <p className="text-error mt-2">{confirmPinError}</p>}
-              {error && typeof(error) === 'string' && <p className="text-error mt-2">{error}</p>}
+            <div className="text-right pb-3">
+              <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleTransactionPinModal}/>
             </div>
-          </Modal>
-        }
-        {
-          showTransactionModal &&
-          <Modal onClose={this.toggleModal}>
-            <div className="">
-              <div className="d-flex border-bottom pb-1 align-items-start">
-                <img src={transactionType(selectedTransaction.type)} className="img-fluid mr-3" alt="transaction type" />
-                <div>
-                  <h3 className="text-deep-blue text-medium">Transaction Details</h3>
-                  <p className="tex-left text-small text-grey">{selectedTransaction.title}</p>
-                </div>
+            <div className="px-5">
+              <div className="d-flex justify-content-center">
+                <img src={require('#/assets/icons/bank-transfer.svg')} alt="bank" className="pb-3"/>
               </div>
-              <div className="d-flex justify-content-between mt-2">
-                <div className="text-left">
-                  <p className="text-small mb-0">Amount</p>
-                  <p className="text-deep-blue text-small">&#x20A6;{selectedTransaction.amount}</p>
+              <div className="text-center">
+                <div className='mb-3'>
+                  <h5 className="text-blue font-bolder">Enter Transaction PIN</h5>
                 </div>
-                <div className="text-right">
-                  <p className="text-small mb-0">Date</p>
-                  <p className="text-deep-blue text-small">
-                    {new Date(selectedTransaction.paidAt ? selectedTransaction.paidAt : selectedTransaction.initializedAt).toDateString()}
-                  </p>
+                <div className="w-100 ml-auto mr-auto">
+                  <PinInput onChange={this.handlePin} error={pinError} />
                 </div>
-              </div>
-              <div className="d-flex justify-content-between mt-2">
-                <div className="text-left">
-                  <p className="text-small mb-0">Fee</p>
-                  <p className="text-deep-blue text-small">&#x20A6;{selectedTransaction.fees ? selectedTransaction.fees : 0.00}</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-small mb-0">Reference Number</p>
-                  <p className="text-deep-blue text-small">{selectedTransaction.reference}</p>
-                </div>
-              </div>
-            </div>
-          </Modal>
-        }
-        {showAmountModal &&
-          <Modal onClose={this.toggleAmountModal}>
-            <h3 className="text-deep-blue">How much do you want to add to this investment right now?</h3>
-              <Textbox
-                onChange={this.handleChange}
-                type="text"
-                label="Amount"
-                placeholder="Amount"
-                name="amount"
-                value={formatStringToCurrency(amount)}
-                error={errors ? errors.amount : (errorObject && errorObject['amount'])}
-              />
-              { walletDetails &&  
-              <p className="text-grey text-x-small mb-0">Available balance <span className="text-deep-blue">
-                &#x20A6; {walletDetails && walletDetails.wallet.NGN ? walletDetails.wallet.NGN : 0}
-                </span>
-              </p>
-            }
-              <div className="text-right mt-2">
-              <button className="btn btn-sm btn-primary" onClick={this.handleTopUp}>
-                Proceed
-              </button>
-            </div>
-          </Modal>
-        }
-
-        {showFundingSourceModal &&
-          <Modal onClose={this.toggleFundingModal}>
-            <div className="text-left">
-              <h3>Choose a funding source</h3>
-              <div>
-                {fundingSource.map(method => (
-                  <PaymentMethod
-                    onSelect={this.handleSelectMethod}
-                    selected={selectedMethod === method.value ? true : false}
-                    imgUrl={method.imgUrl}
-                    imgBlue={method.imgBlue}
-                    key={Math.random() * 1000}
-                    value={method.value}
-                    label={method.label}
-                    balance={walletDetails && walletDetails.wallet.NGN ? walletDetails.wallet.NGN : 0}
-                  />
-                ))}
-                {selectedMethodError && <p className="text-error mt-2">{selectedMethodError}</p>}
-              </div>
-              <div className="text-right">
-                <button className="btn btn-sm btn-primary mt-3" onClick={this.handleSelectedFundingSource} disabled={payLoading}>
-                  Proceed
+                <div className="px-3 mt-4">
+                <button className="btn py-3 btn-primary btn-block mt-3" onClick={this.handleTransactionVerification} disabled={pinLoading}>
+                  Confirm Setup
+                  {pinLoading &&
+                    <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
+                  }
                 </button>
+                <p className="text-blue mt-3" onClick={this.toggleTransactionPinModal}>Cancel Setup</p>
+
+                {pinError && <p className="text-error mt-2">{pinError}</p>}
+                {confirmPinError && <p className="text-error mt-2">{confirmPinError}</p>}
+                </div>
               </div>
             </div>
           </Modal>
         }
-
         {showCardsModal &&
-          <Modal onClose={this.toggleAllCardsModal}>
+          <Modal>
             <div className="text-right pb-3">
               <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleAllCardsModal} className="cursor-pointer" />
             </div>
-            {
-              cards &&
-              cards.cards.length > 0 &&
-              cards.cards.map(card => (
-                <DebitCard card={card} handleSelect={this.handleSelectCard} key={card.id} />
-              ))
-            }
-            <div className="d-flex justify-content-between align-items-center cursor-pointer" onClick={this.handleNewCardSelect}>
-              <div className="d-flex align-items-center">
-                <img src={require('#/assets/icons/add-card.svg')} className="img-fluid mr-3" alt="card" />
-                <p className="text-deep-blue text-medium mb-0">Add money from a new debit card</p>
+            <div className="px-3">
+              <div className="d-flex justify-content-center">
+                <img src={require('#/assets/icons/bank-transfer.svg')} alt="bank" className="pb-3"/>
               </div>
-              <img src={require('#/assets/icons/right-arrow.svg')} className="img-fluid cursor-pointer" alt="arrow" />
+              <div className="text-center">
+                <div className='mb-3'>
+                  <h5 className="text-blue font-bolder">Choose a bank card</h5>
+                  <p>You are about to add money to your customized investment</p>
+                </div>
+                <div className="mt-4">
+                {
+                  cards &&
+                  cards.cards.length > 0 &&
+                  cards.cards.map(card => (
+                    <DebitCard card={card} handleSelect={this.handleSelectCard} key={card.id} />
+                  ))
+                }
+                
+                <div className={`d-flex p-3 mb-2 cursor-pointer debit-card`} onClick={this.toggleAutomateModal}>
+                  <div className="d-flex mr-3">
+                    <img src={require('#/assets/icons/plus-circle.svg')} width={"35px"} alt="icon" />
+                  </div>
+                  <div className="d-flex flex-column justify-content-center">
+                    <h5 className="text-center  mb-0">Add new card</h5>
+                  </div>
+                </div>
+                </div>
+                <div className="mt-4">
+                  {selectedMethodError && <p className="text-error mt-2">{selectedMethodError}</p>}
+                  <button className="btn btn-primary btn-block py-3 mt-3" onClick={this.toggleAutomateModal} disabled={payLoading}>
+                    Proceed
+                  {payLoading &&
+                      <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
+                    }
+                  </button>
+                </div>
+              </div>
             </div>
           </Modal>
         }
 
         {showAutomateModal &&
           <Modal onClose={this.toggleAutomateModal}>
-            <div className="text-left">
-              <h3>Automate funding for this investment</h3>
-              <p className="text-small text-black">Let us help you reach your target easily by funding from your chosen source on a {investment && investment.frequency} basis.</p>
+             <div className="text-right pb-3">
+              <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleAutomateModal} className="cursor-pointer" />
             </div>
-            <div className="d-flex justify-content-end align-items-center">
-              {payLoading &&
-                <div className="spinner-border spinner-border-primary text-primary spinner-border-sm mr-2"></div>
-              }
-              <p className="mr-3 text-deep-blue mb-0 cursor-pointer" onClick={() => this.handlePay(false)}>No, I’ll add money myself</p>
-              <button className="btn btn-sm btn-primary" onClick={() => this.handlePay(true)}>
-                Yes
-              </button>
+            <div className="px-3">
+              <div className="d-flex justify-content-center">
+                <img src={require('#/assets/icons/bank-transfer.svg')} alt="bank" className="pb-3"/>
+              </div>
+              <div className="text-center">
+                <div className='mb-3'>
+                  <h5 className="text-blue font-bolder">Add money to investment</h5>
+                  <p>Allow us to fund from your source {investment && investment.frequency} without asking.</p>
+                </div>
+                <div className="mt-4">
+                  {payLoading &&
+                    <div className="spinner-border spinner-border-primary text-primary spinner-border-sm mr-2"></div>
+                  }
+                  <button className="btn btn-primary btn-block py-3 mt-3" onClick={() => this.handlePay(true)} disabled={payLoading}>
+                    Yes, automate funding
+                  </button>
+                  <p className="mt-4 text-blue mb-2 cursor-pointer" onClick={() => this.handlePay(false)}>No, I’ll add money myself</p>
+                  {error && typeof error === 'string' && <p className="text-error mt-2">{error}</p>}
+
+                </div>
+              </div>
             </div>
-            {error && typeof error === 'string' && <p className="text-error mt-2">{error}</p>}
           </Modal>
         }
         <div className="row mb-3">
@@ -410,11 +365,11 @@ class SingleInvestment extends React.Component {
               <img src={require('#/assets/icons/plus-circle.svg')}
                 alt="plus"
                 className={`img-fluid ${['active', 'booked'].includes(investment?.order_status) ? 'cursor-pointer' : 'cursor-block disabled'}`}
-                onClick={['active', 'booked'].includes(investment?.order_status) ? this.handleSelectAmount : null}
+                onClick={['active', 'booked'].includes(investment?.order_status) ? this.toggleOffCanvas : null}
               />
               <p
               className={`text-blue mb-0 text-small ${['active', 'booked'].includes(investment?.order_status) ? 'cursor-pointer' : 'cursor-block disabled'}`}
-              onClick={['active', 'booked'].includes(investment?.order_status) ? this.handleSelectAmount : null}>
+              onClick={['active', 'booked'].includes(investment?.order_status) ? this.toggleOffCanvas : null}>
                 Top up
               </p>
             </div>
@@ -448,7 +403,6 @@ class SingleInvestment extends React.Component {
             </div>
           </div>
         </Card>
-
         <div className="row mt-3">
           <div className="col-md-4 mt-2">
             <div className="card p-3 px-4 min-height-small  d-flex flex-column justify-content-between">
@@ -509,7 +463,6 @@ class SingleInvestment extends React.Component {
             </div>
           </div>
         </div>
-
         <div className="mt-4 card p-5">
           <h5 className="mb-3 text-blue">Transactions</h5>
           {investment && investment.transactions?.length > 0 ?
@@ -527,7 +480,62 @@ class SingleInvestment extends React.Component {
           </div>
           }
         </div>
+        <OffCanvas title="" position="end" id="single-investment-offcanvas">
+          <div className="px-3 h-100 d-flex flex-column flex-grow-1">
+            <div className="mt-3 mb-2">
+              <h3 className="font-bolder text-blue">Top up Goal</h3>
+              <p>Enter amout to top-up</p>
+            </div>
+
+            <div className="mt-5">
+              <p>How much do you want to deposit?</p>
+              <Textbox
+                onChange={this.handleChange}
+                type="text"
+                label="Amount"
+                placeholder="Amount"
+                name="amount"
+                value={formatStringToCurrency(amount)}
+                error={
+                  errors ? errors.amount : errorObject && errorObject["amount"]
+                }
+              />
+            </div>
+            <div className="mt-5 d-flex flex-column flex-grow-1">
+              <div className="d-flex pb-2 flex-column flex-grow-1 justify-content-between">
+                <div className="w-100">
+                  <p>Choose a payment method</p>
+                  <div className="row">
+                    {fundingSource.map((method) => (
+                      <div className="col-lg-6 pr-0 mt-2" key={Math.random() * 1000} >
+                        <PaymentMethod onSelect={this.handleSelectMethod} selected={ selectedMethod === method.value ? true : false}
+                          imgUrl={method.imgUrl}
+                          imgBlue={method.imgBlue}
+                          key={Math.random() * 1000}
+                          value={method.value}
+                          label={method.label}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="w-100">
+                  <button className="btn w-100 btn-sm btn-primary btn-md-block" onClick={this.handleTopUp} >
+                    Proceed with payment
+                    {this.props.loading && (
+                      <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
+                    )}
+                  </button>
+                  {selectedMethodError &&  <p className="text-error mt-2">{selectedMethodError}</p>}
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </OffCanvas>
       </div>
+      <LiquidateInvestment/>
+      </>
     )
   }
 }
