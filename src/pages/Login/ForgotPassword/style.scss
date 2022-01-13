@@ -7,7 +7,7 @@
   background-repeat: no-repeat;
 
   .box {
-    width: 45%;
+    width: 35%;
     background: #FFFFFF;
     border: 1px solid #E5E5E5;
     box-sizing: border-box;
@@ -17,15 +17,23 @@
     padding: 50px 30px;
     // margin-top: 15vh;
 
+    @media screen and (max-width: 1000px) {
+      width: 45%; 
+    }
+
     @media screen and (max-width: 990px) {
-      width: 65%; 
+      width: 55%; 
     }
     @media screen and (max-width: 676px) {
-      width: 65%; 
+      width: 75%; 
     }
     @media screen and (max-width: 428px) {
       width: 90%; 
     } 
+
+    p{
+      font-size: 16px;
+    }
 
     .left-section {
       text-align: left;

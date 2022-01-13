@@ -10,7 +10,7 @@ const Textbox = ({ label, onChange, defaultValue, name, value, placeholder, boxC
       >
         {/* <legend id="label-legend" className={` pl-2 pr-2 ${error && 'label-error'}`}>{label}</legend> */}
         <div className="d-flex position-relative">
-        { label ? <span className={`position-absolute ${error && 'label-error'}`}>{placeholder}</span> : "" }
+        { label ? <span className={`${boxClasses?.includes("active") ? "active" : ""} mt-0 position-absolute ${error && 'label-error'}`}>{label}</span> : "" }
           <input
             autoComplete="off"
             min={min && min}
@@ -22,9 +22,10 @@ const Textbox = ({ label, onChange, defaultValue, name, value, placeholder, boxC
               else{
                 e.target.parentNode.children[0].classList.remove("active");
                 e.target.classList.remove("active");
-              }
+                }
               onChange(e);
             }}
+            className={`${boxClasses?.includes("active") ? "active" : ""}`}
             name={name}
             value={value}
             placeholder={placeholder}

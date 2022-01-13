@@ -67,7 +67,7 @@ class VerifyIdentity extends React.Component {
                 value={bvn}
                 label="BVN"
                 placeholder="BVN"
-                boxClasses="mt-2"
+                boxClasses="mt-4"
                 error={errors ? errors.bvn : (errorObject && errorObject['bvn'])}
               />
                 <DateBox
@@ -76,10 +76,10 @@ class VerifyIdentity extends React.Component {
                   placeholder="Date of birth"
                   name="dob"
                   value={dob}
-                  boxClasses="mt-2"
+                  boxClasses="mt-4"
                   error={errors ? errors.dob : (errorObject && errorObject['dateOfBirth'])}
                 />
-              <button className="btn btn-sm btn-primary w-100 mt-3" disabled={loading}>
+              <button className="btn py-3 btn-primary w-100 mt-3" disabled={loading}>
                 Validate BVN
                 {loading &&
                   <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>

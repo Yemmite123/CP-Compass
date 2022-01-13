@@ -101,12 +101,12 @@ class Login extends React.Component {
                     />
 
                     <button
-                      className={`w-100 btn btn-sm btn-primary mt-4 ${
+                      className={`w-100 btn py-3 btn-primary mt-4 ${
                         loading && "cursor-pointer"
                       }`}
                       disabled={loading}
                     >
-                      Sign in
+                      Log in
                       {loading && (
                         <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
                       )}

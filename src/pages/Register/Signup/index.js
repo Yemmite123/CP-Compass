@@ -105,8 +105,8 @@ class Signup extends React.Component {
                     onChange={this.handleChange}
                     name="email"
                     value={email}
-                    label="First Name"
-                    placeholder="First Name"
+                    label="Email address"
+                    placeholder="Email address"
                     boxClasses="mt-2"
                     error={errors ? errors.email : (errorObject && errorObject['email'])}
                   />

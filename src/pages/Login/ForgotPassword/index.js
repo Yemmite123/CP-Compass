@@ -53,10 +53,10 @@ class ForgotPassword extends React.Component {
               <h4 className="mt-4 font-bolder text-blue">
                 Reset your password
               </h4>
-              <p className='font-small'>Please input an email registered to your account</p>
+              <p className='font-small'>Please input your registered email to reset your password</p>
             </div>
             <div className="row justify-content-center">
-              <div className="col-md-7 right-section">
+              <div className="col-md-10 right-section">
                 <form autoComplete="off" onSubmit={this.handleSubmit}>
                   <Textbox
                     onChange={this.handleChange}
@@ -73,7 +73,7 @@ class ForgotPassword extends React.Component {
                     }
                   />
                   <button
-                    className="btn btn-sm btn-primary w-100 mt-3"
+                    className="btn py-3 btn-primary w-100 mt-4"
                     disabled={loading}
                   >
                     Send me a reset link

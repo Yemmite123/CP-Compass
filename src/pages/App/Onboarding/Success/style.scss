@@ -9,29 +9,26 @@
     border-radius: 4px;
     margin-left: auto;
     margin-right: auto;
-    line-height: 54px;
+    line-height: 30px;
     padding: 50px 30px;
+    @media screen and (max-width: 1000px) {
+      width: 45%; 
+    }
 
+    @media screen and (max-width: 990px) {
+      width: 55%; 
+    }
     @media screen and (max-width: 676px) {
-      width: 65%; 
-    }  
-    @media screen and (max-width: 500px) {
       width: 75%; 
-    } 
+    }
     @media screen and (max-width: 428px) {
       width: 90%; 
     } 
 
-    h2 {
-      font-size: 18px;
-      line-height: 29px;
-      color: #3A4080;
+    p{
+      font-size: 16px;
     }
-    p {
-      font-size: 14px;
-      line-height: 21px;
-      color: #414141;
-    }
+   
     a{
       font-size: 14px;
     }

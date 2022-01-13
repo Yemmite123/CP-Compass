@@ -17,16 +17,23 @@
     padding: 50px 30px;
     // margin-top: 10vh;
 
+    @media screen and (max-width: 1000px) {
+      width: 45%; 
+    }
+
     @media screen and (max-width: 990px) {
-      width: 65%; 
+      width: 55%; 
     }
     @media screen and (max-width: 676px) {
-      width: 65%; 
+      width: 75%; 
     }
     @media screen and (max-width: 428px) {
       width: 90%; 
     } 
 
+    p{
+      font-size: 16px;
+    }
     h3 {
       font-size: 16px;
       color: rgba(8, 121, 201, 0.96);
@@ -34,12 +41,10 @@
     }
 
     p {
-      color: #7E7E7E;
-      font-size: 12px;
+      font-size: 16px;
     }
 
     .bottom-section {
-      color: #414141;
       font-weight: bold;
     }
   }

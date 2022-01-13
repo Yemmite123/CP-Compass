@@ -124,7 +124,7 @@ class NewPassword extends React.Component {
                 error={errors && errors.confirm}
               />
               <button
-                className="btn btn-sm btn-primary w-100 mt-3"
+                className="btn py-3 btn-primary w-100 mt-3"
                 disabled={loading}
               >
                 Create new password

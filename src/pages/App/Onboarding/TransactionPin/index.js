@@ -74,7 +74,8 @@ class TransactionPin extends React.Component {
                 </div>
               </div>
             </div>
-            <button className="btn btn-sm btn-primary w-100 mt-4" onClick={this.handleNextStep} disabled={loading}>
+            <div className="px-3">
+            <button className="btn py-3 btn-primary w-100 mt-4" onClick={this.handleNextStep} disabled={loading}>
               Set transaction PIN
               {loading &&
                 <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
@@ -82,6 +83,7 @@ class TransactionPin extends React.Component {
             </button>
             {errors && <p className="pin-error">{errors}</p>}
             {error && <p className="pin-error">{error}</p>}
+            </div>
           </div>
         </div>
       </div>

@@ -9,21 +9,22 @@
   .box {
     border-radius: 9px;
     // margin-top: 5%;
-    width: 55%;
+    width: 45%;
 
-    @media screen and (max-width: 800px) {
-      width: 65%; 
-    } 
+    @media screen and (max-width: 1000px) {
+      width: 45%; 
+    }
 
+    @media screen and (max-width: 990px) {
+      width: 55%; 
+    }
     @media screen and (max-width: 676px) {
-      width: 65%; 
-    }  
-    @media screen and (max-width: 500px) {
       width: 75%; 
-    } 
+    }
     @media screen and (max-width: 428px) {
       width: 90%; 
     } 
+
 
     .right-section {
       padding: 15px  15px;
@@ -35,7 +36,11 @@
       h3 {
         font-size: 18px;
         line-height: 22px;
-        color: rgba(8, 121, 201, 0.96);
+        color: var(--blue);
+      }
+
+      p{
+        font-size: 16px;
       }
 
     }

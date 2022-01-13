@@ -7,8 +7,13 @@ import actionTypes from "#/store/profile/actionTypes";
 import Alert from "#/components/Alert";
 import Modal from "#/components/Modal";
 import CustomInput from "#/components/CustomInput";
+import Textbox from "#/components/Textbox";
+import DateBox from "#/components/DateBox";
+import SelectBox from "#/components/SelectBox";
+import PhoneTextBox from "#/components/PhoneTextBox";
 import ImageUploadInput from "#/components/ImageUploadInput";
-import { validateFields, serializeErrors, genderOption } from "#/utils";
+import { validateFields, serializeErrors, genderOption} from "#/utils";
+import { countryCodes } from "#/utils/countryCode";
 import "./style.scss";
 
 class BioData extends React.Component {
@@ -94,6 +99,7 @@ class BioData extends React.Component {
 
   handleGenderChange = (event) => {
     const { value } = event.target;
+    console.log(event.target.value)
     this.setState({ gender: value });
   };
 
@@ -172,16 +178,14 @@ class BioData extends React.Component {
 
     return (
       <div className="section-container">
+        {/* // TODO: create a component for BVN Modal */}
         {isBvnModal && (
           <Modal classes="bvn-active" onClose={this.toggleBvnModal}>
             <div className="text-center">
               <h3 className="text-deep-blue">
                 Please Setup your BVN to continue
               </h3>
-              <button
-                className="btn btn-primary btn-sm btn-block mt-4"
-                onClick={this.handleBvnSetup}
-              >
+              <button className="btn btn-primary btn-sm btn-block mt-4" onClick={this.handleBvnSetup}>
                 Setup BVN
               </button>
             </div>
@@ -200,103 +204,133 @@ class BioData extends React.Component {
             handleFile={this.handleImageSelect}
           />
           <form onSubmit={this.handleSubmit} className="section-form">
-            <CustomInput
-              name="firstName"
-              label="First name"
+            <Textbox
+              boxClasses="active"
+              type="text"
+              label="First Name"
               value={firstName}
-              disabled
-            />
-            <CustomInput
-              name="lastName"
-              label="Last name"
+              placeholder={"First Name"}
+              name="firstName"
+              disabled={true}
+                  />
+            <Textbox
+              boxClasses="active"
+              type="text"
+              label="Last Name"
               value={lastName}
-              disabled
-            />
-            <CustomInput
-              name="middleName"
-              label="Other name"
+              placeholder={"Last Name"}
+              name="lastName"
+              disabled={true}
+                  />
+            <Textbox
+              boxClasses="active"
+              type="text"
+              label="Middle Name"
               value={middleName}
-              onChange={this.handleChange}
+              placeholder={"Middle Name"}
+              name="middleName"
+              disabled={true}
               error={
                 errors
                   ? errors.middleName
                   : errorObject && errorObject["middleName"]
               }
             />
-            <CustomInput
-              name="dob"
+
+            <DateBox
+              type="text"
               label="Date of birth"
               value={dateOfBirth}
-              disabled
-              type="date"
+              placeholder={""}
+              name="dob"
+              disabled={true}
             />
-            <CustomInput
-              name="gender"
+
+            <SelectBox
               label="Gender"
               value={gender}
-              onChange={this.handleGenderChange}
-              type="select"
+              placeholder={"Gender"}
               options={genderOption}
+              optionName="name"
+              onChange={this.handleGenderChange}
               error={
                 errors ? errors.gender : errorObject && errorObject["gender"]
               }
             />
-            <CustomInput
-              name="placeOfBirth"
-              label="Country of Birth"
+
+            <Textbox
+              type="text"
+              boxClasses="active"
+              label="Place of Birth"
               value={placeOfBirth}
+              placeholder={"Country of Birth"}
               onChange={this.handleChange}
+              name="placeOfBirth"
               error={
                 errors
                   ? errors.placeOfBirth
                   : errorObject && errorObject["placeOfBirth"]
               }
-            />
-            <CustomInput
-              name="stateOfOrigin"
+                  /> 
+            <Textbox
+              type="text"
+              boxClasses="active"
               label="State of Origin"
               value={stateOfOrigin}
+              placeholder={"State of Origin"}
               onChange={this.handleChange}
+              name="stateOfOrigin"
               error={
                 errors
                   ? errors.stateOfOrigin
                   : errorObject && errorObject["stateOfOrigin"]
               }
-            />
-            <CustomInput
-              name="nationality"
+            /> 
+            <Textbox
+              type="text"
+              boxClasses="active"
               label="Nationality"
               value={nationality}
+              placeholder={"Nationality"}
               onChange={this.handleChange}
+              name="nationality"
               error={
                 errors
                   ? errors.nationality
                   : errorObject && errorObject["nationality"]
               }
-            />
-            <CustomInput
-              name="phone"
-              label="Phone number"
-              type="phone"
-              value={phone}
-              countryCodeValue={countryCode}
+            /> 
+            <PhoneTextBox 
               onChange={this.handleChange}
-              error={
-                errors
-                  ? errors.phoneNumber
-                  : errorObject && errorObject["phone"]
-              }
+              boxClasses="active"
+              name="phone"
+              value={phone}
+              label="Phone number"
+              placeholder="Phone number"
+              options={countryCodes}
+              onChangeSelect={this.handleChange}
+              selectName="countryCode"
+              defaultValue={countryCode}
+              type="number"
+              error={errors ? errors.phoneNumber : (errorObject && errorObject['phone'])}
             />
-            <CustomInput
+        
+            <Textbox
               name="email"
-              label="Email address"
+              boxClasses={"active"}
               value={email}
-              disabled
+              label="Email address"
+              placeholder="Email address"
+              disabled={true}
             />
-            <CustomInput
-              name="motherMaidenName"
+
+            <Textbox
+              type="text"
+              boxClasses="active"
               label="Mother's maiden name"
               value={motherMaidenName}
+              placeholder={"Mother's maiden name"}
+              name="motherMaidenName"
               onChange={this.handleChange}
               error={
                 errors
@@ -304,10 +338,13 @@ class BioData extends React.Component {
                   : errorObject && errorObject["motherMaidenName"]
               }
             />
-            <CustomInput
-              name="residentialAddress"
+            <Textbox
+              type="text"
+              boxClasses="active"
               label="Residential Address"
               value={residentialAddress}
+              placeholder={"Residential Address"}
+              name="residentialAddress"
               onChange={this.handleChange}
               error={
                 errors
@@ -322,7 +359,7 @@ class BioData extends React.Component {
               {data && (
                 <Alert alert={{ type: "success", message: data.message }} />
               )}
-              <button className="btn-default" disabled={loading}>
+              <button className="btn-default px-4" disabled={loading}>
                 Save changes
                 {loading && (
                   <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>

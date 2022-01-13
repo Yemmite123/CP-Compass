@@ -71,7 +71,7 @@ class VerifyIdentityManually extends React.Component {
                 label="BVN"
                 maxlength={11}
                 placeholder="BVN"
-                boxClasses="mt-2"
+                boxClasses="mt-4"
                 error={errors ? errors.bvn : (errorObject && errorObject['bvn'])}
               />
               <Textbox
@@ -80,7 +80,7 @@ class VerifyIdentityManually extends React.Component {
                 value={firstName}
                 label="First name"
                 placeholder="First name"
-                boxClasses="mt-2"
+                boxClasses="mt-4"
                 error={errors ? errors.firstName : (errorObject && errorObject['firstName'])}
               />
               <Textbox
@@ -89,7 +89,7 @@ class VerifyIdentityManually extends React.Component {
                 value={lastName}
                 label="Last name"
                 placeholder="Last name"
-                boxClasses="mt-2"
+                boxClasses="mt-4"
                 error={errors ? errors.lastName : (errorObject && errorObject['lastName'])}
               />
               <DateBox
@@ -98,10 +98,10 @@ class VerifyIdentityManually extends React.Component {
                   placeholder="Date of birth"
                   name="dob"
                   value={dob}
-                  boxClasses="mt-2"
+                  boxClasses="mt-4"
                   error={errors ? errors.dob : (errorObject && errorObject['dateOfBirth'])}
                 />
-              <button className="btn btn-sm btn-primary w-100 mt-3" disabled={loading}>
+              <button className="btn py-3 btn-primary w-100 mt-4 mb-2" disabled={loading}>
                 Submit Credentials
                 {loading &&
                   <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>

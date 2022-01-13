@@ -4,17 +4,22 @@ import './style.scss';
 const SelectBox = (
   { label, onChange, name, optionName, readonly, value, defaultValue, placeholder, boxClasses, type, error, disabled, options, required, actualDefaultValue }
   ) => {
+  
+    const onInputChange = (e) => {
+      // setHasvalue(e.target.value.trim().length > 0 ? true : false);
+      onChange(e);
+    };
+  
 
   return(
     <div className={`${boxClasses} selectbox`} tabIndex="1">
       <fieldset className={`${error && 'error'} ${disabled && 'disabled-input'}`}>
-        {/* <legend id="label-legend" className={` pl-2 pr-2 ${error && 'label-error'}`}>{label}</legend> */}
         <div className="d-flex position-relative">
-          <select autoComplete="off" onChange={onChange} name={name} value={defaultValue} placeholder={placeholder} defaultValue={actualDefaultValue} required={required} type={type} disabled={disabled && disabled} readOnly={readonly}>
+          <select autoComplete="off" onChange={onInputChange} name={name} value={value} placeholder={placeholder} required={required} type={type} disabled={disabled && disabled} readOnly={readonly}>
             {/* <option value=''>{defaultValue}</option> */}
             {
               options && options.map(option => (
-                <option key={Math.random()*1000} value={option[value]}>{option[optionName]}</option>
+                <option key={Math.random()*1000} value={option[value]}>{option[optionName ? optionName : "name"]}</option>
               ))
             }
           </select>

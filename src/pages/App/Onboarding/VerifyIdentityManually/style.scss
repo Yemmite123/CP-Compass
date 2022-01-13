@@ -11,20 +11,23 @@
     margin-right: auto;
     padding: 20px 30px 30px 30px;
 
+  
+    @media screen and (max-width: 1000px) {
+      width: 45%; 
+    }
+
+    @media screen and (max-width: 990px) {
+      width: 55%; 
+    }
     @media screen and (max-width: 676px) {
-      width: 65%; 
-    }  
-    @media screen and (max-width: 500px) {
       width: 75%; 
-    } 
+    }
     @media screen and (max-width: 428px) {
       width: 90%; 
     } 
-    
-    p {
-      font-size: 14px;
-      line-height: 21px;
-      color: #414141;
+
+    p{
+      font-size: 16px;
     }
   }
 }

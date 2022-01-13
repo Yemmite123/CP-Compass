@@ -7,6 +7,10 @@ import { addEmploymentDetails } from "#/store/profile/actions";
 import actionTypes from "#/store/profile/actionTypes";
 import Alert from "#/components/Alert";
 import Modal from "#/components/Modal";
+import Textbox from "#/components/Textbox";
+import DateBox from "#/components/DateBox";
+import SelectBox from "#/components/SelectBox";
+import PhoneTextBox from "#/components/PhoneTextBox";
 import {
   validateFields,
   serializeErrors,
@@ -14,6 +18,7 @@ import {
   qualificationOption,
   industiesList,
 } from "#/utils";
+import { countryCodes } from "#/utils/countryCode";
 import CustomInput from "#/components/CustomInput";
 import "./style.scss";
 
@@ -188,7 +193,8 @@ class EmploymentDetails extends React.Component {
           <h2 className="section-header">Employment Details</h2>
           <p className="section-description">We’d like to know what you do.</p>
           <form onSubmit={this.handleSubmit} className="section-form">
-            {status !== "retired" && status !== "student" && <CustomInput
+            {status !== "retired" && status !== "student" &&
+            <SelectBox
               name="qualification"
               label="Level of Qualification"
               type="select"
@@ -200,8 +206,10 @@ class EmploymentDetails extends React.Component {
                   ? errors.qualification
                   : errorObject && errorObject["qualification"]
               }
-            />}
-            <CustomInput
+              />
+
+            }
+            <SelectBox
               name="status"
               label="Employment Status"
               type="select"
@@ -212,9 +220,10 @@ class EmploymentDetails extends React.Component {
                 errors ? errors.status : errorObject && errorObject["status"]
               }
             />
-            {status === "employed" && <CustomInput
+            {status === "employed" && <Textbox
               name="occupation"
               label="Occupation"
+              placeholder="Occupation"
               value={occupation}
               onChange={this.handleChange}
               error={
@@ -223,7 +232,7 @@ class EmploymentDetails extends React.Component {
                   : errorObject && errorObject["occupation"]
               }
             />}
-            {status === "employed" && <CustomInput
+            {status === "employed" && <DateBox
               name="appointmentDate"
               label="Appointment Date"
               value={appointmentDate}
@@ -238,9 +247,10 @@ class EmploymentDetails extends React.Component {
               }
               maxDate={new Date()}
             />}
-            {(status === "employed" || status === "self-employed") && <CustomInput
+            {(status === "employed" || status === "self-employed") && <Textbox
               name="companyName"
               label="Company Name"
+              placeholder="Company Name"
               value={companyName}
               onChange={this.handleChange}
               error={
@@ -249,9 +259,10 @@ class EmploymentDetails extends React.Component {
                   : errorObject && errorObject["companyName"]
               }
             />}
-            {(status === "employed" || status === "self-employed") && <CustomInput
+            {(status === "employed" || status === "self-employed") && <Textbox
               name="companyAddress"
               label="Company Address"
+              placeholder="Company Address"
               value={companyAddress}
               onChange={this.handleChange}
               error={
@@ -260,7 +271,7 @@ class EmploymentDetails extends React.Component {
                   : errorObject && errorObject["companyAddress"]
               }
             />}
-            {(status === "employed" || status === "self-employed") && <CustomInput
+            {(status === "employed" || status === "self-employed") && <Textbox
               name="companyType"
               label="Company Type"
               type="select"
@@ -273,12 +284,17 @@ class EmploymentDetails extends React.Component {
                   : errorObject && errorObject["companyType"]
               }
             />}
-            {status === "employed" && <CustomInput
+            {status === "employed" && <PhoneTextBox
+              boxClasses="active"
+              placeholder="Phone number"
+              options={countryCodes}
+              onChangeSelect={this.handleChange}
+              selectName="countryCode"
+              defaultValue={countryCode}
               name="officialPhoneNumber"
               label="Official Phone Number"
               type="phone"
               value={officialPhoneNumber}
-              countryCodeValue={countryCode}
               onChange={this.handleChange}
               error={
                 errors
@@ -286,9 +302,10 @@ class EmploymentDetails extends React.Component {
                   : errorObject && errorObject["officialPhoneNumber"]
               }
             />}
-            {status === "employed" && <CustomInput
+            {status === "employed" && <Textbox
               name="officialEmailAddress"
               label="Official Email Address"
+              placeholder="Official Email Address"
               value={officialEmailAddress}
               onChange={this.handleChange}
               error={
@@ -304,7 +321,7 @@ class EmploymentDetails extends React.Component {
               {data && (
                 <Alert alert={{ type: "success", message: data.message }} />
               )}
-              <button className="btn-default" disabled={loading}>
+              <button className="btn-default px-4" disabled={loading}>
                 Save changes
                 {loading && (
                   <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>

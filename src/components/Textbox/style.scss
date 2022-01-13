@@ -18,6 +18,7 @@
   }
 
   span.active{
+    margin: 0!important;
     display: inline !important;
     font-size: .8rem;
     transform: translateY(-0.7rem);
@@ -31,6 +32,7 @@
 
   &:focus-within {
     span{
+      margin: 0!important;
       display: inline !important;
       font-size: .8rem;
       transform: translateY(-0.7rem);

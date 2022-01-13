@@ -22,20 +22,22 @@ class ConfirmEmailVerification extends React.Component {
       <div className="confirm-email-page text-center">
         <div className="box">
           <div className="container">
-              <img src={require('#/assets/icons/envelope-mail.svg')} alt="envelope"/>
-              <h4 className="mt-3 text-blue font-bolder">Verify your email address</h4>
-              <p className="mt-2">A verification link has been sent to <b>{email}</b> Please check your inbox to verify using the link sent.</p>
-              <button className="btn btn-sm btn-primary" onClick={this.navigateToLogin}>
-                I have verified my email
-              </button>
-            <div className="bottom-section mt-3">
-              <p>
+              <img src={require('#/assets/icons/verify-email.svg')} alt="envelope"/>
+              <h3 className="mt-3 text-blue font-bolder">Verify your email address</h3>
+              <p className="mt-2 px-3">A verification link has been sent to <b>{email}</b>. Please check your inbox to verify using the link sent. If you have verified your email go to login to access your account.</p>
+              
+            <div className="bottom-section mt-4 px-4">
+               <button className="btn mb-3 py-3 btn-primary" onClick={this.navigateToLogin}>
+                    Go to login page
+                </button>
+               <p>
                 Didn’t get the verification link?
                 <span onClick={this.handleResendToken}><b> Send link again</b> </span>
               </p>
-            </div>
-            {data && <Alert alert={{ type: 'success', message: data.message }}/>}
+              {data && <Alert alert={{ type: 'success', message: data.message }}/>}
             {error && <Alert alert={{ type: 'warning', message: error.message }}/>}
+            </div>
+         
           </div>
         </div>
       </div>

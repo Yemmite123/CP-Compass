@@ -49,7 +49,8 @@ class OneTimePassword extends React.Component {
             <div className="ml-auto mr-auto w-100">
               <PinInput onChange={this.handlePin} error={errors} />
             </div>
-            <button className="btn btn-sm btn-primary w-100 mt-4" onClick={this.handleNextStep} disabled={loading}>
+            <div className="mx-3">
+            <button className="btn py-3 btn-primary w-100 mt-4" onClick={this.handleNextStep} disabled={loading}>
               Proceed
               {loading &&
                 <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
@@ -57,6 +58,7 @@ class OneTimePassword extends React.Component {
             </button>
             {errors && <p className="otp-error">{errors}</p>}
             {error && <p className="otp-error">{error}</p>}
+            </div>
           </div>
         </div>
       </div>

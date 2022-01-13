@@ -7,6 +7,9 @@ import actionTypes from "#/store/profile/actionTypes";
 import Alert from '#/components/Alert';
 import CustomInput from "#/components/CustomInput";
 import ImageUploadInput from "#/components/ImageUploadInput";
+import Textbox from "#/components/Textbox";
+import DateBox from "#/components/DateBox";
+import SelectBox from "#/components/SelectBox";
 import { documentOptions, validateFields, serializeErrors } from '#/utils';
 import './style.scss';
 
@@ -122,15 +125,19 @@ class KycVerification extends React.Component {
         <div className="section-container">
           <h2 className="section-header mb-3">Bank Verification Number</h2>
           <div className="section-form mt-4">
-            <CustomInput
+            <Textbox
+              boxClasses="active"
               name="bvn"
               label="BVN"
+              placeholder={"BVN"}
               value={bvn ? `******${bvn.slice(7)}` : 'No BVN yet'}
-              disabled
+              disabled={true}
             />
-            <CustomInput
+            <SelectBox
+              boxClasses="active"
               name="bankCode"
               label="Bank Name"
+              placeholder="Bank Name"
               value={bankCode}
               onChange={this.handleBankChange}
               type="select"
@@ -138,25 +145,29 @@ class KycVerification extends React.Component {
               options={banks ? banks : []}
               error={errors ? errors.bankCode : (errorObject && errorObject['bankCode'])}
             />
-            <CustomInput
+            <Textbox
+              boxClasses="active"
               name="accountNumber"
               label="Account Number"
+              placeholder="Account Number"
               value={accountNumber}
               onChange={this.handleChange}
               error={errors ? errors.accountNumber : (errorObject && errorObject['accountNumber'])}
             />
-            <CustomInput
+            <Textbox
+              boxClasses="active"
               name="accountName"
               label="Account Name"
+              placeholder="Account Name"
               value={accountName}
-              disabled
+              disabled={true}
             />
             <div className="section-form__button-area">
               <div className="col col-md-7">
                 {bankData && bankData.message !== '' && <Alert alert={{ type:"success", message: bankData.message}}/>}
               </div>
               {bankError && typeof bankError === 'string' && <p className="text-error text-left">{bankError}</p>}
-              <button className="btn-default" disabled={bankLoading} onClick={this.handleSubmitBankInfo}>
+              <button className="btn-default px-4" disabled={bankLoading} onClick={this.handleSubmitBankInfo}>
                 Save changes
                 {bankLoading && (
                   <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
@@ -179,12 +190,13 @@ class KycVerification extends React.Component {
             handleFile={this.handleGovernmetFileSelect}
           />
           <div className="id-type-area">
-            <CustomInput
+            <SelectBox
               name="documentType"
               label="Type of ID uploaded"
               onChange={this.handleDocumentChange}
               type="select"
               options={documentOptions}
+              value={this.state.documentType}
             />
           </div>
           {kycErrors && <p className="text-error">{kycErrors.document}</p>}
@@ -208,7 +220,7 @@ class KycVerification extends React.Component {
               {kycErrors && <p className="text-error">{kycErrors.file}</p>}
               {data && <Alert alert={{ type:"success", message: 'Successfully uploaded your document(s)'}}/>}
             </div>
-            <button className="btn-default" disabled={loading} onClick={this.handleSubmit}>
+            <button className="btn-default px-4" disabled={loading} onClick={this.handleSubmit}>
               Save changes
               {loading && (
                 <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>

@@ -8,6 +8,11 @@ import actionTypes from "#/store/profile/actionTypes";
 import Alert from "#/components/Alert";
 import Modal from "#/components/Modal";
 import CustomInput from "#/components/CustomInput";
+import Textbox from "#/components/Textbox";
+import DateBox from "#/components/DateBox";
+import SelectBox from "#/components/SelectBox";
+import PhoneTextBox from "#/components/PhoneTextBox";
+import { countryCodes } from "#/utils/countryCode";
 import {
   validateFields,
   serializeErrors,
@@ -184,44 +189,38 @@ class NextOfKin extends React.Component {
             inactivity on your account after a period of 6 months.
           </p>
           <form onSubmit={this.handleSubmit} className="section-form">
-            <CustomInput
-              name="firstName"
-              label="First name"
+          <Textbox
+              boxClasses="active"
+              type="text"
+              label="First Name"
               value={firstName}
-              onChange={this.handleChange}
-              error={
-                errors
-                  ? errors.firstName
-                  : errorObject && errorObject["firstName"]
-              }
-            />
-            <CustomInput
-              name="lastName"
-              label="Last name"
+              placeholder={"First Name"}
+              name="firstName"
+                  />
+            <Textbox
+              boxClasses="active"
+              type="text"
+              label="Last Name"
               value={lastName}
-              onChange={this.handleChange}
-              error={
-                errors
-                  ? errors.lastName
-                  : errorObject && errorObject["lastName"]
-              }
-            />
-            <CustomInput
-              name="gender"
+              placeholder={"Last Name"}
+              name="lastName"
+                  />
+            <SelectBox
               label="Gender"
               value={gender}
-              onChange={this.handleGenderChange}
-              type="select"
+              placeholder={"Gender"}
               options={genderOption}
+              optionName="name"
+              onChange={this.handleGenderChange}
               error={
                 errors ? errors.gender : errorObject && errorObject["gender"]
               }
             />
-            <CustomInput
-              name="dateOfBirth"
+            <DateBox
               label="Date of birth"
               value={dateOfBirth}
-              type="date"
+              placeholder={""}
+              name="dateOfBirth"
               onChange={(date) => this.handleChangeDate("dateOfBirth", date)}
               error={
                 errors
@@ -230,56 +229,69 @@ class NextOfKin extends React.Component {
               }
               maxDate={new Date()}
             />
-            <CustomInput
-              name="relationship"
-              label="Relationship"
-              value={relationship}
-              onChange={this.handleRelationshipChange}
-              type="select"
-              options={relationshipOption}
-              error={
-                errors
-                  ? errors.relationship
-                  : errorObject && errorObject["relationship"]
-              }
+            <SelectBox
+             name="relationship"
+             label="Relationship"
+             value={relationship}
+             onChange={this.handleRelationshipChange}
+             type="select"
+             options={relationshipOption}
+             placeholder={"Relationship"}
+             optionName="name"
+             error={
+               errors
+                 ? errors.relationship
+                 : errorObject && errorObject["relationship"]
+             }
             />
-            <CustomInput
-              name="email"
-              label="Email Address"
-              value={email}
+             <Textbox
               onChange={this.handleChange}
+              name="email"
+              boxClasses={"active"}
+              value={email}
+              label="Email address"
+              placeholder="Email address"
               error={
                 errors ? errors.email : errorObject && errorObject["email"]
               }
             />
-            <CustomInput
-              name="phone"
-              label="Phone number"
-              type="phone"
-              value={phone}
-              countryCodeValue={countryCode}
+            <PhoneTextBox 
               onChange={this.handleChange}
-              error={
-                errors
-                  ? errors.phoneNumber
-                  : errorObject && errorObject["phone"]
-              }
+              boxClasses="active"
+              name="phone"
+              value={phone}
+              label="Phone number"
+              placeholder="Phone number"
+              options={countryCodes}
+              onChangeSelect={this.handleChange}
+              selectName="countryCode"
+              defaultValue={countryCode}
+              type="number"
+              error={errors ? errors.phoneNumber : (errorObject && errorObject['phone'])}
             />
-            <CustomInput
-              name="motherMaidenName"
+            
+            <Textbox
+              type="text"
+              boxClasses="active"
               label="Mother's maiden name"
               value={motherMaidenName}
+              placeholder={"Mother's maiden name"}
+              name="motherMaidenName"
               onChange={this.handleChange}
               error={
                 errors
                   ? errors.motherMaidenName
                   : errorObject && errorObject["motherMaidenName"]
               }
-            />
-            <CustomInput
-              name="contactAddress"
+            />    
+
+            <Textbox
+              type="text"
+              boxClasses="active"
               label="Contact Address"
               value={contactAddress}
+              placeholder={"Contact Address"}
+              name="contactAddress"
               onChange={this.handleChange}
               error={
                 errors
@@ -287,17 +299,21 @@ class NextOfKin extends React.Component {
                   : errorObject && errorObject["contactAddress"]
               }
             />
-            <CustomInput
-              name="nationality"
+
+            <Textbox
+              type="text"
+              boxClasses="active"
               label="Nationality"
               value={nationality}
+              placeholder={"Nationality"}
               onChange={this.handleChange}
+              name="nationality"
               error={
                 errors
                   ? errors.nationality
                   : errorObject && errorObject["nationality"]
               }
-            />
+            /> 
             <div className="section-form__button-area">
               {error && typeof error === "string" && (
                 <p className="text-error text-left">{error}</p>
@@ -305,7 +321,7 @@ class NextOfKin extends React.Component {
               {data && (
                 <Alert alert={{ type: "success", message: data.message }} />
               )}
-              <button className="btn-default" disabled={loading}>
+              <button className="btn-default px-4`" disabled={loading}>
                 Save changes
                 {loading && (
                   <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
