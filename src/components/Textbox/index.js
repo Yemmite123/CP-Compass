@@ -1,10 +1,10 @@
 import React from 'react';
 import './style.scss';
 
-const Textbox = ({ label, onChange, defaultValue, name, value, placeholder, boxClasses, type, error, iconUrl, onIconClick, disabled, min, required, max, maxlength }) => {
+const Textbox = React.forwardRef(({ label, onChange, defaultValue, name, value, placeholder, boxClasses, type, error, iconUrl, onIconClick, disabled, min, required, max, maxlength }, ref) => {
 
   return (
-    <div className={`${boxClasses} textbox`} tabIndex="1">
+    <div  className={`${boxClasses} textbox`} tabIndex="1">
       <fieldset
         className={`${error && "error"} ${disabled && "disabled-input"}`}
       >
@@ -12,6 +12,7 @@ const Textbox = ({ label, onChange, defaultValue, name, value, placeholder, boxC
         <div className="d-flex position-relative">
         { label ? <span className={`${boxClasses?.includes("active") ? "active" : ""} mt-0 position-absolute ${error && 'label-error'}`}>{label}</span> : "" }
           <input
+            ref={ref}
             autoComplete="off"
             min={min && min}
             onChange={(e) => {
@@ -52,6 +53,6 @@ const Textbox = ({ label, onChange, defaultValue, name, value, placeholder, boxC
       </p>
     </div>
   );
-}
+})
 
 export default Textbox;

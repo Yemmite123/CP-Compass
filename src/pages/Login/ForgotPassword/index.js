@@ -76,7 +76,7 @@ class ForgotPassword extends React.Component {
                     className="btn py-3 btn-primary w-100 mt-4"
                     disabled={loading}
                   >
-                    Send me a reset link
+                    Send reset link
                     {loading && (
                       <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
                     )}

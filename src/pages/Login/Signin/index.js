@@ -106,7 +106,7 @@ class Login extends React.Component {
                       }`}
                       disabled={loading}
                     >
-                      Log in
+                      Login
                       {loading && (
                         <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
                       )}

@@ -16,7 +16,7 @@ const OffCanvas = (props) => {
           type="button"
           className="btn-close"
           data-cp-dissmiss="offcanvas"
-          onClick={() => { closeOffCanvas(props.id) }}
+          onClick={() => {if (props.onClose) {props.onClose()}; closeOffCanvas(props.id) }}
         />
       </div>
       <div className="offcanvas-body">{props.children}</div>

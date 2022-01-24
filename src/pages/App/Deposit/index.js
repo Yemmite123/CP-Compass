@@ -26,6 +26,7 @@ import "./style.scss";
 class Deposit extends React.Component {
   state = {
     amount: "",
+    textInputAmount: "",
     errors: null,
     selectedMethod: null,
     selectedMethodError: null,
@@ -36,6 +37,8 @@ class Deposit extends React.Component {
     showCardsModal: false,
   };
 
+  textInputRef = React.createRef();
+
   componentDidMount() {
     this.props.getCards();
   }
@@ -45,12 +48,19 @@ class Deposit extends React.Component {
     if (name === "amount") {
       this.setState({ errors: null });
       return this.setState({ [name]: formatCurrencyToString(value) }, () => {
+        this.setState({ textInputAmount: formatCurrencyToString(value)});
         if (isNaN(this.state.amount)) {
           return this.setState({ errors: { amount: "enter a valid number" } });
         }
       });
     }
     this.setState({ [name]: value });
+  };
+
+  resetFields = () => {
+    // console.log((this.textInputRef.current.value = 0));
+    this.setState({ textInputAmount: "" });
+    this.setState({ selectedMethod: null });
   };
 
   handleSelectMethod = (event) => {
@@ -93,6 +103,7 @@ class Deposit extends React.Component {
     e.preventDefault();
     const { selectedMethod } = this.state;
     this.setState({ errors: null, selectionError: null });
+    this.resetFields();
 
     if (!selectedMethod) {
       return this.setState({
@@ -135,6 +146,7 @@ class Deposit extends React.Component {
   render() {
     const {
       amount,
+      textInputAmount,
       selectedMethod,
       errors,
       selectionError,
@@ -183,7 +195,12 @@ class Deposit extends React.Component {
                       />
                     ))}
 
-                  <div className={`d-flex p-3 mb-2 cursor-pointer debit-card new-payment ${this.state.newPayment ? "selected" : ""}`} onClick={this.handleNewPayment} >
+                  <div
+                    className={`d-flex p-3 mb-2 cursor-pointer debit-card new-payment ${
+                      this.state.newPayment ? "selected" : ""
+                    }`}
+                    onClick={this.handleNewPayment}
+                  >
                     <div className="d-flex mr-3">
                       <img
                         src={require("#/assets/icons/plus-circle.svg")}
@@ -213,22 +230,28 @@ class Deposit extends React.Component {
             </div>
           </Modal>
         )}
-        <OffCanvas title="" position="end" id="deposit-offcanvas">
+        <OffCanvas
+          title=""
+          position="end"
+          id="deposit-offcanvas"
+          onClose={this.resetFields}
+        >
           <div className="px-3 h-100 d-flex flex-column flex-grow-1">
             <div className="mt-3 mb-2">
               <h3 className="font-bolder text-blue">Deposit Funds</h3>
-              <p>Enter amout and destination for this fund</p>
+              <p>Enter amount and choose a payment method</p>
             </div>
 
             <div className="mt-5">
               <p>How much do you want to deposit?</p>
               <Textbox
                 onChange={this.handleChange}
+                ref={this.textInputRef}
                 type="text"
+                value={formatStringToCurrency(textInputAmount)}
                 label="Amount"
                 placeholder="Amount"
                 name="amount"
-                value={formatStringToCurrency(amount)}
                 error={
                   errors ? errors.amount : errorObject && errorObject["amount"]
                 }
@@ -269,6 +292,10 @@ class Deposit extends React.Component {
                       <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
                     )}
                   </button>
+                  {error && <p className="text-error text-left">{error}</p>}
+                  {selectionError && (
+                    <p className="text-error text-left">{selectionError}</p>
+                  )}
                 </div>
               </div>
             </div>

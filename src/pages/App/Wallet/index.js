@@ -50,6 +50,8 @@ class Wallet extends React.Component {
   };
 
   handleTransactionSelect = (transaction) => {
+    console.log(this.state.selectedTransaction);
+
     this.setState({ selectedTransaction: transaction }, () =>
       this.setState({ showTransactionModal: true })
     );
@@ -106,12 +108,12 @@ class Wallet extends React.Component {
           </InformationBar>
         )}
         {showTransactionModal && (
-          <Modal onClose={this.toggleModal} classes="tran-modal">
-            <WalletTransaction transaction={selectedTransaction} />
-            {selectedTransaction?.history?.length > 0 &&
+          <Modal classes="tran-modal" onClose={this.toggleModal}>
+            <WalletTransaction transaction={selectedTransaction} onClose={this.toggleModal} />
+            {/* {selectedTransaction?.history?.length > 0 &&
               selectedTransaction?.history?.map((history) => {
                 return <WalletTransaction transaction={history} />;
-              })}
+              })} */}
           </Modal>
         )}
         {walletDetails && (
@@ -189,9 +191,21 @@ class Wallet extends React.Component {
                         className="text-blue mb-0 cursor-pointer"
                         onClick={this.navigateTotransactions}
                       >
-                        { "View details "}
-                        <svg width="5" strokeWidth={"2px"} height="9" viewBox="0 0 5 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M1 8L4 4.5L1 1" stroke="#3A4080" strokeLinecap="round" strokeLinejoin="round"/>
+                        {"View details "}
+                        <svg
+                          width="5"
+                          strokeWidth={"2px"}
+                          height="9"
+                          viewBox="0 0 5 9"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M1 8L4 4.5L1 1"
+                            stroke="#3A4080"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
                         </svg>
                       </p>
                     </div>

@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { removeAlert } from '#/store/ui/actions';
 import './style.scss';
 
+
+//TODO
 class FloatingToastAlert extends React.Component {
 
   componentDidMount() {

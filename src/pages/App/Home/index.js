@@ -113,9 +113,9 @@ class Home extends React.Component {
                     <div className="portfolio">
                       <div className="portfolio__block assets">
                         <div className="assets__top">
-                          <h6>ASSET ALLOCATION</h6>
+                          <h6 className="font-weight-bold">ASSET DISTRIBUTION</h6>
                           <Link to='/app/portfolio'>
-                            {!userHasNoFinancialHistory && <span>View details <img src={require(`#/assets/icons/right-caret.svg`)} alt="caret"/></span>}
+                            {!userHasNoFinancialHistory && <span >View details <img className='ml-2' src={require(`#/assets/icons/right-caret.svg`)} alt="caret"/></span>}
                           </Link>
                         </div>
                         {userHasNoFinancialHistory ?

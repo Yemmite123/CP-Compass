@@ -104,7 +104,7 @@ export const portfolioPieData = {
   datasets: [
     {
       data: [1000, 20500, 30],
-      backgroundColor: ["#044472", "#3F9ADA", "#9DC6FB"],
+      backgroundColor: ["#C95B10", "#3F9ADA", "#9DC6FB"],
     },
   ],
   labels: ["Termed Investment", "Financial Instruments", "Wallet"],
@@ -120,7 +120,7 @@ export const portfolioPie = (wallet, termed, financial) => {
     datasets: [
       {
         data: [wallet, termed],
-        backgroundColor: ["#044472", "#3F9ADA", "#9DC6FB"],
+        backgroundColor: ["#AD3336", "#C95B10", "#9DC6FB"],
       },
     ],
     labels: labels.map((label) => `${label}: ${formatCurrency(data[label])}`),
@@ -128,6 +128,7 @@ export const portfolioPie = (wallet, termed, financial) => {
 };
 
 export const portfolioPieOptions = {
+  cutout: "50%",
   legend: {
     display: false,
   },
@@ -336,6 +337,7 @@ export const getTimeOfDay = () => {
 };
 
 export const transactionType = (type) => {
+  console.log(type)
   const withdrawImg = require("#/assets/icons/funds-withdrawn-icon.svg");
   const depositImg = require("#/assets/icons/funds-deposited.svg");
   const investedImg = require("#/assets/icons/invested-icon.svg");

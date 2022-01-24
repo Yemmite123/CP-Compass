@@ -20,6 +20,7 @@ class Withdraw extends React.Component {
 
   state = {
     amount: '',
+    textInputAmount: "",
     pin: {},
     errors: null,
     showModal: false,
@@ -37,6 +38,7 @@ class Withdraw extends React.Component {
     if(name === 'amount') {
       this.setState({ errors: null});
         return this.setState({ [name]: formatCurrencyToString(value)}, ()=> {
+        this.setState({ textInputAmount: formatCurrencyToString(value)});
           if(isNaN(this.state.amount)) {
             return this.setState({ errors: { amount: 'enter a valid number' } })
           }
@@ -45,9 +47,15 @@ class Withdraw extends React.Component {
     this.setState({ [name]: value });
   }
 
+  resetFields = () => {
+    this.setState({ textInputAmount: "" });
+  };
+
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.setState({ errors: null });
+    this.resetFields();
 
     const data = this.state;
     const required = ['amount'];
@@ -78,7 +86,8 @@ class Withdraw extends React.Component {
     if (token.length < 4) {
       return this.setState({ pinError: 'enter a valid pin' })
     }
-
+    
+    this.toggleModal();
     this.props.confirmWithdraw({ pin: token }, this.props.history)
   }
 
@@ -95,7 +104,7 @@ class Withdraw extends React.Component {
   }
 
   render() {
-    const { amount, errors, showModal, pinError, showComfirmationModal } = this.state;
+    const { amount, textInputAmount, errors, showModal, pinError, showComfirmationModal } = this.state;
     const { error, bankDetails, banks, loading, confirmLoading, confirm, walletDetails, withdrawalFee } = this.props;
     const bank = bankDetails && banks && banks.find(bank => bank.code === bankDetails.bankCode);
 
@@ -114,7 +123,7 @@ class Withdraw extends React.Component {
               <div className="text-center">
                 <h5 className="text-blue font-bolder">Review Withdrawal</h5>
                 <p className="text-small text-grey">
-                  From your withdrawal of <b className="text-black">&#x20A6;{amount}</b>, we will deduct a service charge of <b className="text-black">1%</b>. So, you will receive <b className="text-black">₦{formatCurrency(amount - (withdrawalFee && withdrawalFee[1].current))}</b> into your account.
+                  Your withdrawal of <b className="text-black">&#x20A6;{amount}</b> is subject to a <b className="text-black">₦{formatCurrency((withdrawalFee && withdrawalFee[1].current))}</b> bank charge. So, you will receive <b className="text-black">₦{formatCurrency(amount - (withdrawalFee && withdrawalFee[1].current))}</b> into your account.
                 </p>
               </div>
               <div className="d-flex flex-column align-items-center">
@@ -133,7 +142,7 @@ class Withdraw extends React.Component {
         { showModal && /* TODO: change icon */
           <Modal onClose={this.toggleModal}>
             <div className="text-right pb-3">
-                <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleConfirmationModal}/>
+                <img src={require('#/assets/icons/close.svg')} style={{cursor: "pointer"}} alt="close" onClick={this.toggleModal}/>
             </div>
             <div className="px-5">
               <div className="d-flex justify-content-center">
@@ -141,7 +150,7 @@ class Withdraw extends React.Component {
               </div>
               <div className="text-center">
                 <div className='mb-3'>
-                  <h5 class="text-blue font-bolder">Enter Transaction PIN</h5>
+                  <h5 className="text-blue font-bolder">Enter Transaction PIN</h5>
                   <p className="mb-0 text-grey">Confirm your withdrawal of
                   <b> ₦{formatCurrency(amount)}</b></p>
                 </div>
@@ -156,7 +165,7 @@ class Withdraw extends React.Component {
                   }
                 </button>
                 <p className="text-blue mt-3" onClick={this.toggleModal}>Cancel Withdrawal</p>
-                {confirm && <Alert alert={{ type: "success", message: confirm.message }} />}
+                {/* {confirm && this.toggleModal()} */}
                 {pinError && <p className="text-error mt-2">{pinError}</p>}
                 {error && typeof error === 'string' && <p className="text-error text-center">{error}</p>}
                 </div>
@@ -165,15 +174,41 @@ class Withdraw extends React.Component {
           </Modal>
         }
 
-
-        <OffCanvas title="" position="end" id="withdraw-offcanvas">
+        { confirm && /* TODO: change icon */ 
+          <Modal onClose={this.toggleModal}>
+            <div className="text-right pb-3">
+                <img src={require('#/assets/icons/close.svg')} style={{cursor: "pointer"}} alt="close" onClick={this.toggleModal}/>
+            </div>
+            <div className="px-5">
+              <div className="d-flex justify-content-center">
+                <img src={require('#/assets/icons/done.svg')} alt="bank" className="pb-3"/>
+              </div>
+              <div className="text-center">
+                <div className='mb-3'>
+                  <h5 className="text-blue font-bolder text-success">Done</h5>
+                  <p className="mb-0 text-grey">Your transaction is being processed and you will be notified when the transactions has been approved.</p>
+                </div>
+                <div className="px-3 mt-4">
+                  <button className="btn py-3 btn-success btn-block mt-3" onClick={this.handleWithdraw}>
+                  Go to Wallet
+                    {confirmLoading &&
+                      <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
+                    }
+                  </button>
+                </div>
+              </div>
+            </div>
+          </Modal>
+        }
+        
+        <OffCanvas title="" position="end" id="withdraw-offcanvas" onClose={this.resetFields}>
           <div className="px-3 h-100 d-flex flex-column flex-grow-1">
             <div className="mt-3 mb-2">
               <h3 className="font-bolder text-blue">Withdraw Funds</h3>
               <p>Available Flex balance is: ₦{walletDetails && walletDetails.wallet.NGN ? walletDetails.wallet.NGN : 0}</p>
             </div>
 
-            <div className="mt-5">
+            <div className="mt-3">
               <p>How much do you want to withdraw?</p>
               <Textbox
                 onChange={this.handleChange}
@@ -181,7 +216,7 @@ class Withdraw extends React.Component {
                 label="Amount"
                 placeholder="Amount"
                 name="amount"
-                value={formatStringToCurrency(amount)}
+                value={formatStringToCurrency(textInputAmount)}
                 error={
                   errors ? errors.amount : errorObject && errorObject["amount"]
                 }
