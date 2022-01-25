@@ -336,23 +336,55 @@ export const getTimeOfDay = () => {
   return "evening";
 };
 
-export const transactionType = (type) => {
-  console.log(type)
+export const getTransactionTypeColor = (transaction) => {
+    if (transaction.status === "success" && transaction.type === "service") {
+      return "processed";
+    }
+
+    if (transaction.status === "pending" && transaction.type === "debit") {
+      return "pending";
+    }
+
+    if (transaction.type === "credit") {
+      return "credit";
+    }
+
+    if (transaction.type === "debit") {
+      return "debit";
+    }
+
+    if (transaction.type === "failed") {
+      return "debit";
+    }
+
+    if (transaction.type === "invest") {
+      return "invest";
+    }
+};
+
+export const getTransactionTypeImg = (transaction) => {
   const withdrawImg = require("#/assets/icons/funds-withdrawn-icon.svg");
   const depositImg = require("#/assets/icons/funds-deposited.svg");
   const investedImg = require("#/assets/icons/invested-icon.svg");
   const failedImg = require("#/assets/icons/failed-icon.svg");
+  const pendingImg = require("#/assets/icons/pending-icon.svg");
 
-  if (type === "credit") {
-    return depositImg;
-  }
-  if (type === "debit") {
-    return withdrawImg;
-  }
-  if (type === "service") {
+  if (transaction.status === "success" && transaction.type === "service") {
     return investedImg;
   }
-  if (type === "failed") {
+
+  if (transaction.status === "pending" && transaction.type === "debit") {
+    return pendingImg;
+  }
+
+  if (transaction.type === "credit") {
+    return depositImg;
+  }
+  if (transaction.type === "debit") {
+    return withdrawImg;
+  }
+
+  if (transaction.type === "failed") {
     return failedImg;
   }
 };

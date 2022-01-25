@@ -2,6 +2,25 @@
     h3 {
         font-size: 18px;
         font-weight: 600;;
-        color: #2EB26B;
     }
+
+    .transaction-title{
+        font-size: 12px;
+    }
+
+    .credit {
+        color: #2EB26B;
+      }
+      .debit {
+        color: #BC1F1F
+      }
+      .invest {
+        color: #3F9ADA
+      }
+      .pending{
+        color: #C95B10;
+      }
+      .processed{
+        color: #3A4080;
+      }
 }

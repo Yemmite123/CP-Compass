@@ -31,7 +31,6 @@ import {
   validateFields,
   fundingSource,
   serializeErrors,
-  transactionType,
   formatCurrencyToString,
   formatStringToCurrency,
   openOffCanvas,

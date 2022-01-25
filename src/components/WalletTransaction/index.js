@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import moment from 'moment';
-import { transactionType } from '#/utils';
+import { getTransactionTypeColor, getTransactionTypeImg } from '#/utils';
 import './style.scss';
 
 const WalletTransaction = ({ transaction, onClose }) => {
@@ -13,9 +13,9 @@ const WalletTransaction = ({ transaction, onClose }) => {
         <div className="container">
           <header>
             <div className="mb-3">
-              <img src={transactionType(transaction.type)} className="img-fluid mr-3 mb-4" alt="transaction type" />
-                <h3 className="text-medium">Transaction Details</h3>
-                <p className="tex-left font-weight-bold text-grey">{transaction.title}</p>
+              <img src={getTransactionTypeImg(transaction)} className="img-fluid mr-3 mb-4" alt="transaction type" />
+                <h3 className={`font-weight-bold ${getTransactionTypeColor(transaction)}`}>Transaction Details</h3>
+                <p className="transaction-title text-grey">{transaction.title}</p>
             </div>
           </header>
           <div className="d-flex justify-content-between mt-4 mb-4">
@@ -23,7 +23,7 @@ const WalletTransaction = ({ transaction, onClose }) => {
               <p className="text-small text-grey mb-0">Amount</p>
             </div>
             <div className="text-right">
-              <p className="text-deep-blue font-weight-bold text-small">&#x20A6;{transaction.amount}</p>
+              <p className={`font-weight-bold text-small ${getTransactionTypeColor(transaction)}`}>&#x20A6;{transaction.amount}</p>
             </div>
           </div>
            <div className="d-flex justify-content-between mt-2 mb-4">
@@ -31,7 +31,7 @@ const WalletTransaction = ({ transaction, onClose }) => {
               <p className="text-small text-grey mb-0">Date</p>
             </div>
             <div className="text-right">
-              <p className="text-deep-blue font-weight-bold  text-small">
+              <p className="font-weight-bold  text-small">
                 {moment(moment.utc(transaction.paidAt ? transaction.created_at : transaction.initializedAt).toDate()).local().format('ddd Do MMM, YYYY HH:mm')}
               </p>
             </div>
@@ -41,7 +41,7 @@ const WalletTransaction = ({ transaction, onClose }) => {
               <p className="text-small text-grey mb-0">Fee</p>
             </div>
             <div className="text-right">
-                <p className="text-deep-blue font-weight-bold  text-small">&#x20A6;{transaction.fees ? transaction.fees : '0.00'}</p>
+                <p className="font-weight-bold  text-small">&#x20A6;{transaction.fees ? transaction.fees : '0.00'}</p>
               
             </div>
           </div>
@@ -50,7 +50,7 @@ const WalletTransaction = ({ transaction, onClose }) => {
               <p className="text-small text-grey mb-0">Ref Number</p>
             </div>
             <div className="text-right">
-              <p className="text-deep-blue font-weight-bold  text-small">{transaction.reference}</p>
+              <p className="font-weight-bold  text-small">{transaction.reference}</p>
             </div>
           </div>
         </div>
