@@ -54,7 +54,8 @@ $menu-white: #FBFCFE;
       &--active{
           &>span{
               color: $cp-blue;
-                background-color: rgba(8, 121, 201, 0.08);
+                background-color: rgba(201, 91, 16, 0.1);
+                color: rgba(201, 91, 16, 1);
                 padding: 10px 15px;
                 border-radius: 3px;
 
@@ -68,7 +69,7 @@ $menu-white: #FBFCFE;
 
               &>span{
                   background-color: $light-grey;
-                  color: #3065CD;
+                  color: rgba(201, 91, 16, 1);
               }
           }
       }

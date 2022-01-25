@@ -103,7 +103,6 @@ class Deposit extends React.Component {
     e.preventDefault();
     const { selectedMethod } = this.state;
     this.setState({ errors: null, selectionError: null });
-    this.resetFields();
 
     if (!selectedMethod) {
       return this.setState({
@@ -118,6 +117,8 @@ class Deposit extends React.Component {
     if (Object.keys(errors).length > 0) {
       return this.setState({ errors });
     }
+
+    this.resetFields();
 
     if (!this.props.isBvnActive) {
       closeOffCanvas("deposit-offcanvas");
