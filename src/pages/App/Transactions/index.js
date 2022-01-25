@@ -63,14 +63,14 @@ class Transactions extends React.Component {
         {
           showTransactionModal &&
           <Modal onClose={this.toggleModal}>
-            <WalletTransaction transaction={selectedTransaction} />
-            {selectedTransaction?.history?.length > 0 && 
+            <WalletTransaction transaction={selectedTransaction} onClose={this.toggleModal}/>
+            {/* {selectedTransaction?.history?.length > 0 && 
               selectedTransaction?.history?.map(history => {
                 return (
                 <WalletTransaction transaction={history} />
                 )
             })
-            }
+            } */}
           </Modal>
         }
         <div className="row">

@@ -20,7 +20,7 @@ const WalletTransaction = ({ transaction, onClose }) => {
           </header>
           <div className="d-flex justify-content-between mt-4 mb-4">
             <div className="text-left">
-              <p className="text-small font-weight-bold text-grey mb-0">Amount</p>
+              <p className="text-small text-grey mb-0">Amount</p>
             </div>
             <div className="text-right">
               <p className="text-deep-blue font-weight-bold text-small">&#x20A6;{transaction.amount}</p>
