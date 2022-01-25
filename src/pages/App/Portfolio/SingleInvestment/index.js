@@ -41,6 +41,7 @@ import "./style.scss";
 class SingleInvestment extends React.Component {
   state = {
     amount: "",
+    textInputAmount: "",
     showAmountModal: false,
     showFundingSourceModal: false,
     showCardsModal: false,
@@ -73,12 +74,18 @@ class SingleInvestment extends React.Component {
     if (name === "amount") {
       this.setState({ errors: null });
       return this.setState({ [name]: formatCurrencyToString(value) }, () => {
+        this.setState({ textInputAmount: formatCurrencyToString(value)});
         if (isNaN(this.state[name])) {
           return this.setState({ errors: { [name]: "enter a valid number" } });
         }
       });
     }
     this.setState({ [name]: value });
+  };
+
+  resetFields = () => {
+    this.setState({ textInputAmount: "" });
+    this.setState({ selectedMethod: null });
   };
 
   handlePin = (pin) => {
@@ -112,6 +119,8 @@ class SingleInvestment extends React.Component {
         selectedMethodError: "please select a payment method",
       });
     }
+
+    this.resetFields()
 
     // open transaction modal
     this.setState({ selectedMethodError: "" });
@@ -259,6 +268,7 @@ class SingleInvestment extends React.Component {
       showAutomateModal,
       errors,
       amount,
+      textInputAmount,
       showTransactionModal,
       selectedTransaction,
       showPinModal,
@@ -268,7 +278,7 @@ class SingleInvestment extends React.Component {
 
     return (
       <>
-        <div class="" className="single-portfolio-page">
+        <div className="single-portfolio-page">
           {showPinModal && (
             <Modal
               classes="transaction-modal"
@@ -742,7 +752,7 @@ class SingleInvestment extends React.Component {
               </div>
             )}
           </div>
-          <OffCanvas title="" position="end" id="single-investment-offcanvas">
+          <OffCanvas title="" position="end" id="single-investment-offcanvas" onClose={this.resetFields}>
             <div className="px-3 h-100 d-flex flex-column flex-grow-1">
               <div className="mt-3 mb-2">
                 <h3 className="font-bolder text-blue">Top up Goal</h3>
@@ -757,7 +767,7 @@ class SingleInvestment extends React.Component {
                   label="Amount"
                   placeholder="Amount"
                   name="amount"
-                  value={formatStringToCurrency(amount)}
+                  value={formatStringToCurrency(textInputAmount)}
                   error={
                     errors
                       ? errors.amount
