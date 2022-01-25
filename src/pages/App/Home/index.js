@@ -57,7 +57,7 @@ class Home extends React.Component {
         {loading && !dashboard && <HomeSkeleton />}
         {dashboard &&
           <>
-            {!loading && isBvnActive && 
+            {loading && !isBvnActive && 
               <Link to="/app/onboarding" className="text-white">
                 <InformationBar className="text-white">
                   <span className="text-small font-medium">Complete your account setup:</span>
@@ -77,7 +77,7 @@ class Home extends React.Component {
             </div>
             <div className="summary-container">
                 <SummaryCard className="BG"
-                  title="Wallet balance"
+                  title="Wallet Balance"
                   showCurrency={true}
                   total={dashboard?.dashboard?.wallet?.NGN ? dashboard?.dashboard?.wallet?.NGN : '0.00'}
                   percentageDiff="N/A"
@@ -113,7 +113,7 @@ class Home extends React.Component {
                     <div className="portfolio">
                       <div className="portfolio__block assets">
                         <div className="assets__top">
-                          <h6 className="font-weight-bold">ASSET DISTRIBUTION</h6>
+                          <h6 className="font-weight-bold">ASSET ALLOCATION</h6>
                           <Link to='/app/portfolio'>
                             {!userHasNoFinancialHistory && <span >View details <img className='ml-2' src={require(`#/assets/icons/right-caret.svg`)} alt="caret"/></span>}
                           </Link>
@@ -125,20 +125,20 @@ class Home extends React.Component {
                             :
                         <div className="assets__chart-box">
                           <div>
-                            <div className="assets__chart" style={{background: `conic-gradient(#738AFE ${portfolioPercentage}%, #A0A2EC ${portfolioPercentage}%)`}}>
+                          <div className="assets__chart" style={{background: `conic-gradient(#5D65AC ${portfolioPercentage}%, #AD3336 ${portfolioPercentage}%)`}}>
                               <div>
-                                <span>Actual Value</span>
+                              <span>Actual Value <br/> <span style={{fontWeight: '600',fontSize: '16px',lineHeight: '26px', color: '#141414'}}>&#x20A6;{formatCurrency(walletValue + portfolioValue)} </span></span>
                               </div>
                             </div>
-                            <div className="assets__chart-bottom mb-2">
-                              <span>Total</span> <br></br>
-                              <span className="font-medium">&#x20A6;{formatCurrency(walletValue + portfolioValue)} / 100%</span>
+                            <div className="assets__chart-bottom mb-4">
+                              <span>Total Portfolio Value</span> <br/>
+                              <span style={{fontWeight: '600',fontSize: '18px',lineHeight: '35px', color: '#141414'}} className="font-medium">&#x20A6;{formatCurrency(walletValue + portfolioValue)} / 100%</span>
                             </div>
                           </div>
                           <div className="assets__legend">
                             <div className="assets__legend-block">
                               <span className="assets__legend-key--investment"></span>
-                              <span>Termed Investments</span>
+                              <span>Aspire Goals</span>
                               <span className="assets__legend-value">&#x20A6;{formatCurrency(portfolioValue)} / {portfolioPercentage.toFixed(2)}%</span>
                             </div>
                             <div className="assets__legend-block">

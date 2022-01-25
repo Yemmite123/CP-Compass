@@ -45,9 +45,9 @@ class Portfolio extends React.Component {
         title: 'Overview',
       },
       {
-        name: 'Termed Investments',
+        name: 'Aspire Goals',
         path: '/app/portfolio/termed-investments',
-        title: 'Portfolio',
+        title: 'Aspire Goals',
       },
 
     ]

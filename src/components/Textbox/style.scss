@@ -14,7 +14,6 @@
     border: 1px solid #d34242;
   }
   .label-error {
-    color: #d34242
   }
 
   span.active{
@@ -24,6 +23,17 @@
     transform: translateY(-0.7rem);
     visibility: visible;
   }
+
+  span.label-error{
+    margin: 0!important;
+    display: inline !important;
+    font-size: .8rem;
+    transform: translateY(-0.7rem);
+    visibility: visible;
+    color: #d34242
+
+  }
+
 
   input.active{
     position: relative;

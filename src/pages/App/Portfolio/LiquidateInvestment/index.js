@@ -22,7 +22,9 @@ class LiquidateInvestment extends React.Component {
 
   state = {
     title: '',
+    textInputReason : '',
     reason: '',
+    textInputAmount: '',
     amount: '',
     errors: null,
     showPinModal: false,
@@ -52,13 +54,20 @@ class LiquidateInvestment extends React.Component {
     if(name === 'amount') {
       this.setState({ errors: null});
         return this.setState({ [name]: formatCurrencyToString(value)}, ()=> {
+          this.setState({ textInputAmount: formatCurrencyToString(value)});
           if(isNaN(this.state[name])) {
             return this.setState({ errors: { [name]: 'enter a valid number' } })
           }
         });
       }
     this.setState({ [name]: value });
+    this.setState({ textInputReason: value});
   }
+  resetFields = () => {
+    this.setState({ textInputAmount: "" });
+    this.setState({ textInputReason: ""});
+
+  };
 
   handlePin = (pin) => {
     this.setState({pin})
@@ -70,7 +79,8 @@ class LiquidateInvestment extends React.Component {
     const { amount } = this.state
     const { investment } = this.props;
     this.setState({ errors: null })
-    
+    this.resetFields();
+
     const required = investment?.order_status === 'booked' ? [] : [ 'amount'];
     const errors = validateFields({  amount }, required)
     if (Object.keys(errors).length > 0) {
@@ -148,7 +158,7 @@ class LiquidateInvestment extends React.Component {
   }
   
   render() {
-    const { reason, errors, amount, showPinModal, pinError, confirmationModal } = this.state;
+    const { textInputReason, reason, errors, textInputAmount, amount, showPinModal, pinError, confirmationModal } = this.state;
     const { error, pinLoading, confirmPinError, loading, predefinedLiquidationPenalty, investment, detailsLoading } = this.props;
     const errorObject = serializeErrors(error);
     return (
@@ -266,7 +276,7 @@ class LiquidateInvestment extends React.Component {
             </div>
           </Modal>
         }
-        <OffCanvas title="" position="end" id="liquidate-offcanvas">
+        <OffCanvas title="" position="end" id="liquidate-offcanvas" onClose={this.resetFields}>
           <div className="px-3 h-100 d-flex flex-column flex-grow-1">
             <div className="mt-3 mb-2">
               <h3 className="font-bolder text-blue">Liquidate Goal</h3>
@@ -281,7 +291,7 @@ class LiquidateInvestment extends React.Component {
                 label="Amount"
                 placeholder="Amount"
                 name="amount"
-                value={formatStringToCurrency(amount)}
+                value={formatStringToCurrency(textInputAmount)}
                 error={
                   errors ? errors.amount : errorObject && errorObject["amount"]
                 }
@@ -296,7 +306,7 @@ class LiquidateInvestment extends React.Component {
                         onChange={this.handleChange}
                         rows={5}
                         name="reason"
-                        value={reason}
+                        value={textInputReason}
                         className="w-100 border-faint border-radius-default"
                       />
                   </div>
