@@ -127,6 +127,8 @@ class Custom extends React.Component {
   }
 
   handleChangeDate = (item, date) => {
+    if(item === "startDate") this.setState({inputStartDate: date})
+    if(item === "targetDate") this.setState({inputTargetDate: date})
     this.setState({ [item]: date });
   }
 
@@ -577,11 +579,12 @@ class Custom extends React.Component {
                   cards &&
                   cards.cards.length > 0 &&
                   cards.cards.map(card => (
-                    <DebitCard card={card} handleSelect={this.handleSelectCard} key={card.id} />
+                    <DebitCard card={card} selected={this.state.selectedCard === card} handleSelect={this.handleSelectCard} key={card.id} />
                   ))
                 }
                 
-                <div className={`d-flex p-3 mb-2 cursor-pointer debit-card`} onClick={this.handleAutomateStep}>
+                <div className={`d-flex p-3 mb-2 cursor-pointer debit-card position-relative`} onClick={this.handleAutomateStep}>
+                { (this.state.newPayment ? true : false) && <img className="position-absolute" width={16} src={require("#/assets/icons/success.svg")} style={{zIndex: 1, right: "0.35rem", top: "0.35rem"}} />}
                   <div className="d-flex mr-3">
                     <img src={require('#/assets/icons/plus-circle.svg')} width={"35px"} alt="icon" />
                   </div>

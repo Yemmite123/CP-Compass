@@ -127,7 +127,7 @@ class Home extends React.Component {
                           <div>
                           <div className="assets__chart" style={{background: `conic-gradient(#5D65AC ${portfolioPercentage}%, #AD3336 ${portfolioPercentage}%)`}}>
                               <div>
-                              <span>Actual Value <br/> <span style={{fontWeight: '600',fontSize: '16px',lineHeight: '26px', color: '#141414'}}>&#x20A6;{formatCurrency(walletValue + portfolioValue)} </span></span>
+                              <span>Total Investment <br/> <span style={{fontWeight: '600',fontSize: '16px',lineHeight: '26px', color: '#141414'}}>&#x20A6;{formatCurrency(walletValue + portfolioValue)} </span></span>
                               </div>
                             </div>
                             <div className="assets__chart-bottom mb-4">

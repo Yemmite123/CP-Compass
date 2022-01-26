@@ -69,6 +69,7 @@ class Insights extends React.Component {
 
   render() {
     const { posts, loading } = this.props;
+    console.log(posts)
 
     const defaultMenu = [
       {
@@ -91,16 +92,16 @@ class Insights extends React.Component {
     return (
       <div className="insights-page">
         <div className="d-flex justify-content-start overflow-auto">
-          {posts?.category && <DashboardBodyMenu menus={[...defaultMenu, ...menus]} />}
+          {posts?.category.length ? <DashboardBodyMenu menus={[...defaultMenu, ...menus]} /> : <></>}
         </div>
         {loading && !posts && <InsightSkeleton />}
 
-        {posts &&
+        {posts?.latest.length ? 
 
           <div className="row mt-3 no-gutters">
             <div className="col-md-5">
             <div className="main-blog-img-container">
-              <img src={posts.latest ? posts.latest[0].image : ""} alt="feature" className="img-fluid main-blog-img" />
+              <img src={posts.latest[0].image} alt="feature" className="img-fluid main-blog-img" />
             </div>
             </div>
 <div className="col-md-7">
@@ -119,10 +120,11 @@ class Insights extends React.Component {
             </div>
           </div>
           </div>
+          : <></>
         }
 
         {posts &&
-          <h2 className="text-left text-black mb-4 mt-5">Latest Topics</h2>}
+          <h3 className="text-left text-black mb-4 mt-5">Latest Topics</h3>}
         <div className="row">
           {posts &&
             (posts?.latest?.length > 0 ?
@@ -146,7 +148,7 @@ class Insights extends React.Component {
         }
 
         {posts &&
-          <h2 className={`text-left text-black mb-4 ${posts?.latest ? 'mt-5' : 'mt-5'}`}>Trending Topics</h2>}
+          <h3 className={`text-left text-black mb-4 ${posts?.latest ? 'mt-5' : 'mt-5'}`}>Trending Topics</h3>}
         <div className="row">
           {posts &&
             (posts?.trending.length > 0 ?

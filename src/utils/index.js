@@ -345,6 +345,10 @@ export const getTransactionTypeColor = (transaction) => {
       return "pending";
     }
 
+    if (transaction.type === "service") {
+      return "processed";
+    }
+
     if (transaction.type === "credit") {
       return "credit";
     }
@@ -387,6 +391,11 @@ export const getTransactionTypeImg = (transaction) => {
   if (transaction.type === "failed") {
     return failedImg;
   }
+
+  if (transaction.type == "service"){
+    return investedImg;
+  }
+
 };
 
 export const questionOptions = [

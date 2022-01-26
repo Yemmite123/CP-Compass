@@ -197,11 +197,12 @@ class Deposit extends React.Component {
                     ))}
 
                   <div
-                    className={`d-flex p-3 mb-2 cursor-pointer debit-card new-payment ${
+                    className={`d-flex p-3 mb-2 cursor-pointer debit-card new-payment position-relative ${
                       this.state.newPayment ? "selected" : ""
                     }`}
                     onClick={this.handleNewPayment}
                   >
+                    { (this.state.newPayment ? true : false) && <img className="position-absolute" width={16} src={require("#/assets/icons/success.svg")} style={{zIndex: 1, right: "0.35rem", top: "0.35rem"}} />}
                     <div className="d-flex mr-3">
                       <img
                         src={require("#/assets/icons/plus-circle.svg")}

@@ -87,7 +87,7 @@ class PPI extends React.Component {
               <button className="btn btn-primary btn-sm mr-2" onClick={this.fetchPrevious} disabled={loading || this.state.page === 1}>
                 Prev
               </button>
-              <button className="btn btn-primary btn-sm ml-2" onClick={this.fetchMore} disabled={loading || this.state.page === data?.lastPage}>
+              <button className="btn btn-primary btn-sm ml-2" onClick={this.fetchMore} disabled={loading || this.state.page === data?.lastPage || !data?.total}>
                 Next
               </button>
             </div>

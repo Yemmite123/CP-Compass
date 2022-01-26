@@ -40,11 +40,14 @@ class Predefined extends React.Component {
     inputTarget: '',
     inputAmount: '',
     inputAddEndDate: false,
+    inputStartDate: new Date(),
+    inputTargetDate: new Date(),
     inputFrequencyAmount: '',
     title: '',
     target: '',
     targetDate: new Date(),
     frequency: '',
+    inputFrequency: '',
     startDate: new Date(),
     confirmationModal: false,
     showTransactionModal: false,
@@ -89,10 +92,9 @@ class Predefined extends React.Component {
       }
 
       if(name === "title") this.setState({inputTitle: value});
-      if(name === "startDate") this.setState({inputStartDate: value})
       if(name === "frequency") this.setState({inputFrequency: value})
-      if(name === "targetDate") this.setState({inputTargetDate: value})
-  
+
+
     this.setState({ [name]: value });
   }
 
@@ -107,6 +109,8 @@ class Predefined extends React.Component {
 
 
   handleChangeDate = (item, date) => {
+    if(item === "startDate") this.setState({inputStartDate: date})
+    if(item === "targetDate") this.setState({inputTargetDate: date})
     this.setState({ [item]: date });
   }
 
@@ -152,10 +156,10 @@ class Predefined extends React.Component {
       location: { state },
     } = this.props.history;
 
-    this.resetFields();
     this.props.calculateInvestment(info)
     .then(data => {
       this.setState({ installment: data.installment, expectedTotalReturns: data.expectedTotalReturns }, () => {
+        this.resetFields();
         closeOffCanvas(`offcanvas-${state?.investment.id}`);
         this.toggleConfirmationModal();
       })
@@ -543,11 +547,16 @@ class Predefined extends React.Component {
                   cards &&
                   cards.cards.length > 0 &&
                   cards.cards.map(card => (
-                    <DebitCard card={card} handleSelect={this.handleSelectCard} key={card.id} />
+                    <DebitCard 
+                    card={card} 
+                    selected={this.state.selectedCard === card}
+                    handleSelect={this.handleSelectCard} 
+                    key={card.id} />
                   ))
                 }
                 
-                <div className={`d-flex p-3 mb-2 cursor-pointer debit-card`} onClick={this.handleAutomateStep}>
+                <div className={`position-relative d-flex p-3 mb-2 cursor-pointer debit-card`} onClick={this.handleAutomateStep}>
+                    { (this.state.newPayment ? true : false) && <img className="position-absolute" width={16} src={require("#/assets/icons/success.svg")} style={{zIndex: 1, right: "0.35rem", top: "0.35rem"}} />}
                   <div className="d-flex mr-3">
                     <img src={require('#/assets/icons/plus-circle.svg')} alt="icon" width={"35px"}/>
                   </div>
