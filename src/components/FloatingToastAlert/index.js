@@ -25,6 +25,8 @@ class FloatingToastAlert extends React.Component {
   render() {
     const { alert } = this.props;
     return (
+      <>
+      { alert.type !== "error" ?
       <div className="alert-modal">
         <Modal onClose={this.props.removeAlert}>
           <div className="text-right pb-3">
@@ -62,14 +64,15 @@ class FloatingToastAlert extends React.Component {
           </div>
         </Modal>
       </div>
-
-      // <div className="floating-popup">
-      //   <div className={`floating-popup--${alert.type}`}>
-      //     <div className="floating-popup__message font-md">
-      //       {alert.message}
-      //     </div>
-      //   </div>
-      // </div>
+:
+      <div className="floating-popup">
+        <div className={`floating-popup--${alert.type}`}>
+          <div className="floating-popup__message font-md">
+            {alert.message}
+          </div>
+        </div>
+      </div>}
+      </>
     );
   }
 }

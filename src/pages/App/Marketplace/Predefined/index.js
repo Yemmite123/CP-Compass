@@ -36,6 +36,11 @@ class Predefined extends React.Component {
 
   state = {
     type: '',
+    inputTitle: '',
+    inputTarget: '',
+    inputAmount: '',
+    inputAddEndDate: false,
+    inputFrequencyAmount: '',
     title: '',
     target: '',
     targetDate: new Date(),
@@ -75,13 +80,31 @@ class Predefined extends React.Component {
     if(name === 'target' || name === 'amount') {
       this.setState({ errors: null});
         return this.setState({ [name]: formatCurrencyToString(value)}, ()=> {
+          if(name === "target") this.setState({inputTarget: formatCurrencyToString(value)}) ;
+    
           if(isNaN(this.state[name])) {
             return this.setState({ errors: { [name]: 'enter a valid number' } })
           }
         });
       }
+
+      if(name === "title") this.setState({inputTitle: value});
+      if(name === "startDate") this.setState({inputStartDate: value})
+      if(name === "frequency") this.setState({inputFrequency: value})
+      if(name === "targetDate") this.setState({inputTargetDate: value})
+  
     this.setState({ [name]: value });
   }
+
+  resetFields = () =>{
+    this.setState({ inputTitle: "" });
+    this.setState({ inputTarget: "" });
+    this.setState({ inputTargetDate: new Date() });
+    this.setState({ inputFrequency: "" });
+    this.setState({ inputStartDate: new Date() });
+    this.setState({inputFrequencyAmount: ""});
+  }
+
 
   handleChangeDate = (item, date) => {
     this.setState({ [item]: date });
@@ -129,6 +152,7 @@ class Predefined extends React.Component {
       location: { state },
     } = this.props.history;
 
+    this.resetFields();
     this.props.calculateInvestment(info)
     .then(data => {
       this.setState({ installment: data.installment, expectedTotalReturns: data.expectedTotalReturns }, () => {
@@ -291,7 +315,7 @@ class Predefined extends React.Component {
 
   render() {
     const { 
-      title, target, targetDate, 
+      title, target, targetDate, inputTitle, inputTarget, inputStartDate, inputTargetDate, inputFrequency,
       startDate, confirmationModal, showTransactionModal, 
       pinError, errors, addMoneyModal,
       fundingSourceModal, selectedMethod, selectedMethodError,
@@ -574,7 +598,7 @@ class Predefined extends React.Component {
               </div>
             </Modal>
           }
-         <OffCanvas title="" position="end" id={`offcanvas-${state?.investment.id}`}>
+         <OffCanvas title="" position="end" id={`offcanvas-${state?.investment.id}`} onClose={this.resetFields}>
           <div className="px-3 h-100 d-flex flex-column flex-grow-1">
             <div className='mt-3 mb-2'>
               <h4 className="font-bolder text-blue">Create new {state?.investment.name} plan</h4>
@@ -588,7 +612,7 @@ class Predefined extends React.Component {
                   label="Plan title"
                   placeholder="Plan title"
                   name="title"
-                  value={title}
+                  value={inputTitle}
                   error={errors ? errors.title : (errorObject && errorObject['title'])}
               />
             </div>
@@ -600,7 +624,7 @@ class Predefined extends React.Component {
                   label="Target amount"
                   placeholder="Set target amount"
                   name="target"
-                  value={formatStringToCurrency(target)}
+                  value={formatStringToCurrency(inputTarget)}
                   error={errors ? errors.target : (errorObject && errorObject['target'])}
                 />
               
@@ -612,7 +636,7 @@ class Predefined extends React.Component {
                   label="Start Date"
                   placeholder="Set start date"
                   name="startDate"
-                  value={startDate}
+                  value={inputStartDate}
                   error={errors ? errors.startDate : (errorObject && errorObject['startDate'])}
                   min={new Date()}
                 />
@@ -624,7 +648,7 @@ class Predefined extends React.Component {
                   label="Target date"
                   placeholder="Set target date"
                   name="targetDate"
-                  value={targetDate}
+                  value={inputTargetDate}
                   error={errors ? errors.targetDate : (errorObject && errorObject['targetDate'])}
                   min={new Date()}
                 />
@@ -638,7 +662,7 @@ class Predefined extends React.Component {
                   name="frequency"
                   boxClasses="mt-3"
                   options={investmentFrequency}
-                  value="value"
+                  value={inputFrequency}
                   optionName="name"
                   error={errors ? errors.frequency : (errorObject && errorObject['frequency'])}
                 />

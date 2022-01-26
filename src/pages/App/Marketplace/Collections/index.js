@@ -37,9 +37,12 @@ class Collections extends React.Component {
   state = {
     type: "",
     title: "",
+    inputTitle: "",
+    inputTarget: "",
     target: "",
     frequency: "",
     startDate: new Date(),
+    inputAmount: "",
     amount: "",
     confirmationModal: false,
     showTransactionModal: false,
@@ -50,6 +53,7 @@ class Collections extends React.Component {
     enterAmountModal: false,
     showAutomateModal: false,
     finalAmount: "",
+    inputFinalAmount: "",
     pin: {},
     pinError: null,
     selectedMethod: "",
@@ -73,13 +77,26 @@ class Collections extends React.Component {
     const { name, value } = event.target;
     if (name === "target" || name === "amount" || name === "finalAmount") {
       this.setState({ errors: null });
+      name === "target" ? this.setState({inputTarget: value}) 
+      : name === "amount" ? this.setState({inputAmount: value}) 
+      : name === "finalAmount" ?? this.setState({inputFinalAmount: value});
+
       return this.setState({ [name]: formatCurrencyToString(value) }, () => {
+
         if (isNaN(this.state[name])) {
           return this.setState({ errors: { [name]: "enter a valid number" } });
         }
       });
     }
+    name === "finalAmount" ?? this.setState({inputTitle: value});
     this.setState({ [name]: value });
+  };
+
+  resetFields = () => {
+    this.setState({ inputAmount: "" });
+    this.setState({ inputTitle: "" });
+    this.setState({ inputTarget: "" });
+    // this.setState({ selectedMethod: null });
   };
 
   handleChangeDate = (item, date) => {
@@ -118,8 +135,9 @@ class Collections extends React.Component {
     const {
       location: { state },
     } = this.props.history;
-    
+
     closeOffCanvas(`offcanvas-${state?.investment.id}`);
+    this.resetFields();
     this.toggleConfirmationModal();
   };
 
@@ -306,9 +324,12 @@ class Collections extends React.Component {
   render() {
     const {
       amount,
+      inputAmount,
       selectedMethod,
       frequency,
       title,
+      inputTitle,
+      inputTarget,
       target,
       startDate,
       confirmationModal,
@@ -575,8 +596,11 @@ class Collections extends React.Component {
                     placeholder="Amount"
                     name="finalAmount"
                     value={formatStringToCurrency(finalAmount)}
-                    error={errors ? errors.finalAmount : (errorObject && errorObject['amount'])}
-                    
+                    error={
+                      errors
+                        ? errors.finalAmount
+                        : errorObject && errorObject["amount"]
+                    }
                   />
                 </div>
                 <div className="mt-4">
@@ -634,20 +658,50 @@ class Collections extends React.Component {
                   </p>
                 </div>
                 <div className="mt-4">
-                {fundingSource.map(method => (
-                  <div id={method.value} className={`d-flex p-3 mb-2 ${selectedMethod === method.value ? "selected" : ""} payment-method`} onClick={this.handleSelectMethod}>
-                    <div className="d-flex mr-3">
-                      <img src={require(`#/assets/icons/${method.imgUrl}.svg`)} alt="icon" />
+                  {fundingSource.map((method) => (
+                    <div
+                      id={method.value}
+                      className={`d-flex p-3 mb-2 ${
+                        selectedMethod === method.value ? "selected" : ""
+                      } payment-method`}
+                      onClick={this.handleSelectMethod}
+                    >
+                      <div className="d-flex mr-3">
+                        <img
+                          src={require(`#/assets/icons/${method.imgUrl}.svg`)}
+                          alt="icon"
+                        />
+                      </div>
+                      <div>
+                        <h6 className="text-left mb-0 font-bolder">
+                          {method.label}
+                        </h6>
+                        {method.value === "card" ? (
+                          cards &&
+                          cards.cards.length > 0 && (
+                            <p className="text-grey mb-0">
+                              {cards.cards[0].brand} ending in{" "}
+                              <span className="text-blue">
+                                {" "}
+                                **** {cards.cards[0].last4}
+                              </span>
+                            </p>
+                          )
+                        ) : (
+                          <p className="text-grey mb-0">
+                            Available balance{" "}
+                            <span className="text-blue">
+                              {" "}
+                              &#x20A6;{" "}
+                              {walletDetails && walletDetails.wallet.NGN
+                                ? walletDetails.wallet.NGN
+                                : 0}
+                            </span>
+                          </p>
+                        )}
+                      </div>
                     </div>
-                    <div>
-                    <h6 className="text-left mb-0 font-bolder">{method.label}</h6>
-                    { method.value === "card" ? 
-                     cards &&
-                     cards.cards.length > 0 && <p className='text-grey mb-0'>{cards.cards[0].brand} ending in <span className='text-blue'> **** {cards.cards[0].last4}</span></p> : 
-                      <p className='text-grey mb-0'>Available balance <span className='text-blue'> &#x20A6; {walletDetails && walletDetails.wallet.NGN ? walletDetails.wallet.NGN : 0}</span></p>}
-                    </div>
-                  </div>
-                ))}        
+                  ))}
                 </div>
                 <div className="mt-4">
                   {selectedMethodError && (
@@ -710,7 +764,7 @@ class Collections extends React.Component {
                   >
                     <div className="d-flex mr-3">
                       <img
-                        src={require('#/assets/icons/plus-circle.svg')}
+                        src={require("#/assets/icons/plus-circle.svg")}
                         width={"35px"}
                         alt="icon"
                       />
@@ -797,6 +851,7 @@ class Collections extends React.Component {
           title=""
           position="end"
           id={`offcanvas-${state?.investment.id}`}
+          onClose={this.resetFields}
         >
           <div className="px-3 h-100 d-flex flex-column flex-grow-1">
             <div className="mt-3 mb-2">
@@ -814,7 +869,7 @@ class Collections extends React.Component {
                 label="Plan title"
                 placeholder="Plan title"
                 name="title"
-                value={title}
+                value={inputTitle}
                 error={
                   errors ? errors.title : errorObject && errorObject["title"]
                 }
@@ -828,7 +883,7 @@ class Collections extends React.Component {
                 label="Target amount"
                 placeholder="Set target amount"
                 name="target"
-                value={formatStringToCurrency(target)}
+                value={formatStringToCurrency(inputTarget)}
                 error={
                   errors ? errors.target : errorObject && errorObject["target"]
                 }
@@ -843,7 +898,6 @@ class Collections extends React.Component {
                 name="frequency"
                 boxClasses="mt-3"
                 options={investmentFrequency}
-                value="value"
                 optionName="name"
                 error={
                   errors
@@ -860,7 +914,7 @@ class Collections extends React.Component {
                 label="Frequency amount"
                 placeholder="Set frequency amount"
                 name="amount"
-                value={formatStringToCurrency(amount)}
+                value={formatStringToCurrency(inputAmount)}
                 error={
                   errors
                     ? errors.frequencyAmount
@@ -892,9 +946,7 @@ class Collections extends React.Component {
               )}
               <button
                 className="w-100 py-3 btn btn-primary btn-md-block"
-                onClick={
-                  this.handleComfirmation
-                }
+                onClick={this.handleComfirmation}
               >
                 Save changes
               </button>

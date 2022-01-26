@@ -100,7 +100,7 @@ class Insights extends React.Component {
           <div className="row mt-3 no-gutters">
             <div className="col-md-5">
             <div className="main-blog-img-container">
-              <img src={posts.latest[0].image} alt="feature" className="img-fluid main-blog-img" />
+              <img src={posts.latest ? posts.latest[0].image : ""} alt="feature" className="img-fluid main-blog-img" />
             </div>
             </div>
 <div className="col-md-7">
