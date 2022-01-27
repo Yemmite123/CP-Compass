@@ -40,9 +40,9 @@ class DashboardMenu extends Component {
             path: '/app/profile',
         },
         {
-            name: 'Insights',
+            name: 'Blogs',
             icon: BlogIcon,
-            path: '/app/insights',
+            path: '/app/blogs',
         },
         {
             name: 'Calculator',

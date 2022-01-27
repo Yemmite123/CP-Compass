@@ -35,28 +35,29 @@ class Insights extends React.Component {
 
   handleNavigateToPost = (insight) => {
     this.props.history.push({
-      pathname: `/app/insights/insight/${insight.slug}`,
+      pathname: `/app/blogs/blog/${insight.slug}`,
       state: { routeName: insight.title }
     })
   }
 
   handleNavigateToCategory = (category) => {
+    console.log(category)
     this.props.history.push({
-      pathname: `/app/insights/category/${category.slug}`,
-      state: { routeName: category.name, category }
+      pathname: `/app/blogs/category/${category}`,
+      state: { routeName: category, category }
     })
   }
 
   navigateToTrending = () => {
     this.props.history.push({
-      pathname: `/app/insights/trending`,
+      pathname: `/app/blogs/trending`,
       state: { routeName: 'Trending Posts' }
     })
   }
 
   navigateToLatest = () => {
     this.props.history.push({
-      pathname: `/app/insights/latest`,
+      pathname: `/app/blogs/latest`,
       state: { routeName: 'Latest Posts' }
     })
   }
@@ -74,18 +75,18 @@ class Insights extends React.Component {
     const defaultMenu = [
       {
         name: 'Home',
-        path: '/app/insights',
-        title: 'Insights',
+        path: '/app/blogs',
+        title: 'Blogs',
       },
       {
         name: 'Trending Topics',
-        path: '/app/insights/trending',
+        path: '/app/blogs/trending',
         title: 'Trending',
       }
     ]
     const menus = posts?.category?.map(item => ({
       name: item.name,
-      path: `/app/insights/category/${item.slug}`,
+      path: `/app/blogs/category/${item.slug}`,
       title: item.name,
     }))
 
@@ -104,17 +105,23 @@ class Insights extends React.Component {
               <img src={posts.latest[0].image} alt="feature" className="img-fluid main-blog-img" />
             </div>
             </div>
-<div className="col-md-7">
+            <div className="col-md-7">
             <div className="blog-info-main p-4">
               <div className="content mb-3">
-                <h4 className="cursor-pointer font-weight-normal">{posts.latest[0].title}</h4>
+                <h3 className="font-weight-bold">{posts.latest[0].title}</h3>
                 <div className="d-flex align-items-center my-3">
-                  <img src={posts.latest[0].user.pictureUrl} alt="feature" className="img-fluid profile-photo" />
-                  <p className="text-grey text-small mb-0 ml-2">{posts.latest[0].user.firstName} {posts.latest[0].user.lastName} on {moment(posts.latest[0].created_at).format('MMMM Do YYYY')}</p>
+                  {posts.latest[0].user.pictureUrl ?
+                    <img src={posts.latest[0].user.pictureUrl} alt="feature" className="img-fluid profile-photo" />
+                    :<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                      <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                      </svg>
+                  }
+                  <p className="text-small mb-0 ml-2">{posts.latest[0].user.firstName} {posts.latest[0].user.lastName} on {moment(posts.latest[0].created_at).format('MMMM Do YYYY')}</p>
                 </div>
-                <div>{posts.latest[0].description}...</div>
+                <div> <p className="font-weight-light my-4">  {posts.latest[0].description}...</p></div>
               </div>
-              <span className={`blog-category-${posts.latest[0].category.name} cursor-pointer`} onClick={() => this.handleNavigateToCategory()}>
+              <span className={`blog-category blog-category-${posts.latest[0].category.name} cursor-pointer`} onClick={() => this.handleNavigateToCategory(posts.latest[0].category)}>
                 {posts.latest[0].category.name}
               </span>
             </div>
@@ -125,23 +132,23 @@ class Insights extends React.Component {
 
         {posts &&
           <h3 className="text-left text-black mb-4 mt-5">Latest Topics</h3>}
-        <div className="row">
-          {posts &&
-            (posts?.latest?.length > 0 ?
-              posts?.latest?.map(blogpost => (
-                <div className="col-md-4" key={blogpost.id}>
-                  <BlogItem item={blogpost} navigateToItem={this.handleNavigateToPost} navigateToCategory={this.handleNavigateToCategory} />
-                </div>
-              ))
-              :
-              <div className="text-center w-100 mt-2">
-                <p className="text-grey mt-5">No Latest topics</p>
-              </div>)
-          }
-        </div>
+          <div className="row">
+            {posts &&
+              (posts?.latest?.length > 0 ?
+                posts?.latest?.map(blogpost => (
+                  <div className="col-md-4" key={blogpost.id}>
+                    <BlogItem item={blogpost} navigateToItem={this.handleNavigateToPost} navigateToCategory={this.handleNavigateToCategory} />
+                  </div>
+                ))
+                :
+                <div className="text-center w-100 mt-2">
+                  <p className="text-grey mt-5">No Latest topics</p>
+                </div>)
+            }
+          </div>
         {posts?.latest.length > 0 &&
           <div className="text-center mt-4">
-            <button className="btn btn-stroke-black btn-sm text-center" onClick={this.navigateToLatest} >
+            <button className="btn btn-stroke-black rounded btn-sm text-center" onClick={this.navigateToLatest} >
               See more
             </button>
           </div>
@@ -165,7 +172,7 @@ class Insights extends React.Component {
         </div>
         {posts?.trending.length > 0 &&
           <div className="text-center mt-4">
-            <button className="btn btn-stroke-black btn-sm text-center" onClick={this.navigateToTrending}>
+            <button className="btn btn-stroke-black btn-sm rounded text-center" onClick={this.navigateToTrending}>
               See more
             </button>
           </div>
@@ -177,9 +184,9 @@ class Insights extends React.Component {
               {item && item?.posts.length > 0 &&
                 <div className="d-flex justify-content-between mb-4">
                   <div className="d-flex align-items-center">
-                    <span className={`bar-${item.name}`} /><h4 className="text-center font-light text-black ml-2 mb-0">{item.name}</h4>
+                    <span className={`bar-${item.name}`} /><h4 className="text-center font-weight-bold text-black ml-2 mb-0">{item.name}</h4>
                   </div>
-                  <div className={`${item.name} cursor-pointer`} onClick={() => this.handleNavigateToCategory(item)}>All {item.name} articles <Arrow /> </div>
+                  <div className={`${item.name} cursor-pointer`} onClick={() => this.handleNavigateToCategory(item.category?.name)}>All {item.name} articles <Arrow /> </div>
                 </div>
               }
               <div className="row">

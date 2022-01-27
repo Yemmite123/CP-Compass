@@ -165,19 +165,19 @@ class App extends Component {
                             <Route path={`${path}/calculator`}>
                               <Calculator />
                             </Route>
-                            <Route exact path={`${path}/insights`}>
+                            <Route exact path={`${path}/blogs`}>
                               <Insights />
                             </Route>
-                            <Route exact path={`${path}/insights/insight/:slug`}>
+                            <Route exact path={`${path}/blogs/blog/:slug`}>
                               <SingleInsight />
                             </Route>
-                            <Route path={`${path}/insights/trending`}>
+                            <Route path={`${path}/blogs/trending`}>
                               <TrendingInsights />
                             </Route>
-                            <Route path={`${path}/insights/latest`}>
+                            <Route path={`${path}/blogs/latest`}>
                               <LatestInsights />
                             </Route>
-                            <Route path={`${path}/insights/category/:slug`}>
+                            <Route path={`${path}/blogs/category/:slug`}>
                               <InsightCategory />
                             </Route>
                           </>

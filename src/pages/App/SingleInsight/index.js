@@ -86,6 +86,13 @@ class SingleInsight extends React.Component {
 
     this.setState({ [name]: value });
   }
+  
+  handleNavigateToCategory(categoryName) {
+    this.props.history.push({
+      pathname: `/app/blogs/category/${categoryName}`,
+      state: { routeName: categoryName}
+    })
+  }
 
   handlePostComment = (event) => {
     const { match: { params }, postComment, getComments  } = this.props
@@ -159,7 +166,7 @@ class SingleInsight extends React.Component {
 
   handleNavigateToPost = (insight) => {
     this.props.history.push({
-      pathname: `/app/insights/insight/${insight.slug}`,
+      pathname: `/app/blogs/blog/${insight.slug}`,
       state: { routeName: insight.title }
     })
   }
@@ -210,58 +217,47 @@ class SingleInsight extends React.Component {
         }
         {post?.post &&
           <>
-          <div className="row">
+          <div className="">
 
-            <div className="col-md-9">
-              <h3 className="mt-3">{post?.post?.title}</h3>
-              <div className="d-flex align-items-center mt-3 mb-3">
-                  <img src={post?.post?.user?.pictureUrl ? post?.post?.user?.pictureUrl : AdminImg } className="mr-3 profile-photo" alt="author" />
-                  <p className="mb-0">{post?.post?.user?.firstName} {post?.post?.user?.lastName} on {moment(post?.post?.created_at).format('MMM DD, YYYY')}</p>
-                </div>
+            <div className="">
+           
               <img
                 className="feature-img img-fluid mt-3"
                 alt="feature"
                 src={post?.post?.image}
               />
-              <div className="content mt-3 pb-4">
-                <div ref={this.contentRef}></div>
-              </div>
-            </div>
+                  <h3 className="mt-4 font-weight-bold">{post?.post?.title}</h3>
 
-            <div className="col-md-3">
-              <p className="text-black mt-3">Sign up to our newsletter.</p>
-              <p className="text-grey">Get the latest articles on all things data delivered straight to your inbox.</p>
-              <Textbox
-                  name="email"
-                  label="Your email"
-                  placeholder="Your work email"
-                  boxClasses="mt-3"
-                  type="text"
-                  value={this.state.email}
-                />
-                <button className="btn btn-sm btn-primary mt-2">
-                  Subscribe
-                </button>
+                 <div className="d-flex align-items-center mt-3 mb-3">
+                  <img src={post?.post?.user?.pictureUrl ? post?.post?.user?.pictureUrl : AdminImg } className="mr-3 profile-photo" alt="author" />
+                  <p className="mb-0">{post?.post?.user?.firstName} {post?.post?.user?.lastName} on {moment(post?.post?.created_at).format('MMM DD, YYYY')}</p>
+                </div>
+                <div className='row'>
+                  <div className="content mt-3 pb-4 col-md-11">
+                    <div ref={this.contentRef}></div>
+                  </div>
 
-                <hr />
-              <div className="d-flex align-items-center flex-wrap social-share">
-                <p className="mb-0 mr-3 text-grey">Share </p>
-                  <LinkedinIcon size={25} round={true} onClick={this.shareToLinkedin} className="mr-2 cursor-pointer" />
-                <WhatsappShareButton className="mr-2" url={window.location.href} title={post?.post?.title}>
-                  <WhatsappIcon size={25} round={true} />
-                </WhatsappShareButton>
-                <EmailShareButton className="mr-2" url={window.location.href} subject={post?.post?.title} body={`${post?.post?.description}... \n \n Read full news here: \n`} separator={''}>
-                  <EmailIcon size={25} round={true} />
-                </EmailShareButton>
-                <TwitterShareButton className="mr-2" url={window.location.href} title={post?.post?.title} hashtag={['#CPCompass', '#investment']}>
-                  <TwitterIcon size={25} round={true} />
-                </TwitterShareButton>
-                <FacebookShareButton quote={post?.post?.title} url={window.location.href} hashtag='#CPCompass'>
-                  <FacebookIcon size={25} round={true} />
-                </FacebookShareButton>
-                <img src={CopyLink} alt="copy" className="ml-2 cursor-pointer" onClick={this.copyLink}/>
-              </div>
-              <hr />
+                  <div className="col-md-1">
+                    <div className="d-flex flex-column align-items-center flex-wrap social-share">
+
+                        <LinkedinIcon size={25} round={true} onClick={this.shareToLinkedin} className="my-1 cursor-pointer" />
+                      <WhatsappShareButton className="my-1" url={window.location.href} title={post?.post?.title}>
+                        <WhatsappIcon size={25} round={true} />
+                      </WhatsappShareButton>
+                      <EmailShareButton className="my-1" url={window.location.href} subject={post?.post?.title} body={`${post?.post?.description}... \n \n Read full news here: \n`} separator={''}>
+                        <EmailIcon size={25} round={true} />
+                      </EmailShareButton>
+                      <TwitterShareButton className="my-1" url={window.location.href} title={post?.post?.title} hashtag={['#CPCompass', '#investment']}>
+                        <TwitterIcon size={25} round={true} />
+                      </TwitterShareButton>
+                      <FacebookShareButton quote={post?.post?.title} url={window.location.href} hashtag='#CPCompass'>
+                        <FacebookIcon size={25} round={true} />
+                      </FacebookShareButton>
+                      {/* <img src={CopyLink} alt="copy" className="ml-2 cursor-pointer" onClick={this.copyLink}/> */}
+                    </div>
+                  </div>
+                </div>
+
             </div>
           </div>
 
@@ -309,11 +305,11 @@ class SingleInsight extends React.Component {
           </div>
             <div className="recommendations mt-5">
             {post?.recommends?.length > 0 &&  <h3>More amazing articles for you</h3> }
-              <div className="row">
+              <div className="row mt-4">
               {post?.recommends?.length > 0 && 
                 post?.recommends?.map(blogpost => (
                 <div className="col-md-4" key={blogpost.id}>
-                  <BlogItem item={blogpost} navigateToItem={this.handleNavigateToPost} />
+                  <BlogItem item={blogpost} navigateToItem={this.handleNavigateToPost} navigateToCategory={this.handleNavigateToCategory}/>
                 </div>
               ))
               }

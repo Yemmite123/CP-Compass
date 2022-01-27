@@ -33,9 +33,16 @@ class InsightCategory extends React.Component {
     }
   }
 
+  handleNavigateToCategory(categoryName) {
+    this.props.history.push({
+      pathname: `/app/blogs/category/${categoryName}`,
+      state: { routeName: categoryName}
+    })
+  }
+
   handleNavigateToPost = (insight) => {
     this.props.history.push({
-      pathname: `/app/insights/insight/${insight.slug}`,
+      pathname: `/app/blogs/blog/${insight.slug}`,
       state: { routeName: insight.title }
     })
   }
@@ -69,18 +76,18 @@ class InsightCategory extends React.Component {
     const defaultMenu = [
       {
         name: 'Home',
-        path: '/app/insights',
-        title: 'Insights',
+        path: '/app/blogs',
+        title: 'Blogs',
       },
       {
         name: 'Trending Topics',
-        path: '/app/insights/trending',
+        path: '/app/blogs/trending',
         title: 'Trending',
       }
     ]
     const menus = posts?.category?.map(item => ({
       name: item.name,
-      path: `/app/insights/category/${item.slug}`,
+      path: `/app/blogs/category/${item.slug}`,
       title: item.name,
     }))
 
@@ -97,7 +104,7 @@ class InsightCategory extends React.Component {
             }
             {category?.posts?.data.length > 0 &&
           <div className="row mt-3 no-gutters">
-          <div className="col-md-5">
+            <div className="col-md-5">
                 <div className="main-blog-img-container">
                   <img src={category?.posts?.data[0].image} alt="feature" className="img-fluid main-blog-img" />
                 </div>
@@ -105,14 +112,20 @@ class InsightCategory extends React.Component {
                 <div className="col-md-7">
                 <div className="blog-info-main p-4">
                   <div className="content mb-3">
-                    <h4 className="cursor-pointer font-weight-normal" onClick={() => this.handleNavigateToPost(category?.posts?.data[0])}>{category?.posts?.data[0].title}</h4>
+                    <h3 className="cursor-pointer font-weight-bold" onClick={() => this.handleNavigateToPost(category?.posts?.data[0])}>{category?.posts?.data[0].title}</h3>
                     <div className="d-flex align-items-center my-3">
-                      <img src={category?.posts?.data[0].user.pictureUrl} alt="feature" className="img-fluid profile-photo" />
-                      <p className="text-grey text-small mb-0 ml-2">{category?.posts?.data[0].user.firstName} {category?.posts?.data[0].user.lastName} on {moment(category?.posts?.data[0].created_at).format('MMMM Do YYYY')}</p>
+                      {category?.posts.data[0].user.pictureUrl ?
+                        <img src={category?.posts.data[0].user.pictureUrl} alt="feature" className="img-fluid profile-photo" />
+                        :<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                          <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                          </svg>
+                      }
+                      <p className="text-small mb-0 ml-2">{category?.posts?.data[0].user.firstName} {category?.posts?.data[0].user.lastName} on {moment(category?.posts?.data[0].created_at).format('MMMM Do YYYY')}</p>
                     </div>
-                    <div>{category?.posts?.data[0].description}...</div>
+                    <div> <p className="font-weight-light my-4"> {category?.posts?.data[0].description}...</p></div>
                   </div>
-                  <span className={`blog-category-${category?.posts?.data[0].category.name} cursor-pointer`} onClick={() => this.handleNavigateToCategory()}>
+                  <span className={`blog-category blog-category-${category?.posts?.data[0].category.name} cursor-pointer`} onClick={() => this.handleNavigateToCategory(category?.posts?.data[0].category.name)}>
                     {category?.posts?.data[0].category.name}
                   </span>
                 </div>
@@ -121,7 +134,7 @@ class InsightCategory extends React.Component {
             }
 
             {category?.posts?.data.length > 0 && 
-            <h2 className={`text-left text-black pt-5 mt-3`}>All {category?.posts?.data[0].category.name} articles</h2>
+            <h2 className={`text-left font-weight-bold text-black pt-5 mt-3`}>All {category?.posts?.data[0].category.name} articles</h2>
             }
 
             <div className="row">
@@ -129,7 +142,7 @@ class InsightCategory extends React.Component {
                 (category?.posts?.data.length > 0 ?
                   category?.posts?.data.map(blogpost => (
                     <div className="col-md-12 mt-4" key={blogpost.id}>
-                      <MainBlogItem item={blogpost} navigateToItem={this.handleNavigateToPost} />
+                      <MainBlogItem item={blogpost} navigateToItem={this.handleNavigateToPost} navigateToCategory={this.handleNavigateToCategory}  />
                     </div>
                   ))
                   :
