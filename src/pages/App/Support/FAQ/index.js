@@ -29,30 +29,34 @@ class FAQ extends React.Component {
     const { selectedItem } = this.state;
     return (
       <div className="faq-page">
-        <div>
+        <div className="position-relative">
           {loading &&
             <div className="text-center p-4">
               <div className="spinner-border spinner-border-primary text-primary spinner-border-md mr-2"></div>
             </div>
           }
-          {faq && faq?.faq.length > 0 ?
-            faq?.faq.slice(0,4).map((item, index) => (
-              <Accordion
-                item={item}
-                key={item.id}
-                selectedItem={selectedItem}
-                selectItem={this.handleSelectItem}
-                open={selectedItem === item.id}
-                closeItem={this.closeItem}
-              />
-            ))
-          :
-          (!loading && 
-            <div className="text-center mt-3">
-            <p className="font-light text-medium">No FAQs available</p>
-          </div>
-          )
+          <div className="row gap-3">
+            {faq && faq?.faq.length > 0 ?
+              faq?.faq.slice(0,4).map((item, index) => (
+                <div className="col-lg-6 p-3">
+                  <Accordion
+                    item={item}
+                    key={item.id}
+                    selectedItem={selectedItem}
+                    selectItem={this.handleSelectItem}
+                    open={selectedItem === item.id}
+                    closeItem={this.closeItem}
+                  />
+                </div>
+              ))
+            :
+            (!loading && 
+              <div className="text-center mt-3">
+              <p className="font-light text-medium">No FAQs available</p>
+              </div>
+            )
           }
+          </div>
         </div>
         <div className="text-center mt-5">
           {!loading &&

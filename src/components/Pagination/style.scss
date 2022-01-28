@@ -1,21 +1,25 @@
 $scale: 16;
 .cp-pagination{
-    background-color: transparent;
+    background-color: rgba(93, 101, 172, 1);;
     border-bottom: 1px solid #d1d1d1;
     padding: 10px 10px;
     display: flex;
     font-size: 14rem/$scale;
 
     &__limit{
-        margin-right: auto;
+        margin-left: auto;
     }
 
     & select{
         height: 20rem/$scale;
         font-size: 12rem/$scale;
-        font-weight: 700;
-        border: 1px solid #7E7E7E;
-        border-radius: 2px;
+        font-weight: 400;
+        border: none;
+        padding: inherit;
+        margin: inherit;
+        color: white;
+        background-color: rgba(93, 101, 172, 1);
+        outline: none;
     }
 
     &__arrow{

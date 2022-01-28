@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import DashboardBodyMenu from '#/components/DashboardBodyMenu';
+import Back from '#/components/Back';
 import Tickets from './Tickets';
 import SingleTicket from './SingleTicket';
 import UserGuide from './UserGuide';
@@ -32,6 +33,7 @@ class Support extends React.Component {
     ]
     return (
       <div className="support-page">
+        <Back/>
         <Switch>
           <Route exact path={path}>
             <Redirect to={{ pathname:`${path}/tickets`, state: { routeName: 'Support' }}} />

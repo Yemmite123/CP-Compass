@@ -40,7 +40,7 @@ class Profile extends React.Component {
         title: 'Profile',
       },
       {
-        name: 'Segments & Risk Profile',
+        name: 'Trybe & Risk Profile',
         path: '/app/profile/risk-profile',
         title: 'Profile',
       },

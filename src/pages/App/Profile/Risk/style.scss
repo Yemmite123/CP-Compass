@@ -22,15 +22,26 @@
     }
   }
 
+  .guide-item{
+    .join{
+      color: rgb(201, 91, 16, 1);
+      font-size: 12px;
+    }
+  }
+
+  .user-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    object-fit: cover;
+  }
+  
   .user-img-container {
-    border-radius: 50px;
+    border-radius: 100%;
     width: 70px;
     height: 70px;
     overflow: hidden;
-    
-    .user-img {
-      height: 100%;
-      object-fit: cover;
-    }
+
+
   }
 }

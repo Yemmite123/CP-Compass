@@ -22,13 +22,7 @@ const RangeSelector = ({ options, handleSelectedRange, selectedOption,...props }
           </div>
         ))}
       </div>
-      <div className="row justify-content-between range">
-        {options && options.map(option => (
-          <div className="text-center item pb-3" key={option.scale}>
-            <img src={Stroke} alt="stroke" />
-          </div>
-        ))}
-      </div>
+    
       <Slider
         min={0}
         max={100}

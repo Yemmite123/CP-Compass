@@ -1,5 +1,4 @@
 .single-ticket-page {
-  margin-bottom: 50px;
 
   .cp-modal {
     .dialogue {
@@ -24,7 +23,7 @@
   }
   .message-container {
     height: 55vh;
-    overflow: scroll;
+    overflow-y: scroll;
   }
   .message-area {
     form {
@@ -44,6 +43,7 @@
 
     textarea {
       resize: none;
+      outline: none;
     }
     .attachment-section {
       width: 5%;

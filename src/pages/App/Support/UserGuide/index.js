@@ -81,7 +81,7 @@ class UserGuide extends React.Component {
             {guides && guides.length > 0 ?
               guides.map(guide => (
                 <div className="col-md-4 mt-3" key={guide.id}>
-                  <div className="guide-item p-5">
+                  <div className="guide-item p-3 d-flex flex-column justify-content-between">
                     {guide.image && <img src={guide.image} alt="" className="img-fluid attachment-img" />}
                     <h3 className="text-medium mt-3">{guide.title}</h3>
                     <p className="font-light">{guide?.content?.length > 40 ? `${guide?.content?.substring(0,40)}...` : guide?.content}</p>
@@ -105,13 +105,13 @@ class UserGuide extends React.Component {
                 <span className="cursor-pointer" onClick={this.handleHome}>Home</span>
               </span> {'>'} <span className="text-blue"> {selectedGuide && selectedGuide.title}</span> 
             </p>
-            <h3 className="text-medium">Topic: {selectedGuide && selectedGuide.name}</h3>
-            <p className="font-light text-small">Genegeral information about {selectedGuide && selectedGuide.name}</p>
+            <h3 className="text-center text-medium font-weight-bold text-uppercase">Topic: {selectedGuide && selectedGuide.title}</h3>
+            <p className="font-light text-center">General information about {selectedGuide && selectedGuide.title}</p>
             {selectedGuide && selectedGuide.guides?.length > 0 ?
               selectedGuide.guides.map(guide => (
-                <div className="d-flex align-items-center" key={guide.id}>
+                <div className="d-flex align-items-center mb-2" key={guide.id}>
                   <img src={require('#/assets/icons/external-link.svg')} className="mr-2" alt="link"/>
-                  <p className="text-blue mb-0 text-small cursor-pointer" onClick={() => this.handleSelectedGuideItem(guide.id)}>{guide.title}</p>
+                  <p className="text-blue mb-0 cursor-pointer" onClick={() => this.handleSelectedGuideItem(guide.id)}>{guide.title}</p>
                 </div>
               ))
               : <p> No items for this guide</p>
@@ -126,7 +126,7 @@ class UserGuide extends React.Component {
                 </span><span className="text-blue"> {selectedGuideItem && selectedGuideItem.title}
               </span>
             </p>
-            <h3>{selectedGuideItem && selectedGuideItem.title}</h3>
+            <h3 className="text-center text-medium font-weight-bold text-uppercase mb-4">{selectedGuideItem && selectedGuideItem.title}</h3>
             <p>{selectedGuideItem && selectedGuideItem.content}</p>
             <div>
             {selectedGuideItem?.image && <img src={selectedGuideItem?.image} alt="attachment" className="attachment-img img-fluid" />}

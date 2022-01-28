@@ -8,7 +8,9 @@ import Modal from '#/components/Modal';
 import DataTable from '#/components/DataTable';
 import DragDropFileInput from '#/components/DragDropFileInput';
 import Pagination from '#/components/Pagination';
-import { validateFields, serializeErrors } from '#/utils'
+import Textbox from '#/components/Textbox';
+import OffCanvas from "#/components/OffCanvas";
+import { validateFields, serializeErrors,  openOffCanvas, closeOffCanvas } from '#/utils'
 import { columns } from './utils';
 import './style.scss';
 
@@ -51,9 +53,14 @@ class Tickets extends React.Component {
 
   toggleNewModal = () => {
     this.setState(prevState => ({ showNewModal : !prevState.showNewModal }));
+    openOffCanvas("ticket-offcanvas");
     if(this.state.showNewModal) {
       return this.setState({ title: '', fileNames: [], files: [], issue: '', errors: null })
     }
+  }
+
+  resetFields = ()=>{
+    this.setState({ title: '', fileNames: [], files: [], issue: '', errors: null });
   }
 
   submitNewTicket = (event) => {
@@ -86,6 +93,8 @@ class Tickets extends React.Component {
     createNewTicket(formData)
       .then(data => {
         this.toggleNewModal();
+        this.resetFields();
+        closeOffCanvas('ticket-offcanvas');
         return this.props.getTickets(10, 1);
       });
   }
@@ -104,86 +113,89 @@ class Tickets extends React.Component {
 
     return (
       <div className="tickets-page">
-        {showNewModal &&
-          <Modal onClose={this.toggleNewModal}>
-            <div className="row">
-              <div className="col-md-2">
-                <p className="cursor-pointer" onClick={this.toggleNewModal}>{'< Back'}</p>
-              </div>
-              <div className="col-md-8 text-center">
-                <p className="text-deep-blue">Create New Ticket</p>
-              </div>
+            
+        <OffCanvas title="" position="end" id="ticket-offcanvas" onClose={this.resetFields}>
+          <div className="px-3 h-100 d-flex flex-column flex-grow-1">
+            <div className="mt-3 mb-2">
+              <h3 className="font-bolder text-blue">Create Ticket</h3>
+              <p>Describe an Issue you need to support with</p>
             </div>
-            <form className="mt-2" onSubmit={this.submitNewTicket}>
-              <div className="row align-items-center">
-                <div className="col-md-3">
-                  <label className="text-grey mb-0">Title of Ticket</label>
+
+            <div className="mt-3">
+              <p>Name of Ticket</p>
+              <Textbox
+                onChange={this.handleChange}
+                type="text"
+                label="Title"
+                placeholder="Title"
+                name="title"
+                value={title}
+                error={
+                  errors ? errors.title : errorObject && errorObject["title"]
+                }
+              />
+            </div>
+
+            <div className="mt-3">
+              <p>Describe your issue</p>
+                <div className="">
+                      <textarea
+                      onChange={this.handleChange}
+                      rows={5}
+                      name="issue"
+                      value={issue}
+                      className="w-100 border-faint border-radius-default"
+                    />
                 </div>
-                <div className="col-md-9">
-                  <input
-                    name="title"
-                    value={title}
-                    onChange={this.handleChange}
-                    className="form-control"
-                  />
-                  <p className="text-error mt-0 mb-0">{errors ? errors.title : (errorObject && errorObject['title'])}</p>
-                </div>
-              </div>
-              <div className="row mt-4">
-                <div className="col-md-3">
-                  <label className="text-grey mb-0">Describe your issue</label>
-                </div>
-                <div className="col-md-9">
-                  <textarea
-                    name="issue"
-                    value={issue}
-                    onChange={this.handleChange}
-                    className="form-control"
-                    placeholder="compose your message"
-                    rows={6}
-                  />
-                  <p className="text-error mt-0 mb-0">{errors ? errors.issue : (errorObject && errorObject['description'])}</p>
-                </div>
-              </div>
-              <div className="row mt-4">
-                <div className="col-md-3">
-                  <label className="text-grey mb-0">Attach file</label>
-                </div>
-                <div className="col-md-9">
-                  <DragDropFileInput 
+            </div>
+            <div className="mt-3">
+              <p>Attach Supporting Evidence</p>
+                <DragDropFileInput 
                     handleFile={this.handleFile}  
                     error={errors ? errors.file : (errorObject && errorObject['attachment.0'])} 
                   />
                   <p className="text-error mt-0 mb-0">{errors ? errors.file : (errorObject && errorObject['attachment.0'])}</p>
-                  {error && typeof error === 'string' && <p className="text-error mt-2">{error}</p>}
+                   {error && typeof error === 'string' && <p className="text-error mt-2">{error}</p>}
+              <p>Upload PDF, JPG or PNG files - Max size of 5MB.</p>
+            </div> 
+            <div className="mt-5 d-flex flex-column flex-grow-1"> 
+                <div className="w-100">
+                  <button className="btn w-100 btn-sm btn-primary btn-md-block" onClick={this.submitNewTicket}>
+                    Add ticket
+                  </button>
                 </div>
-              </div>
-              <div className="text-right mt-3">
-                <button className="btn btn-sm btn-primary">
-                  Submit
-                  {newLoading &&
-                    <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
-                  }
-                </button>
-              </div>
-            </form>
-          </Modal>
-        }
-        <div className="d-flex justify-content-end mt-2 flex-wrap">
+            </div>
+          </div>          
+        </OffCanvas>
+        <div className="d-flex justify-content-end mt-2 flex-wrap text-white stroke-white">
           <button className="btn btn-sm btn-primary mr-2 mb-3" onClick={this.toggleNewModal}>
-            Create new ticket
+           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-plus" viewBox="0 0 16 16">
+              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+            </svg> Create ticket
           </button>
-            <form onSubmit={this.handleSubmitSearch}>
-              <input
-                name="search"
-                type="text"
-                placeholder="&#128269; Search tickets"
-                className="p-2 border-grey border-radius-default mb-3"
-                value={search}
-                onChange={this.handleChange}
-              />
+        </div>
+        <div className="text-right mt-2">
+          <form onSubmit={this.handleSubmitSearch}>
+            <div className="position-relative d-inline">
+                <div className="d-inline search">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                  </svg>
+                </div>
+                <input
+                  name="search"
+                  type="text"
+                  placeholder="Search Users by Name, Email or Date"
+                  className="border-0 text-blue pl-4 p-2 col-lg-5 bg-light border-radius-default mb-3"
+                  value={search}
+                  onChange={this.handleChange}
+                  style ={{fontSize: 14}}
+                />
+                
+              </div>
             </form>
         </div>
+
         <div className="mt-2 card">
         {loading &&
             <div className="text-center p-4">
@@ -192,20 +204,21 @@ class Tickets extends React.Component {
           }
         {tickets && tickets.length > 0 ?
             <>
+             
+              <div className="table-class">
+                <DataTable
+                  data={tickets}
+                  columns={columns}
+                  info={metadata}
+                  selectItem={this.naviagetToTicket}
+                />
+              </div>
               <Pagination
                 totalPages={metadata.lastPage}
                 page={metadata.page}
                 limit={metadata.perPage}
                 changePageHandler={(limit, page) => this.props.getTickets(limit, page)}
               />
-              <div className="table-class">
-              <DataTable
-                data={tickets}
-                columns={columns}
-                info={metadata}
-                selectItem={this.naviagetToTicket}
-              />
-              </div>
             </>
           :
           (!loading &&

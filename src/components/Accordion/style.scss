@@ -1,10 +1,28 @@
 .cp-accordion {
-  padding-top: 25px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #C4C4C4;
+
+  .cp-accordion__content{
+    border: 1px solid rgba(244, 246, 248, 1);
+    border-radius: 4px;  
+  }
+
+  .cp-accordion__content__open{
+    border: none;
+    background-color: var(--blue);
+    
+    h3, p{
+      color: white!important;
+    }
+  }
 
   .content {
     transition: ease-out 500ms;
+    width: 100%;
+    background-color: var(--blue);
+    border-radius: 4px;  
+
+      h3, p{
+        color: white!important;
+      }
   }
 
   .add-height {

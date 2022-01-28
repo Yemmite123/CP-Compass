@@ -8,10 +8,12 @@
   top: 0;
   overflow: scroll;
 
+
+
   .cp-modal {
     z-index: 1024;
     .dialogue {
-      width: 40%;
+      width: 32%;
 
       @media screen and (max-width: 676px) {
         width: 65% !important; 
@@ -33,6 +35,38 @@
       }
     }
   }
+
+  .final-modal{
+    .dialogue{
+       width: 45%;
+    }
+  }
+
+  .cp-modal {
+    z-index: 1024;
+    .dialogue {
+
+      @media screen and (max-width: 676px) {
+        width: 65% !important; 
+      }  
+      @media screen and (max-width: 500px) {
+        width: 75% !important; 
+      } 
+      @media screen and (max-width: 428px) {
+        width: 90% !important; 
+      } 
+
+      .segment-img {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        border-radius: 5%;
+        object-fit: cover;
+        margin-right: 10px;
+      }
+    }
+  }
+
 
   .questions {
     margin-bottom: 50px;
@@ -68,7 +102,7 @@
     &--active {
       margin-right: auto;
       margin-left: auto;
-      width: 45%;
+      width: 55%;
 
       @media screen and (max-width: 676px) {
         width: 65% !important; 

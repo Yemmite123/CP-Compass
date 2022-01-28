@@ -27,6 +27,22 @@
   }
 
   .table-class {
-    overflow: scroll;
+    overflow-x: auto;
+    overflow-y: auto
+  }
+
+  input{
+    outline: 0;
+    &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: var(--blue);
+      opacity: 1; /* Firefox */
+    }
+  }
+
+  .search{
+    position: absolute;
+    top: -0.2rem;
+    left: 0.2rem;
+    z-index: 1;
   }
 }

@@ -14,13 +14,13 @@ const Accordion = ({ item, selectItem, open, closeItem }) => {
   }
 
   return (
-    <div className="cp-accordion">
-      <div className="d-flex justify-content-between align-items-center cursor-pointer" onClick={open ? collapseAccordion : dropAccordion}>
+    <div className={`cp-accordion`}>
+      <div className={`d-flex justify-content-between align-items-center cursor-pointer p-4 cp-accordion__content cp-accordion__content__${open ? "open" : ""}`} onClick={open ? collapseAccordion : dropAccordion}>
         <h3 className="text-medium text-black mb-0 cursor-pointer">{item.title}</h3>
         <img src={open ? closeAccordion : openAccordion} alt="toggle" className={`cursor-pointer ${open && 'rotate'}`} onClick={open ? collapseAccordion : dropAccordion}/>
       </div>
       {open &&
-        <div className={`content ${open ? 'add-height' : 'no-height'} p-3`}>
+        <div className={`content ${open ? 'add-height' : 'no-height'} p-3 mt-3`}>
           <p className="text-grey text-small mb-0">{item.content}</p>
         </div>
       }

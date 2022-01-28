@@ -53,7 +53,7 @@ class DragDropFileInput extends Component {
             style={{backgroundColor: dragEntered ? '#0080ff7c' : '#fff', borderColor: error ? '#BD1111' : ''}}
         >
             <label className="file-input-box__button text-small" htmlFor="file">
-            <span className="text-blue">+ Add files</span> or drop files here
+            <span className="text-blue">Upload document</span>
             </label>
             <div className="d-flex">
                 {file && file.length > 0 && file.map(doc => (

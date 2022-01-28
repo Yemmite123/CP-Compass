@@ -18,6 +18,7 @@ class Risk extends React.Component {
 
   componentDidMount() {
     this.setValues()
+    console.log(this.props.segment)
   }
 
   setValues = () => {
@@ -118,46 +119,25 @@ class Risk extends React.Component {
             </button>
           </Modal>
         }
-        <div className="row mb-5">
-          <div className="col-md-4">
-            <div className="section-details text-left">
-              <h3>Segment</h3>
-              <p className="text-grey">Your segment determines your investment recommendations and other personalized services</p>
-            </div>
-          </div>
-          <div className="col-md-7">
-            <div className="d-flex align-items-center">
-              <div className="user-img-container mr-3">
-                <img src={segment ? segment.icon : require('#/assets/icons/blank-avatar.svg')} className="img-fluid user-img" alt="user-img" />
-              </div>
-              <div>
-                <p className="text-grey text-small mb-0">{segment ? segment.name : 'You are yet to join a segment'}</p>
-                <p onClick={this.joinSegment} className="text-blue cursor-pointer">Join a tribe here {`>`} </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <hr />
-        <div className="row mt-5">
-          <div className="col-md-4">
-            <div className="section-details text-left">
-              <h3>Risk profile</h3>
-              <p className="text-grey">Set your risk tolerance.</p>
+         <div className="row">
+          <div className="col-lg-4">
+            <div div className="guide-item border rounded-lg p-3 d-flex flex-column justify-content-between">
+                <img src={segment ? segment.icon : require('#/assets/icons/blank-avatar.svg')} className="img-fluid user-img " alt="user-img" />
+                <span className="h3 text-medium mt-3 text-blue">Trybe</span>
+                <p className="font-light">Join a trybe of like minded individuals who have similar goals as you.</p>
+                <p className="text-blue font-light cursor-pointer join" onClick={this.joinSegment}>Join a tribe here {`>`}</p>
             </div>
           </div>
 
-          <div className="col-md-7">
-            <div className="d-flex align-items-center">
-              <div className="user-img-container mr-3">
-                <img src={risk ? risk.icon : require('#/assets/icons/blank-avatar.svg')} className="img-fluid user-img" alt="user-img" />
-              </div>
-              <div>
-                <p className="text-grey text-small mb-0">{risk ? risk.profile : 'You are yet tto do your risk assessment'}</p>
-                <p onClick={this.joinRisk} className="text-blue cursor-pointer">Set your risk profile here {`>`} </p>
-              </div>
+          <div className="col-lg-4">
+            <div div className="guide-item border rounded-lg p-3 d-flex flex-column justify-content-between">
+              <img src={risk ? risk.icon : require('#/assets/icons/blank-avatar.svg')} className="img-fluid user-img" alt="user-img" />
+
+                <span className="h3 text-medium mt-3 text-blue">Risk Assessment</span>
+                <p className="font-light">Your risk assessment answers would help us recommend investments which suit you.</p>
+                <p className="text-blue text-small font-light cursor-pointer join" onClick={this.joinRisk}>Set your risk profile here {`>`}</p>
             </div>
-          </div>
+          </div> 
         </div>
       </div>
     )
