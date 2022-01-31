@@ -23,14 +23,14 @@
         width: 90% !important; 
       } 
 
-      img {
-        position: relative;
-        width: 150px;
-        height: 150px;
-        border-radius: 5%;
-        object-fit: cover;
-        margin-right: 10px;
-      }
+      // img {
+      //   position: relative;
+      //   width: 150px;
+      //   height: 150px;
+      //   border-radius: 5%;
+      //   object-fit: cover;
+      //   margin-right: 10px;
+      // }
     }
   }
 
@@ -39,7 +39,7 @@
     margin-right: auto;
     margin-left: auto;
     margin-top: 5%;
-    width: 50%;
+    width: 60%;
 
     @media screen and (max-width: 676px) {
       width: 65% !important; 

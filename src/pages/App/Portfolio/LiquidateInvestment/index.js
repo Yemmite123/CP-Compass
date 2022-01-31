@@ -78,8 +78,12 @@ class LiquidateInvestment extends React.Component {
     e.preventDefault();
     const { amount } = this.state
     const { investment } = this.props;
-    this.setState({ errors: null })
-    this.resetFields();
+
+
+    if (isNaN(this.state.amount)) {
+      return this.setState({ errors: { amount: "enter a valid number" } });
+    }
+
 
     const required = investment?.order_status === 'booked' ? [] : [ 'amount'];
     const errors = validateFields({  amount }, required)
@@ -93,7 +97,8 @@ class LiquidateInvestment extends React.Component {
     if(investment?.order_status === 'booked') {
       return this.setState({  amount: '0' }, () => this.handleLiquidationDetails());
     }
-
+    this.setState({ errors: null })
+    this.resetFields();
     closeOffCanvas("liquidate-offcanvas");
     return this.handleLiquidationDetails();
   }

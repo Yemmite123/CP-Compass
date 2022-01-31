@@ -48,7 +48,7 @@ class Deposit extends React.Component {
     if (name === "amount") {
       this.setState({ errors: null });
       return this.setState({ [name]: formatCurrencyToString(value) }, () => {
-        this.setState({ textInputAmount: formatCurrencyToString(value)});
+        this.setState({ textInputAmount: formatCurrencyToString(value) });
         if (isNaN(this.state.amount)) {
           return this.setState({ errors: { amount: "enter a valid number" } });
         }
@@ -113,6 +113,10 @@ class Deposit extends React.Component {
     const data = this.state;
     const required = ["amount"];
     const errors = validateFields(data, required);
+
+    if (isNaN(this.state.amount)) {
+      return this.setState({ errors: { amount: "enter a valid number" } });
+    }
 
     if (Object.keys(errors).length > 0) {
       return this.setState({ errors });
@@ -202,7 +206,14 @@ class Deposit extends React.Component {
                     }`}
                     onClick={this.handleNewPayment}
                   >
-                    { (this.state.newPayment ? true : false) && <img className="position-absolute" width={16} src={require("#/assets/icons/success.svg")} style={{zIndex: 1, right: "0.35rem", top: "0.35rem"}} />}
+                    {(this.state.newPayment ? true : false) && (
+                      <img
+                        className="position-absolute"
+                        width={16}
+                        src={require("#/assets/icons/success.svg")}
+                        style={{ zIndex: 1, right: "0.35rem", top: "0.35rem" }}
+                      />
+                    )}
                     <div className="d-flex mr-3">
                       <img
                         src={require("#/assets/icons/plus-circle.svg")}

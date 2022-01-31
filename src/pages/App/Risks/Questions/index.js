@@ -406,8 +406,13 @@ class Questions extends React.Component {
           finalModal &&
           <Modal onClose={null}>
             <Modal onClose={null} classes="final-modal">
-             <div className="text-right pb-3">
-                <img src={require('#/assets/icons/close.svg')} alt="close"/>
+            <div className="text-right pb-3">
+              <img
+                src={require("#/assets/icons/close.svg")}
+                alt="close"
+                onClick={this.handleNavigateToRecommendations}
+                className="cursor-pointer"
+              />
             </div>
             <div className="px-4 mt">
               <div className="d-flex justify-content-center">

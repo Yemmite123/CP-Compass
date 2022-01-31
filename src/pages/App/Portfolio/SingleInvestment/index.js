@@ -74,7 +74,7 @@ class SingleInvestment extends React.Component {
     if (name === "amount") {
       this.setState({ errors: null });
       return this.setState({ [name]: formatCurrencyToString(value) }, () => {
-        this.setState({ textInputAmount: formatCurrencyToString(value)});
+        this.setState({ textInputAmount: formatCurrencyToString(value) });
         if (isNaN(this.state[name])) {
           return this.setState({ errors: { [name]: "enter a valid number" } });
         }
@@ -106,6 +106,10 @@ class SingleInvestment extends React.Component {
     let required = ["amount"];
     let errors = validateFields({ amount }, required);
 
+    if (isNaN(this.state.amount)) {
+      return this.setState({ errors: { amount: "enter a valid number" } });
+    }
+
     if (Object.keys(errors).length > 0) {
       return this.setState({ errors });
     }
@@ -120,7 +124,7 @@ class SingleInvestment extends React.Component {
       });
     }
 
-    this.resetFields()
+    this.resetFields();
 
     // open transaction modal
     this.setState({ selectedMethodError: "" });
@@ -626,9 +630,11 @@ class SingleInvestment extends React.Component {
               <div className="card p-3 px-4 min-height-small  d-flex flex-column justify-content-between">
                 <h5 className="text-blue">Payment Amount</h5>
                 <div>
-                <h3 className="font-weight-bold">
+                  <h3 className="font-weight-bold">
                     &#x20A6;
-                    {investment ? formatCurrency(investment.installment) : 0}{" "}
+                    {investment
+                      ? formatCurrency(investment.installment)
+                      : 0}{" "}
                     <span className="text-blue text-small">
                       /{investment && investment.frequency}
                     </span>
@@ -687,7 +693,10 @@ class SingleInvestment extends React.Component {
                       <h5 className="text-small font-normal text-grey mb-0">
                         Investment Name
                       </h5>
-                      <h5 className="font-normal text-capitalize font-weight-bold" style={{fontSize: "16px"}}>
+                      <h5
+                        className="font-normal text-capitalize font-weight-bold"
+                        style={{ fontSize: "16px" }}
+                      >
                         {investment ? investment.title : ""}
                       </h5>
                     </div>
@@ -695,8 +704,10 @@ class SingleInvestment extends React.Component {
                       <h5 className="font-normal text-small text-grey mb-0">
                         Target Amount
                       </h5>
-                      <h5 className="font-normal font-weight-bold" style={{fontSize: "16px"}}>
-
+                      <h5
+                        className="font-normal font-weight-bold"
+                        style={{ fontSize: "16px" }}
+                      >
                         &#x20A6;
                         {investment
                           ? formatCurrency(investment.targetAmount)
@@ -709,7 +720,10 @@ class SingleInvestment extends React.Component {
                       <p className="font-normal text-small text-grey mb-0">
                         Start Date
                       </p>
-                      <h5 className="font-normal font-weight-bold" style={{fontSize: "16px"}}>
+                      <h5
+                        className="font-normal font-weight-bold"
+                        style={{ fontSize: "16px" }}
+                      >
                         {investment && investment.startDate
                           ? moment(investment.startDate).format("MMM D, YYYY")
                           : "N/A"}
@@ -719,8 +733,10 @@ class SingleInvestment extends React.Component {
                       <p className="font-normal text-grey text-small mb-0">
                         Target Date
                       </p>
-                      <h5 className="font-normal font-weight-bold" style={{fontSize: "16px"}}>
-
+                      <h5
+                        className="font-normal font-weight-bold"
+                        style={{ fontSize: "16px" }}
+                      >
                         {investment && investment.endDate
                           ? moment(investment.endDate).format("MMM D, YYYY")
                           : "No end date"}
@@ -752,7 +768,12 @@ class SingleInvestment extends React.Component {
               </div>
             )}
           </div>
-          <OffCanvas title="" position="end" id="single-investment-offcanvas" onClose={this.resetFields}>
+          <OffCanvas
+            title=""
+            position="end"
+            id="single-investment-offcanvas"
+            onClose={this.resetFields}
+          >
             <div className="px-3 h-100 d-flex flex-column flex-grow-1">
               <div className="mt-3 mb-2">
                 <h3 className="font-bolder text-blue">Top up Goal</h3>

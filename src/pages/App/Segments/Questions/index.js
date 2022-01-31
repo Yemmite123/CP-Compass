@@ -241,19 +241,20 @@ class Questions extends React.Component {
                       />
                     </div>
                   ))}
-                  <div className="col-md-6">
+                  <div className={`${stageOneSelected === 0 ? "col-12" : "col-md-6" }`}>
                     <div
                       // id="0"
-                      className={`questions--others mt-2 d-flex justify-content-between ${stageOneSelected === 0 && 'selected'}`}
+                      className={`questions--others mt-4 d-flex justify-content-between ${stageOneSelected === 0 && 'selected'}`}
                       // onClick={this.handleSelectOptionOne}
                     >
-                      <div>
+                      <div style={{width:"100%"}} className="align-self-center">
                         <div className="d-flex" id="0" onClick={this.handleSelectOptionOne}>
                           <img src={require("#/assets/icons/others-segments.svg")} alt="check" className="img-fluid mr-2" />
                           <p id="0" onClick={this.handleSelectOptionOne} className="mb-0">Others</p>
                         </div>
                         {stageOneSelected === 0 &&
                           <input
+                            style={{width:"100%", outline: "none"}}
                             type="text"
                             name="stageOneOthers"
                             className="mt-2 p-2"
@@ -264,7 +265,7 @@ class Questions extends React.Component {
                           />
                         }
                       </div>
-                      {stageOneSelected === 0 && <img src={require("#/assets/icons/check-blue.svg")} alt="check" />}
+                      {stageOneSelected === 0 && <img width={24} src={require("#/assets/icons/check-blue.svg")} alt="check" />}
                     </div>
                   </div>
                 </div>
@@ -299,6 +300,7 @@ class Questions extends React.Component {
                 <div className="others">
                   {selectedInterest.includes(questions?.data[1].options[questions?.data[1].options.length - 1].id) &&
                     <input
+                    style={{width:"100%", outline: "none"}}
                       type="text"
                       name="stageTwoOthers"
                       className="mt-2 p-2"
@@ -337,32 +339,33 @@ class Questions extends React.Component {
                       />
                     </div>
                   ))}
-                  <div className="col-md-6">
+                 <div className={`${selectedDescription === 0 ? "col-12" : "col-md-6" }`}>
                     <div
                       // id="0"
-                      className={`questions--others mt-2 d-flex justify-content-between ${selectedDescription === 0 && 'selected'}`}
-                      // onClick={this.handleSelectDescription}
+                      className={`questions--others mt-4 d-flex justify-content-between ${selectedDescription === 0 && 'selected'}`}
+                      // onClick={this.handleSelectOptionOne}
                     >
-                      <div>
+                      <div style={{width:"100%"}} className="align-self-center">
                         <div className="d-flex" id="0" onClick={this.handleSelectDescription}>
                           <img src={require("#/assets/icons/others-segments.svg")} alt="check" className="img-fluid mr-2" />
                           <p id="0" onClick={this.handleSelectDescription} className="mb-0">Others</p>
                         </div>
                         {selectedDescription === 0 &&
                           <input
+                            style={{width:"100%", outline: "none"}}
                             type="text"
-                            name="stageThreeOthers"
+                            name="stageOneOthers"
                             className="mt-2 p-2"
-                            id="stageThreeOthers"
-                            value={stageThreeOthers}
+                            id="stageOneOthers"
+                            value={stageOneOthers}
                             onChange={this.handleChange}
                             placeholder="please specify"
                           />
                         }
                       </div>
-                      {selectedDescription === 0 && <img src={require("#/assets/icons/check-blue.svg")} alt="check" />}
+                      {selectedDescription === 0 && <img width={24} src={require("#/assets/icons/check-blue.svg")} alt="check" />}
                     </div>
-                </div>
+                  </div>
 
                 </div>
                 {errors && <p className="text-error text-center">{errors.stageThree}</p>}
@@ -395,30 +398,31 @@ class Questions extends React.Component {
                       />
                     </div>
                   ))}
-                  <div className="col-md-6">
+                  <div className={`${selectedSpending === 0 ? "col-12" : "col-md-6" }`}>
                     <div
                       // id="0"
-                      className={`questions--others mt-2 d-flex justify-content-between ${selectedSpending === 0 && 'selected'}`}
-                      // onClick={this.handleSelectSpending}
+                      className={`questions--others mt-4 d-flex justify-content-between ${selectedSpending === 0 && 'selected'}`}
+                      // onClick={this.handleSelectOptionOne}
                     >
-                      <div id="0" onClick={this.handleSelectSpending}>
-                        <div className="d-flex">
+                      <div style={{width:"100%"}} className="align-self-center">
+                        <div className="d-flex" id="0" onClick={this.handleSelectSpending}>
                           <img src={require("#/assets/icons/others-segments.svg")} alt="check" className="img-fluid mr-2" />
                           <p id="0" onClick={this.handleSelectSpending} className="mb-0">Others</p>
                         </div>
                         {selectedSpending === 0 &&
                           <input
+                            style={{width:"100%", outline: "none"}}
                             type="text"
-                            name="stageFourOthers"
+                            name="stageOneOthers"
                             className="mt-2 p-2"
-                            id="stageFourOthers"
-                            value={stageFourOthers}
+                            id="stageOneOthers"
+                            value={stageOneOthers}
                             onChange={this.handleChange}
                             placeholder="please specify"
                           />
                         }
                       </div>
-                      {selectedSpending === 0 && <img src={require("#/assets/icons/check-blue.svg")} alt="check" />}
+                      {selectedSpending === 0 && <img width={24} src={require("#/assets/icons/check-blue.svg")} alt="check" />}
                     </div>
                   </div>
                 </div>
