@@ -13,7 +13,7 @@ class MessageItem extends React.Component {
   componentDidMount() {
     if(this.props.message) {
       console.log(this.props.message)
-      this.messageRef.current.innerHTML = `${this.props.message.message.replace(/(\r\n|\n|\r)/gm, "<br />")}`
+      this.messageRef.current.innerHTML = this.props.message.message ? `${this.props.message.message.replace(/(\r\n|\n|\r)/gm, "<br />")}` : ""
     }
   }
 

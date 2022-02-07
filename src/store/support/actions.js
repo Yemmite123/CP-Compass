@@ -102,7 +102,7 @@ export const createNewTicket = (payload) => {
           }))
           if ([200, 201].includes(response.status)) {
             dispatch(createNewTicketSuccess(response.data.data));
-            dispatch(showAlert({ type: 'success', message: 'Ticket created successfully' }))
+            dispatch(showAlert({ type: 'success', message: 'Ticket created successfully', button: "Go to tickets" }))
             return resolve(response.data.data)
           }
         })

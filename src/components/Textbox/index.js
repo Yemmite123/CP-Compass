@@ -3,6 +3,19 @@ import './style.scss';
 
 const Textbox = React.forwardRef(({ label, onChange, defaultValue, name, value, placeholder, boxClasses, type, error, iconUrl, onIconClick, disabled, min, required, max, maxlength }, ref) => {
 
+  const inputRef = React.createRef();
+
+  React.useEffect(() =>{
+    if (inputRef.current.value){
+      inputRef.current.parentNode.children[0].classList.add("active")
+      inputRef.current.classList.add("active")
+    }
+    else{
+      inputRef.current.parentNode.children[0].classList.remove("active");
+      inputRef.current.classList.remove("active");
+      }
+  }, [value, error])
+
   return (
     <div  className={`${boxClasses} textbox`} tabIndex="1">
       <fieldset
@@ -12,7 +25,7 @@ const Textbox = React.forwardRef(({ label, onChange, defaultValue, name, value, 
         <div className="d-flex position-relative">
         { label ? <span className={`${boxClasses?.includes("active") ? "active" : ""} mt-0 position-absolute ${error && 'label-error'}`}>{label}</span> : "" }
           <input
-            ref={ref}
+            ref={inputRef}
             autoComplete="off"
             min={min && min}
             onChange={(e) => {
