@@ -19,27 +19,27 @@ const BankTransferModal = ({ details, closeTransferModal, confirmPayment }) => {
         <div className="d-flex justify-content-center">
           <img src={require("#/assets/icons/bank-transfer.svg")} alt="bank" className="pb-3" />
 
-      </div>
-      <div className="text-center">
-        <h5 className="text-blue font-bolder">
-          Direct Bank Transfer
-        </h5>
-        <p>Send money to the bank account details below</p>
-      </div>
-      <div className="account-details">
-        <div className="d-flex justify-content-between">
-          <p className="label text-left">Account number</p>
-          <p className="account-value text-right">{details? details.accountNumber : 'no account number yet'}</p>
         </div>
-        <div className="d-flex justify-content-between">
-          <p className="label text-left">Account name</p>
-          <p className="name-value text-right">{details? details.accountName : 'no account name yet'}</p>
+        <div className="text-center">
+          <h5 className="text-blue font-bolder">
+            Direct Bank Transfer
+          </h5>
+          <small>This is your dedicated bank account number. Funds would be credited to your account immediately. You can save these account details as a beneficiary for easy access for future use.</small>
         </div>
-        <div className="d-flex justify-content-between">
-          <p className="label text-left">Bank</p>
-          <p className="bank-value text-right">{details? details.BankName : 'no bank name yet'}</p>
+        <div className="account-details">
+          <div className="mt-5 d-flex justify-content-between">
+            <small className="label text-secondary text-left">Account number</small>
+            <h6 className="font-weight-bolder text-blue text-capitalize account-value text-right">{details ? details.accountNumber : 'no account number yet'}</h6>
+          </div>
+          <div className="mt-3 d-flex justify-content-between">
+            <small className="label text-secondary text-left">Account name</small>
+            <h6 className="font-weight-bolder text-blue text-capitalize name-value text-right">{details ? details.accountName : 'no account name yet'}</h6>
+          </div>
+          <div className="mt-3 d-flex justify-content-between">
+            <small className="text-secondary label text-left">Bank</small>
+            <h6 className="font-weight-bolder text-blue text-capitalize bank-value text-right">{details ? details.BankName : 'no bank name yet'}</h6>
+          </div>
         </div>
-      </div>
       </div>
     </Modal>
   )
