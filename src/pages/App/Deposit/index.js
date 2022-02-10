@@ -46,6 +46,8 @@ class Deposit extends React.Component {
   handleChange = (event) => {
     const { name, value } = event.target;
     if (name === "amount") {
+      if (isNaN(formatCurrencyToString(value)))
+        return;
       this.setState({ errors: null });
       return this.setState({ [name]: formatCurrencyToString(value) }, () => {
         this.setState({ textInputAmount: formatCurrencyToString(value) });

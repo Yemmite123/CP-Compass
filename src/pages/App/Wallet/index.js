@@ -33,6 +33,17 @@ class Wallet extends React.Component {
     this.props.getUserProfile();
   }
 
+  componentDidUpdate(prevProps) {
+    console.log(this.props.walletDetails);
+    console.log(prevProps.walletDetails)
+    if (this.props.walletDetails && prevProps.walletDetails)
+      if (this.props.walletDetails.wallet.NGN !== prevProps.walletDetails.wallet.NGN) {
+        this.props.getWalletDetails();
+        this.props.getUserProfile();
+      }
+
+  }
+
   handleDeposit = () => {
     document.querySelector("#deposit-offcanvas").classList.toggle("show");
     if (!document.querySelector(".offcanvas-backdrop")) {
@@ -217,11 +228,10 @@ class Wallet extends React.Component {
                               {formatDate(day)}
                             </h4>
                             <div
-                              className={`${
-                                !walletDetails.transactions[day][
-                                  walletDetails.transactions[day].length - 1
-                                ] && "border-bottom"
-                              }`}
+                              className={`${!walletDetails.transactions[day][
+                                walletDetails.transactions[day].length - 1
+                              ] && "border-bottom"
+                                }`}
                             >
                               {walletDetails.transactions[day].length > 0 ? (
                                 walletDetails.transactions[day].map(

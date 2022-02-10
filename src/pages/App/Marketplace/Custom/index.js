@@ -95,9 +95,23 @@ class Custom extends React.Component {
     if (name === 'target' || name === 'amount' || name === 'frequencyAmount') {
       this.setState({ errors: null });
 
-      if(name === "target") this.setState({inputTarget: formatCurrencyToString(value)}) ;
-      if(name === "amount") this.setState({inputAmount: formatCurrencyToString(value) }); 
-      if(name === "frequencyAmount") this.setState({inputFrequencyAmount: formatCurrencyToString(value) });
+      if (isNaN(formatCurrencyToString(value)))
+        return;
+
+      if (name === "target") {
+        if (!isNaN(formatCurrencyToString(value)))
+          this.setState({ inputTarget: formatCurrencyToString(value) })
+      }
+
+      if (name === "amount") {
+        if (!isNaN(formatCurrencyToString(value)))
+          this.setState({ inputAmount: formatCurrencyToString(value) });
+      }
+
+      if (name === "frequencyAmount") {
+        if (!isNaN(formatCurrencyToString(value)))
+          this.setState({ inputFrequencyAmount: formatCurrencyToString(value) });
+      }
 
       return this.setState({ [name]: formatCurrencyToString(value) }, () => {
         if (isNaN(this.state[name])) {
@@ -106,16 +120,16 @@ class Custom extends React.Component {
       });
     }
 
-    if(name === "title") this.setState({inputTitle: value});
-    if(name === "startDate") this.setState({inputStartDate: value})
-    if(name === "frequency") this.setState({inputFrequency: value})
-    if(name === "targetDate") this.setState({inputTargetDate: value})
-    if(name === "addEndDate") this.setState({inputAddEndDate: value})
+    if (name === "title") this.setState({ inputTitle: value });
+    if (name === "startDate") this.setState({ inputStartDate: value })
+    if (name === "frequency") this.setState({ inputFrequency: value })
+    if (name === "targetDate") this.setState({ inputTargetDate: value })
+    if (name === "addEndDate") this.setState({ inputAddEndDate: value })
 
     this.setState({ [name]: value });
   }
 
-  resetFields = () =>{
+  resetFields = () => {
     this.setState({ inputAmount: "" });
     this.setState({ inputTitle: "" });
     this.setState({ inputTarget: "" });
@@ -123,12 +137,12 @@ class Custom extends React.Component {
     this.setState({ inputFrequency: "" });
     this.setState({ inputStartDate: new Date() });
     this.setState({ inputAddEndDate: false });
-    this.setState({inputFrequencyAmount: ""});
+    this.setState({ inputFrequencyAmount: "" });
   }
 
   handleChangeDate = (item, date) => {
-    if(item === "startDate") this.setState({inputStartDate: date})
-    if(item === "targetDate") this.setState({inputTargetDate: date})
+    if (item === "startDate") this.setState({ inputStartDate: date })
+    if (item === "targetDate") this.setState({ inputTargetDate: date })
     this.setState({ [item]: date });
   }
 
@@ -145,13 +159,13 @@ class Custom extends React.Component {
     e.preventDefault();
     this.setState({ errors: null, entryError: null });
 
-    if(!this.props.isApproved) {
+    if (!this.props.isApproved) {
       return this.setState({ entryError: 'Your account is awaiting approval' })
     }
-    if(!this.props.isBvnActive){
+    if (!this.props.isBvnActive) {
       return this.setState({ entryError: 'Access denied. Please complete your BVN profile' })
     }
-    
+
     const data = this.state;
     const required = this.state.addEndDate
       ? ['title', 'target', 'targetDate', 'frequency', 'startDate']
@@ -164,7 +178,7 @@ class Custom extends React.Component {
     const info = {
       startDate: moment(this.state.startDate).format('YYYY-MM-DD'),
       endDate: moment(this.state.targetDate).format('YYYY-MM-DD'),
-      frequency: this.state.frequency,
+      frequency: this.state.frequency.toLowerCase(),
       targetAmount: formatCurrencyToString(this.state.target),
     }
     const entryError = verifyFrequencyPeriod(info)
@@ -181,7 +195,7 @@ class Custom extends React.Component {
           closeOffCanvas(`offcanvas-${state?.investment.id}`);
         })
       })
-      : (() => { closeOffCanvas(`offcanvas-${state?.investment.id}`); this.toggleConfirmationModal();})();
+      : (() => { closeOffCanvas(`offcanvas-${state?.investment.id}`); this.toggleConfirmationModal(); })();
   }
 
   //move to enterering transaction pin
@@ -216,8 +230,8 @@ class Custom extends React.Component {
     const { location: { state } } = this.props.history
     const { title, target, startDate, targetDate, frequency, frequencyAmount } = this.state
     const payload = this.state.addEndDate ?
-      { title, targetAmount: formatCurrencyToString(target), currency: 'NGN', startDate: moment(startDate).format('YYYY-MM-DD'), endDate: moment(targetDate).format('YYYY-MM-DD'), frequency }
-      : { title, targetAmount: formatCurrencyToString(target), currency: 'NGN', startDate: moment(startDate).format('YYYY-MM-DD'), amount: formatCurrencyToString(frequencyAmount), frequency }
+      { title, targetAmount: formatCurrencyToString(target), currency: 'NGN', startDate: moment(startDate).format('YYYY-MM-DD'), endDate: moment(targetDate).format('YYYY-MM-DD'), frequency: frequency.toLowerCase() }
+      : { title, targetAmount: formatCurrencyToString(target), currency: 'NGN', startDate: moment(startDate).format('YYYY-MM-DD'), amount: formatCurrencyToString(frequencyAmount), frequency: frequency.toLowerCase() }
     const data = { type: 'custom', payload, id: state?.investment.id }
 
     bookNewInvestment(data)
@@ -289,11 +303,11 @@ class Custom extends React.Component {
     const payment = { method: type, type: 'debit', reoccurring: selectedCard ? true : false, cardId: selectedCard && selectedCard.id }
     const payload = this.state.addEndDate ?
       {
-        title, targetAmount: formatCurrencyToString(target), currency: 'NGN', startDate: moment(startDate).format('YYYY-MM-DD'), endDate: moment(targetDate).format('YYYY-MM-DD'), frequency, payment,
+        title, targetAmount: formatCurrencyToString(target), currency: 'NGN', startDate: moment(startDate).format('YYYY-MM-DD'), endDate: moment(targetDate).format('YYYY-MM-DD'), frequency: frequency.toLowerCase(), payment,
         initialAmount: formatCurrencyToString(amount), autoCharge
       }
       : {
-        title, targetAmount: formatCurrencyToString(target), currency: 'NGN', startDate: moment(startDate).format('YYYY-MM-DD'), frequency, payment,
+        title, targetAmount: formatCurrencyToString(target), currency: 'NGN', startDate: moment(startDate).format('YYYY-MM-DD'), frequency: frequency.toLowerCase(), payment,
         amount: formatCurrencyToString(frequencyAmount), initialAmount: formatCurrencyToString(amount), autoCharge
       }
     const data = { type: 'custom', payload, id: state?.investment.id }
@@ -364,97 +378,98 @@ class Custom extends React.Component {
     return (
       <div className="predefined-page">
         {confirmationModal &&
-        <Modal onClose={this.toggleConfirmationModal}>
-          <div className="text-right pb-3">
-              <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleConfirmationModal}/>
-          </div>
-          <div className="px-3">
-            <div className="d-flex justify-content-center">
-              <img src={require('#/assets/icons/bank-transfer.svg')} alt="bank" className="pb-3"/>
+          <Modal onClose={this.toggleConfirmationModal}>
+            <div className="text-right pb-3">
+              <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleConfirmationModal} />
             </div>
-            <div className="text-center">
-              <h5 className="text-blue font-bolder">Confirm Investment Setup</h5>
-              {addEndDate && <p>To achieve your target of <b>N{formatCurrency(target)}</b> by <b>{convertDate(targetDate)}</b>, you have to save
-                <b> N{formatCurrency(installment)} {frequency}</b>.
+            <div className="px-3">
+              <div className="d-flex justify-content-center">
+                <img src={require('#/assets/icons/bank-transfer.svg')} alt="bank" className="pb-3" />
+              </div>
+              <div className="text-center">
+                <h5 className="text-blue font-bolder">Confirm Investment Setup</h5>
+                {addEndDate && <p>To achieve your target of <b>N{formatCurrency(target)}</b> by <b>{convertDate(targetDate)}</b>, you have to save
+                  <b> N{formatCurrency(installment)} {frequency}</b>.
                   Adding interests, your target amount will be approximately
-                <b> N{formatCurrency(expectedTotalReturns)}.</b>
+                  <b> N{formatCurrency(expectedTotalReturns)}.</b>
                 </p>
-              }
-               {!addEndDate && <p>To achieve your target of <b>N{formatCurrency(target)}</b>, you have decided to save <b>N{formatCurrency(frequencyAmount)} {frequency}</b>.</p>}
+                }
+                {!addEndDate && <p>To achieve your target of <b>N{formatCurrency(target)}</b>, you have decided to save <b>N{formatCurrency(frequencyAmount)} {frequency}</b>.</p>}
+              </div>
+              <div className="d-flex flex-column align-items-center">
+                <button className="btn py-3 btn-primary w-100" onClick={this.handleEnterPin}>
+                  Setup Plan
+                </button>
+                <p className="text-blue mt-3 mb-0 cursor-pointer" onClick={this.toggleConfirmationModal}>Review Plan</p>
+              </div>
+              {error && typeof error === 'string' && <p className="text-error text-center">{error}</p>}
             </div>
-            <div className="d-flex flex-column align-items-center">
-              <button className="btn py-3 btn-primary w-100" onClick={this.handleEnterPin}>
-                   Setup Plan
-               </button>
-              <p className="text-blue mt-3 mb-0 cursor-pointer" onClick={this.toggleConfirmationModal}>Review Plan</p>
-            </div>
-            {error && typeof error === 'string' && <p className="text-error text-center">{error}</p>}
-          </div>
-        </Modal>
+          </Modal>
         }
         {showTransactionModal &&
-        <Modal onClose={this.toggleTransactionPinModal}>
-          <div className="text-right pb-3">
-              <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleTransactionPinModal}/>
-          </div>
-          <div className="px-5">
-            <div className="d-flex justify-content-center">
-              <img src={require('#/assets/icons/transaction.svg')} alt="bank" className="pb-3"/>
+          <Modal onClose={this.toggleTransactionPinModal}>
+            <div className="text-right pb-3">
+              <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleTransactionPinModal} />
             </div>
-            <div className="text-center">
-              <div className='mb-3'>
-                <h5 className="text-blue font-bolder">Enter Transaction PIN</h5>
+            <div className="px-5">
+              <div className="d-flex justify-content-center">
+                <img src={require('#/assets/icons/transaction.svg')} alt="bank" className="pb-3" />
               </div>
-              <div className="w-100 ml-auto mr-auto">
-                <PinInput onChange={this.handlePin} error={pinError} />
-              </div>
-              <div className="px-3 mt-4">
-              <button className="btn py-3 btn-primary btn-block mt-3" onClick={this.handleTransactionVerification} disabled={pinLoading}>
-                Confirm Setup
-                {pinLoading &&
-                  <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
-                }
-              </button>
-              <p className="text-blue mt-3" onClick={this.toggleTransactionPinModal}>Cancel Setup</p>
+              <div className="text-center">
+                <div className='mb-3'>
+                  <h5 className="text-blue font-bolder">Enter Transaction PIN</h5>
+                </div>
+                <div className="w-100 ml-auto mr-auto">
+                  <PinInput onChange={this.handlePin} error={pinError} />
+                </div>
+                <div className="px-3 mt-4">
+                  <button className="btn py-3 btn-primary btn-block mt-3" onClick={this.handleTransactionVerification} disabled={pinLoading}>
+                    Confirm Setup
+                    {pinLoading &&
+                      <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
+                    }
+                  </button>
+                  <p className="text-blue mt-3" onClick={this.toggleTransactionPinModal}>Cancel Setup</p>
 
-              {pinError && <p className="text-error mt-2">{pinError}</p>}
-              {confirmPinError && <p className="text-error mt-2">{confirmPinError}</p>}
+                  {pinError && <p className="text-error mt-2">{pinError}</p>}
+                  {confirmPinError && <p className="text-error mt-2">{confirmPinError}</p>}
+                </div>
               </div>
             </div>
-          </div>
-        </Modal>
+          </Modal>
         }
         {setupSuccessModal &&
-        <Modal onClose={this.handleSuccess}>
-          <div className="text-right pb-3">
-              <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleSetupSuccessModal}/>
-          </div>
-          <div className="px-5">
-            <div className="d-flex justify-content-center">
-              <img src={require('#/assets/icons/investment-cup.svg')} alt="bank" className="pb-3"/>
+          <Modal onClose={this.handleSuccess}>
+            <div className="text-right pb-3">
+              <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleSetupSuccessModal} />
             </div>
-            <div className="text-center">
-              <div className='mb-3'>
-                <h5 className="text-blue font-bolder">Investment setup successful!</h5>
+            <div className="px-5">
+              <div className="d-flex justify-content-center">
+                <img src={require('#/assets/icons/done.svg')} alt="bank" className="pb-3" />
               </div>
-              <div className="px-3 mt-4">
-                <p className="text-black mb-0">Your Custom investment plan has been setup {!withpay && <span><span className="text-blue font-weight-bold">pay</span> so</span>} you can start enjoying returns on your principal.</p>
-                <button className="btn btn-sm btn-primary btn-block mt-3" onClick={this.handleSuccess}>
-                    Proceed
-                </button>
+              <div className="text-center">
+                <div className='mb-3'>
+                  <h5 className="text-success font-bolder">Alright, you're done</h5>
+                </div>
+                <div className="px-3 mt-4">
+                  <p className="text-black mb-0">Your custom investment has been created
+                    and you can top it off and more from your portfolio page.</p>
+                  <button className="btn btn-sm btn-primary btn-block mt-3" onClick={this.handleSuccess}>
+                    Go to marketplace
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </Modal>
+          </Modal>
         }
-        { addMoneyModal &&  
+        {addMoneyModal &&
           <Modal>
             <div className="text-right pb-3">
               <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleAddMoneyModal} className="cursor-pointer" />
             </div>
             <div className="px-5">
               <div className="d-flex justify-content-center">
-                <img src={require('#/assets/icons/bank-transfer.svg')} alt="bank" className="pb-3"/>
+                <img src={require('#/assets/icons/bank-transfer.svg')} alt="bank" className="pb-3" />
               </div>
               <div className="text-center">
                 <div className='mb-3'>
@@ -463,7 +478,7 @@ class Custom extends React.Component {
                 </div>
                 <div className="px-3 mt-4">
                   {
-                  loading &&
+                    loading &&
                     <div className="spinner-border spinner-border-primary text-primary spinner-border-sm mr-2"></div>
                   }
                   <button className="btn btn-primary btn-block py-3 mt-3" onClick={this.handleEnterAmount}>
@@ -484,7 +499,7 @@ class Custom extends React.Component {
             </div>
             <div className="px-2">
               <div className="d-flex justify-content-center">
-                <img src={require('#/assets/icons/naira-sign.svg')} alt="bank" className="pb-3"/>
+                <img src={require('#/assets/icons/naira-sign.svg')} alt="bank" className="pb-3" />
               </div>
               <div className="text-center">
                 <div className='mb-3'>
@@ -503,10 +518,10 @@ class Custom extends React.Component {
                 </div>
                 <div className="mt-4">
                   {walletDetails &&
-                  <p className="text-grey mb-1">Available balance <span className="text-blue">
-                    &#x20A6; {walletDetails && walletDetails.wallet.NGN ? walletDetails.wallet.NGN : 0}
+                    <p className="text-grey mb-1">Available balance <span className="text-blue">
+                      &#x20A6; {walletDetails && walletDetails.wallet.NGN ? walletDetails.wallet.NGN : 0}
                     </span>
-                  </p>}
+                    </p>}
                   <div className="mt-2">
                     <button button className="btn btn-primary btn-block py-3 mt-3" onClick={this.handlePickFundingSource}>
                       Proceed
@@ -517,14 +532,14 @@ class Custom extends React.Component {
             </div>
           </Modal>
         }
-        { fundingSourceModal &&
+        {fundingSourceModal &&
           <Modal>
             <div className="text-right pb-3">
               <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleAddMoneyModal} className="cursor-pointer" />
             </div>
             <div className="px-3">
               <div className="d-flex justify-content-center">
-                <img src={require('#/assets/icons/bank-transfer.svg')} alt="bank" className="pb-3"/>
+                <img src={require('#/assets/icons/bank-transfer.svg')} alt="bank" className="pb-3" />
               </div>
               <div className="text-center">
                 <div className='mb-3'>
@@ -532,26 +547,26 @@ class Custom extends React.Component {
                   <p>You can add money to your new investment right now or you can do that later. </p>
                 </div>
                 <div className="mt-4">
-                {fundingSource.map(method => (
-                  <div id={method.value} className={`d-flex p-3 mb-2 ${selectedMethod === method.value ? "selected" : ""} payment-method`} onClick={this.handleSelectMethod}>
-                    <div className="d-flex mr-3">
-                      <img src={require(`#/assets/icons/${method.imgUrl}.svg`)} alt="icon" />
+                  {fundingSource.map(method => (
+                    <div id={method.value} className={`d-flex p-3 mb-2 ${selectedMethod === method.value ? "selected" : ""} payment-method`} onClick={this.handleSelectMethod}>
+                      <div className="d-flex mr-3">
+                        <img src={require(`#/assets/icons/${method.imgUrl}.svg`)} alt="icon" />
+                      </div>
+                      <div>
+                        <h6 className="text-left mb-0 font-bolder">{method.label}</h6>
+                        {method.value === "card" ?
+                          cards &&
+                          cards.cards.length > 0 && <p className='text-grey mb-0'>{cards.cards[0].brand} ending in <span className='text-blue'> **** {cards.cards[0].last4}</span></p> :
+                          <p className='text-grey mb-0'>Available balance <span className='text-blue'> &#x20A6; {walletDetails && walletDetails.wallet.NGN ? walletDetails.wallet.NGN : 0}</span></p>}
+                      </div>
                     </div>
-                    <div>
-                    <h6 className="text-left mb-0 font-bolder">{method.label}</h6>
-                    { method.value === "card" ? 
-                     cards &&
-                     cards.cards.length > 0 && <p className='text-grey mb-0'>{cards.cards[0].brand} ending in <span className='text-blue'> **** {cards.cards[0].last4}</span></p> : 
-                      <p className='text-grey mb-0'>Available balance <span className='text-blue'> &#x20A6; {walletDetails && walletDetails.wallet.NGN ? walletDetails.wallet.NGN : 0}</span></p>}
-                    </div>
-                  </div>
-                ))}               
+                  ))}
                 </div>
                 <div className="mt-4">
                   {selectedMethodError && <p className="text-error mt-2">{selectedMethodError}</p>}
                   <button className="btn btn-primary btn-block py-3 mt-3" onClick={this.handleSelectedFundingSource} disabled={payLoading}>
                     Proceed
-                  {payLoading &&
+                    {payLoading &&
                       <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
                     }
                   </button>
@@ -567,7 +582,7 @@ class Custom extends React.Component {
             </div>
             <div className="px-3">
               <div className="d-flex justify-content-center">
-                <img src={require('#/assets/icons/bank-transfer.svg')} alt="bank" className="pb-3"/>
+                <img src={require('#/assets/icons/bank-transfer.svg')} alt="bank" className="pb-3" />
               </div>
               <div className="text-center">
                 <div className='mb-3'>
@@ -575,29 +590,29 @@ class Custom extends React.Component {
                   <p>You are about to add money to your customized investment</p>
                 </div>
                 <div className="mt-4">
-                {
-                  cards &&
-                  cards.cards.length > 0 &&
-                  cards.cards.map(card => (
-                    <DebitCard card={card} selected={this.state.selectedCard === card} handleSelect={this.handleSelectCard} key={card.id} />
-                  ))
-                }
-                
-                <div className={`d-flex p-3 mb-2 cursor-pointer debit-card position-relative`} onClick={this.handleAutomateStep}>
-                { (this.state.newPayment ? true : false) && <img className="position-absolute" width={16} src={require("#/assets/icons/success.svg")} style={{zIndex: 1, right: "0.35rem", top: "0.35rem"}} />}
-                  <div className="d-flex mr-3">
-                    <img src={require('#/assets/icons/plus-circle.svg')} width={"35px"} alt="icon" />
+                  {
+                    cards &&
+                    cards.cards.length > 0 &&
+                    cards.cards.map(card => (
+                      <DebitCard card={card} selected={this.state.selectedCard === card} handleSelect={this.handleSelectCard} key={card.id} />
+                    ))
+                  }
+
+                  <div className={`d-flex p-3 mb-2 cursor-pointer debit-card position-relative`} onClick={this.handleAutomateStep}>
+                    {(this.state.newPayment ? true : false) && <img className="position-absolute" width={16} src={require("#/assets/icons/success.svg")} style={{ zIndex: 1, right: "0.35rem", top: "0.35rem" }} />}
+                    <div className="d-flex mr-3">
+                      <img src={require('#/assets/icons/plus-circle.svg')} width={"35px"} alt="icon" />
+                    </div>
+                    <div className="d-flex flex-column justify-content-center">
+                      <h5 className="text-center  mb-0">Add new card</h5>
+                    </div>
                   </div>
-                  <div className="d-flex flex-column justify-content-center">
-                    <h5 className="text-center  mb-0">Add new card</h5>
-                  </div>
-                </div>
                 </div>
                 <div className="mt-4">
                   {selectedMethodError && <p className="text-error mt-2">{selectedMethodError}</p>}
                   <button className="btn btn-primary btn-block py-3 mt-3" onClick={this.handleSelectedFundingSource} disabled={payLoading}>
                     Proceed
-                  {payLoading &&
+                    {payLoading &&
                       <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
                     }
                   </button>
@@ -607,14 +622,14 @@ class Custom extends React.Component {
           </Modal>
         }
 
-        {showAutomateModal && 
+        {showAutomateModal &&
           <Modal onClose={this.toggleAutomateModal}>
             <div className="text-right pb-3">
               <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleAutomateModal} className="cursor-pointer" />
             </div>
             <div className="px-3">
               <div className="d-flex justify-content-center">
-                <img src={require('#/assets/icons/bank-transfer.svg')} alt="bank" className="pb-3"/>
+                <img src={require('#/assets/icons/bank-transfer.svg')} alt="bank" className="pb-3" />
               </div>
               <div className="text-center">
                 <div className='mb-3'>
@@ -645,82 +660,82 @@ class Custom extends React.Component {
 
             <div className="mt-3">
               <p>Investment Name</p>
-               <Textbox
-                  onChange={this.handleChange}
-                  type="text"
-                  label="Plan title"
-                  placeholder="Plan title"
-                  name="title"
-                  value={inputTitle}
-                  error={errors ? errors.title : (errorObject && errorObject['title'])}
+              <Textbox
+                onChange={this.handleChange}
+                type="text"
+                label="Plan title"
+                placeholder="Plan title"
+                name="title"
+                value={inputTitle}
+                error={errors ? errors.title : (errorObject && errorObject['title'])}
               />
             </div>
             <div className="mt-3">
               <p>How much do you need to make this goal work?</p>
-                <Textbox
-                  onChange={this.handleChange}
-                  type="text"
-                  label="Target amount"
-                  placeholder="Set target amount"
-                  name="target"
-                  value={formatStringToCurrency(inputTarget)}
-                  error={errors ? errors.target : (errorObject && errorObject['target'])}
-                />
-              
+              <Textbox
+                onChange={this.handleChange}
+                type="text"
+                label="Target amount"
+                placeholder="Set target amount"
+                name="target"
+                value={formatStringToCurrency(inputTarget)}
+                error={errors ? errors.target : (errorObject && errorObject['target'])}
+              />
+
             </div>
             <div className="mt-3">
               <p>When do you want to start?</p>
               <DateBox
-                  onChange={date => this.handleChangeDate('startDate', date)}
-                  label="Start Date"
-                  placeholder="Set start date"
-                  name="startDate"
-                  value={inputStartDate}
-                  error={errors ? errors.startDate : (errorObject && errorObject['startDate'])}
-                  min={new Date()}
-                />
+                onChange={date => this.handleChangeDate('startDate', date)}
+                label="Start Date"
+                placeholder="Set start date"
+                name="startDate"
+                value={inputStartDate}
+                error={errors ? errors.startDate : (errorObject && errorObject['startDate'])}
+                min={new Date()}
+              />
             </div>
             <div className="mt-3">
               <p>How often do you want to set money aside?</p>
               <SelectBox
-                  onChange={this.handleChange}
-                  label="Frequency"
-                  placeholder="Set frequency"
-                  name="frequency"
-                  boxClasses="mt-3"
-                  options={investmentFrequency}
-                  value={inputFrequency}
-                  optionName="name"
-                  error={errors ? errors.frequency : (errorObject && errorObject['frequency'])}
-                />
+                onChange={this.handleChange}
+                label="Frequency"
+                placeholder="Set frequency"
+                name="frequency"
+                boxClasses="mt-3"
+                options={investmentFrequency}
+                value={inputFrequency}
+                optionName="name"
+                error={errors ? errors.frequency : (errorObject && errorObject['frequency'])}
+              />
             </div>
             {addEndDate && <div className="mt-3">
-                <p>When do you want your target amount?</p>
-                <DateBox
-                  onChange={date => this.handleChangeDate('targetDate', date)}
-                  label="Target date"
-                  placeholder="Set target date"
-                  name="targetDate"
-                  value={inputTargetDate}
-                  error={errors ? errors.targetDate : (errorObject && errorObject['targetDate'])}
-                  min={new Date()}
-                />
-              </div>
+              <p>When do you want your target amount?</p>
+              <DateBox
+                onChange={date => this.handleChangeDate('targetDate', date)}
+                label="Target date"
+                placeholder="Set target date"
+                name="targetDate"
+                value={inputTargetDate}
+                error={errors ? errors.targetDate : (errorObject && errorObject['targetDate'])}
+                min={new Date()}
+              />
+            </div>
             }
             {!addEndDate && <div className="mt-3">
               <p>How much do you want to pay on every frequency?</p>
-                <Textbox
-                  onChange={this.handleChange}
-                  type="text"
-                  label="Frequency amount"
-                  placeholder="Set frequency amount"
-                  name="frequencyAmount"
-                  value={formatStringToCurrency(inputFrequencyAmount)}
-                  error={errors ? errors.frequencyAmount : (errorObject && errorObject['amount'])}
-                />
-              </div>
+              <Textbox
+                onChange={this.handleChange}
+                type="text"
+                label="Frequency amount"
+                placeholder="Set frequency amount"
+                name="frequencyAmount"
+                value={formatStringToCurrency(inputFrequencyAmount)}
+                error={errors ? errors.frequencyAmount : (errorObject && errorObject['amount'])}
+              />
+            </div>
             }
-              
+
             <div className="mt-4">
               <input
                 id="addEndDate"
@@ -731,7 +746,7 @@ class Custom extends React.Component {
                 onChange={this.handleChange}
                 checked={inputAddEndDate}
               />
-              <label htmlFor="addEndDate" style={{fontSize: "0.8rem"}}>Do you want to add a target date to this investment?</label>
+              <label htmlFor="addEndDate" style={{ fontSize: "0.8rem" }}>Do you want to add a target date to this investment?</label>
             </div>
             <div className="mt-4 pb-3">
               {entryError && <p className="text-error mt-2 mr-3">{entryError}</p>}
@@ -742,8 +757,8 @@ class Custom extends React.Component {
                 }
               </button>
             </div>
-          </div>    
-        
+          </div>
+
         </OffCanvas>
       </div>
     )

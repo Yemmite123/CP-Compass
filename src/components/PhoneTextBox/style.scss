@@ -35,29 +35,24 @@
         top: 0.3rem;
     }
 
-    &:focus-within {
-        span {
-            display: inline !important;
-            transition: top 5s ease-out 0s;
-            font-size: .8rem;
-            top: -0.7rem;
-            color: #3A4080;
-        }
+    // &:focus-within {
+    //     span {
+    //         display: inline !important;
+    //         transition: top 5s ease-out 0s;
+    //         font-size: .8rem;
+    //         top: -0.7rem;
+    //         color: #3A4080;
+    //     }
 
-        input {
-            position: relative;
-            top: 0.3rem;
-        }
+    //     input {
+    //         position: relative;
+    //         top: 0.3rem;
+    //     }
 
-        input::placeholder {
-            color: transparent;
-        }
-    }
-
-    &:focus-within legend {
-        color: #3A4080;
-        transition: ease-in-out 500ms;
-    }
+    //     input::placeholder {
+    //         color: transparent;
+    //     }
+    // }
 
     fieldset {
         min-width: 0;

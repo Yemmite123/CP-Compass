@@ -45,7 +45,7 @@ class Marketplace extends React.Component {
         title: 'Marketplace',
       },
       {
-        name: 'Termed Investments',
+        name: 'Aspire Goals',
         path: '/app/marketplace/termed-investments',
         title: 'Marketplace',
       },
@@ -63,24 +63,26 @@ class Marketplace extends React.Component {
 
     return (
       <div className="marketplace-page">
-        { isBvnActive && !isApproved && 
+        {isBvnActive && !isApproved &&
           <InformationBar className="mt-3 mb-3 text-white">
             Your account is awaiting approval, you won't be able to perform some actions
           </InformationBar>
         }
         <Switch>
           <Route exact path={path}>
-            <Redirect to={{ pathname:`${path}/recommended`, state: { routeName: 'Marketplace' }}} />
+            <Redirect to={{ pathname: `${path}/recommended`, state: { routeName: 'Marketplace' } }} />
           </Route>
           <Route path={`${path}/recommended`}>
             <DashboardBodyMenu menus={menus} />
             <div className="container">
+              <p className='py-1 mt-2'>These are investments which have been specifically chosen for you based on your goals.</p>
               <Recommended />
             </div>
           </Route>
           <Route path={`${path}/termed-investments`}>
             <DashboardBodyMenu menus={menus} />
             <div className="container">
+              <p className='py-1 mt-2'>{"Reach your set dreams through Aspire goals (8-10% p.a) {Rate of collection investment- rate of predefined investment}"}</p>
               <TermedInvestments />
             </div>
           </Route>

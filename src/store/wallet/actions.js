@@ -49,17 +49,19 @@ export const depositFunds = (payload) => {
       },
     })
       .then(response => {
-       response.headers?.authorization && dispatch(updateUser({
+        response.headers?.authorization && dispatch(updateUser({
           token: response.headers.authorization
         }))
         if ([200, 201].includes(response.status)) {
           dispatch(showAlert({ type: 'success', message: response.data?.message }))
           dispatch(depositFundsSuccess(response.data));
+          dispatch(getWalletDetails());
+          // getUserProfile();
           window.location = response.data.data?.authorization_url;
         }
       })
       .catch(({ response }) => {
-       response.headers?.authorization && dispatch(updateUser({
+        response.headers?.authorization && dispatch(updateUser({
           token: response.headers.authorization
         }))
         if (response && [400, 403, 404, 422, 403].includes(response.status)) {
@@ -112,7 +114,7 @@ export const getCards = () => {
       },
     })
       .then(response => {
-       response.headers?.authorization && dispatch(updateUser({
+        response.headers?.authorization && dispatch(updateUser({
           token: response.headers.authorization
         }))
         dispatch(getCardsSuccess(response.data));
@@ -170,7 +172,7 @@ export const getWalletDetails = () => {
       },
     })
       .then(response => {
-       response.headers?.authorization && dispatch(updateUser({
+        response.headers?.authorization && dispatch(updateUser({
           token: response.headers.authorization
         }))
         dispatch(getWalletDetailsSuccess(response.data));
@@ -228,17 +230,18 @@ export const depositFundsCard = (payload, history) => {
       },
     })
       .then(response => {
-       response.headers?.authorization && dispatch(updateUser({
+        response.headers?.authorization && dispatch(updateUser({
           token: response.headers.authorization
         }))
         if ([200, 201].includes(response.status)) {
           dispatch(depositFundsCardSuccess(response.data));
-          dispatch(showAlert({ type: 'success', message: response.data?.message }))
+          dispatch(showAlert({ type: 'success', message: response.data?.message }));
+          setTimeout(() => getWalletDetails()(dispatch, getState), 4000);
           setTimeout(() => history.push('/app/wallet'), 3000);
         }
       })
       .catch(({ response }) => {
-       response.headers?.authorization && dispatch(updateUser({
+        response.headers?.authorization && dispatch(updateUser({
           token: response.headers.authorization
         }))
         if (response && [400, 404, 422, 403].includes(response.status)) {
@@ -291,18 +294,19 @@ export const initializeWithdraw = (payload) => {
         },
       })
         .then(response => {
-         response.headers.authorization && dispatch(updateUser({
+          response.headers.authorization && dispatch(updateUser({
             token: response.headers.authorization
           }))
           if ([200, 201].includes(response.status)) {
             resolve(response.data.data)
+            
             return dispatch(initializeWithdrawSuccess(response.data));
           }
         })
         .catch(({ response }) => {
-response && response?.headers.authorization && dispatch(updateUser({
-          token: response.headers.authorization
-        }))
+          response && response?.headers.authorization && dispatch(updateUser({
+            token: response.headers.authorization
+          }))
           if (response && [400, 404, 422, 403].includes(response.status)) {
             dispatch(initializeWithdrawError(response.data.error ? response.data.error : response.data.message));
             return setTimeout(() => dispatch(clearError()), 3000)
@@ -355,11 +359,13 @@ export const confirmWithdraw = (payload, history) => {
       },
     })
       .then(response => {
-       response.headers?.authorization && dispatch(updateUser({
+        response.headers?.authorization && dispatch(updateUser({
           token: response.headers.authorization
         }))
         if ([200, 201].includes(response.status)) {
           dispatch(confirmWithdrawSuccess(response.data));
+          setTimeout(() => getWalletDetails()(dispatch, getState), 4000);
+
           return setTimeout(() => {
             dispatch(clearData())
             history.push('/app/wallet')
@@ -419,7 +425,7 @@ export const getTransactionHistory = (limit, pageNumber) => {
         },
       })
         .then(response => {
-         response.headers.authorization && dispatch(updateUser({
+          response.headers.authorization && dispatch(updateUser({
             token: response.headers.authorization
           }))
           if ([200, 201].includes(response.status)) {
@@ -428,9 +434,9 @@ export const getTransactionHistory = (limit, pageNumber) => {
           }
         })
         .catch(({ response }) => {
-response && response?.headers.authorization && dispatch(updateUser({
-          token: response.headers.authorization
-        }))
+          response && response?.headers.authorization && dispatch(updateUser({
+            token: response.headers.authorization
+          }))
           if (response && [400, 404, 422, 403].includes(response.status)) {
             return dispatch(getTransactionHistoryError(response.data.error ? response.data.error : response.data.message));
           }

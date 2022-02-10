@@ -3,13 +3,15 @@ import moment from 'moment';
 import { getTransactionTypeColor, getTransactionTypeImg } from '#/utils';
 import './style.scss';
 
-const WalletTransaction = ({ transaction, onClose }) => {
+const WalletTransaction = ({ transaction, onClose, multiple }) => {
   return (
     <div className="transaction-details-modal text-center">
       <div className="">
-        <div className="text-right pb-3">
+        {
+          !multiple && <div className="text-right pb-3">
             <img src={require('#/assets/icons/close.svg')} style={{cursor: "pointer"}} alt="close" onClick={onClose}/>
-        </div>
+          </div>
+        }
         <div className="container">
           <header>
             <div className="mb-3">

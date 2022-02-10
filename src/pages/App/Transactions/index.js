@@ -29,6 +29,7 @@ class Transactions extends React.Component {
   }
 
   handleTransactionSelect = (transaction) => {
+    console.log(transaction);
     this.setState({ selectedTransaction: transaction },
       () => this.setState({ showTransactionModal: true }))
   }
@@ -62,16 +63,20 @@ class Transactions extends React.Component {
       <div className="all-transactions-page">
         {
           showTransactionModal &&
-          <Modal onClose={this.toggleModal}>
-            <WalletTransaction transaction={selectedTransaction} onClose={this.toggleModal}/>
-            {/* {selectedTransaction?.history?.length > 0 && 
-              selectedTransaction?.history?.map(history => {
-                return (
-                <WalletTransaction transaction={history} />
-                )
-            })
-            } */}
-          </Modal>
+          <div className="transaction-modal">
+            <Modal onClose={this.toggleModal}>
+              <WalletTransaction transaction={selectedTransaction} onClose={this.toggleModal} />
+              {selectedTransaction?.history?.length > 0 &&
+                selectedTransaction?.history?.map(history => {
+                  return (
+                    <div className="mt-5">
+                      <WalletTransaction transaction={history} multiple={true} />
+                    </div>
+                  )
+                })
+              }
+            </Modal>
+          </div>
         }
         <div className="row">
           <div className="col-md-2">

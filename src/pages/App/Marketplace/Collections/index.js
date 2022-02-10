@@ -77,6 +77,10 @@ class Collections extends React.Component {
   handleChange = (event) => {
     const { name, value } = event.target;
     if (name === "target" || name === "amount" || name === "finalAmount") {
+      if (isNaN(formatCurrencyToString(value))){
+        return;
+      }
+
       this.setState({ errors: null });
       if (name === "target") this.setState({inputTarget: value}) ;
       if (name === "amount") this.setState({inputAmount: value}) ;
@@ -184,7 +188,7 @@ class Collections extends React.Component {
       currency: "NGN",
       startDate: moment(startDate).format("YYYY-MM-DD"),
       amount: formatCurrencyToString(amount),
-      frequency,
+      frequency: frequency.toLowerCase(),
     };
     const data = { type: "collection", payload, id: state?.investment.id };
 
@@ -271,7 +275,7 @@ class Collections extends React.Component {
       targetAmount: formatCurrencyToString(target),
       currency: "NGN",
       startDate: moment(startDate).format("YYYY-MM-DD"),
-      frequency,
+      frequency: frequency.toLowerCase(),
       payment,
       amount: formatCurrencyToString(amount),
       initialAmount: formatCurrencyToString(finalAmount),

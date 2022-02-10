@@ -14,7 +14,7 @@ class TermedInvestments extends React.Component {
     if(!this.props.investments) {
       this.props.getTermedInvestments();
     }
-  }
+  }   
 
   handleSingleInvestment = (investment) => {
     console.log(investment)

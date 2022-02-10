@@ -40,12 +40,33 @@ class Withdraw extends React.Component {
   handleChange = (event) => {
     const { name, value } = event.target;
     if (name === "amount") {
+      if (isNaN(formatCurrencyToString(value))) {
+        console.log("returning");
+        return;
+      }
+
       this.setState({ errors: null });
+
       return this.setState({ [name]: formatCurrencyToString(value) }, () => {
         this.setState({ textInputAmount: formatCurrencyToString(value) });
         if (isNaN(this.state.amount)) {
           return this.setState({ errors: { amount: "enter a valid number" } });
         }
+
+        const walletDetails = this.props.walletDetails;
+        if (walletDetails) {
+          const balance =
+            walletDetails && walletDetails.wallet.NGN
+              ? formatCurrencyToString(walletDetails.wallet.NGN)
+              : 0;
+
+
+          if (Number(this.state.amount) > Number(balance)) {
+            return this.setState({ errors: { amount: "Insufficient Funds" } });
+          }
+        }
+
+
       });
     }
     this.setState({ [name]: value });
@@ -66,6 +87,19 @@ class Withdraw extends React.Component {
 
     if (isNaN(this.state.amount)) {
       return this.setState({ errors: { amount: "enter a valid number" } });
+    }
+
+    const walletDetails = this.props.walletDetails;
+    if (walletDetails) {
+      const balance =
+        walletDetails && walletDetails.wallet.NGN
+          ? formatCurrencyToString(walletDetails.wallet.NGN)
+          : 0;
+
+
+      if (Number(this.state.amount) > Number(balance)) {
+        return this.setState({ errors: { amount: "Insufficient Funds" } });
+      }
     }
 
     if (Object.keys(errors).length > 0) {
@@ -149,6 +183,7 @@ class Withdraw extends React.Component {
           <Modal onClose={this.toggleConfirmationModal}>
             <div className="text-right pb-3">
               <img
+                style={{ cursor: "pointer" }}
                 src={require("#/assets/icons/close.svg")}
                 alt="close"
                 onClick={this.toggleConfirmationModal}

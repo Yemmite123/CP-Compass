@@ -5,14 +5,10 @@ const PpiCard = (props) => {
   const { item, handleSelect, classes } = props;
 
   return (
-    <div id="ppi-card" className={`mb-3 cursor-pointer ${classes}`} onClick={() => handleSelect && handleSelect(item)}>
-      <div className="img-cover" style={{ backgroundImage: `url(${item.image})`, backgroundRepeat: "no-repeat", backgroundSize: "cover" }}>
-        <div className="img-overlay">
-          <h5 className="text-white text-capitalize cursor-pointer">{item.title}</h5>
-        </div>
-      </div>
-      <div className="bottom">
-        <p className="text-black mb-0 investment-description">{item.summary?.substring(0, 50)}{item.summary?.length > 50 && '...'}</p>
+    <div className={`marketplace-card position-relative ${classes}`} onClick={() => handleSelect && handleSelect(item)} style={{ backgroundImage: `url(${require(`#/assets/images/marketplace-img.png`)})` }}>
+      <div style={{ zIndex: 1 }}>
+        <h6 className="investment-name text-white mb-0">{item.title}</h6>
+        <p className='investment-description text-white mb-0'>{item.summary?.substring(0, 50)}...</p>
       </div>
     </div>
   )

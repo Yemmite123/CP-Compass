@@ -1,6 +1,9 @@
 .ppi-page {
-  margin-top: 50px;
-  margin-bottom: 50px;
+  // margin-top: 50px;
+  min-height: 72vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   .card-container {
     height: 205px;

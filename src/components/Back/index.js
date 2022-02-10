@@ -2,9 +2,14 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import './style.scss';
 
-const Back = ({ ...props }) => {
+const Back = ({ onClick, ...props }) => {
 
   const handleBack = () => {
+    
+    if (onClick) {
+      onClick();
+      return;
+    }
     props.history.goBack();
   }
 

@@ -337,33 +337,33 @@ export const getTimeOfDay = () => {
 };
 
 export const getTransactionTypeColor = (transaction) => {
-    if (transaction.status === "success" && transaction.type === "service") {
-      return "processed";
-    }
+  if (transaction.status === "success" && transaction.type === "service") {
+    return "processed";
+  }
 
-    if (transaction.status === "pending" && transaction.type === "debit") {
-      return "pending";
-    }
+  if (transaction.status === "pending" && transaction.type === "debit") {
+    return "pending";
+  }
 
-    if (transaction.type === "service") {
-      return "processed";
-    }
+  if (transaction.type === "service") {
+    return "processed";
+  }
 
-    if (transaction.type === "credit") {
-      return "credit";
-    }
+  if (transaction.type === "credit") {
+    return "credit";
+  }
 
-    if (transaction.type === "debit") {
-      return "debit";
-    }
+  if (transaction.type === "debit") {
+    return "debit";
+  }
 
-    if (transaction.type === "failed") {
-      return "debit";
-    }
+  if (transaction.type === "failed") {
+    return "debit";
+  }
 
-    if (transaction.type === "invest") {
-      return "invest";
-    }
+  if (transaction.type === "invest") {
+    return "invest";
+  }
 };
 
 export const getTransactionTypeImg = (transaction) => {
@@ -392,7 +392,7 @@ export const getTransactionTypeImg = (transaction) => {
     return failedImg;
   }
 
-  if (transaction.type == "service"){
+  if (transaction.type == "service") {
     return investedImg;
   }
 
@@ -433,11 +433,14 @@ export const formatCurrency = (amount) => {
 
 //adds the commas
 export const formatStringToCurrency = (amount) => {
+  amount = amount.replace(/^/, "₦");
   return amount.replace(/\B(?=(\d{3})+(?!\d))/g, "$&,");
 };
 
 // removes commas
 export const formatCurrencyToString = (amount) => {
+  amount = amount.replace("₦", "");
+
   return amount.replace(/\,/g, "");
 };
 

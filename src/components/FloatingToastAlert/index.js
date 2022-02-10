@@ -39,7 +39,7 @@ class FloatingToastAlert extends React.Component {
                 </div>
                 <div className="text-center">
                   <div className="mb-3">
-                    <h5 className="text-blue font-bolder text-success text-capitalize">
+                    <h5 className="font-bolder text-success text-capitalize">
                       {alert.type}
                     </h5>
                     <p className="mb-0 text-grey"> {alert.message}.</p>

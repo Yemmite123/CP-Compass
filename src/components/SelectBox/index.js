@@ -7,7 +7,8 @@ const SelectBox = (
   
     const onInputChange = (e) => {
       // setHasvalue(e.target.value.trim().length > 0 ? true : false);
-      onChange(e);
+      if (onChange)
+        onChange(e);
     };
   
 

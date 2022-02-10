@@ -37,7 +37,8 @@ const Textbox = React.forwardRef(({ label, onChange, defaultValue, name, value, 
                 e.target.parentNode.children[0].classList.remove("active");
                 e.target.classList.remove("active");
                 }
-              onChange(e);
+              if (onChange)
+                onChange(e);
             }}
             className={`${boxClasses?.includes("active") ? "active" : ""}`}
             name={name}
