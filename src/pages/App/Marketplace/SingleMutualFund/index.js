@@ -11,7 +11,7 @@ import Modal from '#/components/Modal';
 import Textbox from '#/components/Textbox';
 import SelectBox from '#/components/SelectBox';
 import PhoneTextbox from '#/components/PhoneTextBox';
-import { refineOptions } from '#/utils';
+import { closeOffCanvas, refineOptions } from '#/utils';
 import { countryCodes } from '#/utils/countryCode';
 import DateBox from '#/components/DateBox';
 import OffCanvas from "#/components/OffCanvas";
@@ -107,7 +107,8 @@ class SingleMutualFund extends React.Component {
 
     this.props.submitMutualForm(this.props.fund.slug, payload)
       .then(data => {
-        this.openForm();
+        closeOffCanvas("offcanvas-single-fund");
+        // this.openForm();
       });
   }
 
@@ -139,6 +140,8 @@ class SingleMutualFund extends React.Component {
 
                         return (
                           <div className="mt-3" key={i}>
+                            <p className='text-capitalize'>{isNaN(item.placeholder) ? item.placeholder : item.name == "phoneNumber" ? "Phone Number" : item.name}</p>
+
                             {item.type === 'select' ?
                               <SelectBox
                                 label={item.title}
