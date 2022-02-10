@@ -24,18 +24,18 @@ const Investment = (props) => {
         </div>
         <div className="d-flex justify-content-between mt-4">
           <div>
-            <p className="mb-0 text-grey">Target</p>
-            <p className="mb-0">&#x20A6;{formatCurrency(investment.targetAmount)}</p>
+            <small className="mb-0 text-grey">Target</small>
+            <p className="mb-0 text-small">&#x20A6;{formatCurrency(investment.targetAmount)}</p>
           </div>
           <div>
-            <p className="mb-0 text-grey">Target met</p>
+            <small className="mb-0 text-grey">Target met</small>
             <p className="mb-0"><span className="text-black text-small">&#x20A6;{formatCurrency(investment.balance)}</span></p>
           </div>
         </div>
         <div className="d-flex justify-content-between mt-4">
           <div>
-            <p className="mb-0 text-black text-grey">Next payment Date</p>
-            <p className="mb-0 text-black">{investment.nextPaymentDate ? moment(investment.nextPaymentDate).format('YYYY-MM-DD') : 'N/A'}</p>
+            <small className="mb-0 text-black text-grey">Next payment Date</small>
+            <p className="mb-0 text-black text-small">{investment.nextPaymentDate ? moment(investment.nextPaymentDate).format('DD MMMM, YYYY') : 'N/A'}</p>
           </div>
         </div>
         <div className="mt-3">

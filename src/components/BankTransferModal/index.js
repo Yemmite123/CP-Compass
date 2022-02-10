@@ -6,6 +6,8 @@ import './style.scss';
 
 const BankTransferModal = ({ details, closeTransferModal, confirmPayment }) => {
 
+  console.log(details);
+
   const closeModal = () => {
     closeTransferModal();
   }

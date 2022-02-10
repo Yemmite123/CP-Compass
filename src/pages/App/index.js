@@ -49,6 +49,7 @@ class App extends Component {
     this.props.getSystemCinfig();
     this.props.getDashboardInfo();
     this.props.getAllNotifications(20, 1)
+    console.log(this.props.userProfile.data);
   }
 
   handleLogout = () => {

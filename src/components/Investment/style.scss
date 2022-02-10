@@ -2,8 +2,8 @@
   .card-container {
     border: 1px solid #E1E4FF;
     box-shadow: none!important;
-    max-width: 269px;
-    height: 249px;
+    min-width: 263px;
+    height: 265px;
   }
 
   .progress {
@@ -32,7 +32,7 @@
     }
   }
 
-  p{
-    font-size: 12px;
-  }
+  // p{
+  //   font-size: 12px;
+  // }
 }

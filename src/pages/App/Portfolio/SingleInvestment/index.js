@@ -67,6 +67,7 @@ class SingleInvestment extends React.Component {
     }
     this.props.getCards();
     this.props.fetchSingleInvestment(params.investmentId);
+
   }
 
   handleChange = (event) => {
@@ -254,6 +255,7 @@ class SingleInvestment extends React.Component {
   };
 
   render() {
+    console.log(this.props.investment)
     const {
       investment,
       walletDetails,
@@ -520,11 +522,10 @@ class SingleInvestment extends React.Component {
                 <img
                   src={require("#/assets/icons/plus-circle.svg")}
                   alt="plus"
-                  className={`img-fluid ${
-                    ["active", "booked"].includes(investment?.order_status)
+                  className={`img-fluid ${["active", "booked"].includes(investment?.order_status)
                       ? "cursor-pointer"
                       : "cursor-block disabled"
-                  }`}
+                    }`}
                   onClick={
                     ["active", "booked"].includes(investment?.order_status)
                       ? this.toggleOffCanvas
@@ -532,11 +533,10 @@ class SingleInvestment extends React.Component {
                   }
                 />
                 <p
-                  className={`text-blue mb-0 text-small ${
-                    ["active", "booked"].includes(investment?.order_status)
+                  className={`text-blue mb-0 text-small ${["active", "booked"].includes(investment?.order_status)
                       ? "cursor-pointer"
                       : "cursor-block disabled"
-                  }`}
+                    }`}
                   onClick={
                     ["active", "booked"].includes(investment?.order_status)
                       ? this.toggleOffCanvas
@@ -557,13 +557,12 @@ class SingleInvestment extends React.Component {
                             : require("#/assets/icons/toggle-on.svg")
                         }
                         alt="plus"
-                        className={`img-fluid ${
-                          ["active", "booked"].includes(
-                            investment?.order_status
-                          )
+                        className={`img-fluid ${["active", "booked"].includes(
+                          investment?.order_status
+                        )
                             ? "cursor-pointer"
                             : "cursor-block disabled"
-                        }`}
+                          }`}
                         onClick={
                           ["active", "booked"].includes(
                             investment?.order_status
@@ -573,13 +572,12 @@ class SingleInvestment extends React.Component {
                         }
                       />
                       <p
-                        className={`text-blue mb-0 text-small ${
-                          ["active", "booked"].includes(
-                            investment?.order_status
-                          )
+                        className={`text-blue mb-0 text-small ${["active", "booked"].includes(
+                          investment?.order_status
+                        )
                             ? "cursor-pointer"
                             : "cursor-block disabled"
-                        }`}
+                          }`}
                         onClick={
                           ["active", "booked"].includes(
                             investment?.order_status
@@ -597,11 +595,10 @@ class SingleInvestment extends React.Component {
                 <img
                   src={require("#/assets/icons/liquidate.svg")}
                   alt="plus"
-                  className={`img-fluid ${
-                    ["active", "booked"].includes(investment?.order_status)
+                  className={`img-fluid ${["active", "booked"].includes(investment?.order_status)
                       ? "cursor-pointer"
                       : "cursor-block disabled"
-                  }`}
+                    }`}
                   onClick={
                     ["active", "booked"].includes(investment?.order_status)
                       ? this.handleLiquidate
@@ -609,11 +606,10 @@ class SingleInvestment extends React.Component {
                   }
                 />
                 <p
-                  className={`text-blue mb-0 text-small ${
-                    ["active", "booked"].includes(investment?.order_status)
+                  className={`text-blue mb-0 text-small ${["active", "booked"].includes(investment?.order_status)
                       ? "cursor-pointer"
                       : "cursor-block disabled"
-                  }`}
+                    }`}
                   onClick={
                     ["active", "booked"].includes(investment?.order_status)
                       ? this.handleLiquidate
@@ -644,8 +640,8 @@ class SingleInvestment extends React.Component {
                     <b>
                       {investment && investment.nextPaymentDate
                         ? moment(investment.nextPaymentDate).format(
-                            "MMM D, YYYY"
-                          )
+                          "MMM D, YYYY"
+                        )
                         : "Not Available"}
                     </b>
                   </p>
@@ -660,9 +656,8 @@ class SingleInvestment extends React.Component {
                     <div
                       className="progress-bar bg-success"
                       style={{
-                        width: `${
-                          investment ? investment.percentageCompletion : 0
-                        }%`,
+                        width: `${investment ? investment.percentageCompletion : 0
+                          }%`,
                       }}
                       role="progressbar"
                       aria-valuenow={

@@ -93,7 +93,6 @@ export const getInvestmentDetails = (id) => {
     dispatch(getInvestmentDetailsRequest());
 
     const { token } = getState().user;
-
     axios.get(`${CONFIG.BASE_URL}/services/${id}/investments`, {
       headers: {
         "Content-Type": "application/json",

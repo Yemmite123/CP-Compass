@@ -115,7 +115,7 @@ class Investment extends React.Component {
                 <div className="text-right" onClick={this.handleNewInvestment}>
                   <img src={require('#/assets/icons/plus-circle.svg')} alt="plus" className="img-fluid" onClick={this.handleNewInvestment} />
                 </div>
-                <h3 className="text-white text-medium pr-4" onClick={this.handleNewInvestment}>Create new {state?.investment.name} plan</h3>
+                <h3 className="text-white text-medium pr-4" onClick={this.handleNewInvestment}>Create a new {state?.investment.name} plan</h3>
               </Card>
             </div>
             {investmentList && 

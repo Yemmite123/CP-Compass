@@ -2,29 +2,55 @@
   &:focus-within fieldset {
     border: 1px solid #3a4080;
     transition: ease-in 500ms;
-
-    span {
-      color: #3A4080;
-      visibility: hidden;
-    }
-
   }
+
   .error {
     border: 1px solid #d34242;
   }
   .label-error {
     color: #d34242
   }
-  &:focus-within legend {
-    color: #3F9ADA;
-    transition: ease-in-out 500ms;
+
+  &:focus-within {
+    span{
+      margin: 0!important;
+      display: inline !important;
+      font-size: .8rem;
+      transform: translateY(-0.7rem);
+      color: #3A4080;
+      visibility: visible;
+    }
+
+    select{
+      position: relative;
+      top: 0.3rem;
+    }
+
+    input::placeholder{
+      color: transparent;
+    }
   }
 
-  span {
+  span.active{
+    margin: 0!important;
     display: inline !important;
-    visibility: hidden;
     font-size: .8rem;
-    top: -1.3rem;
+    transform: translateY(-0.7rem);
+    visibility: visible;
+  }
+
+  span.label-error{
+    margin: 0!important;
+    display: inline !important;
+    font-size: .8rem;
+    transform: translateY(-0.7rem);
+    visibility: visible;
+    color: #d34242
+
+  }
+  span{
+    padding: 1px 2px;
+    visibility: hidden;
   }
 
   fieldset {
@@ -36,17 +62,7 @@
     border: 1px solid #E5E5E5;
     border-radius: 5px;
   }
-  legend {
-    max-width: fit-content;
-    font-size: 1.5rem;
-    line-height: inherit;
-    color: #E5E5E5;
-    white-space: normal;
-    text-align: left;
-    font-size: 12px;
-    margin-left: 5px;
-    margin-bottom: -5px;
-  }
+
   select {
     width: 100%;
     height: auto;
@@ -54,6 +70,12 @@
     border: 0;
     background: transparent;
   }
+
+  select.active{
+    position: relative;
+    top: 0.3rem;
+  }
+  
   .input-error {
     text-align: left;
     font-size: 12px;

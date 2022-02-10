@@ -12,7 +12,7 @@ import PaymentMethod from '#/components/PaymentMethod';
 import DebitCard from '#/components/DebitCard';
 import DateBox from '#/components/DateBox';
 import OffCanvas from "#/components/OffCanvas";
-import { closeOffCanvas } from "#/utils";
+import { closeOffCanvas, openOffCanvas } from "#/utils";
 import { getActionLoadingState } from "#/store/selectors";
 import { getCards } from '#/store/wallet/actions'
 import { bookNewInvestment, bookInvestmentWithPay, calculateInvestment } from '#/store/investment/actions'
@@ -42,8 +42,8 @@ class Custom extends React.Component {
     target: '',
     inputTargetDate: '',
     targetDate: new Date(),
-    frequency: '',
-    inputFrequency: '',
+    frequency: 'daily',
+    inputFrequency: 'daily',
     startDate: new Date(),
     inputStartDate: '',
     confirmationModal: false,
@@ -187,7 +187,7 @@ class Custom extends React.Component {
     }
 
     const { location: { state } } = this.props.history
-    this.resetFields()
+    //this.resetFields()
     this.state.addEndDate ? this.props.calculateInvestment(info)
       .then(data => {
         this.setState({ installment: data.installment, expectedTotalReturns: data.expectedTotalReturns }, () => {
@@ -200,6 +200,7 @@ class Custom extends React.Component {
 
   //move to enterering transaction pin
   handleEnterPin = () => {
+    this.resetFields();
     this.toggleConfirmationModal();
     this.toggleTransactionPinModal();
   }
@@ -239,6 +240,12 @@ class Custom extends React.Component {
         this.toggleAddMoneyModal();
         this.toggleSetupSuccessModal();
       });
+  }
+
+  handleReviewPlan = () => {
+    const { location: { state } } = this.props.history;
+    openOffCanvas(`offcanvas-${state?.investment.id}`);
+    this.toggleConfirmationModal()
   }
 
   //handle proceed from the success modal
@@ -400,7 +407,7 @@ class Custom extends React.Component {
                 <button className="btn py-3 btn-primary w-100" onClick={this.handleEnterPin}>
                   Setup Plan
                 </button>
-                <p className="text-blue mt-3 mb-0 cursor-pointer" onClick={this.toggleConfirmationModal}>Review Plan</p>
+                <p className="text-blue mt-3 mb-0 cursor-pointer" onClick={this.handleReviewPlan}>Review Plan</p>
               </div>
               {error && typeof error === 'string' && <p className="text-error text-center">{error}</p>}
             </div>
@@ -704,7 +711,7 @@ class Custom extends React.Component {
                 name="frequency"
                 boxClasses="mt-3"
                 options={investmentFrequency}
-                value={inputFrequency}
+                // value={inputFrequency}
                 optionName="name"
                 error={errors ? errors.frequency : (errorObject && errorObject['frequency'])}
               />
