@@ -25,7 +25,7 @@ class Recommended extends React.Component {
     const { recommended, loading } = this.props;
 
     return (
-      <div className="recommended-investments-page">
+      <div className="recommended-investments-page" >
         {loading && !recommended && <MarketSkeleton />
         }
         {recommended &&
@@ -33,12 +33,12 @@ class Recommended extends React.Component {
             {
               (recommended && recommended.recommendations?.length > 0 &&
                 recommended.recommendations?.map(investment => (
-                  <div className="col-md-3 pl-0" key={Math.random()*1000} >
-                  <MarketplaceCard 
-                    key={Math.random()*1000} 
-                    item={investment} 
-                    handleSelect={() => this.handleSingleInvestment(investment)}
-                  />
+                  <div className="col-md-3 pl-0" key={Math.random() * 1000} >
+                    <MarketplaceCard
+                      key={Math.random() * 1000}
+                      item={investment}
+                      handleSelect={() => this.handleSingleInvestment(investment)}
+                    />
                   </div>
                 ))
               )
@@ -46,11 +46,18 @@ class Recommended extends React.Component {
           </div>
         }
         {!loading && !recommended &&
-          <div className="col-md-12 justify-content-center">
-          <div className="text-center">
-            <p className="text-grey text-large">No recommendations</p>
+          <div className="text-center d-flex justify-content-center" style={{ minHeight: "69vh" }}>
+            <div className='align-self-center'>
+              <img
+                src={require("#/assets/icons/receipt.svg")}
+                alt="no-tickets"
+                className="img-fluid"
+              />
+              <p className="" style={{ color: "rgba(229, 229, 229, 1)" }}>
+                You have no recomendations yet
+              </p>
+            </div>
           </div>
-        </div>
         }
       </div>
     )

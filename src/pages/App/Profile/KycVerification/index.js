@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { getActionLoadingState } from "#/store/selectors";
-import { updateKyc, addBankDetails, getUserProfile  } from "#/store/profile/actions";
+import { updateKyc, addBankDetails, getUserProfile } from "#/store/profile/actions";
 import actionTypes from "#/store/profile/actionTypes";
 import Alert from '#/components/Alert';
 import CustomInput from "#/components/CustomInput";
@@ -28,7 +28,7 @@ class KycVerification extends React.Component {
     accountNumber: '',
     bankCode: '',
     accountName: '',
-    passport: null, 
+    passport: null,
     signature: null,
   }
 
@@ -38,7 +38,7 @@ class KycVerification extends React.Component {
 
   setValues = () => {
     const { bankInfo } = this.props;
-    if(bankInfo){
+    if (bankInfo) {
       this.setState({
         accountNumber: bankInfo && bankInfo.accountNumber ? bankInfo.accountNumber : '',
         bankCode: bankInfo && bankInfo.bankCode ? bankInfo.bankCode : '',
@@ -48,14 +48,14 @@ class KycVerification extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if(prevProps.bankInfo !== this.props.bankInfo) {
+    if (prevProps.bankInfo !== this.props.bankInfo) {
       this.setValues();
     }
   }
 
   handleBankChange = (event) => {
     const { value } = event.target
-    if(value === '...select...'){
+    if (value === '...select...') {
       return this.setState({ bankCode: '' });;
     }
     return this.setState({ bankCode: value });
@@ -85,11 +85,11 @@ class KycVerification extends React.Component {
 
     const { updateKyc } = this.props;
     const { governmentFile, utilityFile, documentType, passport, signature } = this.state;
-    if(!governmentFile && !utilityFile && !signature && !passport) {
-      return this.setState({ kycErrors: {file: 'please select a file'} });
+    if (!governmentFile && !utilityFile && !signature && !passport) {
+      return this.setState({ kycErrors: { file: 'please select a file' } });
     }
-    if(governmentFile && !documentType) {
-      return this.setState({ kycErrors: { document: 'please select a type'} });
+    if (governmentFile && !documentType) {
+      return this.setState({ kycErrors: { document: 'please select a type' } });
     }
     const formData = new FormData();
     if (utilityFile) formData.append('utility_bill', utilityFile)
@@ -106,7 +106,7 @@ class KycVerification extends React.Component {
     const { bankCode, accountNumber } = this.state;
 
     const data = this.state;
-    const required = [ 'accountNumber', 'bankCode' ];
+    const required = ['accountNumber', 'bankCode'];
     const errors = validateFields(data, required)
     if (Object.keys(errors).length > 0) {
       return this.setState({ errors });
@@ -118,6 +118,7 @@ class KycVerification extends React.Component {
   render() {
     const { errors, kycErrors, accountNumber, bankCode, accountName } = this.state;
     const { bvn, loading, data, error, banks, bankLoading, bankData, bankError } = this.props
+    
     const errorObject = serializeErrors(bankError);
 
     return (
@@ -142,7 +143,7 @@ class KycVerification extends React.Component {
               onChange={this.handleBankChange}
               type="select"
               valueKey="code"
-              options={banks ? banks : []}
+              options={banks ? banks.map((bank) => {return {name: bank.name, value: bank.code}}) : []}
               error={errors ? errors.bankCode : (errorObject && errorObject['bankCode'])}
             />
             <Textbox
@@ -164,7 +165,7 @@ class KycVerification extends React.Component {
             />
             <div className="section-form__button-area">
               <div className="col col-md-7">
-                {bankData && bankData.message !== '' && <Alert alert={{ type:"success", message: bankData.message}}/>}
+                {bankData && bankData.message !== '' && <Alert alert={{ type: "success", message: bankData.message }} />}
               </div>
               {bankError && typeof bankError === 'string' && <p className="text-error text-left">{bankError}</p>}
               <button className="btn-default px-4" disabled={bankLoading} onClick={this.handleSubmitBankInfo}>
@@ -179,26 +180,29 @@ class KycVerification extends React.Component {
 
         <div className="section-container">
           <h2 className="section-header mb-3">KYC Documents</h2>
+          
+          <ImageUploadInput
+            acceptsList="image/png, image/jpeg, application/pdf"
+            label="Upload Government-issued ID"
+            handleFile={this.handleGovernmetFileSelect}
+          >
+            <div className="mr-4" style={{minWidth: "300px"}}>
+              <SelectBox
+                boxClasses={"active"}
+                name="documentType"
+                label="What Type of ID do you want to upload?"
+                onChange={this.handleDocumentChange}
+                type="select"
+                options={documentOptions}
+                value={this.state.documentType}
+              />
+            </div>
+          </ImageUploadInput>
           <ImageUploadInput
             acceptsList="image/png, image/jpeg, application/pdf"
             label="Upload Utility Bill"
             handleFile={this.handleUtilityFileSelect}
           />
-          <ImageUploadInput
-            acceptsList="image/png, image/jpeg, application/pdf"
-            label="Upload Government-issued ID"
-            handleFile={this.handleGovernmetFileSelect}
-          />
-          <div className="id-type-area">
-            <SelectBox
-              name="documentType"
-              label="Type of ID uploaded"
-              onChange={this.handleDocumentChange}
-              type="select"
-              options={documentOptions}
-              value={this.state.documentType}
-            />
-          </div>
           {kycErrors && <p className="text-error">{kycErrors.document}</p>}
         </div>
 
@@ -207,18 +211,18 @@ class KycVerification extends React.Component {
           <ImageUploadInput
             acceptsList="image/png, image/jpeg, application/pdf"
             label="Upload Signature Specimen"
-            handleFile={file => this.setState({ signature: file})}
+            handleFile={file => this.setState({ signature: file })}
           />
           <ImageUploadInput
             acceptsList="image/png, image/jpeg, application/pdf"
             label="Upload Passport Photo"
-            handleFile={file => this.setState({ passport: file})}
+            handleFile={file => this.setState({ passport: file })}
           />
           <div className="section-form__button-area mt-5">
             <div className="col col-md-7 mt-3">
               {error && <p className="text-error">{error}</p>}
               {kycErrors && <p className="text-error">{kycErrors.file}</p>}
-              {data && <Alert alert={{ type:"success", message: 'Successfully uploaded your document(s)'}}/>}
+              {data && <Alert alert={{ type: "success", message: 'Successfully uploaded your document(s)' }} />}
             </div>
             <button className="btn-default px-4" disabled={loading} onClick={this.handleSubmit}>
               Save changes

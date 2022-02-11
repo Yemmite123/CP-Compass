@@ -490,7 +490,7 @@ class SingleInvestment extends React.Component {
               className="BG"
               title="Amount Invested"
               showCurrency={true}
-              total={`${investment ? formatCurrency(investment.balance) : 0}`}
+              total={`${investment ? formatCurrency(investment.balance) : "0.00"}`}
               percentageDiff="N/A"
               backgroundImage={`url(${WalletBG})`}
               iconColor="#871523"
@@ -500,7 +500,7 @@ class SingleInvestment extends React.Component {
             <SummaryCard
               title="Interest"
               showCurrency={true}
-              total={`${investment ? investment.accruedInterest : 0}`}
+              total={`${investment ? investment.accruedInterest : "0.00"}`}
               percentageDiff={"N/A"}
               backgroundImage={`url(${InvestmentBG})`}
               iconColor="#B0500E"
@@ -654,11 +654,7 @@ class SingleInvestment extends React.Component {
                   <h5 className="text-blue">Investment Progress</h5>
                   <div className="progress">
                     <div
-                      className="progress-bar bg-success"
-                      style={{
-                        width: `${investment ? investment.percentageCompletion : 0
-                          }%`,
-                      }}
+                      className={`progress-bar bg-success ${investment.percentageCompletion < 10 ? "text-black" : ""}`}
                       role="progressbar"
                       aria-valuenow={
                         investment ? investment.percentageCompletion : 0

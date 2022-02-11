@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Alert from '#/components/Alert';
 import CustomInput from "#/components/CustomInput";
+import Textbox from "#/components/Textbox";
 import { getActionLoadingState } from "#/store/selectors";
 import { updatePin  } from "#/store/profile/actions";
 import actionTypes from "#/store/profile/actionTypes";
@@ -181,25 +182,28 @@ class Security extends React.Component {
         <div className="section-container">
           <h2 className="section-header mb-3">Change Password</h2>
           <div className="section-form mt-4">
-            <CustomInput
+            <Textbox
               name="currentPassword"
               label="Current Password"
+              placeholder="Current Password"
               value={currentPassword}
               type="password"
               onChange={this.handleChange}
               error={errors ? errors.currentPassword : (errorObject && errorObject['currentPassword'])}
             />
-            <CustomInput
+            <Textbox
               name="newPassword"
               label="New Password"
+              placeholder="New Password"
               value={newPassword}
               type="password"
               onChange={this.handleChange}
               error={errors ? errors.newPassword : (errorObject && errorObject['password'])}
             />
-            <CustomInput
+            <Textbox
               name="confirmPassword"
               label="Confirm Password"
+              placeholder="Confirm Password"
               value={confirmPassword}
               type="password"
               onChange={this.handleChange}
@@ -220,29 +224,32 @@ class Security extends React.Component {
         <div className="section-container">
           <h2 className="section-header mb-3">Change Trasaction Pin</h2>
           <div className="section-form mt-4">
-            <CustomInput
+            <Textbox
               name="userPass"
               label="Your Password"
+              placeholder="Your Password"
               value={userPass}
               type="password"
               onChange={this.handleChange}
               error={errors ? errors.userPass : (errorObject && errorObject['userPass'])}
             />
-            <CustomInput
+            <Textbox
               name="pin"
               label="New Transaction Pin"
+              placeholder="New Transaction Pin"
               value={pin}
               type="password"
               onChange={this.handleChange}
-              customAttributes={{maxLength: "4"}}
+              maxlength={4}
             />
-            <CustomInput
+            <Textbox
               name="confirmPin"
               label="Confirm New Transaction Pin"
+              placeholder="Confirm New Transaction Pin"
               value={confirmPin}
               type="password"
               onChange={this.handleChange}
-              customAttributes={{maxLength: "4"}}
+              maxlength={4}
               error={pinValidate}
             />
             <div className="section-form__button-area">

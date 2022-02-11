@@ -43,9 +43,18 @@ class TermedInvestments extends React.Component {
             </div>
           ))
           :
-          ( !loading && <div className="text-center w-100 mt-5">
-            <p className="text-grey text-medium">No Termed Investments</p>
-          </div>)
+          ( !loading &&  <div className="text-center d-flex justify-content-center" style={{ minHeight: "69vh" }}>
+          <div className='align-self-center'>
+            <img
+              src={require("#/assets/icons/receipt.svg")}
+              alt="no-tickets"
+              className="img-fluid"
+            />
+            <p className="" style={{ color: "rgba(229, 229, 229, 1)" }}>
+              You have no Termed Investment yet
+            </p>
+          </div>
+        </div>)
         }
         </div>
         }

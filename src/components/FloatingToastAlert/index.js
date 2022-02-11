@@ -4,7 +4,7 @@ import { removeAlert } from "#/store/ui/actions";
 import Modal from "#/components/Modal";
 import "./style.scss";
 
-//TODO
+//TODO: make center
 class FloatingToastAlert extends React.Component {
   componentDidMount() {
     if (this.props.alert) {
@@ -26,7 +26,7 @@ class FloatingToastAlert extends React.Component {
     const { alert } = this.props;
     return (
       <>
-        {alert.type !== "error" ? (
+        {alert.type !== "error" ? !alert.headerOnly ?
           <div className="alert-modal">
             <Modal onClose={this.props.removeAlert}>
               <div className="px-3">
@@ -45,26 +45,59 @@ class FloatingToastAlert extends React.Component {
                     <p className="mb-0 text-grey"> {alert.message}.</p>
                   </div>
                   <div className="px-3 mt-4">
-                    <button
+                  {!alert.noBtn ? <button
                       className="btn py-3 btn-success btn-block mt-3"
                       onClick={this.props.removeAlert}
                     >
                       {alert.button ? alert.button : "Go back"}
-                    </button>
+                    </button> : <></>
+                    }
+                  </div>
+                </div>
+              </div>
+            </Modal>
+          </div> :
+          <div className="alert-modal">
+            <Modal onClose={this.props.removeAlert}>
+              <div className="px-3">
+                <div className="d-flex justify-content-center">
+                  <img
+                    src={require("#/assets/icons/done.svg")}
+                    alt="bank"
+                    className="pb-3"
+                  />
+                </div>
+                <div className="text-center">
+                  <div className="mb-3">
+                    <h5 className="font-bolder text-success">
+                      {alert.message}
+                    </h5>
+                    <h5 className="font-bolder text-success">
+                      {alert.message2}
+                    </h5>
+                  </div>
+                  <div className="px-3 mt-4">
+                    {!alert.noBtn ? <button
+                      className="btn py-3 btn-success btn-block mt-3"
+                      onClick={this.props.removeAlert}
+                    >
+                      {alert.button ? alert.button : "Go back"}
+                    </button> : <></>
+                    }
                   </div>
                 </div>
               </div>
             </Modal>
           </div>
-        ) : (
-          <div className="floating-popup">
-            <div className={`floating-popup--${alert.type}`}>
-              <div className="floating-popup__message font-md">
-                {alert.message}
+          : (
+            <div className="floating-popup">
+              <div className={`floating-popup--${alert.type}`}>
+                <div className="floating-popup__message font-md">
+                  {alert.message}
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
       </>
     );
   }

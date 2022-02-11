@@ -228,7 +228,7 @@ class Tickets extends React.Component {
           </button>
         </div>
         <div className="text-right mt-2">
-          {/* <form onSubmit={this.handleSubmitSearch}>
+          {tickets && tickets.length > 0 ? <form onSubmit={this.handleSubmitSearch}>
             <div className="position-relative d-inline">
               <div className="d-inline search">
                 <svg
@@ -252,10 +252,11 @@ class Tickets extends React.Component {
                 style={{ fontSize: 14 }}
               />
             </div>
-          </form> */}
+          </form> : <></>
+          }
         </div>
 
-        <div className="mt-2 card">
+        <div className={`mt-2 card ${!(tickets && tickets.length > 0) ? "empty" : ""}`}>
           {loading && (
             <div className="text-center p-4">
               <div className="spinner-border spinner-border-primary text-primary spinner-border-md mr-2"></div>
@@ -288,7 +289,7 @@ class Tickets extends React.Component {
                   alt="no-tickets"
                   className="img-fluid"
                 />
-                <p className="text-grey">
+                <p className="" style={{color: "rgba(229, 229, 229, 1)"}}>
                   {search !== "".trim()
                     ? "No ticket history matches this search"
                     : "You have no tickets yet"}

@@ -8,7 +8,9 @@ import actionTypes from "#/store/profile/actionTypes";
 import Alert from '#/components/Alert';
 import Modal from '#/components/Modal';
 import RadioInput from "#/components/RadioInput";
-import CustomInput from "#/components/CustomInput";
+import Textbox from "#/components/Textbox";
+import DateBox from "#/components/DateBox";
+import SelectBox from "#/components/SelectBox";
 import { validateFields, serializeErrors, relationshipOption } from '#/utils';
 import './style.scss';
 
@@ -232,36 +234,38 @@ class PoliticalStatus extends React.Component {
                     name="occupiedPoliticalPosition" 
                     label="No"
                     value={false} 
-                    checked={occupiedPoliticalPosition === false} 
+                    // checked={occupieddsds PoliticalPosition === false} 
                     onChange={this.handleChange} 
                   />
                 </div>
               </div>
               {occupiedPoliticalPosition && <>
-                <CustomInput
+                <Textbox
                   name="positionName"
                   label="Name of Position"
+                  placeholder="Name of Position"
                   value={positionName}
                   onChange={this.handleChange}
                   error={
                     errors ? errors.positionName : (errorObject && errorObject['positionName'])
                   }
                 />
-                <CustomInput
+                <SelectBox
+                  boxClasses="active"
                   name="occupiedTillDate"
                   label="Do you still occupy this position"
+                  type="select"
                   value={occupiedTillDate ? "1" : "0"}
                   onChange={e => this.setState({occupiedTillDate: e.target.value === "1" ? true : false, to: ''})}
-                  type="select"
                   options={[{name: 'Yes', value: "1"}, {name: 'No', value: "0"}]}
                   error={
-                    errors ? errors.occupiedTillDate : errorObject && errorObject["occupiedTillDate"]
+                    errors ? errors.occupiedTillDfate : errorObject && errorObject["occupiedTillDate"]
                   }
                 />
                 <div className="question-box">
                   <p className="question-box__question">When you occupied position?</p>
                 </div>
-                <CustomInput
+                <DateBox
                   name="from"
                   label="Start Date"
                   value={from}
@@ -270,11 +274,12 @@ class PoliticalStatus extends React.Component {
                   error={errors ? errors.from : (errorObject && errorObject['from'])}
                   maxDate={to || new Date()}
                 />
-                {!occupiedTillDate && <CustomInput
+                {<DateBox
                   name="to"
                   label="End Date"
                   value={to}
                   type="date"
+                  disabled={occupiedTillDate? true : false}
                   onChange={date => this.handleChangeDate('to', date)}
                   error={errors ? errors.to : (errorObject && errorObject['to'])}
                   maxDate={new Date()}
@@ -299,22 +304,24 @@ class PoliticalStatus extends React.Component {
                     name="hasPoliticalAssociate" 
                     label="No"
                     value={false} 
-                    checked={hasPoliticalAssociate === false} 
+                    // checked={hasPoliticalAssociate === false} 
                     onChange={this.handleChange} 
                   />
                 </div>
               </div>
               {hasPoliticalAssociate && <>
-                <CustomInput
+                <Textbox
                   name="associatePositionName"
                   label="Name of Position"
+                  placeholder="Name of Position"
                   value={associatePositionName}
                   onChange={this.handleChange}
                   error={
                     errors ? errors.associatePositionName : (errorObject && errorObject['associatePositionName'])
                   }
                 />
-                <CustomInput
+                <SelectBox
+                  boxClasses="active"
                   name="associateOccupiedTillDate"
                   label="He/She still occupies this position?"
                   value={associateOccupiedTillDate ? "1" : "0"}
@@ -328,7 +335,7 @@ class PoliticalStatus extends React.Component {
                 <div className="question-box">
                   <p className="question-box__question">When he/she occupied position?</p>
                 </div>
-                <CustomInput
+                <DateBox
                   name="associateFrom"
                   label="Start Date"
                   value={associateFrom}
@@ -337,20 +344,22 @@ class PoliticalStatus extends React.Component {
                   error={errors ? errors.associateFrom : (errorObject && errorObject['politicalAssociate.from'])}
                   maxDate={associateTo || new Date()}
                 />
-                {!associateOccupiedTillDate && <CustomInput
+                {<DateBox
                   name="associateTo"
                   label="End Date"
                   value={associateTo}
                   type="date"
+                  disabled={associateOccupiedTillDate ? true : false}
                   onChange={date => this.handleChangeDate('associateTo', date)}
                   error={errors ? errors.associateTo : (errorObject && errorObject['politicalAssociate.to'])}
                   maxDate={new Date()}
                   minDate={associateFrom || undefined}
                 />}
                 {!associateOccupiedTillDate && <div className="just-space">&nbsp;</div>}
-                <CustomInput
+                <Textbox
                   name="relationshipWithAssociate"
                   label="Relationship with Associate"
+                  placeholder="Relationship with Associate"
                   value={relationshipWithAssociate}
                   onChange={this.handleChange}
                   type="select"

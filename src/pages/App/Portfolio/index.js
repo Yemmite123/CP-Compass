@@ -36,6 +36,7 @@ class Portfolio extends React.Component {
 
   render() {
     const { match: { path }, data, loading, location, wallet } = this.props;
+    console.log(data);
     const walletValue = wallet ? parseInt(wallet.replaceAll(',', ''), 10) : 0;
 
     const menus = [
@@ -88,21 +89,26 @@ class Portfolio extends React.Component {
                         <Route path={`${path}/overview`}>
                           <div className="col-md-6 mt-3">
                             <div className="card p-4">
-                              <h3 className="text-deep-blue text-small">Portfolio Allocation</h3>
+                              <h3 className="text-small">WHAT YOU OWN</h3>
                               <div className="mt-4">
                                 {!walletValue && !data?.portfolios?.portfolioWorth?.amount ?
                                   <div className="d-flex justify-content-center w-100">
                                     <p className="text-center text-grey">No Investment data yet</p>
                                   </div>
                                   :
-                                  <Doughnut data={portfolioPie(walletValue, data?.portfolios?.portfolioWorth.amount)} options={portfolioPieOptions} />
+                                  <div className="row">
+                                    <Doughnut data={portfolioPie(walletValue, data?.portfolios?.portfolioWorth.amount)} options={portfolioPieOptions} />
+                                    <div>
+
+                                    </div>
+                                  </div>
                                 }
                                 <div className="row">
                                   <div className="col-lg-6 col-md-6">
-                                    <Card classes="border-blue mt-3">
-                                      <p className="text-grey text-small mb-0">Total Portfolio Value</p>
-                                      <p className="text-deep-blue text-large mb-0">&#x20A6;{data && data.portfolios?.portfolioWorth ? formatCurrency(data.portfolios?.portfolioWorth.amount) : 0}</p>
-                                      <div className="d-flex mt-2 align-items-baseline">
+                                    <Card classes="border-blue mt-3 text-center">
+                                      <p className="text-small mb-0">Total Portfolio Value</p>
+                                      <h4 className="text-blue font-weight-bolder mb-0">&#x20A6;{data && data.portfolios?.portfolioWorth ? formatCurrency(data.portfolios?.portfolioWorth.amount) : 0}</h4>
+                                      <div className="mt-2 align-items-baseline">
                                         <img
                                           src={isNegative(data && data?.portfolios?.portfolioWorth.percentageDiff) === 'neutral'
                                             ? require('#/assets/icons/flatline.svg') :
@@ -112,29 +118,29 @@ class Portfolio extends React.Component {
                                           }
                                           className="img-fluid mr-2"
                                           alt="difference" />
-                                        <p
+                                        <span
                                           className={`text-small  mr-2 mb-0 
                                       ${isNegative(data && data?.portfolios?.portfolioWorth.percentageDiff) === 'neutral' ? 'text-grey' :
                                               isNegative(data && data?.portfolios?.portfolioWorth.percentageDiff) ? 'text-red' : 'text-green'}
                                       `}
                                         >
-                                          {data && data?.portfolios?.portfolioWorth.percentageDiff}%
-                                        </p>
-                                        <p
+                                          <small> {data && data?.portfolios?.portfolioWorth.percentageDiff}%</small>
+                                        </span>
+                                        <span
                                           className={`text-small mb-0 
                                     ${isNegative(data && data?.portfolios?.portfolioWorth.percentageDiff) === 'neutral' ? 'text-grey' :
                                               isNegative(data && data?.portfolios?.portfolioWorth.percentageDiff) ? 'text-red' : 'text-green'}
                                     `}>
-                                          (Last 7 days)
-                                        </p>
+                                          <small>    (Last 7 days)</small>
+                                        </span>
                                       </div>
                                     </Card>
                                   </div>
                                   <div className="col-lg-6 col-md-6">
-                                    <Card classes="bg-default mt-3">
+                                    <Card classes="bg-default mt-3 text-center">
                                       <p className="text-white text-small mb-0">Total Returns</p>
-                                      <p className="text-white text-large mb-0">&#x20A6;{data && data.portfolios?.totalReturns ? formatCurrency(data.portfolios?.totalReturns.amount) : 0}</p>
-                                      <div className="d-flex mt-2 align-items-baseline">
+                                      <h4 className="text-white font-weight-bolder mb-0">&#x20A6;{data && data.portfolios?.totalReturns ? formatCurrency(data.portfolios?.totalReturns.amount) : 0}</h4>
+                                      <div className=" mt-2 align-items-baseline">
                                         <img
                                           src={isNegative(data && data?.portfolios?.portfolioWorth.percentageDiff === 'neutral')
                                             ? require('#/assets/icons/flatline-white.svg') :
@@ -144,10 +150,15 @@ class Portfolio extends React.Component {
                                           }
                                           className="img-fluid mr-2"
                                           alt="difference" />
-                                        <p className="text-small text-white mr-2 mb-0">
-                                          {data && data.portfolios?.totalReturns ? data.portfolios?.totalReturns.percentageDiff : 0}%
-                                        </p>
-                                        <p className="text-small text-white mb-0">(Last 7 days)</p>
+                                        <span className="text-small text-white mr-2 mb-0">
+                                          <small> {data && data.portfolios?.totalReturns ? data.portfolios?.totalReturns.percentageDiff : 0}%</small>
+                                        </span>
+                                        <span className="text-small text-white mb-0">
+                                          <small>
+                                            (Last 7 days)
+                                          </small>
+                                        </span>
+
                                       </div>
                                     </Card>
                                   </div>

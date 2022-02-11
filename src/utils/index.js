@@ -129,6 +129,7 @@ export const portfolioPie = (wallet, termed, financial) => {
 
 export const portfolioPieOptions = {
   cutout: "50%",
+  cutoutPercentage: 80,
   legend: {
     display: false,
   },
@@ -232,7 +233,7 @@ export const employmentOption = [
   },
   {
     name: "Retired",
-    value: "retired",
+    value: "Retired",
   },
 ];
 
@@ -644,26 +645,26 @@ export const calculateLiquidationInterest = (amount, balance, accrued) => {
 };
 
 export const industiesList = [
-  "Agriculture",
-  "Commerce",
-  "Construction/Real Estate",
-  "Consumer Goods",
-  "Education",
-  "Financial Services",
-  "Healthcare",
-  "Hospitality",
-  "Industrial Goods",
-  "Information & Communications Technology (ICT)",
-  "Manufacturing",
-  "Media",
-  "Oil & Gas",
-  "Postal",
-  "Public Sector",
-  "Services",
-  "Shipping & Logistics",
-  "Tourism",
-  "Transportation",
-  "Utilities",
+ { name: "Agriculture", value: "Agriculture"},
+ { name: "Commerce", value: "Commerce"},
+ { name: "Construction/Real Estate", value: "Construction/Real Estate"},
+ { name: "Consumer Goods", value: "Consumer Goods"},
+ { name: "Education", value: "Education"},
+ { name: "Financial Services", value: "Financial Services"},
+ { name: "Healthcare", value: "Healthcare"},
+ { name: "Hospitality", value: "Hospitality"},
+ { name: "Industrial Goods", value: "Industrial Goods"},
+ { name: "Information & Communications Technology (ICT)", value: "Information & Communications Technology (ICT)"},
+ { name: "Manufacturing", value: "Manufacturing"},
+ { name: "Media", value: "Media"},
+ { name: "Oil & Gas", value: "Oil & Gas"},
+ { name: "Postal", value: "Postal"},
+ { name: "Public Sector", value: "Public Sector"},
+ { name: "Services", value: "Services"},
+ { name: "Shipping & Logistics", value: "Shipping & Logistics"},
+ { name: "Tourism", value: "Tourism"},
+ { name: "Transportation", value: "Transportation"},
+ { name: "Utilities", value: "Utilities"},
 ];
 
 export const openOffCanvas = (name) => {

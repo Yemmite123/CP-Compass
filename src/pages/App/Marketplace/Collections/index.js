@@ -77,14 +77,14 @@ class Collections extends React.Component {
   handleChange = (event) => {
     const { name, value } = event.target;
     if (name === "target" || name === "amount" || name === "finalAmount") {
-      if (isNaN(formatCurrencyToString(value))){
+      if (isNaN(formatCurrencyToString(value))) {
         return;
       }
 
       this.setState({ errors: null });
-      if (name === "target") this.setState({inputTarget: value}) ;
-      if (name === "amount") this.setState({inputAmount: value}) ;
-      if (name === "finalAmount") this.setState({inputFinalAmount: value});
+      if (name === "target") this.setState({ inputTarget: value });
+      if (name === "amount") this.setState({ inputAmount: value });
+      if (name === "finalAmount") this.setState({ inputFinalAmount: value });
 
       return this.setState({ [name]: formatCurrencyToString(value) }, () => {
 
@@ -93,7 +93,7 @@ class Collections extends React.Component {
         }
       });
     }
-    if (name === "finalAmount") this.setState({inputTitle: value});
+    if (name === "finalAmount") this.setState({ inputTitle: value });
     this.setState({ [name]: value });
   };
 
@@ -105,8 +105,8 @@ class Collections extends React.Component {
   };
 
   handleChangeDate = (item, date) => {
-    if(item === "startDate") this.setState({inputStartDate: date})
-    if(item === "targetDate") this.setState({inputTargetDate: date})
+    if (item === "startDate") this.setState({ inputStartDate: date })
+    if (item === "targetDate") this.setState({ inputTargetDate: date })
     this.setState({ [item]: date });
   };
 
@@ -461,6 +461,7 @@ class Collections extends React.Component {
                   </button>
                   <p
                     className="text-blue mt-3"
+                    style={{ curso: "pointer" }}
                     onClick={this.toggleTransactionPinModal}
                   >
                     Cancel Setup
@@ -669,9 +670,8 @@ class Collections extends React.Component {
                   {fundingSource.map((method) => (
                     <div
                       id={method.value}
-                      className={`d-flex p-3 mb-2 ${
-                        selectedMethod === method.value ? "selected" : ""
-                      } payment-method`}
+                      className={`d-flex p-3 mb-2 ${selectedMethod === method.value ? "selected" : ""
+                        } payment-method`}
                       onClick={this.handleSelectMethod}
                     >
                       <div className="d-flex mr-3">
@@ -771,7 +771,7 @@ class Collections extends React.Component {
                     className={`d-flex p-3 mb-2 cursor-pointer debit-card position-relative`}
                     onClick={this.handleAutomateStep}
                   >
-                    { (this.state.newPayment ? true : false) && <img className="position-absolute" width={16} src={require("#/assets/icons/success.svg")} style={{zIndex: 1, right: "0.35rem", top: "0.35rem"}} />}
+                    {(this.state.newPayment ? true : false) && <img className="position-absolute" width={16} src={require("#/assets/icons/success.svg")} style={{ zIndex: 1, right: "0.35rem", top: "0.35rem" }} />}
                     <div className="d-flex mr-3">
                       <img
                         src={require("#/assets/icons/plus-circle.svg")}

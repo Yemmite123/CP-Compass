@@ -68,23 +68,30 @@ class PPI extends React.Component {
             <div className="row">
               {funds && funds.length > 0
                 ? funds.map((fund) => (
-                  <div className="col-md-3 pl-0 mt-3" key={Math.random()*1000} >
-                      <PpiCard
-                        item={fund}
-                        handleSelect={() => this.handleSingleFund(fund)}
-                      />
-                    </div>
-                  ))
+                  <div className="col-md-3 pl-0 mt-3" key={Math.random() * 1000} >
+                    <PpiCard
+                      item={fund}
+                      handleSelect={() => this.handleSingleFund(fund)}
+                    />
+                  </div>
+                ))
                 : !loading && (
-                    <div className="text-center w-100 mt-5">
-                      <p className="text-grey text-medium">
-                        There are no new issues at this time
+                  <div className="w-100 text-center d-flex justify-content-center" style={{ minHeight: "69vh" }}>
+                    <div className='align-self-center'>
+                      <img
+                        src={require("#/assets/icons/receipt.svg")}
+                        alt="no-tickets"
+                        className="img-fluid"
+                      />
+                      <p className="" style={{ color: "rgba(229, 229, 229, 1)" }}>
+                        There are no ne issues at this time
                       </p>
                     </div>
-                  )}
+                  </div>
+                )}
             </div>
 
-            <div className="text-center d-flex justify-content-between align-items-center mt-3">
+            {(funds && funds.length > 0) ? <div className="text-center d-flex justify-content-between align-items-center mt-3">
               <div>
                 <button
                   className="btn btn-primary btn-sm mr-2"
@@ -107,6 +114,8 @@ class PPI extends React.Component {
               </div>
               <p className="text-grey text-small">Page {this.state.page}</p>
             </div>
+              : <></>
+            }
           </>
         )}
 
@@ -118,7 +127,7 @@ class PPI extends React.Component {
               </div>
             )}
 
-            <Back onClick={this.navigateBack}/>
+            <Back onClick={this.navigateBack} />
             {fund && <SingleMutualFund fund={fund} />}
           </>
         )}

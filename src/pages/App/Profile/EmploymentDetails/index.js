@@ -58,7 +58,7 @@ class EmploymentDetails extends React.Component {
           userInfo && userInfo.companyName ? userInfo.companyName : "",
         companyAddress:
           userInfo && userInfo.companyAddress ? userInfo.companyAddress : "",
-        companyType: 
+        companyType:
           userInfo && userInfo.companyType ? userInfo.companyType : "",
         officialPhoneNumber:
           userInfo && userInfo.officialPhoneNumber
@@ -80,7 +80,7 @@ class EmploymentDetails extends React.Component {
 
   handleStatusChange = (event) => {
     const { value } = event.target;
-    this.setState({ status: value });
+    this.setState({ status: value.toLowerCase() });
   };
 
   handleQualificationChange = (event) => {
@@ -115,8 +115,10 @@ class EmploymentDetails extends React.Component {
 
     this.setState({ errors: null });
 
+
     const hasNoQualification = status === "retired" || status === "student";
     const data = this.state;
+    console.log(data);
     const required = hasNoQualification ? [] : ["qualification"];
     const errors = validateFields(data, required);
 
@@ -136,11 +138,11 @@ class EmploymentDetails extends React.Component {
       countryCode,
     };
 
-    if(status === 'self-employed') {
-      payload = {status, qualification, companyName, companyAddress, companyType};
+    if (status === 'self-employed') {
+      payload = { status, qualification, companyName, companyAddress, companyType };
     }
-    if(hasNoQualification) {
-      payload = {status};
+    if (hasNoQualification) {
+      payload = { status };
     }
 
     addEmploymentDetails(payload);
@@ -193,34 +195,35 @@ class EmploymentDetails extends React.Component {
           <h2 className="section-header">Employment Details</h2>
           <p className="section-description">We’d like to know what you do.</p>
           <form onSubmit={this.handleSubmit} className="section-form">
-            {status !== "retired" && status !== "student" &&
-            <SelectBox
-              name="qualification"
-              label="Level of Qualification"
-              type="select"
-              options={qualificationOption}
-              value={qualification}
-              onChange={this.handleQualificationChange}
-              error={
-                errors
-                  ? errors.qualification
-                  : errorObject && errorObject["qualification"]
-              }
+            {status.toLowerCase() !== "retired" && status !== "student" &&
+              <SelectBox
+                boxClasses="active"
+                name="qualification"
+                label="Level of Qualification"
+                type="select"
+                value={qualification}
+                options={qualificationOption}
+                onChange={this.handleQualificationChange}
+                error={
+                  errors
+                    ? errors.qualification
+                    : errorObject && errorObject["qualification"]
+                }
               />
-
-            }
+            }        
             <SelectBox
+              boxClasses="active"
               name="status"
               label="Employment Status"
               type="select"
-              options={employmentOption}
               value={status}
+              options={employmentOption}
               onChange={this.handleStatusChange}
               error={
                 errors ? errors.status : errorObject && errorObject["status"]
               }
             />
-            {status === "employed" && <Textbox
+            {status.toLowerCase() === "employed" && <Textbox
               name="occupation"
               label="Occupation"
               placeholder="Occupation"
@@ -232,7 +235,7 @@ class EmploymentDetails extends React.Component {
                   : errorObject && errorObject["occupation"]
               }
             />}
-            {status === "employed" && <DateBox
+            {status.toLowerCase() === "employed" && <DateBox
               name="appointmentDate"
               label="Appointment Date"
               value={appointmentDate}
@@ -247,7 +250,7 @@ class EmploymentDetails extends React.Component {
               }
               maxDate={new Date()}
             />}
-            {(status === "employed" || status === "self-employed") && <Textbox
+            {(status.toLowerCase() === "employed" || status.toLowerCase() === "self-employed" || status.toLowerCase() === "self employed") && <Textbox
               name="companyName"
               label="Company Name"
               placeholder="Company Name"
@@ -259,7 +262,7 @@ class EmploymentDetails extends React.Component {
                   : errorObject && errorObject["companyName"]
               }
             />}
-            {(status === "employed" || status === "self-employed") && <Textbox
+            {(status.toLowerCase() === "employed" || status.toLowerCase() === "self-employed" || status.toLowerCase() === "self employed") && <Textbox
               name="companyAddress"
               label="Company Address"
               placeholder="Company Address"
@@ -271,20 +274,22 @@ class EmploymentDetails extends React.Component {
                   : errorObject && errorObject["companyAddress"]
               }
             />}
-            {(status === "employed" || status === "self-employed") && <Textbox
-              name="companyType"
-              label="Company Type"
-              type="select"
-              options={industiesList}
-              value={companyType}
-              onChange={this.handleChange}
-              error={
-                errors
-                  ? errors.companyType
-                  : errorObject && errorObject["companyType"]
-              }
-            />}
-            {status === "employed" && <PhoneTextBox
+            {(status.toLowerCase() === "employed" || status.toLowerCase() === "self-employed" || status.toLowerCase() === "self employed") &&
+              <SelectBox
+                boxClasses="active"
+                name="companyType"
+                label="Company Type"
+                type="select"
+                options={industiesList}
+                value={companyType}
+                onChange={this.handleChange}
+                error={
+                  errors
+                    ? errors.companyType
+                    : errorObject && errorObject["companyType"]
+                }
+              />}
+            {status.toLowerCase() === "employed" && <PhoneTextBox
               boxClasses="active"
               placeholder="Phone number"
               options={countryCodes}
@@ -302,7 +307,7 @@ class EmploymentDetails extends React.Component {
                   : errorObject && errorObject["officialPhoneNumber"]
               }
             />}
-            {status === "employed" && <Textbox
+            {status.toLowerCase() === "employed" && <Textbox
               name="officialEmailAddress"
               label="Official Email Address"
               placeholder="Official Email Address"

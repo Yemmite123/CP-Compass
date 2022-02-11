@@ -590,7 +590,7 @@ export const updatePin = (payload) => {
           }))
           if ([200, 201].includes(response.status)) {
             dispatch(updatePinSuccess(response.data));
-            dispatch(showAlert({ type: 'success', message: response.data.message }))
+            dispatch(showAlert({ type: 'success', noBtn: true, message: response.data.message }))
             resolve()
             setTimeout(() => dispatch(clearData()), 3000)
           }

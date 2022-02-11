@@ -507,6 +507,7 @@ class Predefined extends React.Component {
                   </button>
                   <p
                     className="text-blue mt-3"
+                    style={{curso: "pointer"}}
                     onClick={this.toggleTransactionPinModal}
                   >
                     Cancel Setup

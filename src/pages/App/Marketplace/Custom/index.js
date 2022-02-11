@@ -436,7 +436,9 @@ class Custom extends React.Component {
                       <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
                     }
                   </button>
-                  <p className="text-blue mt-3" onClick={this.toggleTransactionPinModal}>Cancel Setup</p>
+                  <p className="text-blue mt-3"
+                    style={{curso: "pointer"}}
+                    onClick={this.toggleTransactionPinModal}>Cancel Setup</p>
 
                   {pinError && <p className="text-error mt-2">{pinError}</p>}
                   {confirmPinError && <p className="text-error mt-2">{confirmPinError}</p>}

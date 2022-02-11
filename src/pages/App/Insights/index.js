@@ -149,7 +149,7 @@ class Insights extends React.Component {
         {posts?.latest.length > 0 &&
           <div className="text-center mt-4">
             <button className="btn btn-stroke-black rounded btn-sm text-center" onClick={this.navigateToLatest} >
-              See more
+              Show more
             </button>
           </div>
         }
@@ -173,7 +173,7 @@ class Insights extends React.Component {
         {posts?.trending.length > 0 &&
           <div className="text-center mt-4">
             <button className="btn btn-stroke-black btn-sm rounded text-center" onClick={this.navigateToTrending}>
-              See more
+            Show more
             </button>
           </div>
         }

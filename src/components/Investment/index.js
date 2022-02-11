@@ -13,7 +13,7 @@ const Investment = (props) => {
         <h3 className="text-blue text-medium text-capitalize" >{investment.title}</h3>
         <div className="progress">
           <div
-          className="progress-bar bg-success"
+          className={`progress-bar bg-success ${investment.percentageCompletion < 10 ? "text-black" : ""}`}
           style={{ width: `${investment.percentageCompletion}%`}}
           role="progressbar"
           aria-valuenow={investment.percentageCompletion}

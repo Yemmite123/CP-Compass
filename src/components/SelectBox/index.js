@@ -18,10 +18,10 @@ const SelectBox = (
         <div className="d-flex position-relative">
           { label ? <span className={`${boxClasses?.includes("active") ? "active" : ""} mt-0 position-absolute ${error && 'label-error'}`}>{label}</span> : "" }
           <select className={`${boxClasses?.includes("active") ? "active" : ""}`} autoComplete="off" onChange={onInputChange} name={name} value={value} placeholder={placeholder} required={required} type={type} disabled={disabled && disabled} readOnly={readonly}>
-            {/* <option value=''>{defaultValue}</option> */}
+            <option value=""></option>
             {
-              options && options.map(option => (
-                <option key={Math.random()*1000} value={option[value]}>{option[optionName ? optionName : "name"]}</option>
+              options && options.map((option, i) => (
+                <option key={i} value={`${option.value}` }>{option.name}</option>
               ))
             }
           </select>

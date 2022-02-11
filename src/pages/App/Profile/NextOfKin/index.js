@@ -26,10 +26,10 @@ class NextOfKin extends React.Component {
     firstName: "",
     lastName: "",
     email: "",
-    gender: "",
+    gender: "male",
     phone: "",
     dateOfBirth: new Date(),
-    relationship: "",
+    relationship: "brother",
     motherMaidenName: "",
     contactAddress: "",
     nationality: "",
@@ -50,13 +50,13 @@ class NextOfKin extends React.Component {
         lastName: userInfo && userInfo.lastName ? userInfo.lastName : "",
         email: userInfo && userInfo.email ? userInfo.email : "",
         phone: userInfo && userInfo.phone ? userInfo.phone : "",
-        gender: userInfo && userInfo.gender ? userInfo.gender : "",
+        gender: userInfo && userInfo.gender ? userInfo.gender : "male",
         dateOfBirth:
           userInfo && userInfo.dateOfBirth
             ? new Date(userInfo.dateOfBirth.split("T")[0])
             : "",
         relationship:
-          userInfo && userInfo.relationship ? userInfo.relationship : "",
+          userInfo && userInfo.relationship ? userInfo.relationship : "brother",
         motherMaidenName:
           userInfo && userInfo.motherMaidenName
             ? userInfo.motherMaidenName
@@ -73,6 +73,7 @@ class NextOfKin extends React.Component {
 
   handleChange = (event) => {
     const { name, value } = event.target;
+    console.log(value)
     this.setState({ [name]: value });
   };
 
@@ -185,27 +186,30 @@ class NextOfKin extends React.Component {
         <div>
           <h2 className="section-header">Next of Kin</h2>
           <p className="section-description">
-            Your next of kin will be contacted in any case that we notice
-            inactivity on your account after a period of 6 months.
+            Our first point of contact should the need arise
           </p>
           <form onSubmit={this.handleSubmit} className="section-form">
-          <Textbox
+            <Textbox
+              onChange={this.handleChange}
               boxClasses="active"
               type="text"
               label="First Name"
               value={firstName}
               placeholder={"First Name"}
               name="firstName"
-                  />
+            />
             <Textbox
+              onChange={this.handleChange}
+
               boxClasses="active"
               type="text"
               label="Last Name"
               value={lastName}
               placeholder={"Last Name"}
               name="lastName"
-                  />
+            />
             <SelectBox
+              boxClasses="active"
               label="Gender"
               value={gender}
               placeholder={"Gender"}
@@ -217,7 +221,7 @@ class NextOfKin extends React.Component {
               }
             />
             <DateBox
-              label="Date of birth"
+              label="Date of Birth"
               value={dateOfBirth}
               placeholder={""}
               name="dateOfBirth"
@@ -230,32 +234,34 @@ class NextOfKin extends React.Component {
               maxDate={new Date()}
             />
             <SelectBox
-             name="relationship"
-             label="Relationship"
-             value={relationship}
-             onChange={this.handleRelationshipChange}
-             type="select"
-             options={relationshipOption}
-             placeholder={"Relationship"}
-             optionName="name"
-             error={
-               errors
-                 ? errors.relationship
-                 : errorObject && errorObject["relationship"]
-             }
+              boxClasses="active"
+
+              name="relationship"
+              label="Relationship"
+              value={relationship}
+              onChange={this.handleRelationshipChange}
+              type="select"
+              options={relationshipOption}
+              placeholder={"Relationship"}
+              optionName="name"
+              error={
+                errors
+                  ? errors.relationship
+                  : errorObject && errorObject["relationship"]
+              }
             />
-             <Textbox
+            <Textbox
               onChange={this.handleChange}
               name="email"
               boxClasses={"active"}
               value={email}
-              label="Email address"
-              placeholder="Email address"
+              label="Email Address"
+              placeholder="Email Address"
               error={
                 errors ? errors.email : errorObject && errorObject["email"]
               }
             />
-            <PhoneTextBox 
+            <PhoneTextBox
               onChange={this.handleChange}
               boxClasses="active"
               name="phone"
@@ -269,13 +275,13 @@ class NextOfKin extends React.Component {
               type="number"
               error={errors ? errors.phoneNumber : (errorObject && errorObject['phone'])}
             />
-            
+
             <Textbox
               type="text"
               boxClasses="active"
-              label="Mother's maiden name"
+              label="Mother's Maiden Name"
               value={motherMaidenName}
-              placeholder={"Mother's maiden name"}
+              placeholder={"Mother's Maiden Name"}
               name="motherMaidenName"
               onChange={this.handleChange}
               error={
@@ -283,7 +289,7 @@ class NextOfKin extends React.Component {
                   ? errors.motherMaidenName
                   : errorObject && errorObject["motherMaidenName"]
               }
-            />    
+            />
 
             <Textbox
               type="text"
@@ -313,7 +319,7 @@ class NextOfKin extends React.Component {
                   ? errors.nationality
                   : errorObject && errorObject["nationality"]
               }
-            /> 
+            />
             <div className="section-form__button-area">
               {error && typeof error === "string" && (
                 <p className="text-error text-left">{error}</p>

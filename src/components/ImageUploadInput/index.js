@@ -8,16 +8,26 @@ const ImageUploadInput = ({
   label,
   instruction = "Upload PDF, JPG or PNG files - Max size of 2mb.",
   acceptsList = "",
+  maxSizeInMb = 2,
+  children
 }) => {
   const [file, setFile] = React.useState("");
   const [selectedImageURL, setSelectedImageURL] = React.useState("");
 
   const onSelectImage = (e) => {
     const selectedImage = e.target.files[0];
-    setFile(selectedImage);
-    setSelectedImageURL(selectedImage.type === "application/pdf" ? defaultImage : URL.createObjectURL(selectedImage));
-    handleFile(selectedImage);
-    URL.revokeObjectURL(selectedImage);
+
+    console.log(selectedImage);
+
+    if (selectedImage) {
+      if (selectedImage.size > maxSizeInMb * 1024 * 1024)
+        return;
+
+      setFile(selectedImage);
+      setSelectedImageURL(selectedImage.type === "application/pdf" ? defaultImage : URL.createObjectURL(selectedImage));
+      handleFile(selectedImage);
+      URL.revokeObjectURL(selectedImage);
+    }
   };
 
   const randomId = Math.floor(Math.random() * 1000);
@@ -28,6 +38,7 @@ const ImageUploadInput = ({
         alt="preview"
         className="custom-upload__image"
       />
+      {children}
       <div className="custom-upload__button-area">
         <input
           type="file"

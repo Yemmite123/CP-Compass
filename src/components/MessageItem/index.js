@@ -11,26 +11,33 @@ class MessageItem extends React.Component {
   messageRef = React.createRef();
 
   componentDidMount() {
-    if(this.props.message) {
+    if (this.props.message) {
       console.log(this.props.message)
       this.messageRef.current.innerHTML = this.props.message.message ? `${this.props.message.message.replace(/(\r\n|\n|\r)/gm, "<br />")}` : ""
     }
   }
 
   componentDidUpdate(prevProps) {
-    if(prevProps.message !== this.props.message) {
+    if (prevProps.message !== this.props.message) {
       this.messageRef.current.innerHTML = `${this.props.message.message.replace(/(\r\n|\n|\r)/gm, "<br />")}`
     }
   }
 
   render() {
     const { message, viewImage } = this.props;
+    console.log(message)
     return (
       <div className="message-item">
         <div className={`d-flex message__box__${message && message?.user.isStaff ? 'admin' : 'you'}`}>
-          <img src={message && message?.user.isStaff ? AdminDefault : (message?.user.pictureUrl ? message?.user.pictureUrl : DefaultProfile)} className="img-fluid avatar" alt="user" />
+          <div className='d-flex justify-content-center m-2 text-center ' style={{ width: "50px", height: "50px", border: "2px solid rgba(58, 64, 128, 0.1)", borderRadius: "50%" }}>
+            {/* {message?.user */}
+            <span className="font-bold text-blue align-self-center">
+              {message?.user.firstName[0]+message?.user.lastName[0]}
+            </span>
+          </div>
+          {/* <img src={message && message?.user.isStaff ? AdminDefault : (message?.user.pictureUrl ? message?.user.pictureUrl : DefaultProfile)} className="img-fluid avatar" alt="user" /> */}
           <div className="w-75">
-          {/*  <div className="d-flex justify-content-between">
+            {/*  <div className="d-flex justify-content-between">
               <p className="text-small">{message && message?.user.isStaff ? 'Admin' : 'You'}</p>
             </div> 
           */}
@@ -50,7 +57,7 @@ class MessageItem extends React.Component {
                     </div>
                   }
                   <div className='attachment-info'>
-                    <p>   { checkFileType(item) === 'file' ? "Image" : "File" }</p>
+                    <p>   {checkFileType(item) === 'file' ? "Image" : "File"}</p>
                   </div>
                 </div>
               ))

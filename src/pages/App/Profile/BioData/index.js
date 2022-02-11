@@ -12,7 +12,7 @@ import DateBox from "#/components/DateBox";
 import SelectBox from "#/components/SelectBox";
 import PhoneTextBox from "#/components/PhoneTextBox";
 import ImageUploadInput from "#/components/ImageUploadInput";
-import { validateFields, serializeErrors, genderOption} from "#/utils";
+import { validateFields, serializeErrors, genderOption } from "#/utils";
 import { countryCodes } from "#/utils/countryCode";
 import "./style.scss";
 
@@ -201,6 +201,7 @@ class BioData extends React.Component {
             label="Change Profile Avatar"
             instruction="Upload JPG or PNG files - Max size of 150Kb."
             currentImageURL={photo || pictureUrl}
+            maxSizeInMb={150 / 1024}
             handleFile={this.handleImageSelect}
           />
           <form onSubmit={this.handleSubmit} className="section-form">
@@ -208,25 +209,28 @@ class BioData extends React.Component {
               boxClasses="active"
               type="text"
               label="First Name"
+              displayLabel={true}
               value={firstName}
               placeholder={"First Name"}
               name="firstName"
               disabled={true}
-                  />
+            />
             <Textbox
               boxClasses="active"
               type="text"
               label="Last Name"
+              displayLabel={true}
               value={lastName}
               placeholder={"Last Name"}
               name="lastName"
               disabled={true}
-                  />
+            />
             <Textbox
               boxClasses="active"
               type="text"
-              label="Middle Name"
+              label="Other Names"
               value={middleName}
+              displayLabel={true}
               placeholder={"Middle Name"}
               name="middleName"
               disabled={true}
@@ -239,7 +243,7 @@ class BioData extends React.Component {
 
             <DateBox
               type="text"
-              label="Date of birth"
+              label="Date of Birth"
               value={dateOfBirth}
               placeholder={""}
               name="dob"
@@ -247,6 +251,7 @@ class BioData extends React.Component {
             />
 
             <SelectBox
+              boxClasses="active"
               label="Gender"
               value={gender}
               placeholder={"Gender"}
@@ -261,7 +266,7 @@ class BioData extends React.Component {
             <Textbox
               type="text"
               boxClasses="active"
-              label="Place of Birth"
+              label="Country of Birth"
               value={placeOfBirth}
               placeholder={"Country of Birth"}
               onChange={this.handleChange}
@@ -271,7 +276,7 @@ class BioData extends React.Component {
                   ? errors.placeOfBirth
                   : errorObject && errorObject["placeOfBirth"]
               }
-                  /> 
+            />
             <Textbox
               type="text"
               boxClasses="active"
@@ -285,7 +290,7 @@ class BioData extends React.Component {
                   ? errors.stateOfOrigin
                   : errorObject && errorObject["stateOfOrigin"]
               }
-            /> 
+            />
             <Textbox
               type="text"
               boxClasses="active"
@@ -299,8 +304,8 @@ class BioData extends React.Component {
                   ? errors.nationality
                   : errorObject && errorObject["nationality"]
               }
-            /> 
-            <PhoneTextBox 
+            />
+            <PhoneTextBox
               onChange={this.handleChange}
               boxClasses="active"
               name="phone"
@@ -314,7 +319,7 @@ class BioData extends React.Component {
               type="number"
               error={errors ? errors.phoneNumber : (errorObject && errorObject['phone'])}
             />
-        
+
             <Textbox
               name="email"
               boxClasses={"active"}
@@ -327,9 +332,9 @@ class BioData extends React.Component {
             <Textbox
               type="text"
               boxClasses="active"
-              label="Mother's maiden name"
+              label="Mother's Maiden Name"
               value={motherMaidenName}
-              placeholder={"Mother's maiden name"}
+              placeholder={"Mother's Maiden Name"}
               name="motherMaidenName"
               onChange={this.handleChange}
               error={

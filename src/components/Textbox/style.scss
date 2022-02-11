@@ -55,7 +55,7 @@
       top: 0.3rem;
     }
 
-    input::placeholder{
+    input:not([disabled])::placeholder{
       color: transparent;
     }
   }

@@ -1,12 +1,12 @@
 import React from 'react';
 import './style.scss';
 
-const Textbox = React.forwardRef(({ label, onChange, defaultValue, name, value, placeholder, boxClasses, type, error, iconUrl, onIconClick, disabled, min, required, max, maxlength }, ref) => {
+const Textbox = React.forwardRef(({ label, displayLabel, onChange, defaultValue, name, value, placeholder, boxClasses, type, error, iconUrl, onIconClick, disabled, min, required, max, maxlength }, ref) => {
 
   const inputRef = React.createRef();
 
   React.useEffect(() =>{
-    if (inputRef.current.value){
+    if (inputRef.current.value || displayLabel){
       inputRef.current.parentNode.children[0].classList.add("active")
       inputRef.current.classList.add("active")
     }
