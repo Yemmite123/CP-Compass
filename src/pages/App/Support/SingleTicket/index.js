@@ -85,6 +85,8 @@ class SingleTicket extends React.Component {
     const required = ["message"];
     const errors = validateFields(data, required);
 
+    this.setState({ error: "" })
+
     if (!message && !files.length) {
       return this.setState({ error: "Field is required" })
     }
