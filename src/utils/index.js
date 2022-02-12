@@ -15,7 +15,6 @@ export const validateFields = (data, required, noScroll) => {
       noScroll && window.scrollTo(0, 0);
       errors[required[i]] = `field is required`;
     }
-    continue;
   }
   return errors;
 };

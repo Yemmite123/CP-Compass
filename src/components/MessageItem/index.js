@@ -12,7 +12,6 @@ class MessageItem extends React.Component {
 
   componentDidMount() {
     if (this.props.message) {
-      console.log(this.props.message)
       this.messageRef.current.innerHTML = this.props.message.message ? `${this.props.message.message.replace(/(\r\n|\n|\r)/gm, "<br />")}` : ""
     }
   }
@@ -32,7 +31,7 @@ class MessageItem extends React.Component {
           <div className='d-flex justify-content-center m-2 text-center ' style={{ width: "50px", height: "50px", border: "2px solid rgba(58, 64, 128, 0.1)", borderRadius: "50%" }}>
             {/* {message?.user */}
             <span className="font-bold text-blue align-self-center">
-              {message?.user.firstName[0]+message?.user.lastName[0]}
+              {message?.user.firstName ? message?.user.firstName[0] + message?.user.lastName[0] : ""}
             </span>
           </div>
           {/* <img src={message && message?.user.isStaff ? AdminDefault : (message?.user.pictureUrl ? message?.user.pictureUrl : DefaultProfile)} className="img-fluid avatar" alt="user" /> */}

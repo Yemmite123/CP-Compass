@@ -14,6 +14,7 @@ import Modal from "#/components/Modal";
 
 class SingleTicket extends React.Component {
   state = {
+    error: "",
     message: "",
     files: [],
     fileNames: [],
@@ -84,6 +85,10 @@ class SingleTicket extends React.Component {
     const required = ["message"];
     const errors = validateFields(data, required);
 
+    if (!message && !files.length) {
+      return this.setState({ error: "Field is required" })
+    }
+
     if (Object.keys(errors).length > 0 && !files) {
       return;
     }
@@ -95,16 +100,15 @@ class SingleTicket extends React.Component {
         files.length > 1 ? "attachment" : "attachment[]",
         files[x]
       );
-    }
+    };
+
     formData.append("message", message);
 
     sendMessage(params.ticketId, formData).then((data) => {
       const messageItem = {
         ...data,
-        user: { picture: user.pictureUrl, isStaff: 0 },
+        user: { picture: user.pictureUrl, isStaff: 0, firstName: user.firstName, lastName: user.lastName },
       };
-      // console.log(messageItem);
-      // console.log(user);
 
       this.setState({
         messages: [...messages, messageItem],
@@ -243,6 +247,9 @@ class SingleTicket extends React.Component {
         </p>
         {error && typeof error === "string" && (
           <p className="text-error mt-2 mb-0">{error}</p>
+        )}
+        {this.state.error && (
+          <p className="text-error mt-2 mb-0">{this.state.error}</p>
         )}
         <input
           type="file"
