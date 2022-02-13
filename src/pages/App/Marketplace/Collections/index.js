@@ -12,7 +12,7 @@ import Textbox from "#/components/Textbox";
 import DebitCard from "#/components/DebitCard";
 import DateBox from "#/components/DateBox";
 import OffCanvas from "#/components/OffCanvas";
-import { closeOffCanvas } from "#/utils";
+import { openOffCanvas, closeOffCanvas } from "#/utils";
 import { getActionLoadingState } from "#/store/selectors";
 import { getCards } from "#/store/wallet/actions";
 import {
@@ -144,12 +144,12 @@ class Collections extends React.Component {
     } = this.props.history;
 
     closeOffCanvas(`offcanvas-${state?.investment.id}`);
-    this.resetFields();
     this.toggleConfirmationModal();
   };
 
   //move to enterering transaction pin
   handleEnterPin = () => {
+    this.resetFields();
     this.toggleConfirmationModal();
     this.toggleTransactionPinModal();
   };
@@ -197,6 +197,12 @@ class Collections extends React.Component {
       this.toggleSetupSuccessModal();
     });
   };
+
+  handleReviewPlan = () => {
+    const { location: { state } } = this.props.history;
+    openOffCanvas(`offcanvas-${state?.investment.id}`);
+    this.toggleConfirmationModal()
+  }
 
   //handle proceed from the success modal
   handleSuccess = () => {
@@ -411,7 +417,7 @@ class Collections extends React.Component {
                 </button>
                 <p
                   className="text-blue mt-3 mb-0 cursor-pointer"
-                  onClick={this.toggleConfirmationModal}
+                  onClick={this.handleReviewPlan}
                 >
                   Review Plan
                 </p>
@@ -461,7 +467,7 @@ class Collections extends React.Component {
                   </button>
                   <p
                     className="text-blue mt-3"
-                    style={{ curso: "pointer" }}
+                    style={{ cursor   : "pointer" }}
                     onClick={this.toggleTransactionPinModal}
                   >
                     Cancel Setup

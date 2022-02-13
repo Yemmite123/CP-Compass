@@ -53,7 +53,7 @@ export const depositFunds = (payload) => {
           token: response.headers.authorization
         }))
         if ([200, 201].includes(response.status)) {
-          dispatch(showAlert({ type: 'success', message: response.data?.message }))
+          dispatch(showAlert({ type: 'success', message: response.data?.message, noBtn: true }))
           dispatch(depositFundsSuccess(response.data));
           dispatch(getWalletDetails());
           // getUserProfile();
@@ -235,7 +235,7 @@ export const depositFundsCard = (payload, history) => {
         }))
         if ([200, 201].includes(response.status)) {
           dispatch(depositFundsCardSuccess(response.data));
-          dispatch(showAlert({ type: 'success', message: response.data?.message }));
+          dispatch(showAlert({ type: 'success', message: response.data?.message, noBtn: true }));
           setTimeout(() => getWalletDetails()(dispatch, getState), 4000);
           setTimeout(() => history.push('/app/wallet'), 3000);
         }

@@ -437,7 +437,7 @@ class Custom extends React.Component {
                     }
                   </button>
                   <p className="text-blue mt-3"
-                    style={{curso: "pointer"}}
+                    style={{ cursor: "pointer" }}
                     onClick={this.toggleTransactionPinModal}>Cancel Setup</p>
 
                   {pinError && <p className="text-error mt-2">{pinError}</p>}

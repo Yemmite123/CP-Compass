@@ -145,12 +145,12 @@ class SingleMutualFund extends React.Component {
                             {item.type === 'select' ?
                               <SelectBox
                                 label={item.title}
-                                placeholder={item.placeholder}
+                                // placeholder={item.placeholder}
                                 name={item.name}
                                 options={refineOptions(item.options)}
                                 // value="value"
                                 optionName="name"
-                                boxClasses="mt-3"
+                                boxClasses="mt-3 active"
                                 actualDefaultValue={item.name === 'bankName' ? profile.bankInfo && profile.bankInfo['bankName'].toLowerCase() : profile[item.name]}
                                 required
                                 error={errors && errors[item.name]}
@@ -174,7 +174,7 @@ class SingleMutualFund extends React.Component {
                                 (item.name === 'DateOfBirth' ?
                                   <DateBox
                                     label={item.title}
-                                    placeholder={item.placeholder}
+                                    // placeholder={item.placeholder}
                                     name={item.name}
                                     boxClasses="mt-3"
                                     error={errors && errors[item.name]}
@@ -190,7 +190,7 @@ class SingleMutualFund extends React.Component {
                                   <Textbox
                                     type={item.type}
                                     name={item.name}
-                                    placeholder={item.placeholder}
+                                    // placeholder={item.placeholder}
                                     label={item.title}
                                     id={item.name.toLowerCase()}
                                     required

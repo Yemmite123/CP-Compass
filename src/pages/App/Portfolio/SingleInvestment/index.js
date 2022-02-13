@@ -523,8 +523,8 @@ class SingleInvestment extends React.Component {
                   src={require("#/assets/icons/plus-circle.svg")}
                   alt="plus"
                   className={`img-fluid ${["active", "booked"].includes(investment?.order_status)
-                      ? "cursor-pointer"
-                      : "cursor-block disabled"
+                    ? "cursor-pointer"
+                    : "cursor-block disabled"
                     }`}
                   onClick={
                     ["active", "booked"].includes(investment?.order_status)
@@ -534,8 +534,8 @@ class SingleInvestment extends React.Component {
                 />
                 <p
                   className={`text-blue mb-0 text-small ${["active", "booked"].includes(investment?.order_status)
-                      ? "cursor-pointer"
-                      : "cursor-block disabled"
+                    ? "cursor-pointer"
+                    : "cursor-block disabled"
                     }`}
                   onClick={
                     ["active", "booked"].includes(investment?.order_status)
@@ -560,8 +560,8 @@ class SingleInvestment extends React.Component {
                         className={`img-fluid ${["active", "booked"].includes(
                           investment?.order_status
                         )
-                            ? "cursor-pointer"
-                            : "cursor-block disabled"
+                          ? "cursor-pointer"
+                          : "cursor-block disabled"
                           }`}
                         onClick={
                           ["active", "booked"].includes(
@@ -575,8 +575,8 @@ class SingleInvestment extends React.Component {
                         className={`text-blue mb-0 text-small ${["active", "booked"].includes(
                           investment?.order_status
                         )
-                            ? "cursor-pointer"
-                            : "cursor-block disabled"
+                          ? "cursor-pointer"
+                          : "cursor-block disabled"
                           }`}
                         onClick={
                           ["active", "booked"].includes(
@@ -596,8 +596,8 @@ class SingleInvestment extends React.Component {
                   src={require("#/assets/icons/liquidate.svg")}
                   alt="plus"
                   className={`img-fluid ${["active", "booked"].includes(investment?.order_status)
-                      ? "cursor-pointer"
-                      : "cursor-block disabled"
+                    ? "cursor-pointer"
+                    : "cursor-block disabled"
                     }`}
                   onClick={
                     ["active", "booked"].includes(investment?.order_status)
@@ -607,8 +607,8 @@ class SingleInvestment extends React.Component {
                 />
                 <p
                   className={`text-blue mb-0 text-small ${["active", "booked"].includes(investment?.order_status)
-                      ? "cursor-pointer"
-                      : "cursor-block disabled"
+                    ? "cursor-pointer"
+                    : "cursor-block disabled"
                     }`}
                   onClick={
                     ["active", "booked"].includes(investment?.order_status)
@@ -654,8 +654,12 @@ class SingleInvestment extends React.Component {
                   <h5 className="text-blue">Investment Progress</h5>
                   <div className="progress">
                     <div
-                      className={`progress-bar bg-success ${investment.percentageCompletion < 10 ? "text-black" : ""}`}
+                      className={`progress-bar bg-success ${investment && investment.percentageCompletion < 10 ? "text-black" : ""}`}
                       role="progressbar"
+                      style={{
+                        width: `${investment ? investment.percentageCompletion : 0
+                          }%`,
+                      }}
                       aria-valuenow={
                         investment ? investment.percentageCompletion : 0
                       }

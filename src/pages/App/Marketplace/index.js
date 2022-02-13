@@ -55,7 +55,7 @@ class Marketplace extends React.Component {
         title: 'Marketplace',
       },
       {
-        name: 'Private Placement/Public Issue',
+        name: 'New Offers',
         path: '/app/marketplace/ppi',
         title: 'Marketplace',
       },

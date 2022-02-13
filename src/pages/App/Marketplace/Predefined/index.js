@@ -12,7 +12,7 @@ import PaymentMethod from "#/components/PaymentMethod";
 import DebitCard from "#/components/DebitCard";
 import OffCanvas from "#/components/OffCanvas";
 import DateBox from "#/components/DateBox";
-import { closeOffCanvas } from "#/utils";
+import { openOffCanvas, closeOffCanvas } from "#/utils";
 import { getActionLoadingState } from "#/store/selectors";
 import { getCards } from "#/store/wallet/actions";
 import {
@@ -86,7 +86,7 @@ class Predefined extends React.Component {
   handleChange = (event) => {
     const { name, value } = event.target;
     if (name === "target" || name === "amount") {
-      
+
       if (isNaN(formatCurrencyToString(value)))
         return;
 
@@ -182,7 +182,6 @@ class Predefined extends React.Component {
           expectedTotalReturns: data.expectedTotalReturns,
         },
         () => {
-          this.resetFields();
           closeOffCanvas(`offcanvas-${state?.investment.id}`);
           this.toggleConfirmationModal();
         }
@@ -192,6 +191,7 @@ class Predefined extends React.Component {
 
   //move to enterering transaction pin
   handleEnterPin = () => {
+    this.resetFields();
     this.toggleConfirmationModal();
     this.toggleTransactionPinModal();
   };
@@ -214,6 +214,12 @@ class Predefined extends React.Component {
       this.toggleAddMoneyModal();
     });
   };
+
+  handleReviewPlan = () => {
+    const { location: { state } } = this.props.history;
+    openOffCanvas(`offcanvas-${state?.investment.id}`);
+    this.toggleConfirmationModal()
+  }
 
   //submit booking details without payment
   handleBookWithoutPay = (e) => {
@@ -457,7 +463,7 @@ class Predefined extends React.Component {
                 </button>
                 <p
                   className="text-blue mt-3 mb-0 cursor-pointer"
-                  onClick={this.toggleConfirmationModal}
+                  onClick={this.handleReviewPlan}
                 >
                   Review Plan
                 </p>
@@ -507,7 +513,7 @@ class Predefined extends React.Component {
                   </button>
                   <p
                     className="text-blue mt-3"
-                    style={{curso: "pointer"}}
+                    style={{ cursor: "pointer" }}
                     onClick={this.toggleTransactionPinModal}
                   >
                     Cancel Setup
@@ -716,9 +722,8 @@ class Predefined extends React.Component {
                   {fundingSource.map((method) => (
                     <div
                       id={method.value}
-                      className={`d-flex p-3 mb-2 ${
-                        selectedMethod === method.value ? "selected" : ""
-                      } payment-method`}
+                      className={`d-flex p-3 mb-2 ${selectedMethod === method.value ? "selected" : ""
+                        } payment-method`}
                       onClick={this.handleSelectMethod}
                     >
                       <div className="d-flex mr-3">
