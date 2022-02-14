@@ -167,7 +167,7 @@ export const submitMutualForm = (slug, payload) => {
           }))
           if ([200, 201].includes(response.status)) {
             dispatch(submitMutualFormSuccess(response.data.data));
-            dispatch(showAlert({ type: 'success', message: "Your request has been sent, someone will reach out to you soon via an email or a phone call. ", button: "Go to marketplace" }))
+            dispatch(showAlert({ type: 'success', isStatic: true, url: "/app/marketplace", message: "Your request has been sent, someone will reach out to you soon via an email or a phone call. ", button: "Go to marketplace" }))
             resolve();
           }
         })

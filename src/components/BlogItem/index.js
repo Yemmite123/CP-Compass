@@ -2,19 +2,19 @@ import React from 'react';
 import moment from 'moment';
 import './style.scss';
 
-const BlogItem = ({ item, category, navigateToItem, navigateToCategory }) => {
+const BlogItem = ({ item, className, category, navigateToItem, navigateToCategory }) => {
 
   const handleSingleItem = () => {
     navigateToItem(item)
   }
 
   return (
-    <div className="blog-item" >
+    <div className={`blog-item ${className}`} >
       <div>
-        <img src={item.image} alt="feature" className="rounded img-fluid cursor-pointer" onClick={handleSingleItem} />
+        <img src={item.image} alt="feature" className="rounded blog-thumbnail img-fluid cursor-pointer" onClick={handleSingleItem} />
         <div className="blog-info pb-5 pt-4">
           <div className="content">
-            <h4 className="font-weight-bold cursor-pointer" onClick={handleSingleItem}>{item.title}</h4>
+            <h5 className="font-weight-bold cursor-pointer" onClick={handleSingleItem}>{item.title}</h5>
             <div className="d-flex align-items-center my-3">
               {item.user.pictureUrl ?
                 <img src={item.user.pictureUrl} alt="feature" className="img-fluid profile-photo" />
@@ -25,7 +25,7 @@ const BlogItem = ({ item, category, navigateToItem, navigateToCategory }) => {
               }
               <p className="text-small mb-0 ml-2">{item.user.firstName} {item.user.lastName} on {moment(item.created_at).format('MMMM Do YYYY')}</p>
             </div>
-            <p className="blog-description">{item.description.length > 60 ? `${item.description.substring(0, 60)}...` : item.description}</p>
+            <p className="blog-description font-weight-light ">{item.description.length > 60 ? `${item.description.substring(0, 60)}...` : item.description}</p>
           </div>
           <span className={`blog-category blog-category-${item.category?.name} cursor-pointer`} onClick={() => navigateToCategory(item.category?.name)}>
             {item.category?.name}

@@ -292,6 +292,7 @@ class SingleInvestment extends React.Component {
             >
               <div className="text-right pb-3">
                 <img
+                  style={{ cursor: "pointer" }}
                   src={require("#/assets/icons/close.svg")}
                   alt="close"
                   onClick={this.toggleTransactionPinModal}
@@ -653,7 +654,9 @@ class SingleInvestment extends React.Component {
               <div className="card p-3 px-4 min-height-small d-flex flex-column justify-content-between">
                 <div>
                   <h5 className="text-blue">Investment Progress</h5>
-                  <div className="progress">
+                  <div className="progress position-relative">
+                    {investment && investment.percentageCompletion < 10 ? <div style={{ top: "3px", left: "2px" }} className="position-absolute text-black font-weight-bold"> {investment.percentageCompletion}% </div> : <></>}
+
                     <div
                       className={`progress-bar bg-success ${investment && investment.percentageCompletion < 10 ? "text-black" : ""}`}
                       role="progressbar"
@@ -667,7 +670,7 @@ class SingleInvestment extends React.Component {
                       aria-valuemin="0"
                       aria-valuemax="100"
                     >
-                      {investment ? investment.percentageCompletion : 0}%
+                      {investment && investment.percentageCompletion >= 10 ? `${investment.percentageCompletion}%` : ""}
                     </div>
                   </div>
                 </div>

@@ -9,17 +9,18 @@ const Investment = (props) => {
   const { investment, navigateToInvestment } = props;
   return (
     <div className="investment-card">
-      <Card classes="cursor-pointer" onclick={() => { console.log(investment); navigateToInvestment(investment.id)}}>
+      <Card classes="cursor-pointer" onclick={() => { console.log(investment); navigateToInvestment(investment.id) }}>
         <h3 className="text-blue text-medium text-capitalize" >{investment.title}</h3>
-        <div className="progress">
+        <div className="progress position-relative">
+          {investment && investment.percentageCompletion < 10 ? <div className="text-black position-absolute font-weight-bold" style={{ top: "1px", left: "2px" }} > {investment.percentageCompletion}% </div> : <></>}
           <div
-          className={`progress-bar bg-success ${investment.percentageCompletion < 10 ? "text-black" : ""}`}
-          style={{ width: `${investment.percentageCompletion}%`}}
-          role="progressbar"
-          aria-valuenow={investment.percentageCompletion}
-          aria-valuemin="0"
-          aria-valuemax="100">
-            {investment.percentageCompletion}% 
+            className={`progress-bar bg-success`}
+            style={{ width: `${investment.percentageCompletion}%` }}
+            role="progressbar"
+            aria-valuenow={investment.percentageCompletion}
+            aria-valuemin="0"
+            aria-valuemax="100">
+            {investment && investment.percentageCompletion >= 10 ? `${investment.percentageCompletion}%` : ""}
           </div>
         </div>
         <div className="d-flex justify-content-between mt-4">

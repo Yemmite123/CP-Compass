@@ -161,6 +161,7 @@ class Calculator extends React.Component {
                     placeholder="Set target date"
                     name="targetDate"
                     value={targetDate}
+                    formatMonth={(locale, date) =>  moment(date).format("MMMM")}
                     error={errors ? errors.targetDate : (errorObject && errorObject['endDate'])}
                     min={new Date()}
                   />
@@ -172,7 +173,7 @@ class Calculator extends React.Component {
                   <Textbox
                     onChange={this.handleChange}
                     type="text"
-                    label="Enter amount"
+                    label="Enter Amount"
                     placeholder="&#x20A6;"
                     name="target"
                     value={formatStringToCurrency(target)}
@@ -186,7 +187,7 @@ class Calculator extends React.Component {
                 <div className="">
                   <SelectBox
                     onChange={this.handleChange}
-                    label="Frequency"
+                    label="Choose a Frequency"
                     placeholder="Set frequency"
                     name="frequency"
                     boxClasses="active"

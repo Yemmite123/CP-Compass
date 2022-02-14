@@ -74,15 +74,15 @@ class Insights extends React.Component {
 
     const defaultMenu = [
       {
-        name: 'Home',
-        path: '/app/blogs',
-        title: 'Blogs',
-      },
-      {
         name: 'Trending',
-        path: '/app/blogs/trending',
-        title: 'Trending',
-      }
+        path: '/app/blogs',
+        title: 'Blog',
+      },
+      // {
+      //   name: 'Trending',
+      //   path: '/app/blogs/trending',
+      //   title: 'Trending',
+      // }
     ]
     const menus = posts?.category?.map(item => ({
       name: item.name,
@@ -97,61 +97,37 @@ class Insights extends React.Component {
         </div>
         {loading && !posts && <InsightSkeleton />}
 
-        {posts?.latest.length ? 
+        {posts?.trending.length ?
 
           <div className="row mt-3 no-gutters">
             <div className="col-md-5">
-            <div className="main-blog-img-container">
-              <img src={posts.latest[0].image} alt="feature" className="img-fluid main-blog-img" />
-            </div>
+              <div className="main-blog-img-container">
+                <img src={posts.trending[0].image} alt="feature" className="img-fluid main-blog-img" />
+              </div>
             </div>
             <div className="col-md-7">
-            <div className="blog-info-main p-4">
-              <div className="content mb-3">
-                <h3 className="font-weight-bold">{posts.latest[0].title}</h3>
-                <div className="d-flex align-items-center my-3">
-                  {posts.latest[0].user.pictureUrl ?
-                    <img src={posts.latest[0].user.pictureUrl} alt="feature" className="img-fluid profile-photo" />
-                    :<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-person-circle" viewBox="0 0 16 16">
-                      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                      <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+              <div className="blog-info-main p-4">
+                <div className="content mb-3">
+                  <h3 className="font-weight-bold">{posts.trending[0].title}</h3>
+                  <div className="d-flex align-items-center my-3">
+                    {posts.trending[0].user.pictureUrl ?
+                      <img src={posts.trending[0].user.pictureUrl} alt="feature" className="img-fluid profile-photo" />
+                      : <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                       </svg>
-                  }
-                  <p className="text-small mb-0 ml-2">{posts.latest[0].user.firstName} {posts.latest[0].user.lastName} on {moment(posts.latest[0].created_at).format('MMMM Do YYYY')}</p>
+                    }
+                    <p className="text-small font-weight-bold mb-0 ml-2">{posts.trending[0].user.firstName} {posts.trending[0].user.lastName} on {moment(posts.latest[0].created_at).format('MMMM Do YYYY')}</p>
+                  </div>
+                  <div> <p className="font-weight-light my-4">  {posts.trending[0].description}...</p></div>
                 </div>
-                <div> <p className="font-weight-light my-4">  {posts.latest[0].description}...</p></div>
+                <span className={`blog-category blog-category-${posts.trending[0].category.name} cursor-pointer`} onClick={() => this.handleNavigateToCategory(posts.latest[0].category.name)}>
+                  {posts.trending[0].category.name}
+                </span>
               </div>
-              <span className={`blog-category blog-category-${posts.latest[0].category.name} cursor-pointer`} onClick={() => this.handleNavigateToCategory(posts.latest[0].category.name)}>
-                {posts.latest[0].category.name}
-              </span>
             </div>
           </div>
-          </div>
           : <></>
-        }
-
-        {posts &&
-          <h3 className="text-left text-black mb-4 mt-5">Latest Topics</h3>}
-          <div className="row">
-            {posts &&
-              (posts?.latest?.length > 0 ?
-                posts?.latest?.map(blogpost => (
-                  <div className="col-md-4" key={blogpost.id}>
-                    <BlogItem item={blogpost} navigateToItem={this.handleNavigateToPost} navigateToCategory={this.handleNavigateToCategory} />
-                  </div>
-                ))
-                :
-                <div className="text-center w-100 mt-2">
-                  <p className="text-grey mt-5">No Latest topics</p>
-                </div>)
-            }
-          </div>
-        {posts?.latest.length > 0 &&
-          <div className="text-center mt-4">
-            <button className="btn btn-stroke-black rounded btn-sm text-center" onClick={this.navigateToLatest} >
-              Show more
-            </button>
-          </div>
         }
 
         {posts &&
@@ -161,19 +137,19 @@ class Insights extends React.Component {
             (posts?.trending.length > 0 ?
               posts?.trending.map(blogpost => (
                 <div className="col-md-4" key={blogpost.id}>
-                  <BlogItem item={blogpost} navigateToItem={this.handleNavigateToPost} />
+                  <BlogItem item={blogpost} className="small-img" navigateToItem={this.handleNavigateToPost} />
                 </div>
               ))
               :
               <div className="text-center w-100 mt-5">
-                <p className="text-grey mt-5">No Trending topics</p>
+                <p className="text-grey mt-5 text-center">No Trending topics</p>
               </div>)
           }
         </div>
         {posts?.trending.length > 0 &&
           <div className="text-center mt-4">
             <button className="btn btn-stroke-black btn-sm rounded text-center" onClick={this.navigateToTrending}>
-            Show more
+              Show more
             </button>
           </div>
         }
@@ -184,15 +160,15 @@ class Insights extends React.Component {
               {item && item?.posts.length > 0 &&
                 <div className="d-flex justify-content-between mb-4">
                   <div className="d-flex align-items-center">
-                    <span className={`bar-${item.name}`} /><h4 className="text-center font-weight-bold text-black ml-2 mb-0">{item.name}</h4>
+                    <span className={`bar-${item.name}`} /> <h3 className="text-left text-black mb-4 mt-5">{item.name}</h3>
                   </div>
-                  <div className={`${item.name} cursor-pointer`} onClick={() => this.handleNavigateToCategory(item.category?.name)}>All {item.name} articles <Arrow /> </div>
+                  <div className={`${item.name} cursor-pointer`} style={{ color: "#AD3336" }} onClick={() => this.handleNavigateToCategory(item.category?.name)}>All {item.name} articles <Arrow /> </div>
                 </div>
               }
               <div className="row">
                 {item && item?.posts.length > 0 &&
                   <div className="col-md-5">
-                    <BlogItem item={item?.posts[0]} category={item.name} navigateToItem={this.handleNavigateToPost} navigateToCategory={this.handleNavigateToCategory} />
+                    <BlogItem item={item?.posts[0]} className="small-img" category={item.name} navigateToItem={this.handleNavigateToPost} navigateToCategory={this.handleNavigateToCategory} />
                   </div>
                 }
                 <div className="col-md-7">
@@ -201,14 +177,13 @@ class Insights extends React.Component {
                       .map((blogpost, i) => (
                         <>
                           <MiniBlogItem item={blogpost} category={item.name} navigateToItem={this.handleNavigateToPost} navigateToCategory={this.handleNavigateToCategory} />
-                          {i !== item?.posts.length - 1 && <hr />}
                         </>
                       ))}
                 </div>
               </div>
             </div>
           ))}
-        
+
       </div>
     )
   }

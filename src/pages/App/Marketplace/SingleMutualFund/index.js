@@ -194,7 +194,7 @@ class SingleMutualFund extends React.Component {
                                     label={item.title}
                                     id={item.name.toLowerCase()}
                                     required
-                                    boxClasses="mt-3"
+                                    boxClasses="mt-3 active"
                                     defaultValue={
                                       ['accountNumber'].includes(item.name)
                                         ? profile.bankInfo && profile.bankInfo[item.name]

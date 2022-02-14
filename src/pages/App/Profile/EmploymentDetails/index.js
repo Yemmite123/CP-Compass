@@ -210,7 +210,7 @@ class EmploymentDetails extends React.Component {
                     : errorObject && errorObject["qualification"]
                 }
               />
-            }        
+            }
             <SelectBox
               boxClasses="active"
               name="status"
@@ -239,6 +239,7 @@ class EmploymentDetails extends React.Component {
               name="appointmentDate"
               label="Appointment Date"
               value={appointmentDate}
+              disabled={appointmentDate ? true : false}
               type="date"
               onChange={(date) =>
                 this.handleChangeDate("appointmentDate", date)
