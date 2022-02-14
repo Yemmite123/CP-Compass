@@ -121,10 +121,15 @@ class Wallet extends React.Component {
         {showTransactionModal && (
           <Modal classes="tran-modal" onClose={this.toggleModal}>
             <WalletTransaction transaction={selectedTransaction} onClose={this.toggleModal} />
-            {/* {selectedTransaction?.history?.length > 0 &&
-              selectedTransaction?.history?.map((history) => {
-                return <WalletTransaction transaction={history} />;
-              })} */}
+            {selectedTransaction?.history?.length > 0 &&
+              selectedTransaction?.history?.map(history => {
+                return (
+                  <div className="mt-5">
+                    <WalletTransaction transaction={history} multiple={true} />
+                  </div>
+                )
+              })
+            }
           </Modal>
         )}
         {walletDetails && (
