@@ -2,8 +2,7 @@
   .cp-modal {
     .dialogue {
       overflow-y: auto;
-      min-height: 350px;
-      max-height: 460px;
+      height: 473px;
       width: 35%;
       @media screen and (max-width: 676px) {
         width: 65%; 
