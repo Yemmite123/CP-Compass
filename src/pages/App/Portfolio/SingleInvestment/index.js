@@ -328,6 +328,7 @@ class SingleInvestment extends React.Component {
                     <p
                       className="text-blue mt-3"
                       onClick={this.toggleTransactionPinModal}
+                      style={{ cursor: "pointer" }}
                     >
                       Cancel Setup
                     </p>
