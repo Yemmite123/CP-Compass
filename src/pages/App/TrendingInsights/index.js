@@ -117,7 +117,7 @@ class TrendingInsights extends React.Component {
                 </div>
                 <div><p className="font-weight-light my-4"> {trending?.data[0]?.description}...</p></div>
               </div>
-              <span className={`blog-category blog-category-${trending?.data[0]?.category?.name} cursor-pointer`} onClick={() => this.handleNavigateToCategory(trending?.date[0]?.category?.name)}>
+              <span className={`blog-category blog-category-${trending?.data[0]?.category?.name} cursor-pointer`} onClick={() => this.handleNavigateToCategory(trending?.data[0]?.category?.name)}>
                 {trending?.data[0]?.category?.name}
               </span>
             </div>

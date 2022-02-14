@@ -73,6 +73,7 @@ class Withdraw extends React.Component {
   };
 
   resetFields = () => {
+    this.setState({ errors: null });
     this.setState({ textInputAmount: "" });
   };
 
@@ -120,6 +121,8 @@ class Withdraw extends React.Component {
         this.toggleConfirmationModal();
         this.toggleModal();
       });
+
+    this.setState({ amount: "" });
   };
 
   handleWithdraw = (e) => {

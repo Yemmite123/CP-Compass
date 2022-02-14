@@ -74,6 +74,7 @@ class App extends Component {
     } = this.props;
     const { path } = match;
     const headerTitle = location.state?.routeName;
+
     const { openMenu } = this.state;
 
     if(!authorized || isStaff) return <Redirect to="/login" />

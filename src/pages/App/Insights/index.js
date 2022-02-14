@@ -79,7 +79,7 @@ class Insights extends React.Component {
         title: 'Blogs',
       },
       {
-        name: 'Trending Topics',
+        name: 'Trending',
         path: '/app/blogs/trending',
         title: 'Trending',
       }
@@ -121,7 +121,7 @@ class Insights extends React.Component {
                 </div>
                 <div> <p className="font-weight-light my-4">  {posts.latest[0].description}...</p></div>
               </div>
-              <span className={`blog-category blog-category-${posts.latest[0].category.name} cursor-pointer`} onClick={() => this.handleNavigateToCategory(posts.latest[0].category)}>
+              <span className={`blog-category blog-category-${posts.latest[0].category.name} cursor-pointer`} onClick={() => this.handleNavigateToCategory(posts.latest[0].category.name)}>
                 {posts.latest[0].category.name}
               </span>
             </div>

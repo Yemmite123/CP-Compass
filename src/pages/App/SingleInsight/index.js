@@ -209,7 +209,6 @@ class SingleInsight extends React.Component {
           </Modal>
           }
         <Back />
-        <hr />
         {loading &&
           <div className="text-center">
             <div className="spinner-border text-blue spinner-border-md ml-2"></div>

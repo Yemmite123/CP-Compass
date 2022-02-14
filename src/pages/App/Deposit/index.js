@@ -61,6 +61,7 @@ class Deposit extends React.Component {
 
   resetFields = () => {
     // console.log((this.textInputRef.current.value = 0));
+    this.setState({ errors: null });
     this.setState({ textInputAmount: "" });
     this.setState({ selectedMethod: null });
   };
@@ -97,6 +98,7 @@ class Deposit extends React.Component {
       cardId: this.state.selectedCard.id,
     };
 
+    this.setState({ amount: "" })
     this.props.depositFundsCard(payload, this.props.history);
     return this.toggleAllCardsModal(e);
   };
@@ -203,9 +205,8 @@ class Deposit extends React.Component {
                     ))}
 
                   <div
-                    className={`d-flex p-3 mb-2 cursor-pointer debit-card new-payment position-relative ${
-                      this.state.newPayment ? "selected" : ""
-                    }`}
+                    className={`d-flex p-3 mb-2 cursor-pointer debit-card new-payment position-relative ${this.state.newPayment ? "selected" : ""
+                      }`}
                     onClick={this.handleNewPayment}
                   >
                     {(this.state.newPayment ? true : false) && (
