@@ -1,9 +1,12 @@
 .questions-page {
-  background: #ffffff;
+  background-color: #f3f3f3;
+  background-image:  url(../../../../assets/images/password-bg.svg);;
   position: fixed;
   width: 100vw;
   height: 100vh;
-  z-index: 1000;
+  z-index: 1001;
+  display: flex;
+  justify-content: center;
   left: 0;
   top: 0;
   overflow: scroll;
@@ -69,7 +72,10 @@
 
 
   .questions {
-    margin-bottom: 50px;
+    
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 
     .progress {
       border-radius: 0 !important;
@@ -78,21 +84,9 @@
       width: 45%;
       z-index: 1020;
     }
-    .question-header {
-      width: 45%;
-      margin-right: auto;
-      margin-left: auto;
-      margin-top: 5%;
 
-      @media screen and (max-width: 676px) {
-        width: 65% !important; 
-      }  
-      @media screen and (max-width: 500px) {
-        width: 75% !important; 
-      } 
-      @media screen and (max-width: 428px) {
-        width: 90% !important; 
-      } 
+    .question-header {
+    
     }
 
     &__one {
@@ -100,24 +94,24 @@
     }
 
     &--active {
-      margin-right: auto;
-      margin-left: auto;
-      width: 65%;
+      // margin-right: auto;
+      // margin-left: auto;
+      // width: 65%;
 
-      @media screen and (max-width: 676px) {
-        width: 65% !important; 
-      }  
-      @media screen and (max-width: 500px) {
-        width: 75% !important; 
-      } 
-      @media screen and (max-width: 428px) {
-        width: 90% !important; 
-      } 
+      // @media screen and (max-width: 676px) {
+      //   width: 65% !important; 
+      // }  
+      // @media screen and (max-width: 500px) {
+      //   width: 75% !important; 
+      // } 
+      // @media screen and (max-width: 428px) {
+      //   width: 90% !important; 
+      // } 
     }
 
     &--inactive {
-      margin-right: auto;
-      width: 40%;
+      // margin-right: auto;
+      // width: 40%;
     }
 
     &--others {

@@ -46,3 +46,20 @@ a:hover {
 ul {
   list-style: none;
 }
+
+
+.cp-modal{
+  display: flex!important;
+  justify-content: center;
+
+  .dialogue{
+    background-color: #ffffff;
+    border: 1px solid #E5E5E5;
+    box-sizing: border-box;
+    border-radius: 4px;
+    padding: 25px 20px 35px;
+    height: fit-content;
+    align-self: center;
+    margin: 0!important;
+  }
+}

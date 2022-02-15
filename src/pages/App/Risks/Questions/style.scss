@@ -1,9 +1,12 @@
 .risk-questions-page {
-  background: #ffffff;
+  background-color: #f3f3f3;
+  background-image:  url(../../../../assets/images/password-bg.svg);;
   position: fixed;
   width: 100vw;
   height: 100vh;
-  z-index: 1000;
+  z-index: 1001;
+  display: flex;
+  justify-content: center;
   left: 0;
   top: 0;
   overflow: scroll;
@@ -35,22 +38,10 @@
   }
 
   .questions {
-    margin-bottom: 50px;
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 5%;
-    width: 60%;
-
-    @media screen and (max-width: 676px) {
-      width: 65% !important; 
-    }  
-    @media screen and (max-width: 500px) {
-      width: 80% !important; 
-    } 
-    @media screen and (max-width: 428px) {
-      width: 95% !important; 
-    } 
-
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    
     .progress {
       border-radius: 0 !important;
       position: absolute;
