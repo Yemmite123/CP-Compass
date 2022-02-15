@@ -232,8 +232,8 @@ class BioData extends React.Component {
               value={middleName}
               displayLabel={true}
               placeholder={"Middle Name"}
+              onChange={this.handleChange}
               name="middleName"
-              disabled={true}
               error={
                 errors
                   ? errors.middleName

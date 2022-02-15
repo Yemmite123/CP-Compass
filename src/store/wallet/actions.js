@@ -299,7 +299,7 @@ export const initializeWithdraw = (payload) => {
           }))
           if ([200, 201].includes(response.status)) {
             resolve(response.data.data)
-            
+
             return dispatch(initializeWithdrawSuccess(response.data));
           }
         })
@@ -352,42 +352,47 @@ export const confirmWithdraw = (payload, history) => {
 
     const { token } = getState().user;
 
-    axios.post(`${CONFIG.BASE_URL}/users/confirm-withdrawal`, payload, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-    })
-      .then(response => {
-        response.headers?.authorization && dispatch(updateUser({
-          token: response.headers.authorization
-        }))
-        if ([200, 201].includes(response.status)) {
-          dispatch(confirmWithdrawSuccess(response.data));
-          setTimeout(() => getWalletDetails()(dispatch, getState), 4000);
+    return new Promise((resolve) => {
 
-          return setTimeout(() => {
-            dispatch(clearData())
-            history.push('/app/wallet')
-          }, 2000)
-        }
+      axios.post(`${CONFIG.BASE_URL}/users/confirm-withdrawal`, payload, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
       })
-      .catch(({ response }) => {
-        response && response?.headers.authorization && dispatch(updateUser({
-          token: response.headers.authorization
-        }))
-        if (response && [400, 404, 422, 403].includes(response.status)) {
-          return dispatch(confirmWithdrawError(response.data.error ? response.data.error : response.data.message));
-        }
-        if (response && [401].includes(response.status)) {
-          dispatch(showAlert({ type: 'error', message: 'Your session has expired' }))
-          return setTimeout(() => dispatch(logout()), 2000)
-        }
-        if (response && response.status >= 500) {
+        .then(response => {
+          response.headers?.authorization && dispatch(updateUser({
+            token: response.headers.authorization
+          }))
+          if ([200, 201].includes(response.status)) {
+            resolve(response.data.data);
+            dispatch(confirmWithdrawSuccess(response.data));
+            setTimeout(() => getWalletDetails()(dispatch, getState), 4000);
+
+            return setTimeout(() => {
+              dispatch(clearData())
+              history.push('/app/wallet')
+            }, 2000)
+          }
+        })
+        .catch(({ response }) => {
+          response && response?.headers.authorization && dispatch(updateUser({
+            token: response.headers.authorization
+          }))
+          if (response && [400, 404, 422, 403].includes(response.status)) {
+            return dispatch(confirmWithdrawError(response.data.error ? response.data.error : response.data.message));
+          }
+          if (response && [401].includes(response.status)) {
+            dispatch(showAlert({ type: 'error', message: 'Your session has expired' }))
+            return setTimeout(() => dispatch(logout()), 2000)
+          }
+          if (response && response.status >= 500) {
+            return dispatch(confirmWithdrawError('Oops! We did something wrong.'));
+          }
           return dispatch(confirmWithdrawError('Oops! We did something wrong.'));
-        }
-        return dispatch(confirmWithdrawError('Oops! We did something wrong.'));
-      })
+        })
+    })
+
   }
 }
 

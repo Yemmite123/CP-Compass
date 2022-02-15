@@ -118,11 +118,12 @@ class Withdraw extends React.Component {
         currency: "NGN",
       })
       .then((data) => {
-        this.toggleConfirmationModal();
+
         this.toggleModal();
+        this.toggleConfirmationModal();
       });
 
-    this.setState({ amount: "" });
+
   };
 
   handleWithdraw = (e) => {
@@ -136,9 +137,11 @@ class Withdraw extends React.Component {
     if (token.length < 4) {
       return this.setState({ pinError: "enter a valid pin" });
     }
+    this.props.confirmWithdraw({ pin: token }, this.props.history).then((data) => {
+      this.setState({ amount: "" });
+      this.toggleModal();
 
-    this.toggleModal();
-    this.props.confirmWithdraw({ pin: token }, this.props.history);
+    });
   };
 
   handlePin = (pin) => {
@@ -348,7 +351,7 @@ class Withdraw extends React.Component {
             <div className="mt-3 mb-2">
               <h3 className="font-bolder text-blue">Withdraw Funds</h3>
               <p>
-                Available Flex balance is: ₦
+                Available balance is: ₦
                 {walletDetails && walletDetails.wallet.NGN
                   ? walletDetails.wallet.NGN
                   : 0}

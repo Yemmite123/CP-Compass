@@ -176,7 +176,7 @@ class Home extends React.Component {
                             iconName="custom-plan"
                           />
                           <QuickActionCard
-                            onclick={() => this.props.history.push('profile/risk-profile')}
+                            onclick={() => this.props.history.push('profile/segments')}
                             title={<span>Join a tribe and <br></br> start investing</span>}
                             iconName="tribe"
                           />

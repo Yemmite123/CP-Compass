@@ -12,16 +12,19 @@ const ImageUploadInput = ({
   children
 }) => {
   const [file, setFile] = React.useState("");
+  const [error, setError] = React.useState("");
   const [selectedImageURL, setSelectedImageURL] = React.useState("");
 
   const onSelectImage = (e) => {
     const selectedImage = e.target.files[0];
 
-    console.log(selectedImage);
+    setError("");
 
     if (selectedImage) {
-      if (selectedImage.size > maxSizeInMb * 1024 * 1024)
+      if (selectedImage.size > maxSizeInMb * 1024 * 1024) {
+        setError(`Max size of ${maxSizeInMb * 1024}kb exceeded!`);
         return;
+      }
 
       setFile(selectedImage);
       setSelectedImageURL(selectedImage.type === "application/pdf" ? defaultImage : URL.createObjectURL(selectedImage));
@@ -39,20 +42,23 @@ const ImageUploadInput = ({
         className="custom-upload__image"
       />
       {children}
-      <div className="custom-upload__button-area">
-        <input
-          type="file"
-          accept={acceptsList || "image/png, image/jpeg"}
-          className="custom-upload__input"
-          id={randomId}
-          onChange={onSelectImage}
-        />
-        <label htmlFor={randomId} className="custom-upload__button">
-          {label}
-        </label>
-        <span className="custom-upload__info">
-          {file ? file.name : instruction}
-        </span>
+      <div className="d-flex flex-column">
+        <div className="custom-upload__button-area">
+          <input
+            type="file"
+            accept={acceptsList || "image/png, image/jpeg"}
+            className="custom-upload__input"
+            id={randomId}
+            onChange={onSelectImage}
+          />
+          <label htmlFor={randomId} className="custom-upload__button">
+            {label}
+          </label>
+          <span className="custom-upload__info">
+            {file ? file.name : instruction}
+          </span>
+        </div>
+        {error ? <p className="text-danger">{error}</p> : <></>}
       </div>
     </div>
   );
