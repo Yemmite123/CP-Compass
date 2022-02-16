@@ -47,6 +47,7 @@ class SingleInvestment extends React.Component {
     showCardsModal: false,
     showAutomateModal: false,
     showTransactionModal: false,
+    newPayment: false,
     selectedMethod: "",
     selectedMethodError: "",
     errors: null,
@@ -145,8 +146,15 @@ class SingleInvestment extends React.Component {
   };
 
   handleSelectCard = (card) => {
+    this.setState({ newPayment: false });
     this.setState({ cardId: card.id });
   };
+
+  handleNewPayment = () => {
+    this.setState({ newPayment: true });
+    this.setState({ cardId: "" });
+
+  }
 
   handlePay = (autoCharge) => {
     this.toggleAutomateModal();
@@ -163,6 +171,8 @@ class SingleInvestment extends React.Component {
       currency: "NGN",
       autoCharge: autoCharge && autoCharge,
     };
+
+    console.log(payload)
 
     this.props.topUpInvestment(payload, params.investmentId).then((data) => {
       this.state.showAutomateModal && this.toggleAutomateModal();
@@ -255,7 +265,6 @@ class SingleInvestment extends React.Component {
   };
 
   render() {
-    console.log(this.props.investment)
     const {
       investment,
       walletDetails,
@@ -377,14 +386,24 @@ class SingleInvestment extends React.Component {
                         <DebitCard
                           card={card}
                           handleSelect={this.handleSelectCard}
+                          selected={this.state.cardId === card.id}
                           key={card.id}
                         />
                       ))}
 
                     <div
-                      className={`d-flex p-3 mb-2 cursor-pointer debit-card`}
-                      onClick={this.toggleAutomateModal}
+                      className={`d-flex p-3 mb-2 cursor-pointer debit-card new-payment position-relative ${this.state.newPayment ? "selected" : ""
+                        }`}
+                      onClick={this.handleNewPayment}
                     >
+                      {(this.state.newPayment ? true : false) && (
+                        <img
+                          className="position-absolute"
+                          width={16}
+                          src={require("#/assets/icons/success.svg")}
+                          style={{ zIndex: 1, right: "0.35rem", top: "0.35rem" }}
+                        />
+                      )}
                       <div className="d-flex mr-3">
                         <img
                           src={require("#/assets/icons/plus-circle.svg")}
