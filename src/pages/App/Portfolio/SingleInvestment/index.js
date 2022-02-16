@@ -222,7 +222,12 @@ class SingleInvestment extends React.Component {
     confirmPin({ pin: initialPin }).then((data) => {
       // close transaction modal
       this.toggleTransactionPinModal();
-      this.toggleAllCardsModal();
+
+      if (this.state.tempSelectedMethod != "wallet")
+        this.toggleAllCardsModal();
+      else {
+        this.toggleAutomateModal();
+      }
     });
   };
 
@@ -621,23 +626,23 @@ class SingleInvestment extends React.Component {
                 <img
                   src={require("#/assets/icons/liquidate.svg")}
                   alt="plus"
-                  className={`img-fluid ${["active", "booked"].includes(investment?.order_status)
+                  className={`img-fluid ${["active"].includes(investment?.order_status)
                     ? "cursor-pointer"
                     : "cursor-block disabled"
                     }`}
                   onClick={
-                    ["active", "booked"].includes(investment?.order_status)
+                    ["active"].includes(investment?.order_status)
                       ? this.handleLiquidate
                       : null
                   }
                 />
                 <p
-                  className={`text-blue mb-0 text-small ${["active", "booked"].includes(investment?.order_status)
+                  className={`text-blue mb-0 text-small ${["active"].includes(investment?.order_status)
                     ? "cursor-pointer"
                     : "cursor-block disabled"
                     }`}
                   onClick={
-                    ["active", "booked"].includes(investment?.order_status)
+                    ["active"].includes(investment?.order_status)
                       ? this.handleLiquidate
                       : null
                   }
