@@ -106,12 +106,12 @@ class SingleInvestment extends React.Component {
   };
 
   handleTopUp = () => {
-    const { amount } = this.state;
+    const { textInputAmount } = this.state;
 
     let required = ["amount"];
-    let errors = validateFields({ amount }, required);
+    let errors = validateFields({ textInputAmount }, required);
 
-    if (!Math.floor(Number(this.state.amount)) || Number(this.state.amount) < 0) {
+    if (!Math.floor(Number(this.state.textInputAmount)) || Number(this.state.textInputAmount) < 0) {
       return this.setState({ errors: { amount: "enter a valid amount" } });
     }
 
