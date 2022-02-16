@@ -135,6 +135,16 @@ class Predefined extends React.Component {
     e.preventDefault();
     this.setState({ errors: null, entryError: null });
 
+    if (this.state.target)
+      if (!Math.floor(Number(this.state.target)) || Number(this.state.target) < 0) {
+        return this.setState({ errors: { target: 'enter a valid amount' } })
+      }
+
+    if (this.state.amount)
+      if (!Math.floor(Number(this.state.amount)) || Number(this.state.amount) < 0) {
+        return this.setState({ errors: { amout: 'enter a valid amount' } })
+      }
+
     if (!this.props.isApproved) {
       return this.setState({ entryError: "Your account is awaiting approval" });
     }

@@ -41,7 +41,6 @@ class Withdraw extends React.Component {
     const { name, value } = event.target;
     if (name === "amount") {
       if (isNaN(formatCurrencyToString(value))) {
-        console.log("returning");
         return;
       }
 
@@ -86,9 +85,10 @@ class Withdraw extends React.Component {
     const required = ["amount"];
     const errors = validateFields(data, required);
 
-    if (isNaN(this.state.amount)) {
-      return this.setState({ errors: { amount: "enter a valid number" } });
+    if (!Math.floor(Number(this.state.amount)) || Number(this.state.amount) < 0) {
+      return this.setState({ errors: { amount: "enter a valid amount" } });
     }
+
 
     const walletDetails = this.props.walletDetails;
     if (walletDetails) {

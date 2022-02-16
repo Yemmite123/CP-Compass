@@ -14,15 +14,17 @@ import Textbox from '#/components/Textbox';
 import Modal from '#/components/Modal';
 import PinInput from '#/components/PinInput';
 import OffCanvas from "#/components/OffCanvas";
-import { formatCurrency, serializeErrors, validateFields,
-  formatStringToCurrency, formatCurrencyToString, openOffCanvas, closeOffCanvas } from '#/utils'
+import {
+  formatCurrency, serializeErrors, validateFields,
+  formatStringToCurrency, formatCurrencyToString, openOffCanvas, closeOffCanvas
+} from '#/utils'
 import './style.scss';
 
 class LiquidateInvestment extends React.Component {
 
   state = {
     title: '',
-    textInputReason : '',
+    textInputReason: '',
     reason: '',
     textInputAmount: '',
     amount: '',
@@ -51,26 +53,27 @@ class LiquidateInvestment extends React.Component {
 
   handleChange = (event) => {
     const { name, value } = event.target;
-    if(name === 'amount') {
-      this.setState({ errors: null});
-        return this.setState({ [name]: formatCurrencyToString(value)}, ()=> {
-          this.setState({ textInputAmount: formatCurrencyToString(value)});
-          if(isNaN(this.state[name])) {
-            return this.setState({ errors: { [name]: 'enter a valid number' } })
-          }
-        });
+    if (name === 'amount') {
+      if (isNaN(this.state[name])) {
+        return;
       }
+
+      this.setState({ errors: null });
+      return this.setState({ [name]: formatCurrencyToString(value) }, () => {
+        this.setState({ textInputAmount: formatCurrencyToString(value) });
+      });
+    }
     this.setState({ [name]: value });
-    this.setState({ textInputReason: value});
+    this.setState({ textInputReason: value });
   }
   resetFields = () => {
     this.setState({ textInputAmount: "" });
-    this.setState({ textInputReason: ""});
+    this.setState({ textInputReason: "" });
 
   };
 
   handlePin = (pin) => {
-    this.setState({pin})
+    this.setState({ pin })
   }
 
   //liquidate confirmation 
@@ -79,23 +82,22 @@ class LiquidateInvestment extends React.Component {
     const { amount } = this.state
     const { investment } = this.props;
 
-
-    if (isNaN(this.state.amount)) {
-      return this.setState({ errors: { amount: "enter a valid number" } });
+    if (!Math.floor(Number(this.state.amount)) || Number(this.state.amount) < 0) {
+      return this.setState({ errors: { amount: "enter a valid amount" } });
     }
 
 
-    const required = investment?.order_status === 'booked' ? [] : [ 'amount'];
-    const errors = validateFields({  amount }, required)
+    const required = investment?.order_status === 'booked' ? [] : ['amount'];
+    const errors = validateFields({ amount }, required)
     if (Object.keys(errors).length > 0) {
       return this.setState({ errors });
     }
 
-    if(amount > this.props.investment?.balance) {
+    if (amount > this.props.investment?.balance) {
       return this.setState({ errors: { amount: 'Amount greater than investment balance' } });
     }
-    if(investment?.order_status === 'booked') {
-      return this.setState({  amount: '0' }, () => this.handleLiquidationDetails());
+    if (investment?.order_status === 'booked') {
+      return this.setState({ amount: '0' }, () => this.handleLiquidationDetails());
     }
     this.setState({ errors: null })
     this.resetFields();
@@ -111,7 +113,7 @@ class LiquidateInvestment extends React.Component {
       balance: this.props.investment?.balance,
       targetAmount: this.props.investment?.targetAmount,
       accruedInterest: this.props.investment?.accruedInterest,
-      interestRate: this.props.investment?.endDate ? this.props.predefinedLiquidationPenalty?.current : 0 ,
+      interestRate: this.props.investment?.endDate ? this.props.predefinedLiquidationPenalty?.current : 0,
       type: this.props.investment?.endDate ? 'predefined' : 'collection',
       endDate: this.props.investment?.endDate && moment(this.props.investment?.endDate).format('YYYY-MM-DD')
     }).then(data => {
@@ -139,9 +141,9 @@ class LiquidateInvestment extends React.Component {
     const { confirmPin, liquidateInvestment } = this.props
     this.setState({ pinError: null })
 
-    const initialPin = [ pin.value1, pin.value2, pin.value3, pin.value4 ].join('');
-    if (initialPin.length < 4 ) {
-      return this.setState({ pinError: 'field is required'})
+    const initialPin = [pin.value1, pin.value2, pin.value3, pin.value4].join('');
+    if (initialPin.length < 4) {
+      return this.setState({ pinError: 'field is required' })
     }
     confirmPin({ pin: initialPin })
       .then(data => {
@@ -151,7 +153,7 @@ class LiquidateInvestment extends React.Component {
             this.setState({ amount: '', reason: '' })
             this.props.history.goBack()
           })
-    })
+      })
   }
 
   toggleConfirmationModal = () => {
@@ -161,7 +163,7 @@ class LiquidateInvestment extends React.Component {
   toggleTransactionPinModal = () => {
     this.setState(prevState => ({ showPinModal: !prevState.showPinModal }))
   }
-  
+
   render() {
     const { textInputReason, reason, errors, textInputAmount, amount, showPinModal, pinError, confirmationModal } = this.state;
     const { error, pinLoading, confirmPinError, loading, predefinedLiquidationPenalty, investment, detailsLoading } = this.props;
@@ -169,94 +171,94 @@ class LiquidateInvestment extends React.Component {
     return (
       <div className="liquidate-investment-page">
         {confirmationModal &&
-        <Modal onClose={this.toggleConfirmationModal}>
-           <div className="text-right pb-3">
-              <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleConfirmationModal}/>
+          <Modal onClose={this.toggleConfirmationModal}>
+            <div className="text-right pb-3">
+              <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleConfirmationModal} />
             </div>
-          <div className="text-center confirmation-modal">
-            <div className="px-5 mb-4">
-              <h3 className="text-blue font-bolder info mb-3">Liquidation Information</h3>
-              <div className="px-4">
-                <p className="text-small">By liquidating your investment, you confirm to the following terms:
-                  You would bear <b> a penalty of {investment.endDate ? predefinedLiquidationPenalty?.current : 0}% on your interest earned </b>on the investment.
-                  Interest accruing on the portion of the investment you are liquidating would stop.
-                </p>
-              </div>
-            </div>
-            <div>
-              <div className="liquidation-table">
-                <div className="liquidation-header">
-                  <h3 className="text-white text-medium mb-0">Liquidation Details</h3>
-                </div>
-                <div className="liquidation-body">
-                  <div className="row">
-                    <div className="col-md-6 text-left">
-                      <p className="mb-0 text-small">Liquidation Amount</p>
-                    </div>
-                    <div className="col-md-6 text-right">
-                      <p className="mb-0 text-small">&#x20A6;{formatCurrency(amount)}</p>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-6 text-left">
-                      <p className="mb-0 text-small">Penalty</p>
-                    </div>
-                    <div className="col-md-6 text-right">
-                    <p className="mb-0 text-small">
-                      &#x20A6;{investment.endDate ? this.state.penalty : '0.00'}
-                    </p>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-6 text-left">
-                      <p className="mb-0 text-small">Interest to get</p>
-                    </div>
-                    <div className="col-md-6 text-right">
-                    <p className="mb-0 text-small">
-                    &#x20A6;{formatCurrency(this.state.interestToGet )}
-                    </p>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-6 text-left">
-                      <p className="mb-0 text-small">Investment Balance</p>
-                    </div>
-                    <div className="col-md-6 text-right">
-                    <p className="mb-0 text-small">
-                      &#x20A6;{formatCurrency(this.state.investmentBalance)}
-                    </p>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-6 text-left">
-                      <p className="mb-0 text-small">Amount you will get</p>
-                    </div>
-                    <div className="col-md-6 text-right">
-                    <p className="mb-0 text-small">
-                      &#x20A6;{formatCurrency(this.state.amountToGet)}
-                    </p>
-                    </div>
-                  </div>
+            <div className="text-center confirmation-modal">
+              <div className="px-5 mb-4">
+                <h3 className="text-blue font-bolder info mb-3">Liquidation Information</h3>
+                <div className="px-4">
+                  <p className="text-small">By liquidating your investment, you confirm to the following terms:
+                    You would bear <b> a penalty of {investment.endDate ? predefinedLiquidationPenalty?.current : 0}% on your interest earned </b>on the investment.
+                    Interest accruing on the portion of the investment you are liquidating would stop.
+                  </p>
                 </div>
               </div>
-              <div className="d-flex flex-column align-items-center mt-4">
-                <button className="btn py-3 btn-primary" onClick={this.handleEnterPin}>
-                  Yes, liquidate 
-                </button>
-                <p className="text-blue mt-3 mb-0 cursor-pointer" onClick={this.toggleConfirmationModal}>No, go back</p>
+              <div>
+                <div className="liquidation-table">
+                  <div className="liquidation-header">
+                    <h3 className="text-white text-medium mb-0">Liquidation Details</h3>
+                  </div>
+                  <div className="liquidation-body">
+                    <div className="row">
+                      <div className="col-md-6 text-left">
+                        <p className="mb-0 text-small">Liquidation Amount</p>
+                      </div>
+                      <div className="col-md-6 text-right">
+                        <p className="mb-0 text-small">&#x20A6;{formatCurrency(amount)}</p>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-6 text-left">
+                        <p className="mb-0 text-small">Penalty</p>
+                      </div>
+                      <div className="col-md-6 text-right">
+                        <p className="mb-0 text-small">
+                          &#x20A6;{investment.endDate ? this.state.penalty : '0.00'}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-6 text-left">
+                        <p className="mb-0 text-small">Interest to get</p>
+                      </div>
+                      <div className="col-md-6 text-right">
+                        <p className="mb-0 text-small">
+                          &#x20A6;{formatCurrency(this.state.interestToGet)}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-6 text-left">
+                        <p className="mb-0 text-small">Investment Balance</p>
+                      </div>
+                      <div className="col-md-6 text-right">
+                        <p className="mb-0 text-small">
+                          &#x20A6;{formatCurrency(this.state.investmentBalance)}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-6 text-left">
+                        <p className="mb-0 text-small">Amount you will get</p>
+                      </div>
+                      <div className="col-md-6 text-right">
+                        <p className="mb-0 text-small">
+                          &#x20A6;{formatCurrency(this.state.amountToGet)}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="d-flex flex-column align-items-center mt-4">
+                  <button className="btn py-3 btn-primary" onClick={this.handleEnterPin}>
+                    Yes, liquidate
+                  </button>
+                  <p className="text-blue mt-3 mb-0 cursor-pointer" onClick={this.toggleConfirmationModal}>No, go back</p>
+                </div>
               </div>
             </div>
-          </div>
-        </Modal>
+          </Modal>
         }
         {showPinModal &&
-            <Modal classes="transaction-modal" onClose={this.toggleTransactionPinModal}>
+          <Modal classes="transaction-modal" onClose={this.toggleTransactionPinModal}>
             <div className="text-right pb-3">
-              <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleTransactionPinModal}/>
+              <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleTransactionPinModal} />
             </div>
             <div className="px-5">
               <div className="d-flex justify-content-center">
-                <img src={require('#/assets/icons/bank-transfer.svg')} alt="bank" className="pb-3"/>
+                <img src={require('#/assets/icons/bank-transfer.svg')} alt="bank" className="pb-3" />
               </div>
               <div className="text-center">
                 <div className='mb-3'>
@@ -266,16 +268,16 @@ class LiquidateInvestment extends React.Component {
                   <PinInput onChange={this.handlePin} error={pinError} />
                 </div>
                 <div className="px-3 mt-4">
-                <button className="btn py-3 btn-primary btn-block mt-3" onClick={this.handleTransactionVerification} disabled={pinLoading}>
-                  Confirm Setup
-                  {pinLoading &&
-                    <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
-                  }
-                </button>
-                <p className="text-blue mt-3" onClick={this.toggleTransactionPinModal}>Cancel Setup</p>
+                  <button className="btn py-3 btn-primary btn-block mt-3" onClick={this.handleTransactionVerification} disabled={pinLoading}>
+                    Confirm Setup
+                    {pinLoading &&
+                      <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
+                    }
+                  </button>
+                  <p className="text-blue mt-3" onClick={this.toggleTransactionPinModal}>Cancel Setup</p>
 
-                {pinError && <p className="text-error mt-2">{pinError}</p>}
-                {confirmPinError && <p className="text-error mt-2">{confirmPinError}</p>}
+                  {pinError && <p className="text-error mt-2">{pinError}</p>}
+                  {confirmPinError && <p className="text-error mt-2">{confirmPinError}</p>}
                 </div>
               </div>
             </div>
@@ -285,7 +287,7 @@ class LiquidateInvestment extends React.Component {
           <div className="px-3 h-100 d-flex flex-column flex-grow-1">
             <div className="mt-3 mb-2">
               <h3 className="font-bolder text-blue">Liquidate Goal</h3>
-              
+
             </div>
 
             <div className="mt-5">
@@ -307,13 +309,13 @@ class LiquidateInvestment extends React.Component {
                 <div className="w-100">
                   <p>State reason for this liquidation</p>
                   <div className="">
-                        <textarea
-                        onChange={this.handleChange}
-                        rows={5}
-                        name="reason"
-                        value={textInputReason}
-                        className="w-100 border-faint border-radius-default"
-                      />
+                    <textarea
+                      onChange={this.handleChange}
+                      rows={5}
+                      name="reason"
+                      value={textInputReason}
+                      className="w-100 border-faint border-radius-default"
+                    />
                   </div>
                 </div>
                 <div className="w-100">
@@ -335,10 +337,10 @@ class LiquidateInvestment extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { 
+  const {
     app: {
-      security: { error: confirmPinError }, 
-        portfolio: { investment },
+      security: { error: confirmPinError },
+      portfolio: { investment },
       investment: { error },
       config: { data }
     }

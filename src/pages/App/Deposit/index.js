@@ -48,12 +48,10 @@ class Deposit extends React.Component {
     if (name === "amount") {
       if (isNaN(formatCurrencyToString(value)))
         return;
+
       this.setState({ errors: null });
       return this.setState({ [name]: formatCurrencyToString(value) }, () => {
         this.setState({ textInputAmount: formatCurrencyToString(value) });
-        if (isNaN(this.state.amount)) {
-          return this.setState({ errors: { amount: "enter a valid number" } });
-        }
       });
     }
     this.setState({ [name]: value });
@@ -112,6 +110,11 @@ class Deposit extends React.Component {
       return this.setState({
         selectionError: "please select a payment method",
       });
+    }
+
+
+    if (!Math.floor(Number(this.state.amount)) || Number(this.state.amount) < 0) {
+      return this.setState({ errors: { amount: "enter a valid amount" } });
     }
 
     const data = this.state;

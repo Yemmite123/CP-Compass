@@ -74,12 +74,13 @@ class SingleInvestment extends React.Component {
   handleChange = (event) => {
     const { name, value } = event.target;
     if (name === "amount") {
+      if (isNaN(formatCurrencyToString(value))) {
+        return;
+      }
+
       this.setState({ errors: null });
       return this.setState({ [name]: formatCurrencyToString(value) }, () => {
         this.setState({ textInputAmount: formatCurrencyToString(value) });
-        if (isNaN(this.state[name])) {
-          return this.setState({ errors: { [name]: "enter a valid number" } });
-        }
       });
     }
     this.setState({ [name]: value });
@@ -108,8 +109,8 @@ class SingleInvestment extends React.Component {
     let required = ["amount"];
     let errors = validateFields({ amount }, required);
 
-    if (isNaN(this.state.amount)) {
-      return this.setState({ errors: { amount: "enter a valid number" } });
+    if (!Math.floor(Number(this.state.amount)) || Number(this.state.amount) < 0) {
+      return this.setState({ errors: { amount: "enter a valid amount" } });
     }
 
     if (Object.keys(errors).length > 0) {
@@ -795,7 +796,7 @@ class SingleInvestment extends React.Component {
             <div className="px-3 h-100 d-flex flex-column flex-grow-1">
               <div className="mt-3 mb-2">
                 <h3 className="font-bolder text-blue">Top up Goal</h3>
-                <p>Enter amout to top-up</p>
+                <p>Enter amount to top-up</p>
               </div>
 
               <div className="mt-5">

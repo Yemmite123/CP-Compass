@@ -31,14 +31,15 @@ class Calculator extends React.Component {
   handleChange = (event) => {
     const { name, value } = event.target;
     if (name === 'target') {
+      if (isNaN(this.state[name])) {
+        return;
+      }
       this.setState({ errors: null });
       return this.setState({ [name]: formatCurrencyToString(value) }, () => {
-        if (isNaN(this.state[name])) {
-          return this.setState({ errors: { [name]: 'enter a valid number' } })
-        }
+
       });
     }
-    
+
     this.setState({ [name]: value });
   }
 
@@ -53,6 +54,10 @@ class Calculator extends React.Component {
   submit = (e) => {
     e.preventDefault();
     this.setState({ errors: null, entryError: null });
+
+    if (!Math.floor(Number(this.state.target)) || Number(this.state.target) < 0) {
+      return this.setState({ errors: { target: 'enter a valid amount' } })
+    }
 
     const data = this.state;
     const required = ['target', 'targetDate', 'frequency', 'startDate'];

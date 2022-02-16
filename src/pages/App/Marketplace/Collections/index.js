@@ -123,6 +123,19 @@ class Collections extends React.Component {
     e.preventDefault();
     this.setState({ errors: null, entryError: null });
 
+    if (!Math.floor(Number(this.state.target)) || Number(this.state.target) < 0) {
+      return this.setState({ errors: { target: 'enter a valid amount' } })
+    }
+
+    if (!Math.floor(Number(this.state.amount)) || Number(this.state.amount) < 0) {
+      return this.setState({ errors: { amout: 'enter a valid amount' } })
+    }
+
+    if (!Math.floor(Number(this.state.finalAmount)) || Number(this.state.finalAmount) < 0) {
+      return this.setState({ errors: { finalAmount: 'enter a valid amount' } })
+    }
+
+
     if (!this.props.isApproved) {
       return this.setState({ entryError: "Your account is awaiting approval" });
     }
@@ -467,7 +480,7 @@ class Collections extends React.Component {
                   </button>
                   <p
                     className="text-blue mt-3"
-                    style={{ cursor   : "pointer" }}
+                    style={{ cursor: "pointer" }}
                     onClick={this.toggleTransactionPinModal}
                   >
                     Cancel Setup
