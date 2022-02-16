@@ -151,7 +151,6 @@ class LiquidateInvestment extends React.Component {
           .then(response => {
             this.toggleTransactionPinModal()
             this.setState({ amount: '', reason: '' })
-            this.props.history.goBack()
           })
       })
   }

@@ -10,9 +10,6 @@ const DataTable = (props) => {
       <table>
         <tbody>
         <tr className="table-header">
-          <th>
-            <input type="checkbox" class="checkbox" id="check"/>
-          </th>
           {columns && columns.map(column => (
             <th key={column.id}>{column.name.toUpperCase()}</th>
           ))}
@@ -20,9 +17,6 @@ const DataTable = (props) => {
         {
           data && data.map(item => (
             <tr className="table-data-row cursor-pointer" onClick={() => selectItem(item.id)} key={Math.random()*1000}>
-              <td>
-                <input type="checkbox" class="checkbox" id="check"/>
-              </td>
               <td>
                 {item.title}
               </td>
