@@ -40,7 +40,7 @@ class DashboardMenu extends Component {
             path: '/app/profile',
         },
         {
-            name: 'Blogs',
+            name: 'Blog',
             icon: BlogIcon,
             path: '/app/blogs',
         },
@@ -64,12 +64,12 @@ class DashboardMenu extends Component {
     }
 
     renderMenus = () => this.menus.map(menu => (
-        <NavLink 
-            to={{ pathname: menu.path, state: { routeName: menu.name || menu.title} }} 
-            key={menu.name} 
+        <NavLink
+            to={{ pathname: menu.path, state: { routeName: menu.name || menu.title } }}
+            key={menu.name}
             activeClassName="dashboard-menu-area__menu--active"
         >
-            <div className="dashboard-menu-area__menu mt-2l999999 p-2l99999" onClick={this.props.openMenu ? this.props.handleToggleMenu : ()=>''}>
+            <div className="dashboard-menu-area__menu mt-2l999999 p-2l99999" onClick={this.props.openMenu ? this.props.handleToggleMenu : () => ''}>
                 <menu.icon className="dashboard-menu-area__menu-icon grey-icon mr-3" />
                 <span className="dashboard-menu-area__menu-name">{menu.name}</span>
             </div>
@@ -78,7 +78,7 @@ class DashboardMenu extends Component {
 
     render() {
         const { openMenu } = this.props;
-        return(
+        return (
             <div className={`dashboard-menu ${openMenu ? 'menu-open' : 'menu-close'}`}>
                 <img src={CPLogo} alt="logo" className="cp-logo dashboard-menu__logo cursor-pointer" onClick={this.navigateToHome} />
                 <div className="dashboard-menu-area">
