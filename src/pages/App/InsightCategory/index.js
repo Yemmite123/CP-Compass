@@ -178,7 +178,7 @@ class InsightCategory extends React.Component {
                 (filter?.posts?.data.length > 0 ?
                   filter?.posts?.data.map(blogpost => (
                     <div className="col-md-4" key={blogpost.id}>
-                      <BlogItem item={blogpost} navigateToItem={this.handleNavigateToPost} />
+                      <BlogItem item={blogpost} navigateToItem={this.handleNavigateToPost}  navigateToCategory={this.handleNavigateToCategory}/>
                     </div>
                   ))
                   :

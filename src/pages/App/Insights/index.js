@@ -137,7 +137,7 @@ class Insights extends React.Component {
             (posts?.trending.length > 0 ?
               posts?.trending.map(blogpost => (
                 <div className="col-md-4" key={blogpost.id}>
-                  <BlogItem item={blogpost} className="small-img" navigateToItem={this.handleNavigateToPost} />
+                  <BlogItem item={blogpost} className="small-img" navigateToItem={this.handleNavigateToPost} navigateToCategory={this.handleNavigateToCategory} />
                 </div>
               ))
               :
@@ -156,7 +156,7 @@ class Insights extends React.Component {
 
         {posts && posts?.category?.length > 0
           && posts?.category.filter(item => item?.posts.length > 0).map(item => (
-            <div className="pt-5 mb-4" key={item.id}>
+            <div className="mb-4" key={item.id}>
               {item && item?.posts.length > 0 &&
                 <div className="d-flex justify-content-between mb-4">
                   <div className="d-flex align-items-center">

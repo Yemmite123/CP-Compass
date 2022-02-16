@@ -117,7 +117,7 @@ class LatestInsights extends React.Component {
                 (recent?.data.length > 0 ?
                   recent?.data.map(blogpost => (
                     <div className="col-md-12 mt-4" key={blogpost.id}>
-                      <MainBlogItem item={blogpost} navigateToItem={this.handleNavigateToPost} />
+                      <MainBlogItem item={blogpost} navigateToItem={this.handleNavigateToPost}  navigateToCategory={this.handleNavigateToCategory}/>
                     </div>
                   ))
                   :
@@ -153,7 +153,7 @@ class LatestInsights extends React.Component {
                 (filter?.posts?.data.length > 0 ?
                   filter?.posts?.data.map(blogpost => (
                     <div className="col-md-4" key={blogpost.id}>
-                      <BlogItem item={blogpost} navigateToItem={this.handleNavigateToPost} />
+                      <BlogItem item={blogpost} navigateToItem={this.handleNavigateToPost}  navigateToCategory={this.handleNavigateToCategory} />
                     </div>
                   ))
                   :
