@@ -30,8 +30,18 @@
   }
 
   &--booked {
-    background-color: #eeeeee;
-    color: #bbbbbb
+    background-color: rgba(247, 239, 255, 1);
+    color: rgba(83, 55, 108, 1);
+  }
+
+  &--terminated{
+    background-color: #FFF6D9;
+    color: #E7A52E;
+  }
+
+  &--matured{
+    background-color: #E2F3FF;
+      color: #0879C9;
   }
 
   .progress {

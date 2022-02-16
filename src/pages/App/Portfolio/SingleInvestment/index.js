@@ -48,6 +48,7 @@ class SingleInvestment extends React.Component {
     showAutomateModal: false,
     showTransactionModal: false,
     newPayment: false,
+    tempSelectedMethod: "",
     selectedMethod: "",
     selectedMethodError: "",
     errors: null,
@@ -88,6 +89,7 @@ class SingleInvestment extends React.Component {
 
   resetFields = () => {
     this.setState({ textInputAmount: "" });
+    this.setState({ errors: null })
     this.setState({ selectedMethod: null });
   };
 
@@ -127,6 +129,7 @@ class SingleInvestment extends React.Component {
       });
     }
 
+    this.setState({ tempSelectedMethod: selectedMethod });
     this.resetFields();
 
     // open transaction modal
@@ -159,10 +162,11 @@ class SingleInvestment extends React.Component {
 
   handlePay = (autoCharge) => {
     this.toggleAutomateModal();
-    const { amount, selectedMethod, cardId } = this.state;
+    const { amount, tempSelectedMethod, cardId } = this.state;
     const { params } = this.props.match;
+
     const payment = {
-      method: selectedMethod,
+      method: tempSelectedMethod,
       reoccurring: cardId ? true : false,
       cardId: cardId && cardId,
     };
@@ -173,7 +177,7 @@ class SingleInvestment extends React.Component {
       autoCharge: autoCharge && autoCharge,
     };
 
-    console.log(payload)
+
 
     this.props.topUpInvestment(payload, params.investmentId).then((data) => {
       this.state.showAutomateModal && this.toggleAutomateModal();
@@ -522,7 +526,7 @@ class SingleInvestment extends React.Component {
             <SummaryCard
               title="Interest"
               showCurrency={true}
-              total={`${investment ? investment.accruedInterest : "0.00"}`}
+              total={`${investment ? formatCurrency(investment.accruedInterest) : "0.00"}`}
               percentageDiff={"N/A"}
               backgroundImage={`url(${InvestmentBG})`}
               iconColor="#B0500E"
