@@ -10,7 +10,7 @@ const Investment = (props) => {
   return (
     <div className="investment-card">
       <Card classes="cursor-pointer" onclick={() => { console.log(investment); navigateToInvestment(investment.id) }}>
-        <h3 className="text-blue text-medium text-capitalize" >{investment.title}</h3>
+        <h3 className="text-blue text-medium text-capitalize" >{investment.title.length > 20 ? investment.title.slice(0, 19) + "..." : investment.title}</h3>
         <div className="progress position-relative">
           {investment && investment.percentageCompletion < 10 ? <div className="text-black position-absolute font-weight-bold" style={{ top: "1px", left: "2px" }} > {investment.percentageCompletion}% </div> : <></>}
           <div
