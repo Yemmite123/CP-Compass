@@ -15,7 +15,7 @@ import { closeOffCanvas, refineOptions } from '#/utils';
 import { countryCodes } from '#/utils/countryCode';
 import DateBox from '#/components/DateBox';
 import OffCanvas from "#/components/OffCanvas";
-import { openOffCanvas } from "#/utils";
+import { openOffCanvas, validateEmail } from "#/utils";
 
 import './style.scss';
 class SingleMutualFund extends React.Component {
@@ -188,7 +188,7 @@ class SingleMutualFund extends React.Component {
                                   />
                                   :
                                   <Textbox
-                                    type={item.type}
+                                    type={item.name == "email" ? "email" : "text"}
                                     name={item.name}
                                     // placeholder={item.placeholder}
                                     label={item.title}
