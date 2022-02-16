@@ -679,7 +679,7 @@ class Custom extends React.Component {
         <OffCanvas title="" position="end" id={`offcanvas-${state?.investment.id}`} onClose={this.resetFields}>
           <div className="px-3 h-100 d-flex flex-column flex-grow-1">
             <div className='mt-3 mb-2'>
-              <h4 className="font-bolder text-blue">Create New Custom Investment</h4>
+              <h4 className="font-bolder text-blue">Create A New Custom Investment</h4>
               <p>Create your own personal investment</p>
             </div>
 
@@ -700,7 +700,7 @@ class Custom extends React.Component {
               <Textbox
                 onChange={this.handleChange}
                 type="text"
-                label="Target amount"
+                label="Target Amount"
                 placeholder="Set target amount"
                 name="target"
                 value={formatStringToCurrency(inputTarget)}
@@ -724,10 +724,10 @@ class Custom extends React.Component {
               <p>How often do you want to set money aside?</p>
               <SelectBox
                 onChange={this.handleChange}
+                boxClasses="mt-3 active"
                 label="Frequency"
                 placeholder="Set frequency"
                 name="frequency"
-                boxClasses="mt-3"
                 options={investmentFrequency}
                 // value={inputFrequency}
                 optionName="name"
@@ -738,7 +738,7 @@ class Custom extends React.Component {
               <p>When do you want your target amount?</p>
               <DateBox
                 onChange={date => this.handleChangeDate('targetDate', date)}
-                label="Target date"
+                label="Target Date"
                 placeholder="Set target date"
                 name="targetDate"
                 value={inputTargetDate}
@@ -752,7 +752,7 @@ class Custom extends React.Component {
               <Textbox
                 onChange={this.handleChange}
                 type="text"
-                label="Frequency amount"
+                label="Frequency Amount"
                 placeholder="Set frequency amount"
                 name="frequencyAmount"
                 value={formatStringToCurrency(inputFrequencyAmount)}

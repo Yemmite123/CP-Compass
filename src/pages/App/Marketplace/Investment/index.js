@@ -17,7 +17,7 @@ import './style.scss';
 
 class Investment extends React.Component {
 
-  state= {
+  state = {
     showNoBvn: false,
   }
   componentDidMount() {
@@ -31,11 +31,11 @@ class Investment extends React.Component {
   handleBvnSetup = () => {
     this.props.history.push('/app/onboarding');
   }
-  
+
   handleNewInvestment = () => {
     const { location: { state } } = this.props.history
     const { isBvnActive } = this.props;
-    if(!isBvnActive){
+    if (!isBvnActive) {
       return this.toggleBvnModal()
     }
 
@@ -71,14 +71,14 @@ class Investment extends React.Component {
 
     return (
       <div className="single-investment-page">
-        { showNoBvn &&
+        {showNoBvn &&
           <Modal classes="bvn-active" onClose={this.toggleBvnModal}>
             <div className="text-right pb-3">
               <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleBvnModal} className="cursor-pointer" />
             </div>
             <div className="px-3">
               <div className="d-flex justify-content-center">
-                <img src={require('#/assets/icons/bank-transfer.svg')} alt="bank" className="pb-3"/>
+                <img src={require('#/assets/icons/bank-transfer.svg')} alt="bank" className="pb-3" />
               </div>
               <div className="text-center">
                 <div className='mb-3'>
@@ -111,14 +111,14 @@ class Investment extends React.Component {
 
           <div className="row mt-2">
             <div className="col-md-3 mt-4">
-              <Card classes="bg-default investment-item cursor-pointer" onclick={this.handleNewInvestment} backgroundImage={`url(${HexBG})`}>
+              <Card classes={`bg-default investment-item cursor-pointer ${investmentList ? investmentList.investments.length ? "multiple" : "" : ""}`} onclick={this.handleNewInvestment} backgroundImage={`url(${HexBG})`}>
                 <div className="text-right" onClick={this.handleNewInvestment}>
                   <img src={require('#/assets/icons/plus-circle.svg')} alt="plus" className="img-fluid" onClick={this.handleNewInvestment} />
                 </div>
                 <h3 className="text-white text-medium pr-4" onClick={this.handleNewInvestment}>Create a new {state?.investment.name} plan</h3>
               </Card>
             </div>
-            {investmentList && 
+            {investmentList &&
               investmentList.investments?.map((investment) => {
                 return (<div className="col-md-3 mt-4" key={investment.id}>
                   <InvestmentItem investment={investment} navigateToInvestment={this.handleNavigatetoInvestment} />
@@ -128,7 +128,7 @@ class Investment extends React.Component {
           </div>
         </div>
         {
-          state.investment.type === 'collection' ?  <Collections/> : state.investment.type === 'custom' ? <Custom/> : <Predefined/>
+          state.investment.type === 'collection' ? <Collections /> : state.investment.type === 'custom' ? <Custom /> : <Predefined />
         }
       </div>
     )
@@ -149,7 +149,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getInvestmentDetails: (id)=> dispatch(getInvestmentDetails(id)),
+    getInvestmentDetails: (id) => dispatch(getInvestmentDetails(id)),
   };
 };
 

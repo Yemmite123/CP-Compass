@@ -35,7 +35,7 @@ const Investment = (props) => {
         </div>
         <div className="d-flex justify-content-between mt-4">
           <div>
-            <small className="mb-0 text-black text-grey">Next payment Date</small>
+            <small className="mb-0 text-black text-grey">Next payment date</small>
             <p className="mb-0 text-black text-small">{investment.nextPaymentDate ? moment(investment.nextPaymentDate).format('DD MMMM, YYYY') : 'N/A'}</p>
           </div>
         </div>
