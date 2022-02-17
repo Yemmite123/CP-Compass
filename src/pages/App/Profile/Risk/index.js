@@ -2,9 +2,13 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 import Modal from '#/components/Modal';
+import OffCanvas from "#/components/OffCanvas";
 import SelectBox from '#/components/SelectBox';
 import DateBox from '#/components/DateBox';
-import { genderOption } from '#/utils';
+import {
+  genderOption, openOffCanvas,
+  closeOffCanvas,
+} from '#/utils';
 import './style.scss';
 
 class Risk extends React.Component {
@@ -15,6 +19,7 @@ class Risk extends React.Component {
     dateOfBirth: '',
     gender: '',
     section: '',
+    errors: { date: "", gender: "" }
   }
 
   componentDidMount() {
@@ -46,6 +51,10 @@ class Risk extends React.Component {
     this.setState({ gender: value });
   }
 
+  resetFields = () => {
+
+  }
+
   handleChangeDate = (item, date) => {
     this.setState({ [item]: date });
   }
@@ -63,12 +72,31 @@ class Risk extends React.Component {
     this.setState({ section: 'risk' })
 
     if (!this.props.sex || !this.props.dob) {
+      openOffCanvas("bio-offcanvas");
       return this.toggleModal()
     }
     this.props.history.push('/app/profile/risks');
   }
 
   joinSegmentWithAge = () => {
+
+    let error = { date: false, gender: false };
+    if (moment(this.state.dateOfBirth).isBefore(moment())) {
+      this.setState({ error: { date: "Date of Birth can't be a future data", gender: "" } });
+      error.date = true;
+    }
+
+    if (!this.state.gender) {
+      this.setState(prevState => ({ error: { date: prevState.error.date, gender: "Field is required" } }));
+      error.gender = true;
+    }
+
+    if (error.gender || error.date) {
+      return;
+    }
+
+    closeOffCanvas("bio-offcanvas");
+
     if (this.state.section === 'segment') {
       return this.props.history.push({
         pathname: '/app/profile/segments',
@@ -80,6 +108,8 @@ class Risk extends React.Component {
       state: { gender: this.state.gender, dateOfBirth: moment(this.state.dateOfBirth).format('YYYY-MM-DD') },
     });
   }
+
+
 
   toggleModal = () => {
     this.setState(prevState => ({ showGenderModal: !prevState.showGenderModal }))
@@ -97,33 +127,60 @@ class Risk extends React.Component {
       <div className="risk-page">
         {
           showGenderModal &&
-          <Modal onClose={this.toggleModal}>
-            <h3 className="text-blue">You haven’t set up your Date of Birth and Gender</h3>
-            <p className="text-small">Complete field to continue to segment</p>
-            <DateBox
-              onChange={date => this.handleChangeDate('dateOfBirth', date)}
-              label="Date of Birth"
-              placeholder="Date of Birth"
-              name="dateOfBirth"
-              boxClasses="mt-3"
-              value={dateOfBirth}
-            />
-            <SelectBox
-              onChange={this.handleGenderChange}
-              name="gender"
-              label="Gender"
-              placeholder="Gender"
-              boxClasses="mt-3"
-              options={genderOption}
-              value="value"
-              optionName="name"
-              defaultValue={gender}
-            />
+          <>
 
-            <button onClick={this.joinSegmentWithAge} className="mt-3 btn btn-block btn-sm btn-primary">
-              Continue
-            </button>
-          </Modal>
+            <OffCanvas
+              title=""
+              position="end"
+              id="bio-offcanvas"
+              onClose={this.resetFields}
+            >
+              <div className="px-3 h-100 d-flex flex-column flex-grow-1">
+                <div className="mt-3 mb-2">
+                  <h3 className="font-bolder text-blue">Complete you bio</h3>
+                  <p>You haven’t set up your date of birth and gender</p>
+                </div>
+
+                <div className="mt-5">
+                  <p>Date of Birth</p>
+                  <DateBox
+                    onChange={date => this.handleChangeDate('dateOfBirth', date)}
+                    label="Date of Birth"
+                    placeholder="Date of Birth"
+                    name="dateOfBirth"
+                    boxClasses="mt-3"
+                    value={dateOfBirth}
+                  />
+                </div>
+                <div className="mt-5 d-flex flex-column flex-grow-1">
+                  <div className="d-flex pb-2 flex-column flex-grow-1 justify-content-between">
+                    <div className="w-100">
+                      <p>Gender</p>
+                      <SelectBox
+                        onChange={this.handleGenderChange}
+                        name="gender"
+                        // label="Gender"
+                        // placeholder="Gender"
+                        boxClasses="mt-3"
+                        options={genderOption}
+                        value="value"
+                        optionName="name"
+                        defaultValue={gender}
+                      />
+                    </div>
+                    <div className="w-100">
+                      <button
+                        className="btn w-100 btn-sm btn-primary btn-md-block"
+                        onClick={this.joinSegmentWithAge}
+                      >
+                        Continue
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </OffCanvas>
+          </>
         }
         {
           showJoinSegmentModal && <Modal onClose={this.toggleJoinSegmentModal}>

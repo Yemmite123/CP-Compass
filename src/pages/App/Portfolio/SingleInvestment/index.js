@@ -25,6 +25,8 @@ import WalletBG from "#/assets/images/walletBG.svg";
 import InvestmentBG from "#/assets/images/InvestmentBG.svg";
 import ReturnsBG from "#/assets/images/ReturnsBG.svg";
 import OffCanvas from "#/components/OffCanvas";
+import SelectBox from '#/components/SelectBox';
+import DateBox from '#/components/DateBox';
 import LiquidateInvestment from "#/pages/App/Portfolio/LiquidateInvestment";
 import {
   formatCurrency,
@@ -916,6 +918,71 @@ class SingleInvestment extends React.Component {
                     )}
                   </div>
                 </div>
+              </div>
+            </div>
+          </OffCanvas>
+          <OffCanvas
+            title=""
+            position="end"
+            id="edit-investment-offcanvas"
+            onClose={this.resetFields}
+          >
+            <div className="px-3 h-100 d-flex flex-column flex-grow-1">
+              <div className="mt-3 mb-2">
+                <h4 className="font-bolder text-blue">Edit Plan</h4>
+                <p>Make changes to your plan</p>
+              </div>
+
+              <div className="mt-3">
+                <p>Plan Title</p>
+                <Textbox
+                  onChange={this.handleChange}
+                  type="text"
+                  label="New title"
+                  placeholder="New title"
+                  name="title"
+                  value={formatStringToCurrency(textInputAmount)}
+                  error={
+                    errors
+                      ? errors.amount
+                      : errorObject && errorObject["amount"]
+                  }
+                />
+              </div>
+              <div className="mt-3">
+                <p>How often do you set aside money for this?</p>
+                <SelectBox
+                  onChange={this.handleChange}
+                  boxClasses="mt-3 active"
+                  label="Frequency"
+                  placeholder="Set frequency"
+                  name="frequency"
+                  options={[{ name: "", value: "" }]}
+                  // value={inputFrequency}
+                  optionName="name"
+                // error={errors ? errors.frequency : (errorObject && errorObject['frequency'])}
+                />
+              </div>
+              <div className="mt-3">
+                <p>Edit target date?</p>
+                <DateBox
+                  // onChange={date => this.handleChangeDate('targetDate', date)}
+                  label="Target Date"
+                  placeholder="Set target date"
+                  name="targetDate"
+                  value={new Date()}
+                  // error={errors ? errors.targetDate : (errorObject && errorObject['targetDate'])}
+                  min={new Date()}
+                />
+              </div>
+              <div className="mt-4 pb-3">
+                {/* {entryError && <p className="text-error mt-2 mr-3">{entryError}</p>} */}
+                <button className="w-100 py-3 btn btn-primary btn-md-block" onClick={this.handleComfirmation}>
+                  Save changes
+                  {/* {calcLoading &&
+                    <div className="spinner-border text-white spinner-border-sm ml-2"></div>
+                  } */}
+                </button>
               </div>
             </div>
           </OffCanvas>

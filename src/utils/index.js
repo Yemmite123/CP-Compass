@@ -650,26 +650,26 @@ export const calculateLiquidationInterest = (amount, balance, accrued) => {
 };
 
 export const industiesList = [
- { name: "Agriculture", value: "Agriculture"},
- { name: "Commerce", value: "Commerce"},
- { name: "Construction/Real Estate", value: "Construction/Real Estate"},
- { name: "Consumer Goods", value: "Consumer Goods"},
- { name: "Education", value: "Education"},
- { name: "Financial Services", value: "Financial Services"},
- { name: "Healthcare", value: "Healthcare"},
- { name: "Hospitality", value: "Hospitality"},
- { name: "Industrial Goods", value: "Industrial Goods"},
- { name: "Information & Communications Technology (ICT)", value: "Information & Communications Technology (ICT)"},
- { name: "Manufacturing", value: "Manufacturing"},
- { name: "Media", value: "Media"},
- { name: "Oil & Gas", value: "Oil & Gas"},
- { name: "Postal", value: "Postal"},
- { name: "Public Sector", value: "Public Sector"},
- { name: "Services", value: "Services"},
- { name: "Shipping & Logistics", value: "Shipping & Logistics"},
- { name: "Tourism", value: "Tourism"},
- { name: "Transportation", value: "Transportation"},
- { name: "Utilities", value: "Utilities"},
+  { name: "Agriculture", value: "Agriculture" },
+  { name: "Commerce", value: "Commerce" },
+  { name: "Construction/Real Estate", value: "Construction/Real Estate" },
+  { name: "Consumer Goods", value: "Consumer Goods" },
+  { name: "Education", value: "Education" },
+  { name: "Financial Services", value: "Financial Services" },
+  { name: "Healthcare", value: "Healthcare" },
+  { name: "Hospitality", value: "Hospitality" },
+  { name: "Industrial Goods", value: "Industrial Goods" },
+  { name: "Information & Communications Technology (ICT)", value: "Information & Communications Technology (ICT)" },
+  { name: "Manufacturing", value: "Manufacturing" },
+  { name: "Media", value: "Media" },
+  { name: "Oil & Gas", value: "Oil & Gas" },
+  { name: "Postal", value: "Postal" },
+  { name: "Public Sector", value: "Public Sector" },
+  { name: "Services", value: "Services" },
+  { name: "Shipping & Logistics", value: "Shipping & Logistics" },
+  { name: "Tourism", value: "Tourism" },
+  { name: "Transportation", value: "Transportation" },
+  { name: "Utilities", value: "Utilities" },
 ];
 
 export const openOffCanvas = (name) => {
@@ -683,18 +683,22 @@ export const closeOffCanvas = (name) => {
   let offcanvas = document.querySelector(`.${name}`);
   let overlay = document.querySelectorAll(".offcanvas-backdrop");
 
-  overlay.forEach((val) => {
-    val.style.opacity = "0";
-  });
+  if (offcanvas) {
+    if (overlay)
+      overlay.forEach((val) => {
+        val.style.opacity = "0";
+      });
 
-  offcanvas.style.transform = "translateX(100%)";
+    offcanvas.style.transform = "translateX(100%)";
 
-  setTimeout(() => {
-    offcanvas.classList.remove("show");
-    offcanvas.style.transform = "";
-    overlay.forEach((val) => {
-      val.style.opacity = "0";
-      val.remove();
-    });
-  }, 300);
+    setTimeout(() => {
+      offcanvas.classList.remove("show");
+      offcanvas.style.transform = "";
+      overlay.forEach((val) => {
+        val.style.opacity = "0";
+        val.remove();
+      });
+    }, 300);
+  }
+
 };
