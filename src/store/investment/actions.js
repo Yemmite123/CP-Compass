@@ -2,6 +2,7 @@ import axios from 'axios';
 import CONFIG from '#/config';
 import * as actions from "./actionTypes";
 import { logout, updateUser } from "#/store/user/actions";
+import { fetchSingleInvestment } from "#/store/portfolio/actions"
 import { showAlert } from '#/store/ui/actions';
 
 const clearError = () => {
@@ -295,6 +296,7 @@ export const liquidateInvestment = (id, payload) => {
           }))
           dispatch(liquidateInvestmentSuccess(response.data));
           dispatch(showAlert({ type: 'success', message: response.data?.message }))
+          setTimeout(() => fetchSingleInvestment(id)(dispatch, getState), 4000);
           resolve(response.data.data)
         })
         .catch(({ response }) => {
@@ -543,6 +545,8 @@ export const disableAutocharge = (id) => {
           }))
           dispatch(showAlert({ type: 'success', message: response.data.message }))
           dispatch(disableAutochargeSuccess(response.data));
+
+          setTimeout(() => fetchSingleInvestment(id)(dispatch, getState), 4000);
           resolve(response.data.data)
         })
         .catch(({ response }) => {

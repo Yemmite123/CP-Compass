@@ -14,7 +14,7 @@ const Investment = (props) => {
         <div className="progress position-relative">
           {investment && investment.percentageCompletion < 10 ? <div className="text-black position-absolute font-weight-bold" style={{ top: "1px", left: "2px" }} > {investment.percentageCompletion}% </div> : <></>}
           <div
-            className={`progress-bar bg-success`}
+            className={`progress-bar bg-success ${investment.percentageCompletion == 0 ? "d-none" : ""}`}
             style={{ width: `${investment.percentageCompletion}%` }}
             role="progressbar"
             aria-valuenow={investment.percentageCompletion}
@@ -29,7 +29,8 @@ const Investment = (props) => {
             <p className="mb-0 text-small">&#x20A6;{formatCurrency(investment.targetAmount)}</p>
           </div>
           <div>
-            <small className="mb-0 text-grey">Target met</small>
+            {/* TOOD: Update Value from server */}
+            <small className="mb-0 text-grey">Interest per annum</small>
             <p className="mb-0"><span className="text-black text-small">&#x20A6;{formatCurrency(investment.balance)}</span></p>
           </div>
         </div>

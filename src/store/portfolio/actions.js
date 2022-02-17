@@ -172,6 +172,7 @@ export const topUpInvestment = (payload, id) => {
             token: response.headers.authorization
           }))
           if ([200, 201].includes(response.status)) {
+            setTimeout(() => fetchSingleInvestment(id)(dispatch, getState), 4000);
             dispatch(topUpInvestmentSuccess(response.data.data));
             resolve(response.data)
             if (response.data.data?.authorization_url) {
