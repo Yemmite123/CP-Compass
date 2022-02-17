@@ -113,7 +113,7 @@ class Deposit extends React.Component {
     }
 
 
-    if (!Math.floor(Number(this.state.amount)) || Number(this.state.amount) < 0) {
+    if (!Math.floor(Number(this.state.textInputAmount)) || Number(this.state.textInputAmount) < 0) {
       return this.setState({ errors: { amount: "enter a valid amount" } });
     }
 
