@@ -145,8 +145,8 @@ class Wallet extends React.Component {
                     <div className="col-12">
                       <SummaryCard
                         className="BG"
-                        showCurrency={true}
-                        title="Wallet balance"
+                        // showCurrency={true}
+                        title="Naira Balance"
                         total={
                           walletDetails && walletDetails.wallet.NGN
                             ? walletDetails.wallet.NGN
@@ -155,7 +155,7 @@ class Wallet extends React.Component {
                         percentageDiff="N/A"
                         backgroundImage={`url(${WalletBG})`}
                         iconColor="#871523"
-                        iconName="white-wallet"
+                        iconName="naira-img"
                       />
                     </div>
                     <div

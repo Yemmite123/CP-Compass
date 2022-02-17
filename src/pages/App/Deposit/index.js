@@ -73,10 +73,16 @@ class Deposit extends React.Component {
     this.setState({ showCardsModal: !this.state.showCardsModal });
   };
 
-  handleSelectCard = (card) => {
+  _handleSelectCard = (card) => {
     this.setState({ newPayment: false });
     this.setState({ selectedCard: card, type: "card" });
   };
+  get handleSelectCard() {
+    return this._handleSelectCard;
+  }
+  set handleSelectCard(value) {
+    this._handleSelectCard = value;
+  }
 
   handleNewPayment = () => {
     this.setState({ newPayment: true });

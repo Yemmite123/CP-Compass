@@ -53,7 +53,7 @@ export const depositFunds = (payload) => {
           token: response.headers.authorization
         }))
         if ([200, 201].includes(response.status)) {
-          dispatch(showAlert({ type: 'success', message: response.data?.message, noBtn: true }))
+          // sdispatch(showAlert({ type: 'success', message: response.data?.message, noBtn: true }))
           dispatch(depositFundsSuccess(response.data));
           dispatch(getWalletDetails());
           // getUserProfile();
