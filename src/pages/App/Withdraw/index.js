@@ -85,6 +85,10 @@ class Withdraw extends React.Component {
     const required = ["amount"];
     const errors = validateFields(data, required);
 
+    if (Number(this.state.textInputAmount) < 5000) {
+      return this.setState({ errors: { amount: "Does not meet minimum withdrawal of ₦5000" } })
+    }
+
     if (!Math.floor(Number(this.state.textInputAmount)) || Number(this.state.textInputAmount) < 0) {
       return this.setState({ errors: { amount: "enter a valid amount" } });
     }
@@ -320,21 +324,10 @@ class Withdraw extends React.Component {
               <div className="text-center">
                 <div className="mb-3">
                   <h5 className="text-blue font-bolder text-success">Done</h5>
-                  <p className="mb-0 text-grey">
+                  <p className="mb-0 text-grey text-small">
                     Your transaction is being processed and you will be notified
                     when the transactions has been approved.
                   </p>
-                </div>
-                <div className="px-3 mt-4">
-                  <button
-                    className="btn py-3 btn-success btn-block mt-3"
-                    onClick={this.handleWithdraw}
-                  >
-                    Go to Wallet
-                    {confirmLoading && (
-                      <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
-                    )}
-                  </button>
                 </div>
               </div>
             </div>

@@ -70,19 +70,14 @@ class Deposit extends React.Component {
 
   toggleAllCardsModal = (e) => {
     e.preventDefault();
+    this.setState({ selectedMethod: "" });
     this.setState({ showCardsModal: !this.state.showCardsModal });
   };
 
-  _handleSelectCard = (card) => {
+  handleSelectCard = (card) => {
     this.setState({ newPayment: false });
     this.setState({ selectedCard: card, type: "card" });
   };
-  get handleSelectCard() {
-    return this._handleSelectCard;
-  }
-  set handleSelectCard(value) {
-    this._handleSelectCard = value;
-  }
 
   handleNewPayment = () => {
     this.setState({ newPayment: true });
@@ -117,7 +112,6 @@ class Deposit extends React.Component {
         selectionError: "please select a payment method",
       });
     }
-
 
     if (!Math.floor(Number(this.state.textInputAmount)) || Number(this.state.textInputAmount) < 0) {
       return this.setState({ errors: { amount: "enter a valid amount" } });

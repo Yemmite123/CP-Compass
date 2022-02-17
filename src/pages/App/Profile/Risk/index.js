@@ -63,6 +63,7 @@ class Risk extends React.Component {
     this.setState({ section: 'segment' })
 
     if (!this.props.sex || !this.props.dob) {
+      openOffCanvas("bio-offcanvas");
       return this.toggleModal()
     }
     this.props.history.push('/app/profile/segments');
@@ -97,16 +98,7 @@ class Risk extends React.Component {
 
     closeOffCanvas("bio-offcanvas");
 
-    if (this.state.section === 'segment') {
-      return this.props.history.push({
-        pathname: '/app/profile/segments',
-        state: { gender: this.state.gender, dateOfBirth: moment(this.state.dateOfBirth).format('YYYY-MM-DD') },
-      });
-    }
-    return this.props.history.push({
-      pathname: '/app/profile/risks',
-      state: { gender: this.state.gender, dateOfBirth: moment(this.state.dateOfBirth).format('YYYY-MM-DD') },
-    });
+    this.toggleJoinSegmentModal();
   }
 
 

@@ -190,7 +190,7 @@ class KycVerification extends React.Component {
               <SelectBox
                 boxClasses={"active"}
                 name="documentType"
-                label="What Type of ID do you want to upload?"
+                label="What type of ID do you want to upload?"
                 onChange={this.handleDocumentChange}
                 type="select"
                 options={documentOptions}

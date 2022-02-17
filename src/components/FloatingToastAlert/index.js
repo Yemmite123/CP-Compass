@@ -70,7 +70,7 @@ class FloatingToastAlert extends React.Component {
                     <p className="mb-0 text-grey"> {alert.message}.</p>
                   </div>
                   <div className="px-3 mt-4">
-                    {!alert.noBtn ? <button
+                    {alert.button ? <button
                       className="btn py-3 btn-success btn-block mt-3"
                       onClick={this.handleClick}
 
@@ -111,7 +111,7 @@ class FloatingToastAlert extends React.Component {
                     </h5>
                   </div>
                   <div className="px-3 mt-4">
-                    {!alert.noBtn ? <button
+                    {alert.button ? <button
                       className="btn py-3 btn-success btn-block mt-3"
                       onClick={this.handleClick}
                     >
@@ -147,4 +147,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withRouter( connect(mapStateToProps, mapDispatchToProps)(FloatingToastAlert));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FloatingToastAlert));

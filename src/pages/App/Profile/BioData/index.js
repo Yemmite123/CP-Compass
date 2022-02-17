@@ -324,8 +324,8 @@ class BioData extends React.Component {
               name="email"
               boxClasses={"active"}
               value={email}
-              label="Email address"
-              placeholder="Email address"
+              label="Email Address"
+              placeholder="Email Address"
               disabled={true}
             />
 

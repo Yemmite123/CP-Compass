@@ -9,6 +9,8 @@ import Modal from '#/components/Modal';
 import SelectableList from '#/components/SelectableList';
 import Pill from '#/components/Pill';
 import CPLogo from '#/assets/images/CP-Compass-New.svg'
+import ProfileImg from '#/assets/icons/man-profile.svg'
+
 import './style.scss';
 
 class Questions extends React.Component {
@@ -20,6 +22,7 @@ class Questions extends React.Component {
     stageTwo: false,
     stageThree: false,
     stageFour: false,
+    stageFive: false,
     view: 1,
     stageOneSelected: '',
     stageOneOthers: '',
@@ -169,7 +172,7 @@ class Questions extends React.Component {
   render() {
     const {
       startModal, view, stageOne,
-      stageTwo, stageThree, stageFour,
+      stageTwo, stageThree, stageFour, stageFive,
       stageOneSelected, stageOneOthers, finalModal,
       selectedInterest, stageTwoOthers, stageFourOthers,
       stageThreeOthers, selectedDescription, selectedSpending,
@@ -446,6 +449,215 @@ class Questions extends React.Component {
                 </div>
               </div>
             }
+            {stageFive &&
+              <div className={`question-section questions__one ${stageFive ? 'questions--active' : 'questions--inactive'}`}>
+
+                <div className=" p-5">
+                  <div className="row">
+                    <div className="col-lg-3 col-md-4 col-12">
+                      <div className='card py-2 px-3 text-center'>
+                        <div>
+                          <img src={ProfileImg} />
+                          <h3 className="text-blue">
+                            Cp Chief
+                          </h3>
+                          <div className="mt-3">
+                            <p>
+                              He is passionate about the financial security and growth of his family.
+                              His budget is all encompassing as it covers everyone.
+                            </p>
+                            <div className='px-3'>
+                              <button
+                                className="btn w-100 btn-sm btn-primary btn-md-block"
+                                onClick={null}
+                              >
+                                Read more
+                              </button>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-3 col-md-4 col-12">
+                      <div className='card py-2 px-3 text-center'>
+                        <div>
+                          <img src={ProfileImg} />
+                          <h3 className="text-blue">
+                            Cp Chief
+                          </h3>
+                          <div className="mt-3">
+                            <p>
+                              He is passionate about the financial security and growth of his family.
+                              His budget is all encompassing as it covers everyone.
+                            </p>
+                            <div className='px-3'>
+                              <button
+                                className="btn w-100 btn-sm btn-primary btn-md-block"
+                                onClick={null}
+                              >
+                                Read more
+                              </button>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-3 col-md-4 col-12">
+                      <div className='card py-2 px-3 text-center'>
+                        <div>
+                          <img src={ProfileImg} />
+                          <h3 className="text-blue">
+                            Cp Chief
+                          </h3>
+                          <div className="mt-3">
+                            <p>
+                              He is passionate about the financial security and growth of his family.
+                              His budget is all encompassing as it covers everyone.
+                            </p>
+                            <div className='px-3'>
+                              <button
+                                className="btn w-100 btn-sm btn-primary btn-md-block"
+                                onClick={null}
+                              >
+                                Read more
+                              </button>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-3 col-md-4 col-12">
+                      <div className='card py-2 px-3 text-center'>
+                        <div>
+                          <img src={ProfileImg} />
+                          <h3 className="text-blue">
+                            Cp Chief
+                          </h3>
+                          <div className="mt-3">
+                            <p>
+                              He is passionate about the financial security and growth of his family.
+                              His budget is all encompassing as it covers everyone.
+                            </p>
+                            <div className='px-3'>
+                              <button
+                                className="btn w-100 btn-sm btn-primary btn-md-block"
+                                onClick={null}
+                              >
+                                Read more
+                              </button>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-3 col-md-4 col-12">
+                      <div className='card py-2 px-3 text-center'>
+                        <div>
+                          <img src={ProfileImg} />
+                          <h3 className="text-blue">
+                            Cp Chief
+                          </h3>
+                          <div className="mt-3">
+                            <p>
+                              He is passionate about the financial security and growth of his family.
+                              His budget is all encompassing as it covers everyone.
+                            </p>
+                            <div className='px-3'>
+                              <button
+                                className="btn w-100 btn-sm btn-primary btn-md-block"
+                                onClick={null}
+                              >
+                                Read more
+                              </button>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-3 col-md-4 col-12">
+                      <div className='card py-2 px-3 text-center'>
+                        <div>
+                          <img src={ProfileImg} />
+                          <h3 className="text-blue">
+                            Cp Chief
+                          </h3>
+                          <div className="mt-3">
+                            <p>
+                              He is passionate about the financial security and growth of his family.
+                              His budget is all encompassing as it covers everyone.
+                            </p>
+                            <div className='px-3'>
+                              <button
+                                className="btn w-100 btn-sm btn-primary btn-md-block"
+                                onClick={null}
+                              >
+                                Read more
+                              </button>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-3 col-md-4 col-12">
+                      <div className='card py-2 px-3 text-center'>
+                        <div>
+                          <img src={ProfileImg} />
+                          <h3 className="text-blue">
+                            Cp Chief
+                          </h3>
+                          <div className="mt-3">
+                            <p>
+                              He is passionate about the financial security and growth of his family.
+                              His budget is all encompassing as it covers everyone.
+                            </p>
+                            <div className='px-3'>
+                              <button
+                                className="btn w-100 btn-sm btn-primary btn-md-block"
+                                onClick={null}
+                              >
+                                Read more
+                              </button>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-3 col-md-4 col-12">
+                      <div className='card py-2 px-3 text-center'>
+                        <div>
+                          <img src={ProfileImg} />
+                          <h3 className="text-blue">
+                            Cp Chief
+                          </h3>
+                          <div className="mt-3">
+                            <p>
+                              He is passionate about the financial security and growth of his family.
+                              His budget is all encompassing as it covers everyone.
+                            </p>
+                            <div className='px-3'>
+                              <button
+                                className="btn w-100 btn-sm btn-primary btn-md-block"
+                                onClick={null}
+                              >
+                                Read more
+                              </button>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
           </div>
         </div>
         {
@@ -492,7 +704,7 @@ class Questions extends React.Component {
 
           </Modal>
         }
-      </div>
+      </div >
     )
   }
 }
