@@ -11,8 +11,8 @@ export default (state = portfolioDefaultState, action) => {
   switch (action.type) {
     case actions.CLEAR_DATA:
       return { ...state, data: null };
-      case actions.CLEAR_ERROR:
-        return { ...state, error: false};
+    case actions.CLEAR_ERROR:
+      return { ...state, error: false };
     case actions.FETCH_PORTFOLIO_SUCCESS:
       return { ...state, loading: false, error: false, data: action.data }
     case actions.FETCH_PORTFOLIO_ERROR:
@@ -21,11 +21,20 @@ export default (state = portfolioDefaultState, action) => {
       return { ...state, loading: false, error: false, investment: action.data }
     case actions.FETCH_SINGLE_INVESTMENT_ERROR:
       return { ...state, loading: false, error: action.error };
-      case actions.TOP_UP_INVESTMENT_SUCCESS:
-        return { ...state, loading: false, error: false, data: action.data }
-      case actions.TOP_UP_INVESTMENT_ERROR:
-        return { ...state, loading: false, error: action.error };
+    case actions.TOP_UP_INVESTMENT_SUCCESS:
+      return { ...state, loading: false, error: false, data: action.data }
+    case actions.TOP_UP_INVESTMENT_ERROR:
+      return { ...state, loading: false, error: action.error };
+    case actions.EDIT_INVESTMENT_SUCCESS:
+      return { ...state, loading: false, error: false, data: action.data }
+    case actions.EDIT_INVESTMENT_SUCCESS:
+      return { ...state, loading: false, error: action.error };
+    case actions.EDIT_AMOUNT_INVESTMENT_SUCCESS:
+      return { ...state, loading: false, error: false, data: action.data }
+    case actions.EDIT_AMOUNT_INVESTMENT_SUCCESS:
+      return { ...state, loading: false, error: action.error };
     default:
       return state;
   }
 }
+

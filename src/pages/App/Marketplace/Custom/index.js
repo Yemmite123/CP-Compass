@@ -41,9 +41,9 @@ class Custom extends React.Component {
     inputTarget: '',
     target: '',
     inputTargetDate: '',
-    targetDate: new Date(),
-    frequency: 'daily',
-    inputFrequency: 'daily',
+    targetDate: '',
+    frequency: '',
+    inputFrequency: '',
     startDate: new Date(),
     inputStartDate: '',
     confirmationModal: false,
@@ -741,7 +741,7 @@ class Custom extends React.Component {
                 error={errors ? errors.frequency : (errorObject && errorObject['frequency'])}
               />
             </div>
-            {addEndDate && <div className="mt-3">
+            {inputAddEndDate && <div className="mt-3">
               <p>When do you want your target amount?</p>
               <DateBox
                 onChange={date => this.handleChangeDate('targetDate', date)}

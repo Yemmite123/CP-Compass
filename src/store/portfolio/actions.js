@@ -133,6 +133,156 @@ export const fetchSingleInvestment = (id) => {
   }
 }
 
+const editInvestmentRequest = () => {
+  return {
+    type: actions.EDIT_INVESTMENT_REQUEST,
+  }
+}
+
+const editInvestmentError = (message) => {
+  return {
+    type: actions.EDIT_INVESTMENT_ERROR,
+    error: message,
+  }
+}
+
+const editInvestmentSuccess = (data) => {
+  return {
+    type: actions.EDIT_INVESTMENT_SUCCESS,
+    data,
+  }
+}
+
+const editAmountInvestmentRequest = () => {
+  return {
+    type: actions.EDIT_AMOUNT_INVESTMENT_REQUEST,
+  }
+}
+
+const editAmountInvestmentError = (message) => {
+  return {
+    type: actions.EDIT_AMOUNT_INVESTMENT_ERROR,
+    error: message,
+  }
+}
+
+const editAmountInvestmentSuccess = (data) => {
+  return {
+    type: actions.EDIT_AMOUNT_INVESTMENT_SUCCESS,
+    data,
+  }
+}
+
+export const editInvestmentAmount = (payload, type, id) => {
+  return (dispatch, getState) => {
+    dispatch(editAmountInvestmentRequest());
+
+    const { token } = getState().user;
+    return new Promise((resolve) => {
+
+      axios.patch(`${CONFIG.BASE_URL}/services/${type}/plan/investments/${id}/payment-amount`, payload, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      })
+        .then(response => {
+          response.headers.authorization && dispatch(updateUser({
+            token: response.headers.authorization
+          }))
+          if ([200, 201].includes(response.status)) {
+            setTimeout(() => fetchSingleInvestment(id)(dispatch, getState), 4000);
+            dispatch(editAmountInvestmentSuccess(response.data.data));
+            resolve(response.data)
+            if (response.data.data?.authorization_url) {
+              return window.location = response.data.data.authorization_url;
+            }
+            return dispatch(showAlert({ type: 'success', message: response.data.message }))
+          }
+        })
+        .catch((error) => {
+          error.response && error.response.headers.authorization && dispatch(updateUser({
+            token: error.response.headers.authorization
+          }))
+          if (error.response && [400, 422, 403].includes(error.response.status)) {
+            dispatch(editAmountInvestmentError(error.response.data.error ? error.response.data.error : error.response.data.message));
+            return setTimeout(() => dispatch(clearError()), 2000)
+          }
+          if (error.response && [404].includes(error.response.status)) {
+            dispatch(showAlert({ type: 'error', message: error.response.data.message }))
+            dispatch(editAmountInvestmentError(error.response.data.error ? error.response.data.error : error.response.data.message));
+            return setTimeout(() => dispatch(clearError()), 2000)
+          }
+          if (error.response && [401].includes(error.response.status)) {
+            dispatch(showAlert({ type: 'error', message: 'Your session has expired' }))
+            return setTimeout(() => dispatch(logout()), 2000)
+          }
+          if (error.response && error.response.status >= 500) {
+            dispatch(editAmountInvestmentError('Oops! We did something wrong.'));
+            return setTimeout(() => dispatch(clearError()), 2000)
+          }
+          dispatch(editAmountInvestmentError('Oops! We did something wrong.'));
+          return setTimeout(() => dispatch(clearError()), 2000)
+        })
+    })
+  }
+}
+
+export const editInvestment = (payload, type, id) => {
+  return (dispatch, getState) => {
+    dispatch(editInvestmentRequest());
+
+    const { token } = getState().user;
+    return new Promise((resolve) => {
+
+      axios.put(`${CONFIG.BASE_URL}/services/${type}/plan/investments/${id}`, payload, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      })
+        .then(response => {
+          response.headers.authorization && dispatch(updateUser({
+            token: response.headers.authorization
+          }))
+          if ([200, 201].includes(response.status)) {
+            setTimeout(() => fetchSingleInvestment(id)(dispatch, getState), 4000);
+            dispatch(editInvestmentSuccess(response.data.data));
+            resolve(response.data)
+            if (response.data.data?.authorization_url) {
+              return window.location = response.data.data.authorization_url;
+            }
+            return dispatch(showAlert({ type: 'success', message: response.data.message }))
+          }
+        })
+        .catch((error) => {
+          error.response && error.response.headers.authorization && dispatch(updateUser({
+            token: error.response.headers.authorization
+          }))
+          if (error.response && [400, 422, 403].includes(error.response.status)) {
+            dispatch(editInvestmentError(error.response.data.error ? error.response.data.error : error.response.data.message));
+            return setTimeout(() => dispatch(clearError()), 2000)
+          }
+          if (error.response && [404].includes(error.response.status)) {
+            dispatch(showAlert({ type: 'error', message: error.response.data.message }))
+            dispatch(editInvestmentError(error.response.data.error ? error.response.data.error : error.response.data.message));
+            return setTimeout(() => dispatch(clearError()), 2000)
+          }
+          if (error.response && [401].includes(error.response.status)) {
+            dispatch(showAlert({ type: 'error', message: 'Your session has expired' }))
+            return setTimeout(() => dispatch(logout()), 2000)
+          }
+          if (error.response && error.response.status >= 500) {
+            dispatch(editInvestmentError('Oops! We did something wrong.'));
+            return setTimeout(() => dispatch(clearError()), 2000)
+          }
+          dispatch(editInvestmentError('Oops! We did something wrong.'));
+          return setTimeout(() => dispatch(clearError()), 2000)
+        })
+    })
+  }
+}
+
 //topup single investment
 const topUpInvestmentRequest = () => {
   return {

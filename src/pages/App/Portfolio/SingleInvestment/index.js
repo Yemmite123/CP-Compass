@@ -6,6 +6,8 @@ import { getActionLoadingState } from "#/store/selectors";
 import actionTypes from "#/store/portfolio/actionTypes";
 import {
   fetchSingleInvestment,
+  editInvestment,
+  editInvestmentAmount,
   topUpInvestment,
 } from "#/store/portfolio/actions";
 import { disableAutocharge } from "#/store/investment/actions";
@@ -29,6 +31,7 @@ import SelectBox from '#/components/SelectBox';
 import DateBox from '#/components/DateBox';
 import LiquidateInvestment from "#/pages/App/Portfolio/LiquidateInvestment";
 import {
+  investmentFrequency,
   formatCurrency,
   validateFields,
   fundingSource,
@@ -37,6 +40,7 @@ import {
   formatStringToCurrency,
   openOffCanvas,
   closeOffCanvas,
+  verifyFrequencyPeriod,
 } from "#/utils";
 import "./style.scss";
 
@@ -44,6 +48,15 @@ class SingleInvestment extends React.Component {
   state = {
     amount: "",
     textInputAmount: "",
+    title: '',
+    inputTitle: '',
+    frequency: '',
+    inputFrequency: '',
+    frequencyAmount: '',
+    inputFrequencyAmount: '',
+    targetDate: '',
+    inputTargetDate: '',
+    enterAmountModal: false,
     showAmountModal: false,
     showFundingSourceModal: false,
     showCardsModal: false,
@@ -54,6 +67,7 @@ class SingleInvestment extends React.Component {
     selectedMethod: "",
     selectedMethodError: "",
     errors: null,
+    entryError: null,
     cardId: null,
     selectedTransaction: null,
     showPinModal: false,
@@ -76,21 +90,37 @@ class SingleInvestment extends React.Component {
 
   handleChange = (event) => {
     const { name, value } = event.target;
-    if (name === "amount") {
+    if (name === "amount" || name == "frequencyAmount") {
       if (isNaN(formatCurrencyToString(value))) {
         return;
       }
 
       this.setState({ errors: null });
       return this.setState({ [name]: formatCurrencyToString(value) }, () => {
-        this.setState({ textInputAmount: formatCurrencyToString(value) });
+        if (name == "amount")
+          this.setState({ textInputAmount: formatCurrencyToString(value) });
+        else {
+          this.setState({ inputFrequencyAmount: formatCurrencyToString(value) })
+        }
+
       });
     }
+
+    if (name === "title") this.setState({ inputTitle: value });
+    if (name === "frequency") this.setState({ inputFrequency: value })
+    if (name === "targetDate") this.setState({ inputTargetDate: value })
+
     this.setState({ [name]: value });
   };
 
   resetFields = () => {
     this.setState({ textInputAmount: "" });
+    this.setState({ inputTitle: "" });
+    this.setState({ inputTargetDate: "" });
+    this.setState({ inputFrequency: "" });
+    this.setState({ inputFrequencyAmount: "" });
+
+    this.setState({ inputFrequencyAmount: "" });
     this.setState({ errors: null })
     this.setState({ selectedMethod: null });
   };
@@ -106,6 +136,76 @@ class SingleInvestment extends React.Component {
   toggleOffCanvas = () => {
     openOffCanvas("single-investment-offcanvas");
   };
+
+  toggleAmountModal = () => {
+    this.setState({ textInputAmount: "" });
+    this.setState({ enterAmountModal: !this.state.enterAmountModal })
+  }
+
+  openEditOffCanvas = () => {
+    openOffCanvas("edit-investment-offcanvas");
+  }
+
+  handleEditAmount = () => {
+    if (!Math.floor(Number(this.state.textInputAmount))) {
+      return this.setState({ errors: { amount: 'enter a valid amount' } })
+    }
+
+    this.props.editInvestmentAmount({ paymentAmount: Number(this.state.textInputAmount) }, "custom", this.props.investment.id);
+    this.toggleAmountModal();
+  }
+
+  handleEditPlan = (e) => {
+    e.preventDefault();
+    this.setState({ errors: null, entryError: "" });
+
+    if (this.state.frequencyAmount)
+      if (!Math.floor(Number(this.state.frequencyAmount)) || Number(this.state.frequencyAmount) < 0) {
+        return this.setState({ errors: { finalAmount: 'enter a valid amount' } })
+      }
+
+    const data = this.state;
+    const required = ["title", "targetDate", "frequency", "frequencyAmount"];
+    const errors = validateFields(data, required)
+
+    if (Object.keys(errors).length > 0) {
+      return this.setState({ errors });
+    }
+
+    console.log(this.props.investment.targetAmount);
+
+    const info = {
+      startDate: moment(this.props.investment.startDate).format('YYYY-MM-DD'),
+      endDate: moment(this.state.targetDate).format('YYYY-MM-DD'),
+      frequency: this.state.frequency.toLowerCase(),
+      targetAmount: this.props.investment.targetAmount,
+    }
+
+    const entryError = verifyFrequencyPeriod(info)
+    if (entryError) {
+      return this.setState({ entryError });
+    }
+
+    const { title, targetDate, frequency, frequencyAmount } = this.state
+    const payload = {
+      title,
+      targetAmount: this.props.investment.targetAmount,
+      currency: "NGN",
+      startDate: moment(this.props.investment.startDate).format('YYYY-MM-DD'),
+      endDate: moment(targetDate).format('YYYY-MM-DD'),
+      frequency,
+      amount: formatCurrencyToString(frequencyAmount)
+    };
+
+    const _data = { type: 'custom', payload, id: this.props.investment.id }
+    console.log(data);
+    this.props.editInvestment(payload, _data.type, _data.id).then(date => {
+      this.resetFields();
+      closeOffCanvas("edit-investment-offcanvas");
+    })
+
+  }
+
 
   handleTopUp = () => {
     const { textInputAmount } = this.state;
@@ -179,8 +279,6 @@ class SingleInvestment extends React.Component {
       autoCharge: autoCharge && autoCharge,
     };
 
-
-
     this.props.topUpInvestment(payload, params.investmentId).then((data) => {
       this.state.showAutomateModal && this.toggleAutomateModal();
       this.setState({
@@ -208,6 +306,13 @@ class SingleInvestment extends React.Component {
       this.props.fetchSingleInvestment(params.investmentId);
     });
   };
+
+  handleChangeDate = (item, date) => {
+
+    this.setState({ inputTargetDate: date })
+    this.setState({ [item]: date });
+  }
+
 
   handleTransactionVerification = (e) => {
     e.preventDefault();
@@ -252,6 +357,7 @@ class SingleInvestment extends React.Component {
   };
 
   toggleAmountModal = () => {
+    this.setState({ textInputAmount: "" });
     this.setState((prevState) => ({
       showAmountModal: !prevState.showAmountModal,
     }));
@@ -287,6 +393,12 @@ class SingleInvestment extends React.Component {
       confirmPinError,
     } = this.props;
     const {
+      inputTitle,
+      entryError,
+      enterAmountModal,
+      inputFrequency,
+      inputFrequencyAmount,
+      inputTargetDate,
       showAmountModal,
       showFundingSourceModal,
       showCardsModal,
@@ -306,6 +418,47 @@ class SingleInvestment extends React.Component {
     return (
       <>
         <div className="single-portfolio-page">
+          {
+            showAmountModal &&
+            <Modal onClose={this.toggleAmountModal}>
+              <div className="text-right pb-3">
+                <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleAmountModal} className="cursor-pointer" />
+              </div>
+              <div className="px-2">
+                <div className="d-flex justify-content-center">
+                  <img src={require('#/assets/icons/naira-sign.svg')} alt="bank" className="pb-3" />
+                </div>
+                <div className="text-center">
+                  <div className='mb-3'>
+                    <h5 className="text-blue font-bolder">Edit your payment amount</h5>
+                  </div>
+                  <div className="px-1 mt-4">
+                    <Textbox
+                      onChange={this.handleChange}
+                      type="text"
+                      label="Amount"
+                      placeholder="Amount"
+                      name="amount"
+                      value={formatStringToCurrency(textInputAmount)}
+                      error={errors ? errors.amount : (errorObject && errorObject['amount'])}
+                    />
+                  </div>
+                  <div className="mt-4">
+                    {/* {walletDetails &&
+                      <p className="text-grey mb-1">Available balance <span className="text-blue">
+                        &#x20A6; {walletDetails && walletDetails.wallet.NGN ? walletDetails.wallet.NGN : 0}
+                      </span>
+                      </p>} */}
+                    <div className="mt-2">
+                      <button className="btn btn-primary btn-block py-3 mt-3" onClick={this.handleEditAmount}>
+                        Proceed
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Modal>
+          }
           {showPinModal && (
             <Modal
               classes="transaction-modal"
@@ -639,7 +792,7 @@ class SingleInvestment extends React.Component {
                           ["active", "booked"].includes(
                             investment?.order_status
                           )
-                            ? null
+                            ? this.openEditOffCanvas
                             : null
                         }
                         width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -728,7 +881,7 @@ class SingleInvestment extends React.Component {
                     <svg className="mr-1" width="9" height="7" viewBox="0 0 9 7" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M0.51245 4.27722C0.547273 4.28227 0.582522 4.28461 0.6178 4.28422L6.63171 4.28422L6.50058 4.33822C6.37216 4.39239 6.25535 4.46617 6.15539 4.55622L4.47428 6.05622C4.36665 6.14781 4.29874 6.27038 4.28255 6.4023C4.26635 6.53422 4.30289 6.667 4.38574 6.77722C4.43707 6.83983 4.50282 6.89191 4.57857 6.92998C4.65432 6.96805 4.73832 6.99123 4.82494 6.99795C4.91155 7.00468 4.99877 6.9948 5.08076 6.96897C5.16274 6.94314 5.23758 6.90197 5.30026 6.84822L8.34644 4.13122C8.40317 4.08069 8.44817 4.02068 8.47888 3.95462C8.50959 3.88855 8.52539 3.81774 8.52539 3.74622C8.52539 3.6747 8.50959 3.60388 8.47888 3.53782C8.44817 3.47176 8.40317 3.41175 8.34644 3.36122L5.2969 0.640218C5.2355 0.585533 5.16173 0.543172 5.08051 0.515962C4.99929 0.488751 4.9125 0.477319 4.82593 0.48243C4.73937 0.487542 4.65502 0.509079 4.57853 0.545602C4.50204 0.582124 4.43517 0.632791 4.38238 0.694219C4.29953 0.804433 4.26298 0.937217 4.27918 1.06913C4.29538 1.20105 4.36329 1.32363 4.47091 1.41522L6.15203 2.92322C6.24136 3.00363 6.34421 3.07111 6.45687 3.12322L6.63955 3.19622L0.651422 3.19622C0.500672 3.1912 0.352897 3.23454 0.234879 3.31838C0.116861 3.40221 0.0364132 3.52101 0.00811577 3.65322C-0.00468922 3.72374 -0.00180149 3.79582 0.016614 3.86534C0.0350294 3.93487 0.0686111 4.00048 0.115443 4.05842C0.162275 4.11636 0.221439 4.16551 0.289557 4.20305C0.357677 4.24059 0.433415 4.26579 0.51245 4.27722Z" fill="#3A4080" />
                     </svg>
-                    <span className="cursor-pointer ms-1 text-blue">Edit Amount</span>
+                    <span className="cursor-pointer ms-1 text-blue" onClick={this.toggleAmountModal}>Edit Amount</span>
                   </div>
                 </div>
               </div>
@@ -941,11 +1094,11 @@ class SingleInvestment extends React.Component {
                   label="New title"
                   placeholder="New title"
                   name="title"
-                  value={formatStringToCurrency(textInputAmount)}
+                  value={inputTitle}
                   error={
                     errors
-                      ? errors.amount
-                      : errorObject && errorObject["amount"]
+                      ? errors.title
+                      : errorObject && errorObject["title"]
                   }
                 />
               </div>
@@ -957,36 +1110,58 @@ class SingleInvestment extends React.Component {
                   label="Frequency"
                   placeholder="Set frequency"
                   name="frequency"
-                  options={[{ name: "", value: "" }]}
+                  options={investmentFrequency}
                   // value={inputFrequency}
                   optionName="name"
-                // error={errors ? errors.frequency : (errorObject && errorObject['frequency'])}
+                  error={errors ? errors.frequency : (errorObject && errorObject['frequency'])}
+                />
+              </div>
+              <div className="mt-3">
+                <p>How much do you want at each frequency?</p>
+                <Textbox
+                  onChange={this.handleChange}
+                  type="text"
+                  label="Frequency Amount"
+                  placeholder="Frequency Amount"
+                  name="frequencyAmount"
+                  value={formatStringToCurrency(inputFrequencyAmount)}
+                  error={
+                    errors
+                      ? errors.frequencyAmount
+                      : errorObject && errorObject["frequencyAmount"]
+                  }
                 />
               </div>
               <div className="mt-3">
                 <p>Edit target date?</p>
                 <DateBox
-                  // onChange={date => this.handleChangeDate('targetDate', date)}
+                  onChange={date => this.handleChangeDate('targetDate', date)}
                   label="Target Date"
                   placeholder="Set target date"
                   name="targetDate"
-                  value={new Date()}
-                  // error={errors ? errors.targetDate : (errorObject && errorObject['targetDate'])}
+                  value={inputTargetDate}
+                  error={errors ? errors.targetDate : (errorObject && errorObject['targetDate'])}
                   min={new Date()}
                 />
               </div>
-              <div className="mt-4 pb-3">
-                {/* {entryError && <p className="text-error mt-2 mr-3">{entryError}</p>} */}
-                <button className="w-100 py-3 btn btn-primary btn-md-block" onClick={this.handleComfirmation}>
-                  Save changes
-                  {/* {calcLoading &&
+              <div className="mt-5 d-flex flex-column flex-grow-1">
+                <div className="d-flex pb-2 flex-column flex-grow-1 justify-content-between">
+
+                  <div className="mt-4 pb-3">
+                    {entryError && <p className="text-error mt-2 mr-3">{entryError}</p>}
+
+                    <button className="w-100 py-3 btn btn-primary btn-md-block" onClick={this.handleEditPlan}>
+                      Save changes
+                      {/* {calcLoading &&
                     <div className="spinner-border text-white spinner-border-sm ml-2"></div>
                   } */}
-                </button>
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </OffCanvas>
-        </div>
+        </div >
         <LiquidateInvestment />
       </>
     );
@@ -1028,6 +1203,8 @@ const mapDispatchToProps = (dispatch) => {
     fetchSingleInvestment: (id) => dispatch(fetchSingleInvestment(id)),
     getCards: () => dispatch(getCards()),
     topUpInvestment: (payload, id) => dispatch(topUpInvestment(payload, id)),
+    editInvestment: (payload, type, id) => dispatch(editInvestment(payload, type, id)),
+    editInvestmentAmount: (payload, type, id) => dispatch(editInvestmentAmount(payload, type, id)),
     disableAutocharge: (id) => dispatch(disableAutocharge(id)),
     confirmPin: (payload) => dispatch(confirmPin(payload)),
   };
