@@ -162,7 +162,7 @@ class Insights extends React.Component {
                   <div className="d-flex align-items-center">
                     <span className={`bar-${item.name}`} /> <h3 className="text-left text-black mb-4 mt-5">{item.name}</h3>
                   </div>
-                  <div className={`${item.name} cursor-pointer`} style={{ color: "#AD3336" }} onClick={() => this.handleNavigateToCategory(item.category?.name)}>All {item.name} articles <Arrow /> </div>
+                  <div className={`${item.name} cursor-pointer`} style={{ color: "#AD3336" }} onClick={() => { this.handleNavigateToCategory(item?.name) }}>All {item.name} articles <Arrow /> </div>
                 </div>
               }
               <div className="row">
