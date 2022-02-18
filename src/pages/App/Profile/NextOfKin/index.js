@@ -26,10 +26,10 @@ class NextOfKin extends React.Component {
     firstName: "",
     lastName: "",
     email: "",
-    gender: "male",
+    gender: "",
     phone: "",
-    dateOfBirth: new Date(),
-    relationship: "brother",
+    dateOfBirth: null,
+    relationship: "",
     motherMaidenName: "",
     contactAddress: "",
     nationality: "",
@@ -50,13 +50,13 @@ class NextOfKin extends React.Component {
         lastName: userInfo && userInfo.lastName ? userInfo.lastName : "",
         email: userInfo && userInfo.email ? userInfo.email : "",
         phone: userInfo && userInfo.phone ? userInfo.phone : "",
-        gender: userInfo && userInfo.gender ? userInfo.gender : "male",
+        gender: userInfo && userInfo.gender ? userInfo.gender : "",
         dateOfBirth:
           userInfo && userInfo.dateOfBirth
             ? new Date(userInfo.dateOfBirth.split("T")[0])
             : "",
         relationship:
-          userInfo && userInfo.relationship ? userInfo.relationship : "brother",
+          userInfo && userInfo.relationship ? userInfo.relationship : "",
         motherMaidenName:
           userInfo && userInfo.motherMaidenName
             ? userInfo.motherMaidenName
@@ -266,8 +266,8 @@ class NextOfKin extends React.Component {
               boxClasses="active"
               name="phone"
               value={phone}
-              label="Phone number"
-              placeholder="Phone number"
+              label="Phone Number"
+              placeholder="Phone Number"
               options={countryCodes}
               onChangeSelect={this.handleChange}
               selectName="countryCode"

@@ -310,8 +310,8 @@ class BioData extends React.Component {
               boxClasses="active"
               name="phone"
               value={phone}
-              label="Phone number"
-              placeholder="Phone number"
+              label="Phone Number"
+              placeholder="Phone Number"
               options={countryCodes}
               onChangeSelect={this.handleChange}
               selectName="countryCode"

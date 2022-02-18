@@ -26,7 +26,7 @@ class EmploymentDetails extends React.Component {
   state = {
     qualification: "",
     status: "",
-    appointmentDate: new Date(),
+    appointmentDate: "",
     occupation: "",
     companyName: "",
     companyAddress: "",
@@ -292,7 +292,7 @@ class EmploymentDetails extends React.Component {
               />}
             {status.toLowerCase() === "employed" && <PhoneTextBox
               boxClasses="active"
-              placeholder="Phone number"
+              placeholder="Phone Number"
               options={countryCodes}
               onChangeSelect={this.handleChange}
               selectName="countryCode"
