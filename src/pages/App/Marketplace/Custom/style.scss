@@ -6,7 +6,7 @@
     cursor: pointer;
 
     &.selected{
-      border-color: #3A4080;
+      border: 2px solid var(--blue);
       color: #3A4080!important;
     }
   }

@@ -59,6 +59,7 @@ class Custom extends React.Component {
     pin: {},
     pinError: null,
     selectedMethod: '',
+    tempSelectedMethod: '',
     errors: null,
     selectedMethodError: null,
     entryError: null,
@@ -133,9 +134,9 @@ class Custom extends React.Component {
     this.setState({ inputAmount: "" });
     this.setState({ inputTitle: "" });
     this.setState({ inputTarget: "" });
-    this.setState({ inputTargetDate: new Date() });
+    this.setState({ inputTargetDate: "" });
     this.setState({ inputFrequency: "" });
-    this.setState({ inputStartDate: new Date() });
+    this.setState({ inputStartDate: "" });
     this.setState({ inputAddEndDate: false });
     this.setState({ inputFrequencyAmount: "" });
   }
@@ -183,7 +184,7 @@ class Custom extends React.Component {
     }
 
     const data = this.state;
-    const required = this.state.addEndDate
+    const required = this.state.inputAddEndDate
       ? ['title', 'target', 'targetDate', 'frequency', 'startDate']
       : ['title', 'target', 'frequency', 'startDate', 'frequencyAmount'];
     const errors = validateFields(data, required)
@@ -293,9 +294,13 @@ class Custom extends React.Component {
     }
     if (selectedMethod === 'wallet') {
       this.setState({ type: 'wallet' });
+      this.setState({ selectedMethod: "" })
       this.toggleFundingModal();
       return this.toggleAutomateModal();
     }
+
+    this.setState({ selectedMethod: "" })
+
     this.toggleFundingModal();
     return this.toggleAllCardsModal()
   }
@@ -340,6 +345,7 @@ class Custom extends React.Component {
         this.setState({ withpay: true });
         type === 'wallet' && this.closeAutomateSuccess();
         type === 'card' && selectedCard && this.closeAutomateSuccess();
+        this.setState({ selectedCard: "" });
       });
   }
 
@@ -401,9 +407,9 @@ class Custom extends React.Component {
     return (
       <div className="predefined-page">
         {confirmationModal &&
-          <Modal onClose={this.toggleConfirmationModal}>
+          <Modal onClose={() => { this.resetFields(); this.toggleConfirmationModal() }}>
             <div className="text-right pb-3">
-              <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleConfirmationModal} />
+              <img src={require('#/assets/icons/close.svg')} alt="close" className="cursor-pointer" onClick={() => { this.resetFields(); this.toggleConfirmationModal() }} />
             </div>
             <div className="px-3">
               <div className="d-flex justify-content-center">
@@ -432,7 +438,7 @@ class Custom extends React.Component {
         {showTransactionModal &&
           <Modal onClose={this.toggleTransactionPinModal}>
             <div className="text-right pb-3">
-              <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleTransactionPinModal} />
+              <img src={require('#/assets/icons/close.svg')} className="cursor-pointer" alt="close" onClick={this.toggleTransactionPinModal} />
             </div>
             <div className="px-5">
               <div className="d-flex justify-content-center">
@@ -464,7 +470,7 @@ class Custom extends React.Component {
           </Modal>
         }
         {setupSuccessModal &&
-          <Modal onClose={this.handleSuccess}>
+          <Modal onClose={this.toggleSetupSuccessModal}>
             <div className="text-right pb-3">
               <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleSetupSuccessModal} />
             </div>
@@ -488,7 +494,7 @@ class Custom extends React.Component {
           </Modal>
         }
         {addMoneyModal &&
-          <Modal>
+          <Modal onClose={this.toggleAddMoneyModal}>
             <div className="text-right pb-3">
               <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleAddMoneyModal} className="cursor-pointer" />
             </div>
@@ -518,9 +524,9 @@ class Custom extends React.Component {
         }
         {
           enterAmountModal &&
-          <Modal>
+          <Modal onClose={this.toggleAmountModal}>
             <div className="text-right pb-3">
-              <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleAddMoneyModal} className="cursor-pointer" />
+              <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleAmountModal} className="cursor-pointer" />
             </div>
             <div className="px-2">
               <div className="d-flex justify-content-center">
@@ -548,7 +554,7 @@ class Custom extends React.Component {
                     </span>
                     </p>}
                   <div className="mt-2">
-                    <button button className="btn btn-primary btn-block py-3 mt-3" onClick={this.handlePickFundingSource}>
+                    <button className="btn btn-primary btn-block py-3 mt-3" onClick={this.handlePickFundingSource}>
                       Proceed
                     </button>
                   </div>
@@ -558,9 +564,9 @@ class Custom extends React.Component {
           </Modal>
         }
         {fundingSourceModal &&
-          <Modal>
+          <Modal onClose={this.toggleFundingModal}>
             <div className="text-right pb-3">
-              <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleAddMoneyModal} className="cursor-pointer" />
+              <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleFundingModal} className="cursor-pointer" />
             </div>
             <div className="px-3">
               <div className="d-flex justify-content-center">
@@ -573,11 +579,12 @@ class Custom extends React.Component {
                 </div>
                 <div className="mt-4">
                   {fundingSource.map(method => (
-                    <div id={method.value} className={`d-flex p-3 mb-2 ${selectedMethod === method.value ? "selected" : ""} payment-method`} onClick={this.handleSelectMethod}>
-                      <div className="d-flex mr-3">
+                    <div id={method.value} className={`position-relative d-flex p-3 mb-2 ${selectedMethod === method.value ? "selected" : ""} payment-method`} onClick={this.handleSelectMethod}>
+                      {selectedMethod === method.value && <img className="position-absolute" width={16} src={require("#/assets/icons/success.svg")} style={{ zIndex: 1, right: "0.35rem", top: "0.35rem" }} />}
+                      <div className="d-flex mr-3" onClick={this.handleSelectMethod}>
                         <img src={require(`#/assets/icons/${method.imgUrl}.svg`)} alt="icon" />
                       </div>
-                      <div>
+                      <div onClick={this.handleSelectMethod}>
                         <h6 className="text-left mb-0 font-bolder">{method.label}</h6>
                         {method.value === "card" ?
                           cards &&
@@ -601,7 +608,7 @@ class Custom extends React.Component {
           </Modal>
         }
         {allCardsModal &&
-          <Modal>
+          <Modal onClose={this.toggleAllCardsModal}>
             <div className="text-right pb-3">
               <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleAllCardsModal} className="cursor-pointer" />
             </div>
@@ -688,8 +695,8 @@ class Custom extends React.Component {
               <Textbox
                 onChange={this.handleChange}
                 type="text"
-                label="Plan title"
-                placeholder="Plan title"
+                label="Plan Title"
+                placeholder="Plan Title"
                 name="title"
                 value={inputTitle}
                 error={errors ? errors.title : (errorObject && errorObject['title'])}
@@ -747,7 +754,7 @@ class Custom extends React.Component {
               />
             </div>
             }
-            {!addEndDate && <div className="mt-3">
+            {!inputAddEndDate && <div className="mt-3">
               <p>How much do you want to pay on every frequency?</p>
               <Textbox
                 onChange={this.handleChange}

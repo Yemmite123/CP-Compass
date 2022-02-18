@@ -82,18 +82,17 @@ class Collections extends React.Component {
       }
 
       this.setState({ errors: null });
-      if (name === "target") this.setState({ inputTarget: value });
-      if (name === "amount") this.setState({ inputAmount: value });
-      if (name === "finalAmount") this.setState({ inputFinalAmount: value });
+      if (name === "target") this.setState({ inputTarget: formatCurrencyToString(value) });
+      if (name === "amount") this.setState({ inputAmount: formatCurrencyToString(value) });
+      // if (name === "finalAmount") this.setState({ inputFinalAmount: formatCurrencyToString(value) });
 
-      return this.setState({ [name]: formatCurrencyToString(value) }, () => {
-
-        if (isNaN(this.state[name])) {
-          return this.setState({ errors: { [name]: "enter a valid number" } });
-        }
-      });
+      return this.setState({ [name]: formatCurrencyToString(value) });
     }
-    if (name === "finalAmount") this.setState({ inputTitle: value });
+
+    if (name === "title") this.setState({ inputTitle: value });
+    if (name === "frequency") this.setState({ inputFrequency: value });
+
+
     this.setState({ [name]: value });
   };
 
@@ -101,6 +100,9 @@ class Collections extends React.Component {
     this.setState({ inputAmount: "" });
     this.setState({ inputTitle: "" });
     this.setState({ inputTarget: "" });
+    this.setState({ inputFrequency: "" });
+    // this.setState({ inputFinalAmount: "" });
+
     // this.setState({ selectedMethod: null });
   };
 
@@ -123,17 +125,17 @@ class Collections extends React.Component {
     e.preventDefault();
     this.setState({ errors: null, entryError: null });
 
-    if (!Math.floor(Number(this.state.target)) || Number(this.state.target) < 0) {
-      return this.setState({ errors: { target: 'enter a valid amount' } })
-    }
+    console.log("validatiao");
 
-    if (!Math.floor(Number(this.state.amount)) || Number(this.state.amount) < 0) {
-      return this.setState({ errors: { amout: 'enter a valid amount' } })
-    }
+    if (this.state.target)
+      if (!Math.floor(Number(this.state.target)) || Number(this.state.target) < 0) {
+        return this.setState({ errors: { target: 'enter a valid amount' } })
+      }
 
-    if (!Math.floor(Number(this.state.finalAmount)) || Number(this.state.finalAmount) < 0) {
-      return this.setState({ errors: { finalAmount: 'enter a valid amount' } })
-    }
+    if (this.state.amount)
+      if (!Math.floor(Number(this.state.amount)) || Number(this.state.amount) < 0) {
+        return this.setState({ errors: { amout: 'enter a valid amount' } })
+      }
 
 
     if (!this.props.isApproved) {
@@ -147,6 +149,10 @@ class Collections extends React.Component {
     const data = this.state;
     const required = ["title", "target", "frequency", "startDate", "amount"];
     const errors = validateFields(data, required);
+
+    console.log(data);
+    console.log(errors);
+
 
     if (Object.keys(errors).length > 0) {
       return this.setState({ errors });
@@ -238,7 +244,7 @@ class Collections extends React.Component {
   // handles for when a funcding source is selected
   handleSelectedFundingSource = () => {
     const { selectedMethod } = this.state;
-
+    console.log(selectedMethod)
     const required = ["selectedMethod"];
     const errors = validateFields({ selectedMethod }, required);
     if (Object.keys(errors).length > 0) {
@@ -246,9 +252,12 @@ class Collections extends React.Component {
     }
     if (selectedMethod === "wallet") {
       this.setState({ type: "wallet" });
+      this.setState({ selectedMethod: "" })
       this.toggleFundingModal();
       return this.toggleAutomateModal();
     }
+
+    this.setState({ selectedMethod: "" })
     this.toggleFundingModal();
     return this.toggleAllCardsModal();
   };
@@ -392,12 +401,13 @@ class Collections extends React.Component {
     return (
       <div className="collections-page">
         {confirmationModal && (
-          <Modal onClose={this.toggleConfirmationModal}>
+          <Modal onClose={() => { this.resetFields(); this.toggleConfirmationModal() }}>
             <div className="text-right pb-3">
               <img
                 src={require("#/assets/icons/close.svg")}
+                className="cursor-pointer"
                 alt="close"
-                onClick={this.toggleConfirmationModal}
+                onClick={() => { this.resetFields(); this.toggleConfirmationModal() }}
               />
             </div>
             <div className="px-3">
@@ -446,6 +456,8 @@ class Collections extends React.Component {
             <div className="text-right pb-3">
               <img
                 src={require("#/assets/icons/close.svg")}
+                className="cursor-pointer"
+
                 alt="close"
                 onClick={this.toggleTransactionPinModal}
               />
@@ -500,6 +512,8 @@ class Collections extends React.Component {
             <div className="text-right pb-3">
               <img
                 src={require("#/assets/icons/close.svg")}
+                className="cursor-pointer"
+
                 alt="close"
                 onClick={this.toggleSetupSuccessModal}
               />
@@ -541,7 +555,7 @@ class Collections extends React.Component {
           </Modal>
         )}
         {addMoneyModal && (
-          <Modal>
+          <Modal onClose={this.toggleAddMoneyModal}>
             <div className="text-right pb-3">
               <img
                 src={require("#/assets/icons/close.svg")}
@@ -593,12 +607,12 @@ class Collections extends React.Component {
           </Modal>
         )}
         {enterAmountModal && (
-          <Modal>
+          <Modal onClose={this.toggleAmountModal}>
             <div className="text-right pb-3">
               <img
                 src={require("#/assets/icons/close.svg")}
                 alt="close"
-                onClick={this.toggleAddMoneyModal}
+                onClick={this.toggleAmountModal}
                 className="cursor-pointer"
               />
             </div>
@@ -658,12 +672,12 @@ class Collections extends React.Component {
           </Modal>
         )}
         {fundingSourceModal && (
-          <Modal>
+          <Modal onClose={this.toggleFundingModal}>
             <div className="text-right pb-3">
               <img
                 src={require("#/assets/icons/close.svg")}
                 alt="close"
-                onClick={this.toggleAddMoneyModal}
+                onClick={this.toggleFundingModal}
                 className="cursor-pointer"
               />
             </div>
@@ -689,10 +703,11 @@ class Collections extends React.Component {
                   {fundingSource.map((method) => (
                     <div
                       id={method.value}
-                      className={`d-flex p-3 mb-2 ${selectedMethod === method.value ? "selected" : ""
+                      className={`position-relative d-flex p-3 mb-2 ${selectedMethod === method.value ? "selected" : ""
                         } payment-method`}
                       onClick={this.handleSelectMethod}
                     >
+                      {selectedMethod === method.value && <img className="position-absolute" width={16} src={require("#/assets/icons/success.svg")} style={{ zIndex: 1, right: "0.35rem", top: "0.35rem" }} />}
                       <div className="d-flex mr-3">
                         <img
                           src={require(`#/assets/icons/${method.imgUrl}.svg`)}
@@ -750,7 +765,7 @@ class Collections extends React.Component {
           </Modal>
         )}
         {allCardsModal && (
-          <Modal>
+          <Modal onClose={this.toggleAllCardsModal}>
             <div className="text-right pb-3">
               <img
                 src={require("#/assets/icons/close.svg")}
@@ -895,8 +910,8 @@ class Collections extends React.Component {
               <Textbox
                 onChange={this.handleChange}
                 type="text"
-                label="Plan title"
-                placeholder="Plan title"
+                label="Plan Title"
+                placeholder="Plan Title"
                 name="title"
                 value={inputTitle}
                 error={
@@ -946,7 +961,7 @@ class Collections extends React.Component {
                 value={formatStringToCurrency(inputAmount)}
                 error={
                   errors
-                    ? errors.frequencyAmount
+                    ? errors.amount
                     : errorObject && errorObject["amount"]
                 }
               />

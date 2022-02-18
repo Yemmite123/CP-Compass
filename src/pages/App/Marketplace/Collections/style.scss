@@ -23,7 +23,8 @@
     cursor: pointer;
 
     &.selected{
-      border: 1px solid var(--blue);
+      border: 2px solid var(--blue);
+      color: #3A4080!important;
     }
   }
 }

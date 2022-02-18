@@ -14,4 +14,11 @@
       } 
     }
   }
+
+  .payment-method{
+  &.selected{
+    border: 2px solid var(--blue);
+    color: #3A4080!important;
+  }
+}
 }
