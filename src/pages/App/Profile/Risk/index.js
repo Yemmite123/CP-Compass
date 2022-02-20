@@ -204,7 +204,7 @@ class Risk extends React.Component {
           </Modal>
         }
         <div className="row">
-          <div className="col-lg-4">
+          <div className="col-lg-4 mt-4">
             <div div className="guide-item border rounded-lg p-3 d-flex flex-column justify-content-between">
               <img src={segment ? segment.icon : require('#/assets/icons/blank-avatar.svg')} className="img-fluid user-img " alt="user-img" />
               <span className="h3 text-medium mt-3 text-blue">Trybe</span>
@@ -213,10 +213,9 @@ class Risk extends React.Component {
             </div>
           </div>
 
-          <div className="col-lg-4">
+          <div className="col-lg-4 mt-4">
             <div div className="guide-item border rounded-lg p-3 d-flex flex-column justify-content-between">
               <img src={risk ? risk.icon : require('#/assets/icons/blank-avatar.svg')} className="img-fluid user-img" alt="user-img" />
-
               <span className="h3 text-medium mt-3 text-blue">Risk Assessment</span>
               <p className="font-light">Your risk assessment answers would help us recommend investments which suit you.</p>
               <p className="text-blue text-small font-light cursor-pointer join" onClick={this.joinRisk}>Set your risk profile here {`>`}</p>

@@ -172,7 +172,7 @@ class LiquidateInvestment extends React.Component {
         {confirmationModal &&
           <Modal onClose={this.toggleConfirmationModal}>
             <div className="text-right pb-3">
-              <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleConfirmationModal} />
+              <img src={require('#/assets/icons/close.svg')} className="cursor-pointer" alt="close" onClick={this.toggleConfirmationModal} />
             </div>
             <div className="text-center confirmation-modal">
               <div className="px-5 mb-4">

@@ -42,6 +42,10 @@
     justify-content: center;
     flex-direction: column;
     
+    .question-section{
+      overflow-y: scroll;
+    }
+
     .progress {
       border-radius: 0 !important;
       position: absolute;

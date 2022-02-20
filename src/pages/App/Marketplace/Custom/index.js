@@ -198,9 +198,13 @@ class Custom extends React.Component {
       frequency: this.state.frequency.toLowerCase(),
       targetAmount: formatCurrencyToString(this.state.target),
     }
-    const entryError = verifyFrequencyPeriod(info)
-    if (entryError) {
-      return this.setState({ entryError });
+    
+    if (this.state.inputAddEndDate) {
+      const entryError = verifyFrequencyPeriod(info)
+      if (entryError) {
+        return this.setState({ entryError });
+      }
+
     }
 
     const { location: { state } } = this.props.history
@@ -472,7 +476,7 @@ class Custom extends React.Component {
         {setupSuccessModal &&
           <Modal onClose={this.toggleSetupSuccessModal}>
             <div className="text-right pb-3">
-              <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleSetupSuccessModal} />
+              <img src={require('#/assets/icons/close.svg')} style={{ cursor: "pointer" }} alt="close" onClick={this.toggleSetupSuccessModal} />
             </div>
             <div className="px-5">
               <div className="d-flex justify-content-center">

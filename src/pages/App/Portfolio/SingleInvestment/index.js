@@ -194,10 +194,10 @@ class SingleInvestment extends React.Component {
       startDate: moment(this.props.investment.startDate).format('YYYY-MM-DD'),
       endDate: moment(targetDate).format('YYYY-MM-DD'),
       frequency,
-      amount: formatCurrencyToString(frequencyAmount)
+      amount: Number(formatCurrencyToString(frequencyAmount))
     };
 
-    const _data = { type: 'custom', payload, id: this.props.investment.id }
+    const _data = { type: this.props.investment.service.type, payload, id: this.props.investment.id }
     console.log(data);
     this.props.editInvestment(payload, _data.type, _data.id).then(date => {
       this.resetFields();
@@ -468,6 +468,7 @@ class SingleInvestment extends React.Component {
                 <img
                   style={{ cursor: "pointer" }}
                   src={require("#/assets/icons/close.svg")}
+                  className="cursor-pointer"
                   alt="close"
                   onClick={this.toggleTransactionPinModal}
                 />
