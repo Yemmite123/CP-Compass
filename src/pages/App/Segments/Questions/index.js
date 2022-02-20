@@ -503,7 +503,7 @@ class Questions extends React.Component {
         </div>
         {
           finalModal &&
-          <Modal onClose={null} classes="final-modal">
+                <Modal onClose={this.handleNavigateToRecommendations} classes="final-modal">
             <div className="px-4 mt">
               <div className="d-flex justify-content-center">
                 <img src={segmentIcon} style={{ width: "100px", borderRadius: "50%", height: "100px" }} />
