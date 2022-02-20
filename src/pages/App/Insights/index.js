@@ -146,23 +146,23 @@ class Insights extends React.Component {
               </div>)
           }
         </div>
-        {posts?.trending.length > 0 &&
+        {/* {posts?.trending.length > 0 &&
           <div className="text-center mt-4">
             <button className="btn btn-stroke-black btn-sm rounded text-center" onClick={this.navigateToTrending}>
               Show more
             </button>
           </div>
-        }
+        } */}
 
         {posts && posts?.category?.length > 0
-          && posts?.category.filter(item => item?.posts.length > 0).map(item => (
-            <div className="mb-4" key={item.id}>
+          && posts?.category.filter(item => item?.posts.length > 0).map((item, index) => (
+            <div className="mb-5" key={item.id}>
               {item && item?.posts.length > 0 &&
                 <div className="d-flex justify-content-between mb-4">
                   <div className="d-flex align-items-center">
-                    <span className={`bar-${item.name}`} /> <h3 className="text-left text-black mb-4 mt-5">{item.name}</h3>
+                    <span className={`bar-${item.name}`} /> <h3 className={`text-left text-black pl-2`} style={{ borderLeft: `5px solid ${(index + 1) % 2 ? "green" : "#6152BD"}` }}>{item.name}</h3>
                   </div>
-                  <div className={`${item.name} cursor-pointer`} style={{ color: "#AD3336" }} onClick={() => { this.handleNavigateToCategory(item?.name) }}>All {item.name} articles <Arrow /> </div>
+                  <div className={`${item.name} align-self-center  cursor-pointer`} style={{ color: "#AD3336" }} onClick={() => { this.handleNavigateToCategory(item?.name) }}>All {item.name} articles <Arrow /> </div>
                 </div>
               }
               <div className="row">
