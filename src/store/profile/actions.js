@@ -515,38 +515,38 @@ export const addBankDetails = (payload) => {
 
     const { token } = getState().user;
     return new Promise((resolve) => {
-    axios.post(`${CONFIG.BASE_URL}/profile/bank-info`, payload, {
-      headers: {
-        Authorization: token,
-        "Content-Type": "application/json",
-      },
-    })
-      .then(response => {
-        response.headers.authorization && dispatch(updateUser({
-          token: response.headers.authorization
-        }))
-        if ([200, 201].includes(response.status)) {
-          dispatch(addBanksDetailsSuccess(response.data));
-          setTimeout(() => dispatch(clearData()), 3000)
-          resolve(response.data)
-        }
+      axios.post(`${CONFIG.BASE_URL}/profile/bank-info`, payload, {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
       })
-      .catch(({ response }) => {
-        response.headers.authorization && dispatch(updateUser({
-          token: response.headers.authorization
-        }))
-        if (response && [400, 404, 422, 403].includes(response.status)) {
-          return dispatch(addBanksDetailsError(response.data.error ? response.data.error : response.data.message));
-        }
-        if (response && [401].includes(response.status)) {
-          dispatch(showAlert({ type: 'error', message: 'Your session has expired' }))
-          return setTimeout(() => dispatch(logout()), 2000)
-        }
-        if (response && response.status >= 500) {
+        .then(response => {
+          response.headers.authorization && dispatch(updateUser({
+            token: response.headers.authorization
+          }))
+          if ([200, 201].includes(response.status)) {
+            dispatch(addBanksDetailsSuccess(response.data));
+            setTimeout(() => dispatch(clearData()), 3000)
+            resolve(response.data)
+          }
+        })
+        .catch(({ response }) => {
+          response.headers.authorization && dispatch(updateUser({
+            token: response.headers.authorization
+          }))
+          if (response && [400, 404, 422, 403].includes(response.status)) {
+            return dispatch(addBanksDetailsError(response.data.error ? response.data.error : response.data.message));
+          }
+          if (response && [401].includes(response.status)) {
+            dispatch(showAlert({ type: 'error', message: 'Your session has expired' }))
+            return setTimeout(() => dispatch(logout()), 2000)
+          }
+          if (response && response.status >= 500) {
+            return dispatch(addBanksDetailsError('Oops! We did something wrong.'));
+          }
           return dispatch(addBanksDetailsError('Oops! We did something wrong.'));
-        }
-        return dispatch(addBanksDetailsError('Oops! We did something wrong.'));
-      })
+        })
     })
   }
 }
@@ -656,8 +656,21 @@ export const joinSegment = (payload) => {
           }))
           if ([200, 201].includes(response.status)) {
             dispatch(joinSegmentSuccess(response.data));
-            resolve(response.data);
-            setTimeout(() => dispatch(clearData()), 3000)
+
+            axios.get(`${CONFIG.BASE_URL}/segments?page=1&limit=20`, {
+              headers: {
+                Authorization: token,
+                "Content-Type": "application/json",
+              },
+            }).then(_response => {
+              if ([200, 201].includes(_response.status)) {
+
+                resolve({ data: response.data, data2: _response.data });
+                setTimeout(() => dispatch(clearData()), 3000)
+              }
+            })
+
+
           }
         })
         .catch((error) => {

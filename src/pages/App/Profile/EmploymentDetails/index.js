@@ -128,6 +128,8 @@ class EmploymentDetails extends React.Component {
     if (Object.keys(errors).length > 0) {
       return this.setState({ errors });
     }
+
+
     let payload = {
       qualification,
       status,
@@ -148,7 +150,7 @@ class EmploymentDetails extends React.Component {
       payload = { status };
     }
 
-    this.setState({isSubmitted: true});
+    this.setState({ isSubmitted: true });
     addEmploymentDetails(payload);
   };
 
@@ -244,8 +246,8 @@ class EmploymentDetails extends React.Component {
               name="appointmentDate"
               label="Appointment Date"
               value={appointmentDate}
-              disabled={(appointmentDate && isSubmitted) ? true : false}
               type="date"
+              min={moment().add(1, "d").toDate()}
               onChange={(date) =>
                 this.handleChangeDate("appointmentDate", date)
               }
@@ -254,7 +256,6 @@ class EmploymentDetails extends React.Component {
                   ? errors.appointmentDate
                   : errorObject && errorObject["appointmentDate"]
               }
-              maxDate={new Date()}
             />}
             {(status.toLowerCase() === "employed" || status.toLowerCase() === "self-employed" || status.toLowerCase() === "self employed") && <Textbox
               name="companyName"

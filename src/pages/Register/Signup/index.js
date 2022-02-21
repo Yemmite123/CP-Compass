@@ -195,10 +195,10 @@ class Signup extends React.Component {
                 <div className="notice mt-4">
                   <p className="w-75 text-center">
                     Creating a CPCompass account means you agree to our
-                    <a style={{ color: '#5D65AC' }} href={`${CONFIG.WEBSITE_URL}/cookiesPolicy`} target="_blank" rel="noopener noreferrer">
+                    <a style={{ color: '#5D65AC' }} href={`${CONFIG.WEBSITE_URL}/termsandconditions`} target="_blank" rel="noopener noreferrer">
                       <span> </span>Privacy Policy
                     </a> and
-                    <a style={{ color: '#5D65AC' }} href={`${CONFIG.WEBSITE_URL}/termsAndConditions`} target="_blank" rel="noopener noreferrer">
+                    <a style={{ color: '#5D65AC' }} href={`${CONFIG.WEBSITE_URL}/termsandconditions`} target="_blank" rel="noopener noreferrer">
                       <span> </span>Terms of Service
                     </a>
                   </p>

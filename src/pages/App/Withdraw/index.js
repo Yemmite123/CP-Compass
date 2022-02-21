@@ -79,7 +79,6 @@ class Withdraw extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.setState({ errors: null });
-    this.resetFields();
 
     const data = this.state;
     const required = ["amount"];
@@ -113,6 +112,7 @@ class Withdraw extends React.Component {
 
     closeOffCanvas("withdraw-offcanvas");
     this.toggleConfirmationModal();
+    this.resetFields();
   };
 
   handleConfirmWithdraw = () => {

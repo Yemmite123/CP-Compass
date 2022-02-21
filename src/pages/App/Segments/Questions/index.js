@@ -9,6 +9,7 @@ import Modal from '#/components/Modal';
 import SelectableList from '#/components/SelectableList';
 import Pill from '#/components/Pill';
 import CPLogo from '#/assets/images/CP-Compass-New.svg'
+import Back from "#/components/Back";
 import ProfileImg from '#/assets/icons/man-profile.svg'
 
 import './style.scss';
@@ -24,6 +25,10 @@ class Questions extends React.Component {
     stageFour: false,
     stageFive: false,
     otherSegmentsModal: false,
+    singleSegment: false,
+    singleSegmentName: "",
+    singleSegmentDescription: "",
+    singleSegmentIcon: "",
     otherSegments: [],
     view: 1,
     stageOneSelected: '',
@@ -47,7 +52,7 @@ class Questions extends React.Component {
     const {
       startModal, stageOne, stageTwo, stageThree, stageFour,
       stageOneSelected, stageOneOthers, selectedInterest, stageTwoOthers,
-      stageFourOthers, stageThreeOthers, selectedDescription, selectedSpending, finalModal
+      stageFourOthers, stageThreeOthers, selectedDescription, selectedSpending, finalModal, singleSegment
     } = this.state;
 
     this.setState({ errors: null });
@@ -76,6 +81,13 @@ class Questions extends React.Component {
       this.setState({ finalModal: false, otherSegmentsModal: true })
     }
 
+    if (singleSegment) {
+      this.setState({ singleSegment: false, otherSegmentsModal: true });
+    }
+  }
+
+  handleSelectSingleSegment = (name, description, icon) => {
+    this.setState({ singleSegmentName: name, singleSegmentDescription: description, singleSegmentIcon: icon, singleSegment: true });
   }
 
   handlePreviousStep = () => {
@@ -171,12 +183,18 @@ class Questions extends React.Component {
       gender: this.props.history.location.state?.gender
     }
     this.props.joinSegment(payload)
-      .then(data => {
-        this.setState({ investmentSegmentCategory: data.message, otherSegments: data?.otherSegments, investmentDescription: data?.segment?.description, segmentIcon: data?.segment?.icon }, () => this.setState({ finalModal: true }))
+      .then((_data) => {
+        const { data, data2 } = _data;
+        console.log(_data);
+        this.setState({ otherSegments: data2?.data?.segments?.data, investmentSegmentCategory: data.message, investmentDescription: data?.segment?.description, segmentIcon: data?.segment?.icon }, () => this.setState({ finalModal: true }))
       })
   }
 
   handleNavigateToRecommendations = () => {
+    if (this.state.singleSegment) {
+      this.setState({ singleSegment: false })
+
+    }
     if (this.state.finalModal) {
       this.setState({ finalModal: false })
     }
@@ -186,6 +204,7 @@ class Questions extends React.Component {
   render() {
     const {
       startModal, view, stageOne, otherSegmentsModal, otherSegments,
+      singleSegment, singleSegmentDescription, singleSegmentName, singleSegmentIcon,
       stageTwo, stageThree, stageFour, stageFive,
       stageOneSelected, stageOneOthers, finalModal,
       selectedInterest, stageTwoOthers, stageFourOthers,
@@ -197,6 +216,10 @@ class Questions extends React.Component {
 
     return (
       <div className="questions-page">
+        {otherSegments && <div className="p-4">
+          <Back onClick={() => this.props.history.push('/app/profile/risk-profile')
+          } />
+        </div>}
         {startModal &&
           <Modal onClose={this.handlePreviousStep}>
             <div className="text-right pb-3">
@@ -236,13 +259,14 @@ class Questions extends React.Component {
 
             {!startModal &&
               (!finalModal &&
+
                 <div className="question-header text-center">
                   <div className="">
                     <h3 className="text-black text-medium font-weight-bold text-center">Join a Trybe</h3>
                   </div>
                   {otherSegmentsModal ? <div className="px-lg-5"><p className="px-5">This is a list of other segments that are available on the platform, you can join any if you don’t want to be in the one recommended before.</p> </div> : <p>
                     Answering these quick questions will help us recommend a segment that best suits you.
-                    We’ll keep your info safe in accordance with our <a href={`${CONFIG.WEBSITE_URL}/cookies`} target="_blank" rel="noopener noreferrer">privacy policy</a>.
+                    We’ll keep your info safe in accordance with our <a href={`${CONFIG.WEBSITE_URL}/termsandconditions`} target="_blank" rel="noopener noreferrer">privacy policy</a>.
                   </p>
                   }
                 </div>
@@ -479,14 +503,14 @@ class Questions extends React.Component {
                               </h5>
                               <div className="mt-3">
                                 <p>
-                                  {segment.description}
+                                  {segment.description ? segment.description.slice(0, 85) + "..." : <></>}
                                 </p>
                               </div>
                             </div>
                             <div className='px-3'>
                               <button
                                 className="btn w-100 btn-sm btn-primary btn-md-block"
-                                onClick={null}
+                                onClick={() => this.handleSelectSingleSegment(segment.name, segment.description, segment.icon)}
                               >
                                 Read more
                               </button>
@@ -504,8 +528,43 @@ class Questions extends React.Component {
           </div>
         </div>
         {
+          singleSegment &&
+          <Modal onClose={this.handleNavigateToRecommendations} classes="final-modal">
+            <div className="px-4 mt">
+              <div className="d-flex justify-content-center">
+                <img src={singleSegmentIcon} style={{ width: "100px", borderRadius: "50%", height: "100px" }} />
+              </div>
+              <div className="text-center">
+                <h5 className="font-bolder mt-3 text-blue">{singleSegmentName}</h5>
+                <p className="text-small text-grey ">
+                  {
+                    singleSegmentDescription
+                  }
+                </p>
+              </div>
+              <div className="d-flex flex-column align-items-center">
+                <button className="btn btn-primary py-3 w-100 mt-4" onClick={this.handleNavigateToRecommendations}>
+                  See recommendations
+                </button>
+                <p className="mt-4 text-blue font-weight-bold cursor-pointer" onClick={this.handleNextStep}>
+                  View other segments
+                </p>
+              </div>
+            </div>
+
+          </Modal>
+        }
+        {
           finalModal &&
           <Modal onClose={this.handleNavigateToRecommendations} classes="final-modal">
+            <div className="text-right pb-3">
+              <img
+                style={{ cursor: "pointer" }}
+                src={require("#/assets/icons/close.svg")}
+                alt="close"
+                onClick={this.handleNavigateToRecommendations}
+              />
+            </div>
             <div className="px-4 mt">
               <div className="d-flex justify-content-center">
                 <img src={segmentIcon} style={{ width: "100px", borderRadius: "50%", height: "100px" }} />
