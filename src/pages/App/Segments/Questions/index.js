@@ -166,7 +166,7 @@ class Questions extends React.Component {
           others: this.state.stageFourOthers
         }
       ],
-      
+
       dateOfBirth: this.props.history.location.state?.dateOfBirth,
       gender: this.props.history.location.state?.gender
     }
@@ -240,10 +240,11 @@ class Questions extends React.Component {
                   <div className="">
                     <h3 className="text-black text-medium font-weight-bold text-center">Join a Trybe</h3>
                   </div>
-                  <p>
+                  {otherSegmentsModal ? <p className="px-5">This is a list of other segments that are available on the platform, you can join any if you don’t want to be in the one recommended before.</p> : <p>
                     Answering these quick questions will help us recommend a segment that best suits you.
                     We’ll keep your info safe in accordance with our <a href={`${CONFIG.WEBSITE_URL}/cookies`} target="_blank" rel="noopener noreferrer">privacy policy</a>.
                   </p>
+                  }
                 </div>
               )
             }
@@ -504,7 +505,7 @@ class Questions extends React.Component {
         </div>
         {
           finalModal &&
-                <Modal onClose={this.handleNavigateToRecommendations} classes="final-modal">
+          <Modal onClose={this.handleNavigateToRecommendations} classes="final-modal">
             <div className="px-4 mt">
               <div className="d-flex justify-content-center">
                 <img src={segmentIcon} style={{ width: "100px", borderRadius: "50%", height: "100px" }} />
