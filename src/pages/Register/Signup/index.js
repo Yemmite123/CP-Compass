@@ -105,15 +105,7 @@ class Signup extends React.Component {
                 </div>
                 <form className="form" autoComplete="off" onSubmit={this.handleSubmit}>
                   {data && <Alert alert={{ type: 'success', message: data.message }} />}
-                  <Textbox
-                    onChange={this.handleChange}
-                    name="email"
-                    value={email}
-                    label="Email Address"
-                    placeholder="Email Address"
-                    boxClasses="mt-2"
-                    error={errors ? errors.email : (errorObject && errorObject['email'])}
-                  />
+                  
                   <Textbox
                     onChange={this.handleChange}
                     name="lastName"
@@ -129,6 +121,15 @@ class Signup extends React.Component {
                     value={firstName}
                     label="First Name"
                     placeholder="First Name"
+                    boxClasses="mt-2"
+                    error={errors ? errors.email : (errorObject && errorObject['email'])}
+                  />
+                  <Textbox
+                    onChange={this.handleChange}
+                    name="email"
+                    value={email}
+                    label="Email Address"
+                    placeholder="Email Address"
                     boxClasses="mt-2"
                     error={errors ? errors.email : (errorObject && errorObject['email'])}
                   />
@@ -163,8 +164,8 @@ class Signup extends React.Component {
                     onChange={this.handleChange}
                     name="confirm"
                     value={confirm}
-                    label="Confirm Password"
-                    placeholder="Confirm Password"
+                    label="Confirm your Password"
+                    placeholder="Confirm your Password"
                     boxClasses="mt-2"
                     type={conPasswordType}
                     iconUrl={require("#/assets/icons/view-password.svg")}
