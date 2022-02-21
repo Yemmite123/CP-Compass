@@ -60,13 +60,14 @@ class NewPassword extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    if (this.state.errors) {
+    if (this.state.errors.confirm) {
+      console.log(this.state.errors)
       return;
     }
 
     const { resetPassword, history } = this.props;
     const { params: { token } } = this.props.match
-    const { password } = this.state;
+    const { password, confirm } = this.state;
 
     this.setState({ errors: null });
 
@@ -77,7 +78,7 @@ class NewPassword extends React.Component {
     if (Object.keys(errors).length > 0) {
       return this.setState({ errors });
     }
-    const payload = { password, resetToken: token }
+    const payload = { password, resetToken: token, confirmPassword: confirm }
     resetPassword(payload, history);
   }
 
