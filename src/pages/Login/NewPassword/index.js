@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { connect } from "react-redux";
 import PasswordStrengthBar from 'react-password-strength-bar';
 import Textbox from '#/components/Textbox';
-import { resetPassword  } from "#/store/login/actions";
+import { resetPassword } from "#/store/login/actions";
 import actionTypes from "#/store/login/actionTypes";
 import { getActionLoadingState } from "#/store/selectors";
 import { validateFields, isPasswordEqual, serializeErrors } from '#/utils';
@@ -28,37 +28,41 @@ class NewPassword extends React.Component {
 
     const { name, value } = event.target;
     this.setState({ [name]: value }, () => {
-      if( name === 'confirm') {
+      if (name === 'confirm') {
         const error = isPasswordEqual(this.state.confirm, this.state.password);
-        if(!error) {
-          return this.setState({ errors: { ...errors, confirm: null }})
+        if (!error) {
+          return this.setState({ errors: { ...errors, confirm: null } })
         }
-        return this.setState({ errors: { ...errors, ...error }})
+        return this.setState({ errors: { ...errors, ...error } })
       }
     });
     if (name === 'password') {
-      return this.setState({ showSignal: true})
+      return this.setState({ showSignal: true })
     }
   }
 
   handlePasswordType = () => {
     const { passwordType } = this.state;
     if (passwordType === 'password') {
-      return this.setState({ passwordType: 'text'})
+      return this.setState({ passwordType: 'text' })
     }
-    return this.setState({ passwordType: 'password'})
+    return this.setState({ passwordType: 'password' })
   }
 
   handleConPasswordType = () => {
     const { conPasswordType } = this.state;
     if (conPasswordType === 'password') {
-      return this.setState({ conPasswordType: 'text'})
+      return this.setState({ conPasswordType: 'text' })
     }
-    return this.setState({ conPasswordType: 'password'})
+    return this.setState({ conPasswordType: 'password' })
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
+
+    if (this.state.errors) {
+      return;
+    }
 
     const { resetPassword, history } = this.props;
     const { params: { token } } = this.props.match
@@ -67,7 +71,7 @@ class NewPassword extends React.Component {
     this.setState({ errors: null });
 
     const data = this.state;
-    const required = [ 'password', 'confirm' ];
+    const required = ['password', 'confirm'];
     const errors = validateFields(data, required)
 
     if (Object.keys(errors).length > 0) {
@@ -77,7 +81,7 @@ class NewPassword extends React.Component {
     resetPassword(payload, history);
   }
 
-  render () {
+  render() {
     const { password, confirm, errors, passwordType, conPasswordType, showSignal } = this.state
     const { loading, data, error } = this.props;
     const errorObject = serializeErrors(error);
