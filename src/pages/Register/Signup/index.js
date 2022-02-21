@@ -68,7 +68,7 @@ class Signup extends React.Component {
 
     this.setState({ errors: null });
     const { registerUser, history } = this.props;
-    const { firstName, lastName, email, phoneNumber, password, errors, countryCode } = this.state;
+    const { firstName, lastName, email, phoneNumber, confirm, password, errors, countryCode } = this.state;
 
     const error = isPasswordEqual(this.state.confirm, this.state.password);
     if (error) {
@@ -84,7 +84,7 @@ class Signup extends React.Component {
     }
 
 
-    const payload = { firstName: firstName, lastName: lastName, email, phone: phoneNumber, password, confirmPassword: "", countryCode };
+    const payload = { firstName: firstName, lastName: lastName, email, phone: phoneNumber, password, confirmPassword: confirm, countryCode };
     registerUser(payload, history);
   }
 
@@ -109,8 +109,8 @@ class Signup extends React.Component {
                     onChange={this.handleChange}
                     name="email"
                     value={email}
-                    label="Email address"
-                    placeholder="Email address"
+                    label="Email Address"
+                    placeholder="Email Address"
                     boxClasses="mt-2"
                     error={errors ? errors.email : (errorObject && errorObject['email'])}
                   />

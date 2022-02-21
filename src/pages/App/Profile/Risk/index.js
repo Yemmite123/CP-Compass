@@ -24,7 +24,9 @@ class Risk extends React.Component {
 
   componentDidMount() {
     this.setValues()
-    console.log(this.props.segment)
+    if (this.props.history.location.state?.showJoinSegmentModal) {
+      this.setState({ showJoinSegmentModal: true });
+    }
   }
 
   setValues = () => {
@@ -52,7 +54,7 @@ class Risk extends React.Component {
   }
 
   resetFields = () => {
-
+    this.setState({ gender: "", dateOfBirth: "" });
   }
 
   handleChangeDate = (item, date) => {
@@ -63,8 +65,8 @@ class Risk extends React.Component {
     this.setState({ section: 'segment' })
 
     if (!this.props.sex || !this.props.dob) {
-      openOffCanvas("bio-offcanvas");
-      return this.toggleModal()
+      this.toggleJoinSegmentModal();
+      return openOffCanvas("bio-offcanvas");
     }
     this.props.history.push('/app/profile/segments');
   }
@@ -82,8 +84,9 @@ class Risk extends React.Component {
   joinSegmentWithAge = () => {
 
     let error = { date: false, gender: false };
+
     if (moment(this.state.dateOfBirth).isBefore(moment())) {
-      this.setState({ error: { date: "Date of Birth can't be a future data", gender: "" } });
+      this.setState({ error: { date: "Date of Birth can't be a future date", gender: "" } });
       error.date = true;
     }
 
@@ -96,9 +99,23 @@ class Risk extends React.Component {
       return;
     }
 
+
+    if (this.state.section === 'segment') {
+      this.resetFields();
+      closeOffCanvas("bio-offcanvas");
+
+      return this.props.history.push({
+        pathname: '/app/profile/segments',
+        state: { gender: this.state.gender, dateOfBirth: moment(this.state.dateOfBirth).format('YYYY-MM-DD') },
+      });
+    }
+    this.resetFields();
     closeOffCanvas("bio-offcanvas");
 
-    this.toggleJoinSegmentModal();
+    return this.props.history.push({
+      pathname: '/app/profile/risks',
+      state: { gender: this.state.gender, dateOfBirth: moment(this.state.dateOfBirth).format('YYYY-MM-DD') },
+    });
   }
 
 
@@ -118,7 +135,7 @@ class Risk extends React.Component {
     return (
       <div className="risk-page">
         {
-          showGenderModal &&
+
           <>
 
             <OffCanvas
@@ -141,6 +158,7 @@ class Risk extends React.Component {
                     placeholder="Date of Birth"
                     name="dateOfBirth"
                     boxClasses="mt-3"
+                    min={new Date()}
                     value={dateOfBirth}
                   />
                 </div>
@@ -155,7 +173,7 @@ class Risk extends React.Component {
                         // placeholder="Gender"
                         boxClasses="mt-3"
                         options={genderOption}
-                        value="value"
+                        value={gender}
                         optionName="name"
                         defaultValue={gender}
                       />
@@ -205,7 +223,7 @@ class Risk extends React.Component {
         }
         <div className="row">
           <div className="col-lg-4 mt-4">
-            <div div className="guide-item border rounded-lg p-3 d-flex flex-column justify-content-between">
+            <div className="guide-item border rounded-lg p-3 d-flex flex-column justify-content-between">
               <img src={segment ? segment.icon : require('#/assets/icons/blank-avatar.svg')} className="img-fluid user-img " alt="user-img" />
               <span className="h3 text-medium mt-3 text-blue">Trybe</span>
               <p className="font-light">Join a trybe of like minded individuals who have similar goals as you.</p>

@@ -35,6 +35,7 @@ class EmploymentDetails extends React.Component {
     officialEmailAddress: "",
     errors: null,
     countryCode: "+234",
+    isSubmitted: false,
     isBvnModal: false,
   };
 
@@ -44,6 +45,8 @@ class EmploymentDetails extends React.Component {
 
   setValues = () => {
     const { userInfo } = this.props;
+    ((userInfo && userInfo.appointmentDate) ? this.setState({ isSubmitted: true }) : this.setState({ isSubmitted: false }))
+
     if (userInfo) {
       this.setState({
         qualification:
@@ -145,6 +148,7 @@ class EmploymentDetails extends React.Component {
       payload = { status };
     }
 
+    this.setState({isSubmitted: true});
     addEmploymentDetails(payload);
   };
 
@@ -162,6 +166,7 @@ class EmploymentDetails extends React.Component {
       countryCode,
       qualification,
       appointmentDate,
+      isSubmitted,
       errors,
       occupation,
       companyName,
@@ -239,7 +244,7 @@ class EmploymentDetails extends React.Component {
               name="appointmentDate"
               label="Appointment Date"
               value={appointmentDate}
-              disabled={appointmentDate ? true : false}
+              disabled={(appointmentDate && isSubmitted) ? true : false}
               type="date"
               onChange={(date) =>
                 this.handleChangeDate("appointmentDate", date)

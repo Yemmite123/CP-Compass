@@ -36,6 +36,7 @@ class BioData extends React.Component {
     pictureUrl: null,
     countryCode: "+234",
     isBvnModal: false,
+    isSubmitted: false
   };
   imgRef = React.createRef();
 
@@ -45,6 +46,7 @@ class BioData extends React.Component {
 
   setValues = () => {
     const { userInfo } = this.props;
+    ((userInfo && userInfo.dateOfBirth) ? this.setState({ isSubmitted: true }) : this.setState({ isSubmitted: false }))
     if (userInfo) {
       this.setState({
         firstName: userInfo && userInfo.firstName ? userInfo.firstName : "",
@@ -143,6 +145,8 @@ class BioData extends React.Component {
       gender,
       countryCode,
     };
+
+    this.setState({ isSubmitted: true });
     addBioData(payload);
   };
 
@@ -168,6 +172,7 @@ class BioData extends React.Component {
       nationality,
       errors,
       dateOfBirth,
+      isSubmitted,
       pictureUrl,
       gender,
       countryCode,
@@ -247,7 +252,7 @@ class BioData extends React.Component {
               value={dateOfBirth}
               placeholder={""}
               name="dob"
-              disabled={true}
+              disabled={(dateOfBirth && isSubmitted) ? true : false}
             />
 
             <SelectBox

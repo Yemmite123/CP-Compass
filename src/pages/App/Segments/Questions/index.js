@@ -166,6 +166,7 @@ class Questions extends React.Component {
           others: this.state.stageFourOthers
         }
       ],
+      
       dateOfBirth: this.props.history.location.state?.dateOfBirth,
       gender: this.props.history.location.state?.gender
     }
