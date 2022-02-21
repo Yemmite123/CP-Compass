@@ -74,7 +74,7 @@ class Login extends React.Component {
                       name="email"
                       value={email}
                       label="Email"
-                      placeholder="Email address"
+                      placeholder="Email Address"
                       boxClasses="mt-3"
                       type="email"
                       error={
@@ -101,9 +101,8 @@ class Login extends React.Component {
                     />
 
                     <button
-                      className={`w-100 btn py-3 btn-primary mt-4 ${
-                        loading && "cursor-pointer"
-                      }`}
+                      className={`w-100 btn py-3 btn-primary mt-4 ${loading && "cursor-pointer"
+                        }`}
                       disabled={loading}
                     >
                       Login

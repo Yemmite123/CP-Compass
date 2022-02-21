@@ -12,6 +12,8 @@ import actionTypes from "#/store/register/actionTypes";
 import { validateFields, isPasswordEqual, serializeErrors } from '#/utils';
 import './style.scss';
 import { countryCodes } from '#/utils/countryCode';
+import { validateEmail } from '#/utils';
+
 
 class Signup extends React.Component {
   state = {
@@ -70,16 +72,26 @@ class Signup extends React.Component {
     const { registerUser, history } = this.props;
     const { firstName, lastName, email, phoneNumber, confirm, password, errors, countryCode } = this.state;
 
+
+
     const error = isPasswordEqual(this.state.confirm, this.state.password);
     if (error) {
       return this.setState({ errors: { ...errors, ...error } })
     }
+
+
 
     const data = this.state;
     const required = ['firstName', 'lastName', 'email', 'password', 'phoneNumber', 'confirm'];
     const validateErrors = validateFields(data, required)
 
     if (Object.keys(validateErrors).length > 0) {
+      const emailValid = validateEmail(this.state.email);
+
+      if (!emailValid) {
+        validateErrors.email = "email is invalid";
+      }
+
       return this.setState({ errors: validateErrors });
     }
 
@@ -105,16 +117,7 @@ class Signup extends React.Component {
                 </div>
                 <form className="form" autoComplete="off" onSubmit={this.handleSubmit}>
                   {data && <Alert alert={{ type: 'success', message: data.message }} />}
-                  
-                  <Textbox
-                    onChange={this.handleChange}
-                    name="lastName"
-                    value={lastName}
-                    label="Last Name"
-                    placeholder="Last Name"
-                    boxClasses="mt-2"
-                    error={errors ? errors.email : (errorObject && errorObject['email'])}
-                  />
+
                   <Textbox
                     onChange={this.handleChange}
                     name="firstName"
@@ -122,11 +125,21 @@ class Signup extends React.Component {
                     label="First Name"
                     placeholder="First Name"
                     boxClasses="mt-2"
-                    error={errors ? errors.email : (errorObject && errorObject['email'])}
+                    error={errors ? errors.firstName : (errorObject && errorObject['firstName'])}
+                  />
+                  <Textbox
+                    onChange={this.handleChange}
+                    name="lastName"
+                    value={lastName}
+                    label="Last Name"
+                    placeholder="Last Name"
+                    boxClasses="mt-2"
+                    error={errors ? errors.lastName : (errorObject && errorObject['lastName'])}
                   />
                   <Textbox
                     onChange={this.handleChange}
                     name="email"
+                    type="email"
                     value={email}
                     label="Email Address"
                     placeholder="Email Address"
