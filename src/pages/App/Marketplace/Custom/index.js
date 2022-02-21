@@ -198,7 +198,7 @@ class Custom extends React.Component {
       frequency: this.state.frequency.toLowerCase(),
       targetAmount: formatCurrencyToString(this.state.target),
     }
-    
+
     if (this.state.inputAddEndDate) {
       const entryError = verifyFrequencyPeriod(info)
       if (entryError) {
@@ -489,9 +489,9 @@ class Custom extends React.Component {
                 <div className="px-3 mt-4">
                   <p className="text-black mb-0">Your custom investment has been created
                     and you can top it off and more from your portfolio page.</p>
-                  <button className="btn btn-sm btn-primary btn-block mt-3" onClick={this.handleSuccess}>
+                  {/* <button className="btn btn-sm btn-primary btn-block mt-3" onClick={this.handleSuccess}>
                     Go to marketplace
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>
