@@ -16,8 +16,8 @@ const SelectBox = (
     <div className={`${boxClasses} selectbox`} tabIndex="1">
       <fieldset className={`${error && 'error'} ${disabled && 'disabled-input'}`}>
         <div className="d-flex position-relative">
-          { label ? <span className={`${boxClasses?.includes("active") ? "active" : ""} mt-0 position-absolute ${error && 'label-error'}`}>{label}</span> : "" }
-          <select className={`${boxClasses?.includes("active") ? "active" : ""}`} autoComplete="off" onChange={onInputChange} name={name} value={value} placeholder={placeholder} required={required} type={type} disabled={disabled && disabled} readOnly={readonly}>
+          { label ? <span className={`${boxClasses?.includes("active") ? "active" : "active"} mt-0 position-absolute ${error && 'label-error'}`}>{label}</span> : "" }
+          <select className={`${boxClasses?.includes("active") ? "active" : "active"}`} autoComplete="off" onChange={onInputChange} name={name} value={value} placeholder={placeholder} required={required} type={type} disabled={disabled && disabled} readOnly={readonly}>
             <option value=""></option>
             {
               options && options.map((option, i) => (
