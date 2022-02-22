@@ -41,7 +41,7 @@ class VerifyIdentityManually extends React.Component {
     this.setState({ errors: null });
 
     const data = this.state;
-    const required = [ 'firstName', 'lastName', 'bvn', 'dob'];
+    const required = ['firstName', 'lastName', 'bvn', 'dob'];
     const errors = validateFields(data, required)
 
     if (Object.keys(errors).length > 0) {
@@ -58,7 +58,7 @@ class VerifyIdentityManually extends React.Component {
 
     return (
       <div className="verify-identity-manually-page text-center">
-        <AuthNav/>
+        <AuthNav />
         <div className="box">
           <div className="container">
             <h3 className="mt-3 text-blue font-bolder">BVN Verification</h3>
@@ -93,14 +93,15 @@ class VerifyIdentityManually extends React.Component {
                 error={errors ? errors.lastName : (errorObject && errorObject['lastName'])}
               />
               <DateBox
-                  onChange={date => this.handleChangeDate('dob', date)}
-                  label="Date of birth"
-                  placeholder="Date of birth"
-                  name="dob"
-                  value={dob}
-                  boxClasses="mt-4"
-                  error={errors ? errors.dob : (errorObject && errorObject['dateOfBirth'])}
-                />
+                onChange={date => this.handleChangeDate('dob', date)}
+                label="Date of birth"
+                placeholder="Date of birth"
+                name="dob"
+                max={moment().subtract(18, "y").toDate()}
+                value={dob}
+                boxClasses="mt-4"
+                error={errors ? errors.dob : (errorObject && errorObject['dateOfBirth'])}
+              />
               <button className="btn py-3 btn-primary w-100 mt-4 mb-2" disabled={loading}>
                 Submit Credentials
                 {loading &&
@@ -108,8 +109,8 @@ class VerifyIdentityManually extends React.Component {
                 }
               </button>
             </form>
-            {data && <Alert alert={{ type: 'success', message: 'Admin will validate your BVN' }} /> }
-            {error && <Alert alert={{ type: 'danger', message: error }}/>}
+            {data && <Alert alert={{ type: 'success', message: 'Admin will validate your BVN' }} />}
+            {error && <Alert alert={{ type: 'danger', message: error }} />}
             {/* <div className="mt-3">
               <Link to='/app/onboarding/verify-identity'><b>Verify BVN automatically</b></Link>
             </div> */}

@@ -38,7 +38,7 @@ class VerifyIdentity extends React.Component {
     this.setState({ errors: null });
 
     const data = this.state;
-    const required = [ 'dob', 'bvn'];
+    const required = ['dob', 'bvn'];
     const errors = validateFields(data, required)
 
     if (Object.keys(errors).length > 0) {
@@ -55,7 +55,7 @@ class VerifyIdentity extends React.Component {
 
     return (
       <div className="verify-identity-page text-center">
-        <AuthNav/>
+        <AuthNav />
         <div className="box">
           <div className="container">
             <h3 className="mt-3 text-blue font-bolder">Verify your identity</h3>
@@ -70,15 +70,16 @@ class VerifyIdentity extends React.Component {
                 boxClasses="mt-4"
                 error={errors ? errors.bvn : (errorObject && errorObject['bvn'])}
               />
-                <DateBox
-                  onChange={date => this.handleChangeDate('dob', date)}
-                  label="Date of birth"
-                  placeholder="Date of birth"
-                  name="dob"
-                  value={dob}
-                  boxClasses="mt-4"
-                  error={errors ? errors.dob : (errorObject && errorObject['dateOfBirth'])}
-                />
+              <DateBox
+                onChange={date => this.handleChangeDate('dob', date)}
+                label="Date of birth"
+                placeholder="Date of birth"
+                name="dob"
+                max={moment().subtract(18, "y").toDate()}
+                value={dob}
+                boxClasses="mt-4"
+                error={errors ? errors.dob : (errorObject && errorObject['dateOfBirth'])}
+              />
               <button className="btn py-3 btn-primary w-100 mt-3" disabled={loading}>
                 Validate BVN
                 {loading &&
@@ -86,7 +87,7 @@ class VerifyIdentity extends React.Component {
                 }
               </button>
             </form>
-            {error && <Alert alert={{ type: 'danger', message: error }}/>}
+            {error && <Alert alert={{ type: 'danger', message: error }} />}
             <div className="mt-3">
               <Link to='/app/onboarding/verify-identity-manually'><b>Verify BVN manually</b></Link>
             </div>

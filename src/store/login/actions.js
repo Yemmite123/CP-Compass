@@ -16,7 +16,7 @@ const clearError = () => {
 
 const loginRequest = () => {
   return {
-      type: actions.LOGIN_REQUEST,
+    type: actions.LOGIN_REQUEST,
   }
 }
 
@@ -29,7 +29,7 @@ const loginError = (message) => {
 
 const loginSuccess = () => {
   return {
-      type: actions.LOGIN_SUCCESS,
+    type: actions.LOGIN_SUCCESS,
   }
 }
 
@@ -78,64 +78,72 @@ export const login = (payload, history) => {
     dispatch(loginRequest());
 
     fetch(`${CONFIG.BASE_URL}/auth/login`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
     })
-    .then(response => {
+      .then(response => {
         if ([200, 201].includes(response.status)) {
           response.json()
-          .then(res => {
-            if(res.isStaff === true) {
-              dispatch(loginError('unauthorized'));
-              return setTimeout(() => dispatch(clearError()), 5000);
-            }
-            dispatch(updateUser({ 
-              emailAddress: payload.email,
-              token: `Bearer ${res.token}`,
-              authorized: true,
-              isBvnActive: res.isBvnActive,
-              isStaff: res.isStaff,
-            }));
-            dispatch(loginSuccess());
-            if(sessionStorage.getItem('redirectOnLogin') && document.referrer) {
-              sessionStorage.removeItem('redirectOnLogin');
-              window.location = document.referrer;
-              return;
-            }
-            history.push('/app/onboarding');
-          });
+            .then(res => {
+              if (res.isStaff === true) {
+                dispatch(loginError('unauthorized'));
+                return setTimeout(() => dispatch(clearError()), 5000);
+              }
+              dispatch(updateUser({
+                emailAddress: payload.email,
+                token: `Bearer ${res.token}`,
+                authorized: true,
+                isBvnActive: res.isBvnActive,
+                isStaff: res.isStaff,
+              }));
+              dispatch(loginSuccess());
+              if (sessionStorage.getItem('redirectOnLogin') && document.referrer) {
+                sessionStorage.removeItem('redirectOnLogin');
+                window.location = document.referrer;
+                return;
+              }
+
+              if (history.length > 2) {
+                console.log(history)
+                return;
+              }
+
+              history.push('/app/onboarding');
+            });
         }
 
         if ([400, 403, 404].includes(response.status)) {
           response.json()
-          .then(res => {
+            .then(res => {
               dispatch(loginError(res.error ? res.error : res.message));
               setTimeout(() => dispatch(clearError()), 5000);
-          })
+            })
         }
         if ([401].includes(response.status)) {
           response.json()
-          .then(res => {
+            .then(res => {
               dispatch(loginError(res.message ? res.message : res.error));
               setTimeout(() => dispatch(clearError()), 5000);
-              if( res.message && res.message.includes('Unverified')){
-                dispatch(updateUser({ emailAddress: payload.email, token: false,
-                  authorized: false }));
+              if (res.message && res.message.includes('Unverified')) {
+                dispatch(updateUser({
+                  emailAddress: payload.email, token: false,
+                  authorized: false
+                }));
                 setTimeout(() => history.push("/register/confirm-email"), 3000);
               }
-          })
+            })
         }
         if (response.status >= 500) {
           dispatch(loginError('Oops! We did something wrong.'));
           setTimeout(() => dispatch(clearError()), 5000);
         }
-    })
-    .catch(() => {
-      dispatch(loginError('Oops! We did something wrong.'));
-    })
+      })
+      .catch(() => {
+        dispatch(loginError('Oops! We did something wrong.'));
+      })
   }
 }
 
@@ -146,35 +154,35 @@ export const sendResetLink = (email, history) => {
     const payload = { email };
 
     fetch(`${CONFIG.BASE_URL}/auth/password/forgot`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
     })
-    .then(response => {
+      .then(response => {
         if ([200, 201].includes(response.status)) {
           response.json()
-          .then(res => {
-            dispatch(sendResetLinkSuccess( !history && res));
-            history && history.push({ pathname:"/forgot-password-confirmation", state:payload })
-            setTimeout(() => dispatch(clear()), 5000);
-          });
+            .then(res => {
+              dispatch(sendResetLinkSuccess(!history && res));
+              history && history.push({ pathname: "/forgot-password-confirmation", state: payload })
+              setTimeout(() => dispatch(clear()), 5000);
+            });
         }
 
         if ([400, 401, 404, 403].includes(response.status)) {
           response.json()
-          .then(res => {
+            .then(res => {
               dispatch(sendResetLinkError(res.error ? res.error : res.message));
-          })
+            })
         }
         if (response.status >= 500) {
           dispatch(sendResetLinkError('Oops! We did something wrong.'));
         }
-    })
-    .catch(() => {
-      dispatch(sendResetLinkError('Oops! We did something wrong.'));
-    })
+      })
+      .catch(() => {
+        dispatch(sendResetLinkError('Oops! We did something wrong.'));
+      })
   }
 }
 
@@ -183,35 +191,35 @@ export const resetPassword = (payload, history) => {
     dispatch(resetPasswordRequest());
 
     fetch(`${CONFIG.BASE_URL}/auth/password/reset`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
     })
-    .then(response => {
+      .then(response => {
         if ([200, 201].includes(response.status)) {
           response.json()
-          .then(res => {
-            dispatch(resetPasswordSuccess(res));
-            setTimeout(() => history.push('/login'), 3000);
-          });
+            .then(res => {
+              dispatch(resetPasswordSuccess(res));
+              setTimeout(() => history.push('/login'), 3000);
+            });
         }
 
         if ([400, 401, 404, 403].includes(response.status)) {
           response.json()
-          .then(res => {
+            .then(res => {
               dispatch(resetPasswordError(res.error ? res.error : res.message));
-          })
+            })
         }
         if (response.status >= 500) {
           dispatch(resetPasswordError('Oops! We did something wrong.'));
           setTimeout(() => dispatch(clearError()), 5000);
         }
-    })
-    .catch(() => {
-      dispatch(resetPasswordError('Oops! We did something wrong.'));
-      setTimeout(() => dispatch(clearError()), 5000);
-    })
+      })
+      .catch(() => {
+        dispatch(resetPasswordError('Oops! We did something wrong.'));
+        setTimeout(() => dispatch(clearError()), 5000);
+      })
   }
 }
