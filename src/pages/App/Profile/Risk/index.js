@@ -169,6 +169,7 @@ class Risk extends React.Component {
                                         label="Date of Birth"
                                         placeholder="Date of Birth"
                                         name="dateOfBirth"
+                                        startDate={moment().subtract(18, "y").toDate()}
                                         boxClasses="mt-3"
                                         max={moment().subtract(18, "y").toDate()}
                                         disabled={this.props.dob ? true : false}
@@ -183,12 +184,11 @@ class Risk extends React.Component {
                                         <div className="w-100">
                                             <p>Gender</p>
                                             <SelectBox
-                                                boxClasses="active 0s"
+                                                boxClasses="active mt-3"
                                                 onChange={this.handleGenderChange}
                                                 name="gender"
                                                 label="Gender"
                                                 placeholder="Gender"
-                                                boxClasses="mt-3"
                                                 options={genderOption}
                                                 value={gender}
                                                 optionName="name"

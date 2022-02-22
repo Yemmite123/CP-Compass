@@ -271,6 +271,7 @@ class BioData extends React.Component {
               placeholder={""}
               name="dob"
               onChange={(date) => this.handleChangeDate("dateOfBirth", date)}
+              startDate={moment().subtract(18, "y").toDate()}
               max={moment().subtract(18, "y").toDate()}
               disabled={(this.props.isBvnActive) ? true : false}
             />

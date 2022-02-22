@@ -1106,7 +1106,7 @@ class SingleInvestment extends React.Component {
                   }
                 />
               </div>
-              {!(this.props.investment && this.props.investment.service && (this.props.investment.service.type === "predefined")) && <div className="mt-3">
+              {<div className="mt-3">
                 <p>How often do you set aside money for this?</p>
                 <SelectBox
                   onChange={this.handleChange}
@@ -1121,7 +1121,7 @@ class SingleInvestment extends React.Component {
                 />
               </div>
               }
-              {<div className="mt-3">
+              {!(this.props.investment && this.props.investment.service && (this.props.investment.service.type === "predefined")) && <div className="mt-3">
                 <p>How much do you want at each frequency?</p>
                 <Textbox
                   onChange={this.handleChange}
@@ -1137,7 +1137,7 @@ class SingleInvestment extends React.Component {
                   }
                 />
               </div>}
-              {!(this.props.investment && this.props.investment.service && (this.props.investment.service.type === "custom" && this.props.investment.endDate)) && <div div className="mt-3">
+              {!(this.props.investment && this.props.investment.service && (this.props.investment.service.type === "collection" && this.props.investment.endDate)) && <div div className="mt-3">
                 <p>Edit target date?</p>
                 <DateBox
                   onChange={date => this.handleChangeDate('targetDate', date)}
