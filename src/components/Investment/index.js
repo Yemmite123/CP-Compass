@@ -31,7 +31,7 @@ const Investment = (props) => {
           <div>
             {/* TOOD: Update Value from server */}
             <small className="mb-0 text-grey">Interest per annum</small>
-            <p className="mb-0"><span className="text-black text-small">&#x20A6;{formatCurrency(investment.balance)}</span></p>
+            <p className="mb-0"><span className="text-black text-small">{investment.interestRate}%</span></p>
           </div>
         </div>
         <div className="d-flex justify-content-between mt-4">
