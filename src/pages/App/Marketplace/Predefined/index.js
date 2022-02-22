@@ -270,7 +270,23 @@ class Predefined extends React.Component {
   };
 
   //displays the modal to select a funding course
-  handlePickFundingSource = () => {
+    handlePickFundingSource = () => {
+        const data = this.state;
+        const required = ["amount"];
+        const errors = validateFields(data, required);
+
+        if (!Math.floor(Number(this.state.amount)) || Number(this.state.amount) < 0) {
+            return this.setState({ errors: { amount: "enter a valid amount" } });
+        }
+
+        if (isNaN(this.state.amount)) {
+            return this.setState({ errors: { amounr: "enter a valid number" } });
+        }
+
+        if (Object.keys(errors).length > 0) {
+            return this.setState({ errors });
+        }
+
     this.toggleAmountModal();
     this.toggleFundingModal();
   };

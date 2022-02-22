@@ -120,8 +120,8 @@ class Investment extends React.Component {
             </div>
             {investmentList &&
               investmentList.investments?.map((investment) => {
-                return (<div className="col-md-3 mt-4" key={investment.id}>
-                  <InvestmentItem investment={investment} navigateToInvestment={this.handleNavigatetoInvestment} />
+                return (<div className="col-md-3 mt-4" key={investment && investment.id}>
+                  <InvestmentItem investment={investment && investment} navigateToInvestment={this.handleNavigatetoInvestment} />
                 </div>)
               })
             }

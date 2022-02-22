@@ -72,7 +72,7 @@ class Profile extends React.Component {
               <Security />
             </Route>
             <Route path={`${path}/risk-profile`}>
-              <Risk segment={data.segment} risk={data.risk} sex={data.gender} dob={data.dateOfBirth}/>
+                        <Risk segment={data.segment} risk={data.risk} bioData={data} sex={data.gender} dob={data.dateOfBirth}/>
             </Route>
           </Switch>
           }

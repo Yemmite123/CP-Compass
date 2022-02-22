@@ -237,6 +237,22 @@ class Collections extends React.Component {
 
   //displays the modal to select a funding course
   handlePickFundingSource = () => {
+      const data = this.state;
+      const required = ["finalAmount"];
+      const errors = validateFields(data, required);
+
+      if (!Math.floor(Number(this.state.finalAmount)) || Number(this.state.finalAmount) < 0) {
+          return this.setState({ errors: { finalAmount: "enter a valid amount" } });
+      }
+
+      if (isNaN(this.state.finalAmount)) {
+          return this.setState({ errors: { finalAmount: "enter a valid number" } });
+      }
+
+      if (Object.keys(errors).length > 0) {
+          return this.setState({ errors });
+      }
+
     this.toggleAmountModal();
     this.toggleFundingModal();
   };
