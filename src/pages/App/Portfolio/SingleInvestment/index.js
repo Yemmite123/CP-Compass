@@ -167,7 +167,17 @@ class SingleInvestment extends React.Component {
       }
 
     const data = this.state;
-    const required = ["title", "targetDate", "frequency", "frequencyAmount"];
+    const required = ["title", "frequency"];
+
+    if (this.props.investment && this.props.investment.service.type !== "predefined") {
+      required.push("frequencyAmount")
+    }
+
+    if (this.props.investment && this.props.investment.service.type !== "collection") {
+      required.push("targetDate")
+
+    }
+
     const errors = validateFields(data, required)
 
     if (Object.keys(errors).length > 0) {
@@ -178,7 +188,7 @@ class SingleInvestment extends React.Component {
 
     const info = {
       startDate: moment(this.props.investment.startDate).format('YYYY-MM-DD'),
-      endDate: this.props.investment.service === "custom" && this.props.investment.endDate ? moment(this.props.investment.endDate).format('YYYY-MM-DD') : moment(this.state.targetDate).format('YYYY-MM-DD'),
+      endDate: this.props.investment.endDate ? moment(this.props.investment.endDate).format('YYYY-MM-DD') : this.state.targetDate ? moment(this.state.targetDate).format('YYYY-MM-DD') : "",
       frequency: this.state.frequency.toLowerCase(),
       targetAmount: this.props.investment.targetAmount,
     }
@@ -1137,7 +1147,7 @@ class SingleInvestment extends React.Component {
                   }
                 />
               </div>}
-              {!(this.props.investment && this.props.investment.service && (this.props.investment.service.type === "collection" && this.props.investment.endDate)) && <div div className="mt-3">
+              {!(this.props.investment && this.props.investment.service && (this.props.investment.service.type === "collection")) && <div div className="mt-3">
                 <p>Edit target date?</p>
                 <DateBox
                   onChange={date => this.handleChangeDate('targetDate', date)}
