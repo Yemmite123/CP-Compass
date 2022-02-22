@@ -97,6 +97,7 @@ class VerifyIdentityManually extends React.Component {
                 label="Date of birth"
                 placeholder="Date of birth"
                 name="dob"
+                startDate={moment().subtract(18, "y").toDate()}
                 max={moment().subtract(18, "y").toDate()}
                 value={dob}
                 boxClasses="mt-4"
