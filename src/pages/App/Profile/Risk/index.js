@@ -158,7 +158,7 @@ class Risk extends React.Component {
                     placeholder="Date of Birth"
                     name="dateOfBirth"
                     boxClasses="mt-3"
-                    min={new Date()}
+                    max={moment().subtract(18, "y").toDate()}
                     value={dateOfBirth}
                   />
                 </div>
