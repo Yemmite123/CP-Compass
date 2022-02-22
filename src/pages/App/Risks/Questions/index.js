@@ -261,7 +261,7 @@ class Questions extends React.Component {
                             </div>
                             <p className="text-small text-grey">
                                 Answering these questions would help us recommend investments for you which suit your risk profile.
-                                We’ll keep your info safe in accordance with our <a href={`${CONFIG.WEBSITE_URL}/termsandconditions`} target="_blank" rel="noopener noreferrer">privacy policy</a>.
+                                We’ll keep your info safe in accordance with our <a href={`${CONFIG.WEBSITE_URL}/legal/termsandconditions`} target="_blank" rel="noopener noreferrer">privacy policy</a>.
                             </p>
                         </div>
 

@@ -266,7 +266,7 @@ class Questions extends React.Component {
                   </div>
                   {otherSegmentsModal ? <div className="px-lg-5"><p className="px-5">This is a list of other segments that are available on the platform, you can join any if you don’t want to be in the one recommended before.</p> </div> : <p>
                     Answering these quick questions will help us recommend a segment that best suits you.
-                    We’ll keep your info safe in accordance with our <a href={`${CONFIG.WEBSITE_URL}/termsandconditions`} target="_blank" rel="noopener noreferrer">privacy policy</a>.
+                    We’ll keep your info safe in accordance with our <a href={`${CONFIG.WEBSITE_URL}/legal/termsandconditions`} target="_blank" rel="noopener noreferrer">privacy policy</a>.
                   </p>
                   }
                 </div>
