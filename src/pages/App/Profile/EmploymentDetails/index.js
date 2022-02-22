@@ -45,8 +45,7 @@ class EmploymentDetails extends React.Component {
 
   setValues = () => {
     const { userInfo } = this.props;
-    ((userInfo && userInfo.appointmentDate) ? this.setState({ isSubmitted: true }) : this.setState({ isSubmitted: false }))
-
+    
     if (userInfo) {
       this.setState({
         qualification:
@@ -247,7 +246,7 @@ class EmploymentDetails extends React.Component {
               label="Appointment Date"
               value={appointmentDate}
               type="date"
-              min={moment().add(1, "d").toDate()}
+              max={moment().toDate()}
               onChange={(date) =>
                 this.handleChangeDate("appointmentDate", date)
               }
