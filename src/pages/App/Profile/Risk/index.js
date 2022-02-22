@@ -59,7 +59,14 @@ class Risk extends React.Component {
     }
 
     resetFields = () => {
-        this.setState({ gender: "", dateOfBirth: "" });
+        if (!this.props.dob) {
+            this.setState({ dateOfBirth: "" });
+
+        }
+        if (!this.props.sex) {
+
+            this.setState({ gender: "" });
+        }
     }
 
     handleChangeDate = (item, date) => {
