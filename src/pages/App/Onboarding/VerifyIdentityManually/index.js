@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 import { getActionLoadingState } from "#/store/selectors";
+import { getUserProfile } from "#/store/profile/actions";
 import actionTypes from "#/store/onboarding/actionTypes";
 import { confirmIdentity } from '#/store/onboarding/actions';
 import Textbox from '#/components/Textbox';
@@ -20,6 +21,10 @@ class VerifyIdentityManually extends React.Component {
     lastName: '',
     errors: null,
     dob: '',
+  }
+
+  componentDidMount() {
+    this.props.getUserProfile();
   }
 
   handleChange = (event) => {
@@ -77,7 +82,8 @@ class VerifyIdentityManually extends React.Component {
               <Textbox
                 onChange={this.handleChange}
                 name="firstName"
-                value={firstName}
+                value={this.props.userData?.firstName ? this.props.userData?.firstName : firstName}
+                // disabled={this.props.userData?.firstName}
                 label="First name"
                 placeholder="First name"
                 boxClasses="mt-4"
@@ -86,7 +92,8 @@ class VerifyIdentityManually extends React.Component {
               <Textbox
                 onChange={this.handleChange}
                 name="lastName"
-                value={lastName}
+                value={this.props.userData?.lastName ? this.props.userData?.lastName : lastName}
+                // disabled={this.props.userData?.lastName}
                 label="Last name"
                 placeholder="Last name"
                 boxClasses="mt-4"
@@ -99,12 +106,12 @@ class VerifyIdentityManually extends React.Component {
                 name="dob"
                 startDate={moment().subtract(18, "y").toDate()}
                 max={moment().subtract(18, "y").toDate()}
-                value={dob}
+                value={this.props.userData?.dateOfBirth ? this.props.userData?.dateOfBirth : dob}
                 boxClasses="mt-4"
                 error={errors ? errors.dob : (errorObject && errorObject['dateOfBirth'])}
               />
               <button className="btn py-3 btn-primary w-100 mt-4 mb-2" disabled={loading}>
-                Submit Credentials
+                Verify your details
                 {loading &&
                   <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
                 }
@@ -123,16 +130,18 @@ class VerifyIdentityManually extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { app: { onboarding: { data, error } } } = state;
+  const { app: { profile: { userProfile }, onboarding: { data, error } } } = state;
   return {
     loading: getActionLoadingState(state, actionTypes.CONFIRM_IDENTITY_REQUEST),
     data,
+    userData: userProfile.data,
     error,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    getUserProfile: () => dispatch(getUserProfile()),
     confirmIdentity: (payload, history) => dispatch(confirmIdentity(payload, history)),
   };
 };

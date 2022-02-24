@@ -86,7 +86,7 @@ class ForgotPassword extends React.Component {
                   <p>
                     Cancel password reset? <span></span>
                     <Link to="/login">
-                      <b>Sign in</b>
+                      <b>Log in</b>
                     </Link>
                   </p>
                 </div>
