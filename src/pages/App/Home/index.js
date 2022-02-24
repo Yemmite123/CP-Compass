@@ -114,7 +114,7 @@ class Home extends React.Component {
                   <div className="portfolio">
                     <div className="portfolio__block assets">
                       <div className="assets__top">
-                        <h6 className="font-weight-bold">ASSET ALLOCATION</h6>
+                        <h6 className="font-weight-bold">ASSET DISTRIBUTION</h6>
                         <Link to='/app/portfolio'>
                           {!userHasNoFinancialHistory && <span >View details <img className='ml-2' src={require(`#/assets/icons/right-caret.svg`)} alt="caret" /></span>}
                         </Link>
@@ -128,7 +128,7 @@ class Home extends React.Component {
                           <div>
                             <div className="assets__chart" style={{ background: `conic-gradient(#5D65AC ${portfolioPercentage}%, #AD3336 ${walletPercentage}%)` }}>
                               <div>
-                                <span>Total Investment <br /> <span style={{ fontWeight: '600', fontSize: '16px', lineHeight: '26px', color: '#141414' }}>&#x20A6;{formatCurrency(walletValue + portfolioValue)} </span></span>
+                                <span className="text-center">Total Investment <br /> <span style={{ fontWeight: '600', fontSize: '16px', lineHeight: '26px', color: '#141414' }}>&#x20A6;{formatCurrency(walletValue + portfolioValue)} </span></span>
                               </div>
                             </div>
                             <div className="assets__chart-bottom mb-4">
@@ -165,20 +165,16 @@ class Home extends React.Component {
                             title="Setup Investments Plans"
                             iconName="setup-investment"
                           />
+
                           <QuickActionCard
-                            onclick={() => this.props.history.push('marketplace/financial-instruments')}
-                            title={<span>Invest in <br></br> Financial Instruments</span>}
-                            iconName="light-bulb"
+                            onclick={() => this.props.history.push({ pathname: 'profile/risk-profile', state: { showJoinSegmentModal: true } })}
+                            title={<span>Join a tribe and <br></br> start investing</span>}
+                            iconName="tribe"
                           />
                           <QuickActionCard
                             onclick={this.setupCustomInvestment}
                             title={<span>Create a custom <br></br> Investment Plan</span>}
                             iconName="custom-plan"
-                          />
-                          <QuickActionCard
-                            onclick={() => this.props.history.push({ pathname: 'profile/risk-profile', state: { showJoinSegmentModal: true } })}
-                            title={<span>Join a tribe and <br></br> start investing</span>}
-                            iconName="tribe"
                           />
                         </div>
                       </div>

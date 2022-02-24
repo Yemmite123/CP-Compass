@@ -105,7 +105,7 @@ class Login extends React.Component {
                         }`}
                       disabled={loading}
                     >
-                      Login
+                      Log in
                       {loading && (
                         <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
                       )}
@@ -126,7 +126,7 @@ class Login extends React.Component {
           <p className="text-black">
             Don't have an account? <span></span>
             <Link to="/register">
-              <b>Create an account</b>
+              <b>Sign up</b>
             </Link>
           </p>
         </div>

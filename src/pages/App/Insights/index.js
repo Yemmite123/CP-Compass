@@ -160,7 +160,7 @@ class Insights extends React.Component {
               {item && item?.posts.length > 0 &&
                 <div className="d-flex justify-content-between mb-4">
                   <div className="d-flex align-items-center">
-                    <span className={`bar-${item.name}`} /> <h3 className={`text-left text-black pl-2`} style={{ borderLeft: `5px solid ${(index + 1) % 2 ? "green" : "#6152BD"}` }}>{item.name}</h3>
+                    <h3 className={`text-left text-black pl-2`} style={{ borderLeft: `5px solid ${(index + 1) % 2 ? "green" : "#6152BD"}` }}>{item.name}</h3>
                   </div>
                   <div className={`${item.name} align-self-center  cursor-pointer`} style={{ color: "#AD3336" }} onClick={() => { this.handleNavigateToCategory(item?.name) }}>All {item.name} articles <Arrow /> </div>
                 </div>

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 import { getActionLoadingState } from "#/store/selectors";
+import { getUserProfile } from "#/store/profile/actions";
 import actionTypes from "#/store/onboarding/actionTypes";
 import { confirmIdentity } from '#/store/onboarding/actions';
 import Textbox from '#/components/Textbox';
@@ -20,6 +21,25 @@ class VerifyIdentityManually extends React.Component {
     lastName: '',
     errors: null,
     dob: '',
+  }
+
+  componentDidMount() {
+    this.props.getUserProfile();
+    console.log(this.props)
+  }
+
+  componentDidUpdate() {
+    if (this.props.userData?.firstName && !this.state.firstName) {
+      this.setState({ firstName: this.props.userData?.firstName });
+    }
+
+    if (this.props.userData?.lastName && !this.state.lastName) {
+      this.setState({ lastName: this.props.userData?.lastName });
+    }
+
+    if (this.props.userData?.dateOfBirth && !this.state.dob) {
+      this.setState({ dob: this.props.userData?.dateOfBirth });
+    }
   }
 
   handleChange = (event) => {
@@ -78,6 +98,7 @@ class VerifyIdentityManually extends React.Component {
                 onChange={this.handleChange}
                 name="firstName"
                 value={firstName}
+                // disabled={this.props.userData?.firstName}
                 label="First name"
                 placeholder="First name"
                 boxClasses="mt-4"
@@ -87,6 +108,7 @@ class VerifyIdentityManually extends React.Component {
                 onChange={this.handleChange}
                 name="lastName"
                 value={lastName}
+                // disabled={this.props.userData?.lastName}
                 label="Last name"
                 placeholder="Last name"
                 boxClasses="mt-4"
@@ -104,7 +126,7 @@ class VerifyIdentityManually extends React.Component {
                 error={errors ? errors.dob : (errorObject && errorObject['dateOfBirth'])}
               />
               <button className="btn py-3 btn-primary w-100 mt-4 mb-2" disabled={loading}>
-                Submit Credentials
+                Verify your details
                 {loading &&
                   <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
                 }
@@ -123,16 +145,18 @@ class VerifyIdentityManually extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { app: { onboarding: { data, error } } } = state;
+  const { app: { profile: { userProfile }, onboarding: { data, error } } } = state;
   return {
     loading: getActionLoadingState(state, actionTypes.CONFIRM_IDENTITY_REQUEST),
     data,
+    userData: userProfile.data,
     error,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    getUserProfile: () => dispatch(getUserProfile()),
     confirmIdentity: (payload, history) => dispatch(confirmIdentity(payload, history)),
   };
 };
