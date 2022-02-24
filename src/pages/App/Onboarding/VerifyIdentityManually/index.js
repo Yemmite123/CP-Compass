@@ -25,6 +25,21 @@ class VerifyIdentityManually extends React.Component {
 
   componentDidMount() {
     this.props.getUserProfile();
+    console.log(this.props)
+  }
+
+  componentDidUpdate() {
+    if (this.props.userData?.firstName && !this.state.firstName) {
+      this.setState({ firstName: this.props.userData?.firstName });
+    }
+
+    if (this.props.userData?.lastName && !this.state.lastName) {
+      this.setState({ lastName: this.props.userData?.lastName });
+    }
+
+    if (this.props.userData?.dateOfBirth && !this.state.dob) {
+      this.setState({ dob: this.props.userData?.dateOfBirth });
+    }
   }
 
   handleChange = (event) => {
@@ -82,7 +97,7 @@ class VerifyIdentityManually extends React.Component {
               <Textbox
                 onChange={this.handleChange}
                 name="firstName"
-                value={this.props.userData?.firstName ? this.props.userData?.firstName : firstName}
+                value={firstName}
                 // disabled={this.props.userData?.firstName}
                 label="First name"
                 placeholder="First name"
@@ -92,7 +107,7 @@ class VerifyIdentityManually extends React.Component {
               <Textbox
                 onChange={this.handleChange}
                 name="lastName"
-                value={this.props.userData?.lastName ? this.props.userData?.lastName : lastName}
+                value={lastName}
                 // disabled={this.props.userData?.lastName}
                 label="Last name"
                 placeholder="Last name"
@@ -106,7 +121,7 @@ class VerifyIdentityManually extends React.Component {
                 name="dob"
                 startDate={moment().subtract(18, "y").toDate()}
                 max={moment().subtract(18, "y").toDate()}
-                value={this.props.userData?.dateOfBirth ? this.props.userData?.dateOfBirth : dob}
+                value={dob}
                 boxClasses="mt-4"
                 error={errors ? errors.dob : (errorObject && errorObject['dateOfBirth'])}
               />
