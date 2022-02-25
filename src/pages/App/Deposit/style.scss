@@ -1,6 +1,7 @@
 .deposit-page {
   .cp-modal {
     .dialogue {
+      overflow-y: auto;
       width: 35%;
       max-height: 500px;
       @media screen and (max-width: 676px) {

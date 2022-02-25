@@ -206,7 +206,6 @@ class Deposit extends React.Component {
                                                 key={card.id}
                                             />
                                         ))}
-
                                     <div
                                         className={`d-flex p-3 mb-2 cursor-pointer debit-card new-payment position-relative ${this.state.newPayment ? "selected" : ""
                                             }`}
