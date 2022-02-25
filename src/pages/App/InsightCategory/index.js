@@ -33,10 +33,11 @@ class InsightCategory extends React.Component {
     }
   }
 
-  handleNavigateToCategory = (categoryName) => {
+  handleNavigateToCategory = (category) => {
+    let path = category.toLowerCase().replaceAll(" ", "-");
     this.props.history.push({
-      pathname: `/app/blogs/category/${categoryName}`,
-      state: { routeName: categoryName }
+      pathname: `/app/blogs/category/${path}`,
+      state: { routeName: category, path }
     })
   }
 
@@ -178,7 +179,7 @@ class InsightCategory extends React.Component {
                 (filter?.posts?.data.length > 0 ?
                   filter?.posts?.data.map(blogpost => (
                     <div className="col-md-4" key={blogpost.id}>
-                      <BlogItem item={blogpost} navigateToItem={this.handleNavigateToPost}  navigateToCategory={this.handleNavigateToCategory}/>
+                      <BlogItem item={blogpost} navigateToItem={this.handleNavigateToPost} navigateToCategory={this.handleNavigateToCategory} />
                     </div>
                   ))
                   :

@@ -41,10 +41,10 @@ class Insights extends React.Component {
   }
 
   handleNavigateToCategory = (category) => {
-    console.log(category)
+    let path = category.toLowerCase().replaceAll(" ", "-");
     this.props.history.push({
-      pathname: `/app/blogs/category/${category}`,
-      state: { routeName: category, category }
+      pathname: `/app/blogs/category/${path}`,
+      state: { routeName: category, path }
     })
   }
 
@@ -117,11 +117,11 @@ class Insights extends React.Component {
                         <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                       </svg>
                     }
-                    <p className="text-small font-weight-bold mb-0 ml-2">{posts.trending[0].user.firstName} {posts.trending[0].user.lastName} on {moment(posts.latest[0].created_at).format('MMMM Do YYYY')}</p>
+                    <p className="text-small font-weight-bold mb-0 ml-2">{posts.trending[0].user.firstName} {posts.trending[0].user.lastName} on {moment(posts.trending[0].created_at).format('MMMM Do YYYY')}</p>
                   </div>
                   <div> <p className="font-weight-light my-4">  {posts.trending[0].description}...</p></div>
                 </div>
-                <span className={`blog-category blog-category-${posts.trending[0].category.name} cursor-pointer`} onClick={() => this.handleNavigateToCategory(posts.latest[0].category.name)}>
+                <span className={`blog-category blog-category-${posts.trending[0].category.name} cursor-pointer`} onClick={() => this.handleNavigateToCategory(posts.trending[0].category.name)}>
                   {posts.trending[0].category.name}
                 </span>
               </div>
