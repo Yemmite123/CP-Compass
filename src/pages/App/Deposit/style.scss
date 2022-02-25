@@ -3,30 +3,31 @@
     .dialogue {
       width: 35%;
       max-height: 500px;
+      overflow-y: scroll;
       @media screen and (max-width: 676px) {
-        width: 65%; 
-      }  
+        width: 65%;
+      }
       @media screen and (max-width: 676px) {
-        width: 65%; 
-      }  
+        width: 65%;
+      }
       @media screen and (max-width: 500px) {
-        width: 75%; 
-      } 
+        width: 75%;
+      }
       @media screen and (max-width: 428px) {
-        width: 90%; 
-      } 
+        width: 90%;
+      }
     }
   }
 
-  .new-payment{
-    &.selected{
+  .new-payment {
+    &.selected {
       border: 2px solid var(--blue);
     }
   }
 
-  .deposit-offcanvas{
-    .h6{
-      font-size: 14px!important;
+  .deposit-offcanvas {
+    .h6 {
+      font-size: 14px !important;
     }
   }
 }
