@@ -34,8 +34,7 @@ class Wallet extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log(this.props.walletDetails);
-    console.log(prevProps.walletDetails)
+    
     if (this.props.walletDetails && prevProps.walletDetails)
       if (this.props.walletDetails.wallet.NGN !== prevProps.walletDetails.wallet.NGN) {
         this.props.getWalletDetails();
@@ -61,8 +60,7 @@ class Wallet extends React.Component {
   };
 
   handleTransactionSelect = (transaction) => {
-    console.log(this.state.selectedTransaction);
-
+   
     this.setState({ selectedTransaction: transaction }, () =>
       this.setState({ showTransactionModal: true })
     );

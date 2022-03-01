@@ -184,7 +184,7 @@ class SingleInvestment extends React.Component {
       return this.setState({ errors });
     }
 
-    console.log(this.props.investment.targetAmount);
+    
 
     const info = {
       startDate: moment(this.props.investment.startDate).format('YYYY-MM-DD'),
@@ -210,7 +210,7 @@ class SingleInvestment extends React.Component {
     };
 
     const _data = { type: this.props.investment.service.type, payload, id: this.props.investment.id }
-    console.log(data);
+    
     this.props.editInvestment(payload, _data.type, _data.id).then(date => {
       this.resetFields();
       closeOffCanvas("edit-investment-offcanvas");

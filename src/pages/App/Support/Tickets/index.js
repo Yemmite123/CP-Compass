@@ -92,8 +92,7 @@ class Tickets extends React.Component {
     const data = this.state;
     const required = ["title", "issue"];
     const errors = validateFields(data, required);
-    console.log(errors);
-
+    
     if (Object.keys(errors).length > 0) {
       return this.setState({ errors });
     }

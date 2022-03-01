@@ -29,7 +29,6 @@ class Transactions extends React.Component {
   }
 
   handleTransactionSelect = (transaction) => {
-    console.log(transaction);
     this.setState({ selectedTransaction: transaction },
       () => this.setState({ showTransactionModal: true }))
   }

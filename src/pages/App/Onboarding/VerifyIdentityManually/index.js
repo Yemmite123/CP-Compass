@@ -25,7 +25,7 @@ class VerifyIdentityManually extends React.Component {
 
   componentDidMount() {
     this.props.getUserProfile();
-    console.log(this.props)
+    
   }
 
   componentDidUpdate() {

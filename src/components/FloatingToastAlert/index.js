@@ -28,7 +28,6 @@ class FloatingToastAlert extends React.Component {
   }
 
   handleClick = () => {
-    console.log(this.props)
     if (this.props.alert.url) {
       this.props.history.push({
         pathname: this.props.alert.url,

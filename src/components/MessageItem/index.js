@@ -24,7 +24,6 @@ class MessageItem extends React.Component {
 
   render() {
     const { message, viewImage } = this.props;
-    console.log(message)
     return (
       <div className="message-item">
         <div className={`d-flex message__box__${message && message?.user.isStaff ? 'admin' : 'you'}`}>

@@ -11,11 +11,7 @@ export const updateUser = (data) => {
 export const logout = (isUserInitiatedLogout) => {
     return () => {
         localStorage.clear();
-        if(isUserInitiatedLogout) {
-            sessionStorage.removeItem('redirectOnLogin');
-        } else {
-            sessionStorage.setItem('redirectOnLogin', true);
-        }
+        sessionStorage.setItem('redirectOnLogin', true);
         window.location = "/login";
     }
 }
