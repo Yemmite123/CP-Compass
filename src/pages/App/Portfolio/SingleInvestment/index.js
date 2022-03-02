@@ -90,6 +90,23 @@ class SingleInvestment extends React.Component {
 
   }
 
+  componentDidUpdate(previousProps) {
+    if (previousProps.investment !== this.props.investment) {
+      this.setValues()
+    }
+  }
+
+  setValues = () => {
+    const investment = this.props.investment;
+    if (!investment)
+      return;
+    this.setState({ textInputAmount: investment.title });
+    this.setState({ inputTitle: investment?.title });
+    this.setState({ inputTargetDate: moment(investment?.endDate.split("T")[0]).toDate() });
+    this.setState({ inputFrequency: investment?.frequency });
+    this.setState({ inputFrequencyAmount: investment?.installment.toString() });
+  }
+
   handleChange = (event) => {
     const { name, value } = event.target;
     if (name === "amount" || name == "frequencyAmount") {
@@ -121,10 +138,9 @@ class SingleInvestment extends React.Component {
     this.setState({ inputTargetDate: "" });
     this.setState({ inputFrequency: "" });
     this.setState({ inputFrequencyAmount: "" });
-
-    this.setState({ inputFrequencyAmount: "" });
     this.setState({ errors: null })
     this.setState({ selectedMethod: null });
+    this.setValues();
   };
 
   handlePin = (pin) => {
@@ -184,7 +200,7 @@ class SingleInvestment extends React.Component {
       return this.setState({ errors });
     }
 
-    
+
 
     const info = {
       startDate: moment(this.props.investment.startDate).format('YYYY-MM-DD'),
@@ -210,7 +226,7 @@ class SingleInvestment extends React.Component {
     };
 
     const _data = { type: this.props.investment.service.type, payload, id: this.props.investment.id }
-    
+
     this.props.editInvestment(payload, _data.type, _data.id).then(date => {
       this.resetFields();
       closeOffCanvas("edit-investment-offcanvas");
@@ -1125,7 +1141,7 @@ class SingleInvestment extends React.Component {
                   placeholder="Set frequency"
                   name="frequency"
                   options={investmentFrequency}
-                  // value={inputFrequency}
+                  value={inputFrequency}
                   optionName="name"
                   error={errors ? errors.frequency : (errorObject && errorObject['frequency'])}
                 />
@@ -1147,7 +1163,7 @@ class SingleInvestment extends React.Component {
                   }
                 />
               </div>}
-              {!(this.props.investment && this.props.investment.service && (this.props.investment.service.type === "collection")) && <div div className="mt-3">
+              {!(this.props.investment && this.props.investment.service && (this.props.investment.service.type === "collection")) && <div className="mt-3">
                 <p>Edit target date?</p>
                 <DateBox
                   onChange={date => this.handleChangeDate('targetDate', date)}
