@@ -118,7 +118,7 @@ class KycVerification extends React.Component {
   render() {
     const { errors, kycErrors, accountNumber, bankCode, accountName } = this.state;
     const { bvn, loading, data, error, banks, bankLoading, bankData, bankError } = this.props
-    
+
     const errorObject = serializeErrors(bankError);
 
     return (
@@ -143,7 +143,7 @@ class KycVerification extends React.Component {
               onChange={this.handleBankChange}
               type="select"
               valueKey="code"
-              options={banks ? banks.map((bank) => {return {name: bank.name, value: bank.code}}) : []}
+              options={banks ? banks.map((bank) => { return { name: bank.name, value: bank.code } }) : []}
               error={errors ? errors.bankCode : (errorObject && errorObject['bankCode'])}
             />
             <Textbox
@@ -180,17 +180,30 @@ class KycVerification extends React.Component {
 
         <div className="section-container">
           <h2 className="section-header mb-3">KYC Documents</h2>
-          
+
           <ImageUploadInput
             acceptsList="image/png, image/jpeg, application/pdf"
             label="Upload Government-issued ID"
+            currentImageURL={(() => {
+              let documentUrl = ""
+              let document = this.props?.documents?.find((document) => document.category === "government_id")
+              if (document) {
+                documentUrl = document.url;
+              }
+
+              return documentUrl
+            })()
+            }
             handleFile={this.handleGovernmetFileSelect}
+            instruction="Upload JPG or PNG files - Max size of 5mb."
+            maxSizeInMb={5}
           >
-            <div className="mr-4" style={{minWidth: "300px"}}>
+            <div className="mr-4" style={{ minWidth: "300px" }}>
               <SelectBox
                 boxClasses={"active"}
                 name="documentType"
                 label="What type of ID do you want to upload?"
+
                 onChange={this.handleDocumentChange}
                 type="select"
                 options={documentOptions}
@@ -201,7 +214,18 @@ class KycVerification extends React.Component {
           <ImageUploadInput
             acceptsList="image/png, image/jpeg, application/pdf"
             label="Upload Utility Bill"
+            currentImageURL={(() => {
+              let documentUrl = ""
+              let document = this.props?.documents?.find((document) => document.category === "bills")
+              if (document) {
+                documentUrl = document.url;
+              }
+              return documentUrl
+            })()
+            }
             handleFile={this.handleUtilityFileSelect}
+            instruction="Upload JPG or PNG files - Max size of 5mb."
+            maxSizeInMb={5}
           />
           {kycErrors && <p className="text-error">{kycErrors.document}</p>}
         </div>
@@ -211,12 +235,34 @@ class KycVerification extends React.Component {
           <ImageUploadInput
             acceptsList="image/png, image/jpeg, application/pdf"
             label="Upload Signature Specimen"
+            currentImageURL={(() => {
+              let documentUrl = ""
+              let document = this.props?.documents?.find((document) => document.category === "signature")
+              if (document) {
+                documentUrl = document.url;
+              }
+              return documentUrl
+            })()
+            }
             handleFile={file => this.setState({ signature: file })}
+            instruction="Upload JPG or PNG files - Max size of 5mb."
+            maxSizeInMb={5}
           />
           <ImageUploadInput
             acceptsList="image/png, image/jpeg, application/pdf"
             label="Upload Passport Photo"
+            currentImageURL={(() => {
+              let documentUrl = ""
+              let document = this.props?.documents?.find((document) => document.category === "passport")
+              if (document) {
+                documentUrl = document.url;
+              }
+              return documentUrl
+            })()
+            }
             handleFile={file => this.setState({ passport: file })}
+            instruction="Upload JPG or PNG files - Max size of 5mb."
+            maxSizeInMb={5}
           />
           <div className="section-form__button-area mt-5">
             <div className="col col-md-7 mt-3">
