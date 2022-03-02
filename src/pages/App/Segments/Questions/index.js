@@ -185,7 +185,7 @@ class Questions extends React.Component {
     this.props.joinSegment(payload)
       .then((_data) => {
         const { data, data2 } = _data;
-        console.log(_data);
+        
         this.setState({ otherSegments: data2?.data?.segments?.data, investmentSegmentCategory: data.message, investmentDescription: data?.segment?.description, segmentIcon: data?.segment?.icon }, () => this.setState({ finalModal: true }))
       })
   }

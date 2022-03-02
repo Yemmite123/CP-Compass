@@ -61,7 +61,6 @@ class NewPassword extends React.Component {
     event.preventDefault();
 
     if (this.state.errors.confirm) {
-      console.log(this.state.errors)
       return;
     }
 

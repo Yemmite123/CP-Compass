@@ -196,7 +196,6 @@ export const connectToSocket = () => {
     socket.on('connect', () => {
 
       socket.on('notifications', (data) => {
-        console.log(data);
         dispatch(addNewNotificationSuccess(data));
       });
 

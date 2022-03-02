@@ -28,7 +28,6 @@ class Cards extends React.Component {
   handleSelectCard = (card) => {
     const { location: { state } } = this.props.history
     const payload = { amount: state?.amount, cardId: card.id }
-    console.log(payload);
     this.props.depositFundsCard(payload, this.props.history)
   }
 

@@ -106,7 +106,7 @@ class BioData extends React.Component {
 
   handleGenderChange = (event) => {
     const { value } = event.target;
-    console.log(event.target.value)
+    
     this.setState({ gender: value });
   };
 

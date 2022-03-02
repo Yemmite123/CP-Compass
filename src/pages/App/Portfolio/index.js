@@ -36,7 +36,7 @@ class Portfolio extends React.Component {
 
   render() {
     const { match: { path }, data, loading, location, wallet } = this.props;
-    console.log(data);
+    
     const walletValue = wallet ? parseInt(wallet.replaceAll(',', ''), 10) : 0;
 
     const menus = [

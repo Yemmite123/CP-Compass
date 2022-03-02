@@ -52,7 +52,7 @@ class Home extends React.Component {
     const walletPercentage = (walletValue * 100) / (walletValue + portfolioValue);
     const portfolioPercentage = (portfolioValue * 100) / (walletValue + portfolioValue);
     const userHasNoFinancialHistory = !walletValue && !dashboard?.dashboard.portfolios.portfolioWorth?.amount;
-    console.log(dashboard)
+    
     return (
       <div className="home-dashboard-page">
         {loading && !dashboard && <HomeSkeleton />}

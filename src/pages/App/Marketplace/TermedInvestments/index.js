@@ -17,7 +17,7 @@ class TermedInvestments extends React.Component {
   }   
 
   handleSingleInvestment = (investment) => {
-    console.log(investment)
+    
     this.props.history.push({
       pathname: `/app/marketplace/termed-investment/${investment.id}`,
       state: { investment, routeName: 'Marketplace' },

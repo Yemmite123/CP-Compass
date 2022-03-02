@@ -58,7 +58,7 @@ class PPI extends React.Component {
   //TODO:
   render() {
     const { loading, funds, fund, fundLoading, data } = this.props;
-    console.log(data);
+    
     const { stageOne, stageTwo } = this.state;
     return (
       <div className="ppi-page">
