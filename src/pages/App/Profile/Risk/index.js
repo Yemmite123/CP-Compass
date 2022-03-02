@@ -16,6 +16,8 @@ import {
 } from '#/utils';
 import './style.scss';
 
+
+
 class Risk extends React.Component {
 
     state = {
@@ -43,7 +45,7 @@ class Risk extends React.Component {
         }
         if (dob) {
             this.setState({
-                dateOfBirth: dob && dob ? new Date(dob) : new Date(),
+                dateOfBirth: dob && dob ? moment(dob.split("T")[0]).toDate() : undefined
             })
         }
     }
