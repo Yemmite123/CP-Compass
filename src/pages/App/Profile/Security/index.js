@@ -146,7 +146,7 @@ class Security extends React.Component {
 
   resetForm = (e) => {
     e.preventDefault()
-    
+    console.log(this.pinForm.current)
     this.pinForm.current.reset();
 
   }

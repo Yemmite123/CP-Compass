@@ -6,10 +6,10 @@ const ImageUploadInput = ({
   currentImageURL,
   handleFile,
   label,
-  instruction = "Upload PDF, JPG or PNG files - Max size of 2mb.",
+  instruction = "Upload PDF, JPG or PNG files - Max size of 5mb.",
   acceptsList = "",
-  maxSizeInMb = 2,
-  children
+  maxSizeInMb = 5,
+  children,
 }) => {
   const [file, setFile] = React.useState("");
   const [error, setError] = React.useState("");
@@ -27,7 +27,11 @@ const ImageUploadInput = ({
       }
 
       setFile(selectedImage);
-      setSelectedImageURL(selectedImage.type === "application/pdf" ? defaultImage : URL.createObjectURL(selectedImage));
+      setSelectedImageURL(
+        selectedImage.type === "application/pdf"
+          ? defaultImage
+          : URL.createObjectURL(selectedImage)
+      );
       handleFile(selectedImage);
       URL.revokeObjectURL(selectedImage);
     }

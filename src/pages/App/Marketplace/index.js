@@ -66,12 +66,6 @@ class Marketplace extends React.Component {
 
     return (
       <div className="marketplace-page">
-        {isBvnActive && !isApproved && (
-          <InformationBar className="mt-3 mb-3 text-white">
-            Your account is awaiting approval, you won't be able to perform some
-            actions
-          </InformationBar>
-        )}
         <Switch>
           <Route exact path={path}>
             <Redirect
@@ -111,6 +105,8 @@ class Marketplace extends React.Component {
           <Route path={`${path}/ppi`}>
             {this.state.showPpiMenu && <DashboardBodyMenu menus={menus} />}
             <div>
+              <p className="py-1 mt-2 ">Direct investments in new securities</p>
+
               <PPI togglePpiMenu={this.togglePpiMenu} />
             </div>
           </Route>

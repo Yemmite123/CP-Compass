@@ -18,7 +18,7 @@
     overflow: scroll;
   }
 
-  .dashboard-body{
+  .dashboard-body {
     position: relative;
     padding: 23px 23px 0 23px;
 
@@ -35,4 +35,8 @@
     z-index: 500;
     background-color: rgba(0, 0, 0, 0.35);
   }
+}
+.complete-account-setup {
+  text-decoration: underline;
+  cursor: pointer;
 }
