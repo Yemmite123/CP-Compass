@@ -131,24 +131,7 @@ class Risk extends React.Component {
       });
     }
 
-<<<<<<< HEAD
-    this.resetFields();
-    closeOffCanvas("bio-offcanvas");
-=======
-    setValues = () => {
-        const { sex, dob } = this.props;
-        if (sex) {
-            this.setState({
-                gender: sex && sex ? sex : ''
-            })
-        }
-        if (dob) {
-            this.setState({
-                dateOfBirth: dob && dob ? moment(dob.split("T")[0]).toDate() : undefined
-            })
-        }
-    }
->>>>>>> fba3fa3e817b48d98e5b6549e082eccbe8f86530
+
 
     return this.props.history.push({
       pathname: "/app/profile/risks",
@@ -158,6 +141,21 @@ class Risk extends React.Component {
       },
     });
   };
+
+
+  setValues = () => {
+    const { sex, dob } = this.props;
+    if (sex) {
+      this.setState({
+        gender: sex && sex ? sex : ''
+      })
+    }
+    if (dob) {
+      this.setState({
+        dateOfBirth: dob && dob ? moment(dob.split("T")[0]).toDate() : undefined
+      })
+    }
+  }
 
   toggleModal = () => {
     this.setState((prevState) => ({

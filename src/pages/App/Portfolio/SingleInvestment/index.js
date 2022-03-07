@@ -138,13 +138,7 @@ class SingleInvestment extends React.Component {
     this.setState({ inputTargetDate: "" });
     this.setState({ inputFrequency: "" });
     this.setState({ inputFrequencyAmount: "" });
-<<<<<<< HEAD
-
-    this.setState({ inputFrequencyAmount: "" });
-    this.setState({ errors: null });
-=======
     this.setState({ errors: null })
->>>>>>> fba3fa3e817b48d98e5b6549e082eccbe8f86530
     this.setState({ selectedMethod: null });
     this.setValues();
   };
@@ -220,19 +214,14 @@ class SingleInvestment extends React.Component {
       return this.setState({ errors });
     }
 
-<<<<<<< HEAD
-    console.log(this.props.investment.targetAmount);
-=======
-
->>>>>>> fba3fa3e817b48d98e5b6549e082eccbe8f86530
 
     const info = {
       startDate: moment(this.props.investment.startDate).format("YYYY-MM-DD"),
       endDate: this.props.investment.endDate
         ? moment(this.props.investment.endDate).format("YYYY-MM-DD")
         : this.state.targetDate
-        ? moment(this.state.targetDate).format("YYYY-MM-DD")
-        : "",
+          ? moment(this.state.targetDate).format("YYYY-MM-DD")
+          : "",
       frequency: this.state.frequency.toLowerCase(),
       targetAmount: this.props.investment.targetAmount,
     };
@@ -253,7 +242,6 @@ class SingleInvestment extends React.Component {
       amount: Number(formatCurrencyToString(frequencyAmount)),
     };
 
-<<<<<<< HEAD
     const _data = {
       type: this.props.investment.service.type,
       payload,
@@ -261,11 +249,6 @@ class SingleInvestment extends React.Component {
     };
     console.log(data);
     this.props.editInvestment(payload, _data.type, _data.id).then((date) => {
-=======
-    const _data = { type: this.props.investment.service.type, payload, id: this.props.investment.id }
-
-    this.props.editInvestment(payload, _data.type, _data.id).then(date => {
->>>>>>> fba3fa3e817b48d98e5b6549e082eccbe8f86530
       this.resetFields();
       closeOffCanvas("edit-investment-offcanvas");
     });
@@ -639,9 +622,8 @@ class SingleInvestment extends React.Component {
                       ))}
 
                     <div
-                      className={`d-flex p-3 mb-2 cursor-pointer debit-card new-payment position-relative ${
-                        this.state.newPayment ? "selected" : ""
-                      }`}
+                      className={`d-flex p-3 mb-2 cursor-pointer debit-card new-payment position-relative ${this.state.newPayment ? "selected" : ""
+                        }`}
                       onClick={this.handleNewPayment}
                     >
                       {(this.state.newPayment ? true : false) && (
@@ -763,9 +745,8 @@ class SingleInvestment extends React.Component {
               className="BG"
               title="Amount Invested"
               showCurrency={true}
-              total={`${
-                investment ? formatCurrency(investment.balance) : "0.00"
-              }`}
+              total={`${investment ? formatCurrency(investment.balance) : "0.00"
+                }`}
               percentageDiff="N/A"
               backgroundImage={`url(${WalletBG})`}
               iconColor="#871523"
@@ -775,9 +756,8 @@ class SingleInvestment extends React.Component {
             <SummaryCard
               title="Interest"
               showCurrency={true}
-              total={`${
-                investment ? formatCurrency(investment.accruedInterest) : "0.00"
-              }`}
+              total={`${investment ? formatCurrency(investment.accruedInterest) : "0.00"
+                }`}
               percentageDiff={"N/A"}
               backgroundImage={`url(${InvestmentBG})`}
               iconColor="#B0500E"
@@ -799,11 +779,10 @@ class SingleInvestment extends React.Component {
                 <img
                   src={require("#/assets/icons/plus-circle.svg")}
                   alt="plus"
-                  className={`img-fluid ${
-                    ["active", "booked"].includes(investment?.order_status)
+                  className={`img-fluid ${["active", "booked"].includes(investment?.order_status)
                       ? "cursor-pointer"
                       : "cursor-block disabled"
-                  }`}
+                    }`}
                   onClick={
                     ["active", "booked"].includes(investment?.order_status)
                       ? this.toggleOffCanvas
@@ -811,11 +790,10 @@ class SingleInvestment extends React.Component {
                   }
                 />
                 <p
-                  className={`text-blue mb-0 text-small ${
-                    ["active", "booked"].includes(investment?.order_status)
+                  className={`text-blue mb-0 text-small ${["active", "booked"].includes(investment?.order_status)
                       ? "cursor-pointer"
                       : "cursor-block disabled"
-                  }`}
+                    }`}
                   onClick={
                     ["active", "booked"].includes(investment?.order_status)
                       ? this.toggleOffCanvas
@@ -836,13 +814,12 @@ class SingleInvestment extends React.Component {
                             : require("#/assets/icons/toggle-on.svg")
                         }
                         alt="plus"
-                        className={`img-fluid ${
-                          ["active", "booked"].includes(
-                            investment?.order_status
-                          )
+                        className={`img-fluid ${["active", "booked"].includes(
+                          investment?.order_status
+                        )
                             ? "cursor-pointer"
                             : "cursor-block disabled"
-                        }`}
+                          }`}
                         onClick={
                           ["active", "booked"].includes(
                             investment?.order_status
@@ -852,13 +829,12 @@ class SingleInvestment extends React.Component {
                         }
                       />
                       <p
-                        className={`text-blue mb-0 text-small ${
-                          ["active", "booked"].includes(
-                            investment?.order_status
-                          )
+                        className={`text-blue mb-0 text-small ${["active", "booked"].includes(
+                          investment?.order_status
+                        )
                             ? "cursor-pointer"
                             : "cursor-block disabled"
-                        }`}
+                          }`}
                         onClick={
                           ["active", "booked"].includes(
                             investment?.order_status
@@ -877,13 +853,12 @@ class SingleInvestment extends React.Component {
                   investment?.autoChargeChannel !== "" && (
                     <>
                       <svg
-                        className={`${
-                          ["active", "booked"].includes(
-                            investment?.order_status
-                          )
+                        className={`${["active", "booked"].includes(
+                          investment?.order_status
+                        )
                             ? "cursor-pointer"
                             : "cursor-block disabled"
-                        }`}
+                          }`}
                         onClick={
                           ["active", "booked"].includes(
                             investment?.order_status
@@ -917,13 +892,12 @@ class SingleInvestment extends React.Component {
                       </svg>
 
                       <p
-                        className={`text-blue mb-0 text-small ${
-                          ["active", "booked"].includes(
-                            investment?.order_status
-                          )
+                        className={`text-blue mb-0 text-small ${["active", "booked"].includes(
+                          investment?.order_status
+                        )
                             ? "cursor-pointer"
                             : "cursor-block disabled"
-                        }`}
+                          }`}
                         onClick={
                           ["active", "booked"].includes(
                             investment?.order_status
@@ -941,11 +915,10 @@ class SingleInvestment extends React.Component {
                 <img
                   src={require("#/assets/icons/liquidate.svg")}
                   alt="plus"
-                  className={`img-fluid ${
-                    ["active"].includes(investment?.order_status)
+                  className={`img-fluid ${["active"].includes(investment?.order_status)
                       ? "cursor-pointer"
                       : "cursor-block disabled"
-                  }`}
+                    }`}
                   onClick={
                     ["active"].includes(investment?.order_status)
                       ? this.handleLiquidate
@@ -953,11 +926,10 @@ class SingleInvestment extends React.Component {
                   }
                 />
                 <p
-                  className={`text-blue mb-0 text-small ${
-                    ["active"].includes(investment?.order_status)
+                  className={`text-blue mb-0 text-small ${["active"].includes(investment?.order_status)
                       ? "cursor-pointer"
                       : "cursor-block disabled"
-                  }`}
+                    }`}
                   onClick={
                     ["active"].includes(investment?.order_status)
                       ? this.handleLiquidate
@@ -988,8 +960,8 @@ class SingleInvestment extends React.Component {
                     <b>
                       {investment && investment.nextPaymentDate
                         ? moment(investment.nextPaymentDate).format(
-                            "MMM D, YYYY"
-                          )
+                          "MMM D, YYYY"
+                        )
                         : "Not Available"}
                     </b>
                   </p>
@@ -1021,20 +993,17 @@ class SingleInvestment extends React.Component {
                     )}
 
                     <div
-                      className={`progress-bar bg-success ${
-                        investment && investment.percentageCompletion < 10
+                      className={`progress-bar bg-success ${investment && investment.percentageCompletion < 10
                           ? "text-black"
                           : ""
-                      } ${
-                        investment && investment.percentageCompletion == 0
+                        } ${investment && investment.percentageCompletion == 0
                           ? "d-none"
                           : ""
-                      }`}
+                        }`}
                       role="progressbar"
                       style={{
-                        width: `${
-                          investment ? investment.percentageCompletion : 0
-                        }%`,
+                        width: `${investment ? investment.percentageCompletion : 0
+                          }%`,
                       }}
                       aria-valuenow={
                         investment ? investment.percentageCompletion : 0
@@ -1238,74 +1207,6 @@ class SingleInvestment extends React.Component {
                   }
                 />
               </div>
-<<<<<<< HEAD
-              {
-                <div className="mt-3">
-                  <p>How often do you set aside money for this?</p>
-                  <SelectBox
-                    onChange={this.handleChange}
-                    boxClasses="mt-3 active"
-                    label="Frequency"
-                    placeholder="Set frequency"
-                    name="frequency"
-                    options={investmentFrequency}
-                    // value={inputFrequency}
-                    optionName="name"
-                    error={
-                      errors
-                        ? errors.frequency
-                        : errorObject && errorObject["frequency"]
-                    }
-                  />
-                </div>
-              }
-              {!(
-                this.props.investment &&
-                this.props.investment.service &&
-                this.props.investment.service.type === "predefined"
-              ) && (
-                <div className="mt-3">
-                  <p>How much do you want at each frequency?</p>
-                  <Textbox
-                    onChange={this.handleChange}
-                    type="text"
-                    label="Frequency Amount"
-                    placeholder="Frequency Amount"
-                    name="frequencyAmount"
-                    value={formatStringToCurrency(inputFrequencyAmount)}
-                    error={
-                      errors
-                        ? errors.frequencyAmount
-                        : errorObject && errorObject["frequencyAmount"]
-                    }
-                  />
-                </div>
-              )}
-              {!(
-                this.props.investment &&
-                this.props.investment.service &&
-                this.props.investment.service.type === "collection"
-              ) && (
-                <div div className="mt-3">
-                  <p>Edit target date?</p>
-                  <DateBox
-                    onChange={(date) =>
-                      this.handleChangeDate("targetDate", date)
-                    }
-                    label="Target Date"
-                    placeholder="Set target date"
-                    name="targetDate"
-                    value={inputTargetDate}
-                    error={
-                      errors
-                        ? errors.targetDate
-                        : errorObject && errorObject["targetDate"]
-                    }
-                    min={new Date()}
-                  />
-                </div>
-              )}
-=======
               {<div className="mt-3">
                 <p>How often do you set aside money for this?</p>
                 <SelectBox
@@ -1349,7 +1250,6 @@ class SingleInvestment extends React.Component {
                   min={new Date()}
                 />
               </div>}
->>>>>>> fba3fa3e817b48d98e5b6549e082eccbe8f86530
               <div className="mt-5 d-flex flex-column flex-grow-1">
                 <div className="d-flex pb-2 flex-column flex-grow-1 justify-content-between">
                   <div className="mt-4 pb-3">
