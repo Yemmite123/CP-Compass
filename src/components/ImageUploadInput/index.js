@@ -1,5 +1,6 @@
 import React from "react";
 import defaultImage from "#/assets/icons/profile-icon.svg";
+import Compressor from 'compressorjs';
 import "./style.scss";
 
 const ImageUploadInput = ({
@@ -26,14 +27,29 @@ const ImageUploadInput = ({
         return;
       }
 
-      setFile(selectedImage);
+
+      if (selectedImage.type !== "application/pdf") {
+        new Compressor(selectedImage, {
+          quality: 0.6,
+          success: (compressedFile) => {
+            setFile(compressedFile);
+
+            setSelectedImageURL(
+              URL.createObjectURL(compressedFile)
+            );
+            handleFile(compressedFile);
+            URL.revokeObjectURL(compressedFile);
+          }
+        })
+
+        return;
+      }
+
       setSelectedImageURL(
-        selectedImage.type === "application/pdf"
-          ? defaultImage
-          : URL.createObjectURL(selectedImage)
+        defaultImage
       );
+
       handleFile(selectedImage);
-      URL.revokeObjectURL(selectedImage);
     }
   };
 
