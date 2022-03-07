@@ -101,7 +101,7 @@ class SingleInvestment extends React.Component {
       return;
     this.setState({ textInputAmount: investment.title });
     this.setState({ inputTitle: investment?.title });
-    this.setState({ inputTargetDate: moment(investment?.endDate.split("T")[0]).toDate() });
+    this.setState({ inputTargetDate: moment(investment?.endDate?.split("T")[0]).toDate() });
     this.setState({ inputFrequency: investment?.frequency });
     this.setState({ inputFrequencyAmount: investment?.installment.toString() });
   }
@@ -780,8 +780,8 @@ class SingleInvestment extends React.Component {
                   src={require("#/assets/icons/plus-circle.svg")}
                   alt="plus"
                   className={`img-fluid ${["active", "booked"].includes(investment?.order_status)
-                      ? "cursor-pointer"
-                      : "cursor-block disabled"
+                    ? "cursor-pointer"
+                    : "cursor-block disabled"
                     }`}
                   onClick={
                     ["active", "booked"].includes(investment?.order_status)
@@ -791,8 +791,8 @@ class SingleInvestment extends React.Component {
                 />
                 <p
                   className={`text-blue mb-0 text-small ${["active", "booked"].includes(investment?.order_status)
-                      ? "cursor-pointer"
-                      : "cursor-block disabled"
+                    ? "cursor-pointer"
+                    : "cursor-block disabled"
                     }`}
                   onClick={
                     ["active", "booked"].includes(investment?.order_status)
@@ -817,8 +817,8 @@ class SingleInvestment extends React.Component {
                         className={`img-fluid ${["active", "booked"].includes(
                           investment?.order_status
                         )
-                            ? "cursor-pointer"
-                            : "cursor-block disabled"
+                          ? "cursor-pointer"
+                          : "cursor-block disabled"
                           }`}
                         onClick={
                           ["active", "booked"].includes(
@@ -832,8 +832,8 @@ class SingleInvestment extends React.Component {
                         className={`text-blue mb-0 text-small ${["active", "booked"].includes(
                           investment?.order_status
                         )
-                            ? "cursor-pointer"
-                            : "cursor-block disabled"
+                          ? "cursor-pointer"
+                          : "cursor-block disabled"
                           }`}
                         onClick={
                           ["active", "booked"].includes(
@@ -856,8 +856,8 @@ class SingleInvestment extends React.Component {
                         className={`${["active", "booked"].includes(
                           investment?.order_status
                         )
-                            ? "cursor-pointer"
-                            : "cursor-block disabled"
+                          ? "cursor-pointer"
+                          : "cursor-block disabled"
                           }`}
                         onClick={
                           ["active", "booked"].includes(
@@ -895,8 +895,8 @@ class SingleInvestment extends React.Component {
                         className={`text-blue mb-0 text-small ${["active", "booked"].includes(
                           investment?.order_status
                         )
-                            ? "cursor-pointer"
-                            : "cursor-block disabled"
+                          ? "cursor-pointer"
+                          : "cursor-block disabled"
                           }`}
                         onClick={
                           ["active", "booked"].includes(
@@ -916,8 +916,8 @@ class SingleInvestment extends React.Component {
                   src={require("#/assets/icons/liquidate.svg")}
                   alt="plus"
                   className={`img-fluid ${["active"].includes(investment?.order_status)
-                      ? "cursor-pointer"
-                      : "cursor-block disabled"
+                    ? "cursor-pointer"
+                    : "cursor-block disabled"
                     }`}
                   onClick={
                     ["active"].includes(investment?.order_status)
@@ -927,8 +927,8 @@ class SingleInvestment extends React.Component {
                 />
                 <p
                   className={`text-blue mb-0 text-small ${["active"].includes(investment?.order_status)
-                      ? "cursor-pointer"
-                      : "cursor-block disabled"
+                    ? "cursor-pointer"
+                    : "cursor-block disabled"
                     }`}
                   onClick={
                     ["active"].includes(investment?.order_status)
@@ -994,8 +994,8 @@ class SingleInvestment extends React.Component {
 
                     <div
                       className={`progress-bar bg-success ${investment && investment.percentageCompletion < 10
-                          ? "text-black"
-                          : ""
+                        ? "text-black"
+                        : ""
                         } ${investment && investment.percentageCompletion == 0
                           ? "d-none"
                           : ""
