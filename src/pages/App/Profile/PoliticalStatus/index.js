@@ -43,10 +43,10 @@ class PoliticalStatus extends React.Component {
         hasPoliticalAssociate: userInfo && userInfo.hasPoliticalAssociate ? (userInfo.hasPoliticalAssociate === 1 ? true : false) : false,
         relationshipWithAssociate: userInfo && userInfo.relationshipWithAssociate ? userInfo.relationshipWithAssociate : '',
         occupiedTillDate: userInfo && userInfo.occupiedTillDate ? (userInfo.occupiedTillDate === 1 ? true : false) : false,
-        associateOccupiedTillDate: userInfo && userInfo.politicalAssociate ? (userInfo.politicalAssociate.occupiedTillDate && userInfo.politicalAssociate.occupiedTillDate ) : false,
-        associateTo: userInfo && userInfo.politicalAssociate ? ( userInfo.politicalAssociate.to ? new Date(userInfo.politicalAssociate.to.split('T')[0] ): '' ) : '',
-        associateFrom: userInfo && userInfo.politicalAssociate ? ( userInfo.politicalAssociate.from ? new Date(userInfo.politicalAssociate.from.split('T')[0]) : '' ) : '',
-        associatePositionName: userInfo && userInfo.politicalAssociate ? ( userInfo.politicalAssociate.positionName ? userInfo.politicalAssociate.positionName : '' ) : '',
+        associateOccupiedTillDate: userInfo && userInfo.politicalAssociate ? (userInfo.politicalAssociate.occupiedTillDate && userInfo.politicalAssociate.occupiedTillDate) : false,
+        associateTo: userInfo && userInfo.politicalAssociate ? (userInfo.politicalAssociate.to ? new Date(userInfo.politicalAssociate.to.split('T')[0]) : '') : '',
+        associateFrom: userInfo && userInfo.politicalAssociate ? (userInfo.politicalAssociate.from ? new Date(userInfo.politicalAssociate.from.split('T')[0]) : '') : '',
+        associatePositionName: userInfo && userInfo.politicalAssociate ? (userInfo.politicalAssociate.positionName ? userInfo.politicalAssociate.positionName : '') : '',
         positionName: userInfo && userInfo.positionName ? userInfo.positionName : '',
         from: userInfo && userInfo.from ? new Date(userInfo.from.split('T')[0]) : '',
         to: userInfo && userInfo.to ? new Date(userInfo.to.split('T')[0]) : '',
@@ -98,7 +98,7 @@ class PoliticalStatus extends React.Component {
 
     this.setState({ errors: null });
 
-    if(occupiedPoliticalPosition){
+    if (occupiedPoliticalPosition) {
       const data = this.state;
       const required = ['positionName'];
       const errors = validateFields(data, required)
@@ -107,7 +107,7 @@ class PoliticalStatus extends React.Component {
       }
     }
 
-    if(occupiedTillDate && occupiedPoliticalPosition) {
+    if (occupiedTillDate && occupiedPoliticalPosition) {
       const data = this.state;
       const required = ['from'];
       const errors = validateFields(data, required)
@@ -116,7 +116,7 @@ class PoliticalStatus extends React.Component {
       }
     }
 
-    if(!occupiedTillDate && occupiedPoliticalPosition) {
+    if (!occupiedTillDate && occupiedPoliticalPosition) {
       const data = this.state;
       const required = ['from', 'to'];
       const errors = validateFields(data, required)
@@ -144,7 +144,7 @@ class PoliticalStatus extends React.Component {
       }
     }
 
-    if(hasPoliticalAssociate){
+    if (hasPoliticalAssociate) {
       const data = this.state;
       const required = ['relationshipWithAssociate', 'associatePositionName'];
       const errors = validateFields(data, required)
@@ -153,17 +153,17 @@ class PoliticalStatus extends React.Component {
       }
     }
 
-    if(!this.props.isBvnActive) {
+    if (!this.props.isBvnActive) {
       return this.toggleBvnModal()
     }
 
-    const politicalAssociate = { 
+    const politicalAssociate = {
       positionName: associatePositionName,
       occupiedTillDate: associateOccupiedTillDate,
       from: moment(associateFrom).format('YYYY-MM-DD'),
       to: moment(associateTo).format('YYYY-MM-DD')
     }
-    const payload = { 
+    const payload = {
       occupiedPoliticalPosition,
       occupiedTillDate,
       hasPoliticalAssociate,
@@ -186,13 +186,13 @@ class PoliticalStatus extends React.Component {
 
   render() {
     const {
-      occupiedPoliticalPosition, 
-      occupiedTillDate, 
-      hasPoliticalAssociate, 
-      positionName, 
-      from, 
-      to, 
-      errors, 
+      occupiedPoliticalPosition,
+      occupiedTillDate,
+      hasPoliticalAssociate,
+      positionName,
+      from,
+      to,
+      errors,
       associateOccupiedTillDate,
       associateTo,
       associateFrom,
@@ -202,10 +202,10 @@ class PoliticalStatus extends React.Component {
     } = this.state;
     const { loading, error, data } = this.props;
     const errorObject = serializeErrors(error);
-    
+
     return (
       <div className="section-container mb-5 pb-4">
-         {isBvnModal &&
+        {isBvnModal &&
           <Modal classes="bvn-active" onClose={this.toggleBvnModal}>
             <div className="text-center">
               <h3 className="text-deep-blue">Please Setup your BVN to continue</h3>
@@ -223,19 +223,19 @@ class PoliticalStatus extends React.Component {
               <div className="question-box">
                 <p className="question-box__question">Have you occupied any Political Position?</p>
                 <div>
-                  <RadioInput 
-                    name="occupiedPoliticalPosition" 
+                  <RadioInput
+                    name="occupiedPoliticalPosition"
                     label="Yes"
                     value={true}
-                    checked={occupiedPoliticalPosition === true} 
-                    onChange={this.handleChange} 
+                    checked={occupiedPoliticalPosition === true}
+                    onChange={this.handleChange}
                   />
-                  <RadioInput 
-                    name="occupiedPoliticalPosition" 
+                  <RadioInput
+                    name="occupiedPoliticalPosition"
                     label="No"
-                    value={false} 
+                    value={false}
                     // checked={occupieddsds PoliticalPosition === false} 
-                    onChange={this.handleChange} 
+                    onChange={this.handleChange}
                   />
                 </div>
               </div>
@@ -256,8 +256,8 @@ class PoliticalStatus extends React.Component {
                   label="Do you still occupy this position"
                   type="select"
                   value={occupiedTillDate ? "1" : "0"}
-                  onChange={e => this.setState({occupiedTillDate: e.target.value === "1" ? true : false, to: ''})}
-                  options={[{name: 'Yes', value: "1"}, {name: 'No', value: "0"}]}
+                  onChange={e => this.setState({ occupiedTillDate: e.target.value === "1" ? true : false, to: '' })}
+                  options={[{ name: 'Yes', value: "1" }, { name: 'No', value: "0" }]}
                   error={
                     errors ? errors.occupiedTillDfate : errorObject && errorObject["occupiedTillDate"]
                   }
@@ -279,7 +279,7 @@ class PoliticalStatus extends React.Component {
                   label="End Date"
                   value={to}
                   type="date"
-                  disabled={occupiedTillDate? true : false}
+                  disabled={occupiedTillDate ? true : false}
                   onChange={date => this.handleChangeDate('to', date)}
                   error={errors ? errors.to : (errorObject && errorObject['to'])}
                   maxDate={new Date()}
@@ -293,19 +293,19 @@ class PoliticalStatus extends React.Component {
                   Do you have any close relative or associates who occupied any Political Position?
                 </p>
                 <div>
-                  <RadioInput 
-                    name="hasPoliticalAssociate" 
+                  <RadioInput
+                    name="hasPoliticalAssociate"
                     label="Yes"
                     value={true}
-                    checked={hasPoliticalAssociate === true} 
-                    onChange={this.handleChange} 
+                    checked={hasPoliticalAssociate === true}
+                    onChange={this.handleChange}
                   />
-                  <RadioInput 
-                    name="hasPoliticalAssociate" 
+                  <RadioInput
+                    name="hasPoliticalAssociate"
                     label="No"
-                    value={false} 
-                    // checked={hasPoliticalAssociate === false} 
-                    onChange={this.handleChange} 
+                    value={false}
+                    checked={hasPoliticalAssociate === false}
+                    onChange={this.handleChange}
                   />
                 </div>
               </div>
@@ -325,9 +325,9 @@ class PoliticalStatus extends React.Component {
                   name="associateOccupiedTillDate"
                   label="He/She still occupies this position?"
                   value={associateOccupiedTillDate ? "1" : "0"}
-                  onChange={e => this.setState({associateOccupiedTillDate: e.target.value === "1" ? true : false, associateTo: ''})}
+                  onChange={e => this.setState({ associateOccupiedTillDate: e.target.value === "1" ? true : false, associateTo: '' })}
                   type="select"
-                  options={[{name: 'Yes', value: "1"}, {name: 'No', value: "0"}]}
+                  options={[{ name: 'Yes', value: "1" }, { name: 'No', value: "0" }]}
                   error={
                     errors ? errors.associateOccupiedTillDate : errorObject && errorObject["associateOccupiedTillDate"]
                   }

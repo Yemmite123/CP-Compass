@@ -89,6 +89,23 @@ class SingleInvestment extends React.Component {
     this.props.fetchSingleInvestment(params.investmentId);
   }
 
+  componentDidUpdate(previousProps) {
+    if (previousProps.investment !== this.props.investment) {
+      this.setValues()
+    }
+  }
+
+  setValues = () => {
+    const investment = this.props.investment;
+    if (!investment)
+      return;
+    this.setState({ textInputAmount: investment.title });
+    this.setState({ inputTitle: investment?.title });
+    this.setState({ inputTargetDate: moment(investment?.endDate.split("T")[0]).toDate() });
+    this.setState({ inputFrequency: investment?.frequency });
+    this.setState({ inputFrequencyAmount: investment?.installment.toString() });
+  }
+
   handleChange = (event) => {
     const { name, value } = event.target;
     if (name === "amount" || name == "frequencyAmount") {
@@ -121,10 +138,15 @@ class SingleInvestment extends React.Component {
     this.setState({ inputTargetDate: "" });
     this.setState({ inputFrequency: "" });
     this.setState({ inputFrequencyAmount: "" });
+<<<<<<< HEAD
 
     this.setState({ inputFrequencyAmount: "" });
     this.setState({ errors: null });
+=======
+    this.setState({ errors: null })
+>>>>>>> fba3fa3e817b48d98e5b6549e082eccbe8f86530
     this.setState({ selectedMethod: null });
+    this.setValues();
   };
 
   handlePin = (pin) => {
@@ -198,7 +220,11 @@ class SingleInvestment extends React.Component {
       return this.setState({ errors });
     }
 
+<<<<<<< HEAD
     console.log(this.props.investment.targetAmount);
+=======
+
+>>>>>>> fba3fa3e817b48d98e5b6549e082eccbe8f86530
 
     const info = {
       startDate: moment(this.props.investment.startDate).format("YYYY-MM-DD"),
@@ -227,6 +253,7 @@ class SingleInvestment extends React.Component {
       amount: Number(formatCurrencyToString(frequencyAmount)),
     };
 
+<<<<<<< HEAD
     const _data = {
       type: this.props.investment.service.type,
       payload,
@@ -234,6 +261,11 @@ class SingleInvestment extends React.Component {
     };
     console.log(data);
     this.props.editInvestment(payload, _data.type, _data.id).then((date) => {
+=======
+    const _data = { type: this.props.investment.service.type, payload, id: this.props.investment.id }
+
+    this.props.editInvestment(payload, _data.type, _data.id).then(date => {
+>>>>>>> fba3fa3e817b48d98e5b6549e082eccbe8f86530
       this.resetFields();
       closeOffCanvas("edit-investment-offcanvas");
     });
@@ -1206,6 +1238,7 @@ class SingleInvestment extends React.Component {
                   }
                 />
               </div>
+<<<<<<< HEAD
               {
                 <div className="mt-3">
                   <p>How often do you set aside money for this?</p>
@@ -1272,6 +1305,51 @@ class SingleInvestment extends React.Component {
                   />
                 </div>
               )}
+=======
+              {<div className="mt-3">
+                <p>How often do you set aside money for this?</p>
+                <SelectBox
+                  onChange={this.handleChange}
+                  boxClasses="mt-3 active"
+                  label="Frequency"
+                  placeholder="Set frequency"
+                  name="frequency"
+                  options={investmentFrequency}
+                  value={inputFrequency}
+                  optionName="name"
+                  error={errors ? errors.frequency : (errorObject && errorObject['frequency'])}
+                />
+              </div>
+              }
+              {!(this.props.investment && this.props.investment.service && (this.props.investment.service.type === "predefined")) && <div className="mt-3">
+                <p>How much do you want at each frequency?</p>
+                <Textbox
+                  onChange={this.handleChange}
+                  type="text"
+                  label="Frequency Amount"
+                  placeholder="Frequency Amount"
+                  name="frequencyAmount"
+                  value={formatStringToCurrency(inputFrequencyAmount)}
+                  error={
+                    errors
+                      ? errors.frequencyAmount
+                      : errorObject && errorObject["frequencyAmount"]
+                  }
+                />
+              </div>}
+              {!(this.props.investment && this.props.investment.service && (this.props.investment.service.type === "collection")) && <div className="mt-3">
+                <p>Edit target date?</p>
+                <DateBox
+                  onChange={date => this.handleChangeDate('targetDate', date)}
+                  label="Target Date"
+                  placeholder="Set target date"
+                  name="targetDate"
+                  value={inputTargetDate}
+                  error={errors ? errors.targetDate : (errorObject && errorObject['targetDate'])}
+                  min={new Date()}
+                />
+              </div>}
+>>>>>>> fba3fa3e817b48d98e5b6549e082eccbe8f86530
               <div className="mt-5 d-flex flex-column flex-grow-1">
                 <div className="d-flex pb-2 flex-column flex-grow-1 justify-content-between">
                   <div className="mt-4 pb-3">
