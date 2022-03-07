@@ -137,10 +137,19 @@ class Deposit extends React.Component {
       closeOffCanvas("deposit-offcanvas");
       return this.toggleBvnModal();
     }
+    if (!this.props.isApproved) {
+      return this.setState({
+        errors: "Your account is awaiting Approval",
+      });
+    }
 
     if (selectedMethod === "transfer") {
       closeOffCanvas("deposit-offcanvas");
       return this.props.displayTransferModal();
+    }
+    if (selectedMethod === "card") {
+      closeOffCanvas("deposit-offcanvas");
+      return this.toggleAllCardsModal(e);
     }
 
     if (this.props.cards && this.props.cards.cards.length > 0) {
@@ -156,8 +165,9 @@ class Deposit extends React.Component {
   toggleBvnModal = () => {
     this.setState((prevState) => ({ showNoBvn: !prevState.showNoBvn }));
   };
-
   render() {
+    console.log(this.props.isBvnActive);
+
     const {
       amount,
       textInputAmount,
@@ -169,7 +179,7 @@ class Deposit extends React.Component {
     } = this.state;
     const { error, loading, cards, walletDetails, payLoading } = this.props;
     const errorObject = serializeErrors(error);
-
+    console.log(error);
     return (
       <div className="deposit-page">
         {showCardsModal && (
@@ -313,6 +323,9 @@ class Deposit extends React.Component {
                     )}
                   </button>
                   {error && <p className="text-error text-left">{error}</p>}
+                  {errors && typeof errors === "string" && (
+                    <p className="text-error text-center">{errors}</p>
+                  )}
                   {selectionError && (
                     <p className="text-error text-left">{selectionError}</p>
                   )}
@@ -378,6 +391,7 @@ const mapStateToProps = (state) => {
     error,
     walletDetails,
     isBvnActive: data && data.bvn ? true : false,
+    isApproved: data && data.isApproved === 1 ? true : false,
   };
 };
 

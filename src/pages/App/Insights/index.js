@@ -70,7 +70,7 @@ class Insights extends React.Component {
 
   render() {
     const { posts, loading } = this.props;
-    
+    console.log(posts)
 
     const defaultMenu = [
       {

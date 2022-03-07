@@ -120,7 +120,7 @@ class EmploymentDetails extends React.Component {
 
     const hasNoQualification = status === "retired" || status === "student";
     const data = this.state;
-    
+    console.log(data);
     const required = hasNoQualification ? [] : ["qualification"];
     const errors = validateFields(data, required);
 

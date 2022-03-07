@@ -27,8 +27,8 @@ import WalletBG from "#/assets/images/walletBG.svg";
 import InvestmentBG from "#/assets/images/InvestmentBG.svg";
 import ReturnsBG from "#/assets/images/ReturnsBG.svg";
 import OffCanvas from "#/components/OffCanvas";
-import SelectBox from '#/components/SelectBox';
-import DateBox from '#/components/DateBox';
+import SelectBox from "#/components/SelectBox";
+import DateBox from "#/components/DateBox";
 import LiquidateInvestment from "#/pages/App/Portfolio/LiquidateInvestment";
 import {
   investmentFrequency,
@@ -49,14 +49,14 @@ class SingleInvestment extends React.Component {
     type: "",
     amount: "",
     textInputAmount: "",
-    title: '',
-    inputTitle: '',
-    frequency: '',
-    inputFrequency: '',
-    frequencyAmount: '',
-    inputFrequencyAmount: '',
-    targetDate: '',
-    inputTargetDate: '',
+    title: "",
+    inputTitle: "",
+    frequency: "",
+    inputFrequency: "",
+    frequencyAmount: "",
+    inputFrequencyAmount: "",
+    targetDate: "",
+    inputTargetDate: "",
     enterAmountModal: false,
     showAmountModal: false,
     showFundingSourceModal: false,
@@ -87,7 +87,6 @@ class SingleInvestment extends React.Component {
 
     this.props.getCards();
     this.props.fetchSingleInvestment(params.investmentId);
-
   }
 
   componentDidUpdate(previousProps) {
@@ -119,15 +118,16 @@ class SingleInvestment extends React.Component {
         if (name == "amount")
           this.setState({ textInputAmount: formatCurrencyToString(value) });
         else {
-          this.setState({ inputFrequencyAmount: formatCurrencyToString(value) })
+          this.setState({
+            inputFrequencyAmount: formatCurrencyToString(value),
+          });
         }
-
       });
     }
 
     if (name === "title") this.setState({ inputTitle: value });
-    if (name === "frequency") this.setState({ inputFrequency: value })
-    if (name === "targetDate") this.setState({ inputTargetDate: value })
+    if (name === "frequency") this.setState({ inputFrequency: value });
+    if (name === "targetDate") this.setState({ inputTargetDate: value });
 
     this.setState({ [name]: value });
   };
@@ -138,7 +138,13 @@ class SingleInvestment extends React.Component {
     this.setState({ inputTargetDate: "" });
     this.setState({ inputFrequency: "" });
     this.setState({ inputFrequencyAmount: "" });
+<<<<<<< HEAD
+
+    this.setState({ inputFrequencyAmount: "" });
+    this.setState({ errors: null });
+=======
     this.setState({ errors: null })
+>>>>>>> fba3fa3e817b48d98e5b6549e082eccbe8f86530
     this.setState({ selectedMethod: null });
     this.setValues();
   };
@@ -157,83 +163,113 @@ class SingleInvestment extends React.Component {
 
   toggleAmountModal = () => {
     this.setState({ textInputAmount: "" });
-    this.setState({ enterAmountModal: !this.state.enterAmountModal })
-  }
+    this.setState({ enterAmountModal: !this.state.enterAmountModal });
+  };
 
   openEditOffCanvas = () => {
     openOffCanvas("edit-investment-offcanvas");
-  }
+  };
 
   handleEditAmount = () => {
     if (!Math.floor(Number(this.state.textInputAmount))) {
-      return this.setState({ errors: { amount: 'enter a valid amount' } })
+      return this.setState({ errors: { amount: "enter a valid amount" } });
     }
 
-    this.props.editInvestmentAmount({ paymentAmount: Number(this.state.textInputAmount) }, "custom", this.props.investment.id);
+    this.props.editInvestmentAmount(
+      { paymentAmount: Number(this.state.textInputAmount) },
+      "custom",
+      this.props.investment.id
+    );
     this.toggleAmountModal();
-  }
+  };
 
   handleEditPlan = (e) => {
     e.preventDefault();
     this.setState({ errors: null, entryError: "" });
 
     if (this.state.frequencyAmount)
-      if (!Math.floor(Number(this.state.frequencyAmount)) || Number(this.state.frequencyAmount) < 0) {
-        return this.setState({ errors: { finalAmount: 'enter a valid amount' } })
+      if (
+        !Math.floor(Number(this.state.frequencyAmount)) ||
+        Number(this.state.frequencyAmount) < 0
+      ) {
+        return this.setState({
+          errors: { finalAmount: "enter a valid amount" },
+        });
       }
 
     const data = this.state;
     const required = ["title", "frequency"];
 
-    if (this.props.investment && this.props.investment.service.type !== "predefined") {
-      required.push("frequencyAmount")
+    if (
+      this.props.investment &&
+      this.props.investment.service.type !== "predefined"
+    ) {
+      required.push("frequencyAmount");
     }
 
-    if (this.props.investment && this.props.investment.service.type !== "collection") {
-      required.push("targetDate")
-
+    if (
+      this.props.investment &&
+      this.props.investment.service.type !== "collection"
+    ) {
+      required.push("targetDate");
     }
 
-    const errors = validateFields(data, required)
+    const errors = validateFields(data, required);
 
     if (Object.keys(errors).length > 0) {
       return this.setState({ errors });
     }
 
+<<<<<<< HEAD
+    console.log(this.props.investment.targetAmount);
+=======
 
+>>>>>>> fba3fa3e817b48d98e5b6549e082eccbe8f86530
 
     const info = {
-      startDate: moment(this.props.investment.startDate).format('YYYY-MM-DD'),
-      endDate: this.props.investment.endDate ? moment(this.props.investment.endDate).format('YYYY-MM-DD') : this.state.targetDate ? moment(this.state.targetDate).format('YYYY-MM-DD') : "",
+      startDate: moment(this.props.investment.startDate).format("YYYY-MM-DD"),
+      endDate: this.props.investment.endDate
+        ? moment(this.props.investment.endDate).format("YYYY-MM-DD")
+        : this.state.targetDate
+        ? moment(this.state.targetDate).format("YYYY-MM-DD")
+        : "",
       frequency: this.state.frequency.toLowerCase(),
       targetAmount: this.props.investment.targetAmount,
-    }
+    };
 
-    const entryError = verifyFrequencyPeriod(info)
+    const entryError = verifyFrequencyPeriod(info);
     if (entryError) {
       return this.setState({ entryError });
     }
 
-    const { title, targetDate, frequency, frequencyAmount } = this.state
+    const { title, targetDate, frequency, frequencyAmount } = this.state;
     const payload = {
       title,
       targetAmount: this.props.investment.targetAmount,
       currency: "NGN",
-      startDate: moment(this.props.investment.startDate).format('YYYY-MM-DD'),
-      endDate: moment(targetDate).format('YYYY-MM-DD'),
+      startDate: moment(this.props.investment.startDate).format("YYYY-MM-DD"),
+      endDate: moment(targetDate).format("YYYY-MM-DD"),
       frequency,
-      amount: Number(formatCurrencyToString(frequencyAmount))
+      amount: Number(formatCurrencyToString(frequencyAmount)),
     };
 
+<<<<<<< HEAD
+    const _data = {
+      type: this.props.investment.service.type,
+      payload,
+      id: this.props.investment.id,
+    };
+    console.log(data);
+    this.props.editInvestment(payload, _data.type, _data.id).then((date) => {
+=======
     const _data = { type: this.props.investment.service.type, payload, id: this.props.investment.id }
 
     this.props.editInvestment(payload, _data.type, _data.id).then(date => {
+>>>>>>> fba3fa3e817b48d98e5b6549e082eccbe8f86530
       this.resetFields();
       closeOffCanvas("edit-investment-offcanvas");
-    })
-
-  }
-
+    });
+  };
 
   handleTopUp = () => {
     const { textInputAmount } = this.state;
@@ -241,7 +277,10 @@ class SingleInvestment extends React.Component {
     let required = ["amount"];
     let errors = validateFields({ textInputAmount }, required);
 
-    if (!Math.floor(Number(this.state.textInputAmount)) || Number(this.state.textInputAmount) < 0) {
+    if (
+      !Math.floor(Number(this.state.textInputAmount)) ||
+      Number(this.state.textInputAmount) < 0
+    ) {
       return this.setState({ errors: { amount: "enter a valid amount" } });
     }
 
@@ -287,8 +326,7 @@ class SingleInvestment extends React.Component {
   handleNewPayment = () => {
     this.setState({ newPayment: true });
     this.setState({ cardId: "" });
-
-  }
+  };
 
   handlePay = (autoCharge) => {
     this.toggleAutomateModal();
@@ -309,6 +347,7 @@ class SingleInvestment extends React.Component {
 
     this.props.topUpInvestment(payload, params.investmentId).then((data) => {
       this.state.showAutomateModal && this.toggleAutomateModal();
+      const { params } = this.props.match;
       this.setState({
         amount: "",
         selectedMethod: "",
@@ -336,11 +375,9 @@ class SingleInvestment extends React.Component {
   };
 
   handleChangeDate = (item, date) => {
-
-    this.setState({ inputTargetDate: date })
+    this.setState({ inputTargetDate: date });
     this.setState({ [item]: date });
-  }
-
+  };
 
   handleTransactionVerification = (e) => {
     e.preventDefault();
@@ -358,8 +395,7 @@ class SingleInvestment extends React.Component {
       // close transaction modal
       this.toggleTransactionPinModal();
 
-      if (this.state.tempSelectedMethod != "wallet")
-        this.toggleAllCardsModal();
+      if (this.state.tempSelectedMethod != "wallet") this.toggleAllCardsModal();
       else {
         this.toggleAutomateModal();
       }
@@ -446,19 +482,29 @@ class SingleInvestment extends React.Component {
     return (
       <>
         <div className="single-portfolio-page">
-          {
-            showAmountModal &&
+          {showAmountModal && (
             <Modal onClose={this.toggleAmountModal}>
               <div className="text-right pb-3">
-                <img src={require('#/assets/icons/close.svg')} alt="close" onClick={this.toggleAmountModal} className="cursor-pointer" />
+                <img
+                  src={require("#/assets/icons/close.svg")}
+                  alt="close"
+                  onClick={this.toggleAmountModal}
+                  className="cursor-pointer"
+                />
               </div>
               <div className="px-2">
                 <div className="d-flex justify-content-center">
-                  <img src={require('#/assets/icons/naira-sign.svg')} alt="bank" className="pb-3" />
+                  <img
+                    src={require("#/assets/icons/naira-sign.svg")}
+                    alt="bank"
+                    className="pb-3"
+                  />
                 </div>
                 <div className="text-center">
-                  <div className='mb-3'>
-                    <h5 className="text-blue font-bolder">Edit your payment amount</h5>
+                  <div className="mb-3">
+                    <h5 className="text-blue font-bolder">
+                      Edit your payment amount
+                    </h5>
                   </div>
                   <div className="px-1 mt-4">
                     <Textbox
@@ -468,7 +514,11 @@ class SingleInvestment extends React.Component {
                       placeholder="Amount"
                       name="amount"
                       value={formatStringToCurrency(textInputAmount)}
-                      error={errors ? errors.amount : (errorObject && errorObject['amount'])}
+                      error={
+                        errors
+                          ? errors.amount
+                          : errorObject && errorObject["amount"]
+                      }
                     />
                   </div>
                   <div className="mt-4">
@@ -478,7 +528,10 @@ class SingleInvestment extends React.Component {
                       </span>
                       </p>} */}
                     <div className="mt-2">
-                      <button className="btn btn-primary btn-block py-3 mt-3" onClick={this.handleEditAmount}>
+                      <button
+                        className="btn btn-primary btn-block py-3 mt-3"
+                        onClick={this.handleEditAmount}
+                      >
                         Proceed
                       </button>
                     </div>
@@ -486,7 +539,7 @@ class SingleInvestment extends React.Component {
                 </div>
               </div>
             </Modal>
-          }
+          )}
           {showPinModal && (
             <Modal
               classes="transaction-modal"
@@ -524,7 +577,7 @@ class SingleInvestment extends React.Component {
                       onClick={this.handleTransactionVerification}
                       disabled={pinLoading}
                     >
-                      Confirm Setup
+                      Confirm Top Up
                       {pinLoading && (
                         <div className="spinner-border spinner-border-white spinner-border-sm ml-2"></div>
                       )}
@@ -534,7 +587,7 @@ class SingleInvestment extends React.Component {
                       onClick={this.toggleTransactionPinModal}
                       style={{ cursor: "pointer" }}
                     >
-                      Cancel Setup
+                      Cancel Top Up
                     </p>
 
                     {pinError && <p className="text-error mt-2">{pinError}</p>}
@@ -586,8 +639,9 @@ class SingleInvestment extends React.Component {
                       ))}
 
                     <div
-                      className={`d-flex p-3 mb-2 cursor-pointer debit-card new-payment position-relative ${this.state.newPayment ? "selected" : ""
-                        }`}
+                      className={`d-flex p-3 mb-2 cursor-pointer debit-card new-payment position-relative ${
+                        this.state.newPayment ? "selected" : ""
+                      }`}
                       onClick={this.handleNewPayment}
                     >
                       {(this.state.newPayment ? true : false) && (
@@ -595,7 +649,11 @@ class SingleInvestment extends React.Component {
                           className="position-absolute"
                           width={16}
                           src={require("#/assets/icons/success.svg")}
-                          style={{ zIndex: 1, right: "0.35rem", top: "0.35rem" }}
+                          style={{
+                            zIndex: 1,
+                            right: "0.35rem",
+                            top: "0.35rem",
+                          }}
                         />
                       )}
                       <div className="d-flex mr-3">
@@ -705,7 +763,9 @@ class SingleInvestment extends React.Component {
               className="BG"
               title="Amount Invested"
               showCurrency={true}
-              total={`${investment ? formatCurrency(investment.balance) : "0.00"}`}
+              total={`${
+                investment ? formatCurrency(investment.balance) : "0.00"
+              }`}
               percentageDiff="N/A"
               backgroundImage={`url(${WalletBG})`}
               iconColor="#871523"
@@ -715,7 +775,9 @@ class SingleInvestment extends React.Component {
             <SummaryCard
               title="Interest"
               showCurrency={true}
-              total={`${investment ? formatCurrency(investment.accruedInterest) : "0.00"}`}
+              total={`${
+                investment ? formatCurrency(investment.accruedInterest) : "0.00"
+              }`}
               percentageDiff={"N/A"}
               backgroundImage={`url(${InvestmentBG})`}
               iconColor="#B0500E"
@@ -737,10 +799,11 @@ class SingleInvestment extends React.Component {
                 <img
                   src={require("#/assets/icons/plus-circle.svg")}
                   alt="plus"
-                  className={`img-fluid ${["active", "booked"].includes(investment?.order_status)
-                    ? "cursor-pointer"
-                    : "cursor-block disabled"
-                    }`}
+                  className={`img-fluid ${
+                    ["active", "booked"].includes(investment?.order_status)
+                      ? "cursor-pointer"
+                      : "cursor-block disabled"
+                  }`}
                   onClick={
                     ["active", "booked"].includes(investment?.order_status)
                       ? this.toggleOffCanvas
@@ -748,10 +811,11 @@ class SingleInvestment extends React.Component {
                   }
                 />
                 <p
-                  className={`text-blue mb-0 text-small ${["active", "booked"].includes(investment?.order_status)
-                    ? "cursor-pointer"
-                    : "cursor-block disabled"
-                    }`}
+                  className={`text-blue mb-0 text-small ${
+                    ["active", "booked"].includes(investment?.order_status)
+                      ? "cursor-pointer"
+                      : "cursor-block disabled"
+                  }`}
                   onClick={
                     ["active", "booked"].includes(investment?.order_status)
                       ? this.toggleOffCanvas
@@ -772,12 +836,13 @@ class SingleInvestment extends React.Component {
                             : require("#/assets/icons/toggle-on.svg")
                         }
                         alt="plus"
-                        className={`img-fluid ${["active", "booked"].includes(
-                          investment?.order_status
-                        )
-                          ? "cursor-pointer"
-                          : "cursor-block disabled"
-                          }`}
+                        className={`img-fluid ${
+                          ["active", "booked"].includes(
+                            investment?.order_status
+                          )
+                            ? "cursor-pointer"
+                            : "cursor-block disabled"
+                        }`}
                         onClick={
                           ["active", "booked"].includes(
                             investment?.order_status
@@ -787,12 +852,13 @@ class SingleInvestment extends React.Component {
                         }
                       />
                       <p
-                        className={`text-blue mb-0 text-small ${["active", "booked"].includes(
-                          investment?.order_status
-                        )
-                          ? "cursor-pointer"
-                          : "cursor-block disabled"
-                          }`}
+                        className={`text-blue mb-0 text-small ${
+                          ["active", "booked"].includes(
+                            investment?.order_status
+                          )
+                            ? "cursor-pointer"
+                            : "cursor-block disabled"
+                        }`}
                         onClick={
                           ["active", "booked"].includes(
                             investment?.order_status
@@ -811,12 +877,13 @@ class SingleInvestment extends React.Component {
                   investment?.autoChargeChannel !== "" && (
                     <>
                       <svg
-                        className={`${["active", "booked"].includes(
-                          investment?.order_status
-                        )
-                          ? "cursor-pointer"
-                          : "cursor-block disabled"
-                          }`}
+                        className={`${
+                          ["active", "booked"].includes(
+                            investment?.order_status
+                          )
+                            ? "cursor-pointer"
+                            : "cursor-block disabled"
+                        }`}
                         onClick={
                           ["active", "booked"].includes(
                             investment?.order_status
@@ -824,21 +891,39 @@ class SingleInvestment extends React.Component {
                             ? this.openEditOffCanvas
                             : null
                         }
-                        width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path opacity="0.6" d="M17 34C26.3888 34 34 26.3888 34 17C34 7.61116 26.3888 0 17 0C7.61116 0 0 7.61116 0 17C0 26.3888 7.61116 34 17 34Z" fill="#E5F1FF" />
-                        <path d="M13.0322 17.8351V19.7351H14.9322L20.0112 14.6561L18.1112 12.7561L13.0322 17.8351Z" fill="#3A4080" />
-                        <path d="M21.5191 12.4411L20.3311 11.2561C20.2357 11.1609 20.1064 11.1074 19.9716 11.1074C19.8369 11.1074 19.7076 11.1609 19.6122 11.2561L18.6191 12.2481L20.5191 14.1481L21.5121 13.1551C21.6068 13.0608 21.6605 12.9331 21.6618 12.7995C21.6631 12.6659 21.6119 12.5372 21.5191 12.4411V12.4411Z" fill="#3A4080" />
-                        <path d="M23.189 21.2631H11V23.2951H23.189V21.2631Z" fill="#3A4080" />
+                        width="34"
+                        height="34"
+                        viewBox="0 0 34 34"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          opacity="0.6"
+                          d="M17 34C26.3888 34 34 26.3888 34 17C34 7.61116 26.3888 0 17 0C7.61116 0 0 7.61116 0 17C0 26.3888 7.61116 34 17 34Z"
+                          fill="#E5F1FF"
+                        />
+                        <path
+                          d="M13.0322 17.8351V19.7351H14.9322L20.0112 14.6561L18.1112 12.7561L13.0322 17.8351Z"
+                          fill="#3A4080"
+                        />
+                        <path
+                          d="M21.5191 12.4411L20.3311 11.2561C20.2357 11.1609 20.1064 11.1074 19.9716 11.1074C19.8369 11.1074 19.7076 11.1609 19.6122 11.2561L18.6191 12.2481L20.5191 14.1481L21.5121 13.1551C21.6068 13.0608 21.6605 12.9331 21.6618 12.7995C21.6631 12.6659 21.6119 12.5372 21.5191 12.4411V12.4411Z"
+                          fill="#3A4080"
+                        />
+                        <path
+                          d="M23.189 21.2631H11V23.2951H23.189V21.2631Z"
+                          fill="#3A4080"
+                        />
                       </svg>
 
-
                       <p
-                        className={`text-blue mb-0 text-small ${["active", "booked"].includes(
-                          investment?.order_status
-                        )
-                          ? "cursor-pointer"
-                          : "cursor-block disabled"
-                          }`}
+                        className={`text-blue mb-0 text-small ${
+                          ["active", "booked"].includes(
+                            investment?.order_status
+                          )
+                            ? "cursor-pointer"
+                            : "cursor-block disabled"
+                        }`}
                         onClick={
                           ["active", "booked"].includes(
                             investment?.order_status
@@ -856,10 +941,11 @@ class SingleInvestment extends React.Component {
                 <img
                   src={require("#/assets/icons/liquidate.svg")}
                   alt="plus"
-                  className={`img-fluid ${["active"].includes(investment?.order_status)
-                    ? "cursor-pointer"
-                    : "cursor-block disabled"
-                    }`}
+                  className={`img-fluid ${
+                    ["active"].includes(investment?.order_status)
+                      ? "cursor-pointer"
+                      : "cursor-block disabled"
+                  }`}
                   onClick={
                     ["active"].includes(investment?.order_status)
                       ? this.handleLiquidate
@@ -867,10 +953,11 @@ class SingleInvestment extends React.Component {
                   }
                 />
                 <p
-                  className={`text-blue mb-0 text-small ${["active"].includes(investment?.order_status)
-                    ? "cursor-pointer"
-                    : "cursor-block disabled"
-                    }`}
+                  className={`text-blue mb-0 text-small ${
+                    ["active"].includes(investment?.order_status)
+                      ? "cursor-pointer"
+                      : "cursor-block disabled"
+                  }`}
                   onClick={
                     ["active"].includes(investment?.order_status)
                       ? this.handleLiquidate
@@ -901,8 +988,8 @@ class SingleInvestment extends React.Component {
                     <b>
                       {investment && investment.nextPaymentDate
                         ? moment(investment.nextPaymentDate).format(
-                          "MMM D, YYYY"
-                        )
+                            "MMM D, YYYY"
+                          )
                         : "Not Available"}
                     </b>
                   </p>
@@ -921,14 +1008,33 @@ class SingleInvestment extends React.Component {
                 <div>
                   <h5 className="text-blue">Investment Progress</h5>
                   <div className="progress position-relative">
-                    {investment && investment.percentageCompletion < 10 ? <div style={{ top: "3px", left: "2px" }} className="position-absolute text-black font-weight-bold"> {investment.percentageCompletion}% </div> : <></>}
+                    {investment && investment.percentageCompletion < 10 ? (
+                      <div
+                        style={{ top: "3px", left: "2px" }}
+                        className="position-absolute text-black font-weight-bold"
+                      >
+                        {" "}
+                        {investment.percentageCompletion}%{" "}
+                      </div>
+                    ) : (
+                      <></>
+                    )}
 
                     <div
-                      className={`progress-bar bg-success ${investment && investment.percentageCompletion < 10 ? "text-black" : ""} ${investment && investment.percentageCompletion == 0 ? "d-none" : ""}`}
+                      className={`progress-bar bg-success ${
+                        investment && investment.percentageCompletion < 10
+                          ? "text-black"
+                          : ""
+                      } ${
+                        investment && investment.percentageCompletion == 0
+                          ? "d-none"
+                          : ""
+                      }`}
                       role="progressbar"
                       style={{
-                        width: `${investment ? investment.percentageCompletion : 0
-                          }%`,
+                        width: `${
+                          investment ? investment.percentageCompletion : 0
+                        }%`,
                       }}
                       aria-valuenow={
                         investment ? investment.percentageCompletion : 0
@@ -936,7 +1042,9 @@ class SingleInvestment extends React.Component {
                       aria-valuemin="0"
                       aria-valuemax="100"
                     >
-                      {investment && investment.percentageCompletion >= 10 ? `${investment.percentageCompletion}%` : ""}
+                      {investment && investment.percentageCompletion >= 10
+                        ? `${investment.percentageCompletion}%`
+                        : ""}
                     </div>
                   </div>
                 </div>
@@ -1126,12 +1234,78 @@ class SingleInvestment extends React.Component {
                   name="title"
                   value={inputTitle}
                   error={
-                    errors
-                      ? errors.title
-                      : errorObject && errorObject["title"]
+                    errors ? errors.title : errorObject && errorObject["title"]
                   }
                 />
               </div>
+<<<<<<< HEAD
+              {
+                <div className="mt-3">
+                  <p>How often do you set aside money for this?</p>
+                  <SelectBox
+                    onChange={this.handleChange}
+                    boxClasses="mt-3 active"
+                    label="Frequency"
+                    placeholder="Set frequency"
+                    name="frequency"
+                    options={investmentFrequency}
+                    // value={inputFrequency}
+                    optionName="name"
+                    error={
+                      errors
+                        ? errors.frequency
+                        : errorObject && errorObject["frequency"]
+                    }
+                  />
+                </div>
+              }
+              {!(
+                this.props.investment &&
+                this.props.investment.service &&
+                this.props.investment.service.type === "predefined"
+              ) && (
+                <div className="mt-3">
+                  <p>How much do you want at each frequency?</p>
+                  <Textbox
+                    onChange={this.handleChange}
+                    type="text"
+                    label="Frequency Amount"
+                    placeholder="Frequency Amount"
+                    name="frequencyAmount"
+                    value={formatStringToCurrency(inputFrequencyAmount)}
+                    error={
+                      errors
+                        ? errors.frequencyAmount
+                        : errorObject && errorObject["frequencyAmount"]
+                    }
+                  />
+                </div>
+              )}
+              {!(
+                this.props.investment &&
+                this.props.investment.service &&
+                this.props.investment.service.type === "collection"
+              ) && (
+                <div div className="mt-3">
+                  <p>Edit target date?</p>
+                  <DateBox
+                    onChange={(date) =>
+                      this.handleChangeDate("targetDate", date)
+                    }
+                    label="Target Date"
+                    placeholder="Set target date"
+                    name="targetDate"
+                    value={inputTargetDate}
+                    error={
+                      errors
+                        ? errors.targetDate
+                        : errorObject && errorObject["targetDate"]
+                    }
+                    min={new Date()}
+                  />
+                </div>
+              )}
+=======
               {<div className="mt-3">
                 <p>How often do you set aside money for this?</p>
                 <SelectBox
@@ -1175,13 +1349,18 @@ class SingleInvestment extends React.Component {
                   min={new Date()}
                 />
               </div>}
+>>>>>>> fba3fa3e817b48d98e5b6549e082eccbe8f86530
               <div className="mt-5 d-flex flex-column flex-grow-1">
                 <div className="d-flex pb-2 flex-column flex-grow-1 justify-content-between">
-
                   <div className="mt-4 pb-3">
-                    {entryError && <p className="text-error mt-2 mr-3">{entryError}</p>}
+                    {entryError && (
+                      <p className="text-error mt-2 mr-3">{entryError}</p>
+                    )}
 
-                    <button className="w-100 py-3 btn btn-primary btn-md-block" onClick={this.handleEditPlan}>
+                    <button
+                      className="w-100 py-3 btn btn-primary btn-md-block"
+                      onClick={this.handleEditPlan}
+                    >
                       Save changes
                       {/* {calcLoading &&
                     <div className="spinner-border text-white spinner-border-sm ml-2"></div>
@@ -1192,7 +1371,7 @@ class SingleInvestment extends React.Component {
               </div>
             </div>
           </OffCanvas>
-        </div >
+        </div>
         <LiquidateInvestment />
       </>
     );
@@ -1234,8 +1413,10 @@ const mapDispatchToProps = (dispatch) => {
     fetchSingleInvestment: (id) => dispatch(fetchSingleInvestment(id)),
     getCards: () => dispatch(getCards()),
     topUpInvestment: (payload, id) => dispatch(topUpInvestment(payload, id)),
-    editInvestment: (payload, type, id) => dispatch(editInvestment(payload, type, id)),
-    editInvestmentAmount: (payload, type, id) => dispatch(editInvestmentAmount(payload, type, id)),
+    editInvestment: (payload, type, id) =>
+      dispatch(editInvestment(payload, type, id)),
+    editInvestmentAmount: (payload, type, id) =>
+      dispatch(editInvestmentAmount(payload, type, id)),
     disableAutocharge: (id) => dispatch(disableAutocharge(id)),
     confirmPin: (payload) => dispatch(confirmPin(payload)),
   };
