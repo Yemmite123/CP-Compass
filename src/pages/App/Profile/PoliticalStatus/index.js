@@ -234,7 +234,7 @@ class PoliticalStatus extends React.Component {
                     name="occupiedPoliticalPosition"
                     label="No"
                     value={false}
-                    // checked={occupieddsds PoliticalPosition === false} 
+                    checked={occupiedPoliticalPosition === false}
                     onChange={this.handleChange}
                   />
                 </div>
