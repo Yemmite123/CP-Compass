@@ -33,7 +33,7 @@ class Recommended extends React.Component {
             {
               (recommended && recommended.recommendations?.length > 0 &&
                 recommended.recommendations?.map(investment => (
-                  <div className="col-md-3 pl-0" key={Math.random() * 1000} >
+                  <div className="col-md-3 mt-3 pl-0" key={Math.random() * 1000} >
                     <MarketplaceCard
                       key={Math.random() * 1000}
                       item={investment}

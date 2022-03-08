@@ -27,17 +27,18 @@ const ImageUploadInput = ({
         return;
       }
 
-
+      console.log(selectedImage)
       if (selectedImage.type !== "application/pdf") {
         new Compressor(selectedImage, {
           quality: 0.6,
-          convertSize: 0,
+          convertSize: 1000000,
           success: (compressedFile) => {
             setFile(compressedFile);
-            console.log(compressedFile)
             setSelectedImageURL(
               URL.createObjectURL(compressedFile)
             );
+            compressedFile = new File([compressedFile], compressedFile.name)
+            console.log(compressedFile);
             handleFile(compressedFile);
             URL.revokeObjectURL(compressedFile);
           }

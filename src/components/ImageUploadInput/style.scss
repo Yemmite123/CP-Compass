@@ -4,6 +4,8 @@
   align-items: center;
   margin-bottom: 33px;
 
+ 
+
   &__image {
     width: 92px;
     height: 92px;
@@ -54,6 +56,14 @@
     &__image {
       width: 75px;
       height: 75px;
+    }
+  }
+
+  @media (max-width: 760px) {
+    height: max-content;
+    display: block;
+    &__image{
+      margin-bottom: 10px;
     }
   }
 }
