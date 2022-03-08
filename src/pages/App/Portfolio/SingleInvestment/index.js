@@ -192,20 +192,20 @@ class SingleInvestment extends React.Component {
       }
 
     const data = this.state;
-    const required = ["title", "frequency"];
+    const required = ["inputTitle", "inputFrequency"];
 
     if (
       this.props.investment &&
       this.props.investment.service.type !== "predefined"
     ) {
-      required.push("frequencyAmount");
+      required.push("inputFrequencyAmount");
     }
 
     if (
       this.props.investment &&
       this.props.investment.service.type !== "collection"
     ) {
-      required.push("targetDate");
+      required.push("inputTargetDate");
     }
 
     const errors = validateFields(data, required);
@@ -231,15 +231,15 @@ class SingleInvestment extends React.Component {
       return this.setState({ entryError });
     }
 
-    const { title, targetDate, frequency, frequencyAmount } = this.state;
+    const { inputTitle, inputTargetDate, inputFrequency, inputFrequencyAmount } = this.state;
     const payload = {
-      title,
+      title: inputTitle,
       targetAmount: this.props.investment.targetAmount,
       currency: "NGN",
       startDate: moment(this.props.investment.startDate).format("YYYY-MM-DD"),
-      endDate: moment(targetDate).format("YYYY-MM-DD"),
-      frequency,
-      amount: Number(formatCurrencyToString(frequencyAmount)),
+      endDate: moment(inputTargetDate).format("YYYY-MM-DD"),
+      frequency: inputFrequency,
+      amount: Number(formatCurrencyToString(inputFrequencyAmount)),
     };
 
     const _data = {
