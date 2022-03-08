@@ -105,6 +105,19 @@ export const login = (payload, history) => {
                                 window.location = document.referrer;
                                 return;
                             }
+
+                            if (sessionStorage.getItem("blogPost")) {
+                                const href = sessionStorage.getItem("blogPost");
+                                sessionStorage.removeItem("blogPost");
+                                let paths = href.split("/");
+                                const blogName = paths[paths.length - 1];
+                                history.push({
+                                    pathname: `app/blogs/blog/${blogName}`,
+                                    state: { routeName: blogName.split("-").join(" ") }
+                                });
+                                return;
+                            }
+
                             history.push('/app/onboarding');
                         });
                 }

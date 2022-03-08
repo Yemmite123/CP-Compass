@@ -120,126 +120,126 @@ class App extends Component {
               {!this.props.history.location.pathname
                 .split("/")
                 .includes("onboarding") && (
-                <DashboardMenu
-                  openMenu={openMenu}
-                  handleToggleMenu={this.handleToggleMenu}
-                />
-              )}
+                  <DashboardMenu
+                    openMenu={openMenu}
+                    handleToggleMenu={this.handleToggleMenu}
+                  />
+                )}
               {!this.props.history.location.pathname
                 .split("/")
                 .includes("onboarding") && (
-                <>
-                  <div className="dashboard-main">
-                    <span
-                      className={` ${openMenu ? "d-block" : "d-none"}`}
-                      onClick={this.handleToggleMenu}
-                    ></span>
-                    <DashboardNav
-                      user={userProfile}
-                      headerTitle={headerTitle ? headerTitle : "Dashboard"}
-                      logoutHandler={this.handleLogout}
-                      profileHandler={this.handleNavigateToProfile}
-                      toggleMenu={this.handleToggleMenu}
-                      notifications={notifications}
-                      notificationsMeta={notificationsMeta}
-                    />
-                    <div className="dashboard-body">
-                      {isBvn && !isApproved ? (
-                        <InformationBar className="mt-3 mb-3 text-white">
-                          Your account is awaiting approval, you won't be able
-                          to perform some actions.
-                        </InformationBar>
-                      ) : !isBvn && !isApproved ? (
-                        <InformationBar className="mt-3 mb-3 text-white">
-                          <span
-                            className="complete-account-setup"
-                            onClick={this.handleCompleteAccount}
-                          >
-                            Complete your account setup:
-                          </span>{" "}
-                          You need to complete your account setup to start
-                          investing!
-                        </InformationBar>
-                      ) : null}
+                  <>
+                    <div className="dashboard-main">
+                      <span
+                        className={` ${openMenu ? "d-block" : "d-none"}`}
+                        onClick={this.handleToggleMenu}
+                      ></span>
+                      <DashboardNav
+                        user={userProfile}
+                        headerTitle={headerTitle ? headerTitle : "Dashboard"}
+                        logoutHandler={this.handleLogout}
+                        profileHandler={this.handleNavigateToProfile}
+                        toggleMenu={this.handleToggleMenu}
+                        notifications={notifications}
+                        notificationsMeta={notificationsMeta}
+                      />
+                      <div className="dashboard-body h-85">
+                        {isBvn && !isApproved ? (
+                          <InformationBar className="mt-3 mb-3 text-white">
+                            Your account is awaiting approval, you won't be able
+                            to perform some actions.
+                          </InformationBar>
+                        ) : !isBvn && !isApproved ? (
+                          <InformationBar className="mt-3 mb-3 text-white">
+                            <span
+                              className="complete-account-setup"
+                              onClick={this.handleCompleteAccount}
+                            >
+                              Complete your account setup:
+                            </span>{" "}
+                            You need to complete your account setup to start
+                            investing!
+                          </InformationBar>
+                        ) : null}
 
-                      {this.props.userProfile?.data && (
-                        <Drift
-                          appId={CONFIG.DRIFT_ID}
-                          userId={
-                            this.props.userProfile?.data &&
-                            this.props.userProfile?.data.id
-                          }
-                          attributes={{
-                            email: this.props.userProfile?.data?.email,
-                            company: "CP Compass",
-                            name: `${this.props.userProfile?.data?.firstName} ${this.props.userProfile?.data?.lastName}`,
-                          }}
-                        />
-                      )}
-                      <div>
-                        <Switch>
-                          <>
-                            <Route path={`${path}/home`}>
-                              <Home />
-                            </Route>
-                            <Route path={`${path}/marketplace`}>
-                              <Marketplace />
-                            </Route>
-                            <Route path={`${path}/portfolio`}>
-                              <Portfolio />
-                            </Route>
-                            <Route path={`${path}/profile`}>
-                              <Profile />
-                            </Route>
-                            <Route path={`${path}/support`}>
-                              <Support />
-                            </Route>
-                            <Route exact path={`${path}/wallet`}>
-                              <Wallet />
-                            </Route>
-                            <Route path={`${path}/wallet/deposit`}>
-                              <Deposit />
-                            </Route>
-                            <Route path={`${path}/wallet/withdraw`}>
-                              <Withdraw />
-                            </Route>
-                            <Route path={`${path}/wallet/transactions`}>
-                              <Transactions />
-                            </Route>
-                            <Route path={`${path}/wallet/cards`}>
-                              <Cards />
-                            </Route>
-                            <Route path={`${path}/profile/segments`}>
-                              <Segments />
-                            </Route>
-                            <Route path={`${path}/profile/risks`}>
-                              <Risks />
-                            </Route>
-                            <Route path={`${path}/calculator`}>
-                              <Calculator />
-                            </Route>
-                            <Route exact path={`${path}/blogs`}>
-                              <Insights />
-                            </Route>
-                            <Route exact path={`${path}/blogs/blog/:slug`}>
-                              <SingleInsight />
-                            </Route>
-                            <Route path={`${path}/blogs/trending`}>
-                              <TrendingInsights />
-                            </Route>
-                            <Route path={`${path}/blogs/latest`}>
-                              <LatestInsights />
-                            </Route>
-                            <Route path={`${path}/blogs/category/:slug`}>
-                              <InsightCategory />
-                            </Route>
-                          </>
-                        </Switch>
+                        {this.props.userProfile?.data && (
+                          <Drift
+                            appId={CONFIG.DRIFT_ID}
+                            userId={
+                              this.props.userProfile?.data &&
+                              this.props.userProfile?.data.id
+                            }
+                            attributes={{
+                              email: this.props.userProfile?.data?.email,
+                              company: "CP Compass",
+                              name: `${this.props.userProfile?.data?.firstName} ${this.props.userProfile?.data?.lastName}`,
+                            }}
+                          />
+                        )}
+                        <div className="h-100">
+                          <Switch>
+                            <>
+                              <Route path={`${path}/home`}>
+                                <Home />
+                              </Route>
+                              <Route path={`${path}/marketplace`}>
+                                <Marketplace />
+                              </Route>
+                              <Route path={`${path}/portfolio`}>
+                                <Portfolio />
+                              </Route>
+                              <Route path={`${path}/profile`}>
+                                <Profile />
+                              </Route>
+                              <Route path={`${path}/support`}>
+                                <Support />
+                              </Route>
+                              <Route exact path={`${path}/wallet`}>
+                                <Wallet />
+                              </Route>
+                              <Route path={`${path}/wallet/deposit`}>
+                                <Deposit />
+                              </Route>
+                              <Route path={`${path}/wallet/withdraw`}>
+                                <Withdraw />
+                              </Route>
+                              <Route path={`${path}/wallet/transactions`}>
+                                <Transactions />
+                              </Route>
+                              <Route path={`${path}/wallet/cards`}>
+                                <Cards />
+                              </Route>
+                              <Route path={`${path}/profile/segments`}>
+                                <Segments />
+                              </Route>
+                              <Route path={`${path}/profile/risks`}>
+                                <Risks />
+                              </Route>
+                              <Route path={`${path}/calculator`}>
+                                <Calculator />
+                              </Route>
+                              <Route exact path={`${path}/blogs`}>
+                                <Insights />
+                              </Route>
+                              <Route exact path={`${path}/blogs/blog/:slug`}>
+                                <SingleInsight />
+                              </Route>
+                              <Route path={`${path}/blogs/trending`}>
+                                <TrendingInsights />
+                              </Route>
+                              <Route path={`${path}/blogs/latest`}>
+                                <LatestInsights />
+                              </Route>
+                              <Route path={`${path}/blogs/category/:slug`}>
+                                <InsightCategory />
+                              </Route>
+                            </>
+                          </Switch>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </>
-              )}
+                  </>
+                )}
             </div>
           </>
         </Switch>

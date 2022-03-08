@@ -32,14 +32,14 @@ class Support extends React.Component {
       },
     ]
     return (
-      <div className="support-page">
+      <div className="support-page h-100">
         <Switch>
           <Route exact path={path}>
-            <Redirect to={{ pathname:`${path}/tickets`, state: { routeName: 'Support' }}} />
+            <Redirect to={{ pathname: `${path}/tickets`, state: { routeName: 'Support' } }} />
           </Route>
           <Route path={`${path}/tickets`}>
-            <Back/>
-            <div className="mb-4"/>
+            <Back />
+            <div className="mb-4" />
             <DashboardBodyMenu menus={menus} />
             <div className="">
               <Tickets />
@@ -56,7 +56,7 @@ class Support extends React.Component {
             </div>
           </Route>
           <Route path={`${path}/ticket/:ticketId`}>
-            <Back/>
+            <Back />
             <SingleTicket />
           </Route>
         </Switch>

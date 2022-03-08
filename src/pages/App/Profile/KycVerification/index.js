@@ -37,13 +37,20 @@ class KycVerification extends React.Component {
   }
 
   setValues = () => {
-    const { bankInfo } = this.props;
+    const { bankInfo, documents } = this.props;
     if (bankInfo) {
       this.setState({
         accountNumber: bankInfo && bankInfo.accountNumber ? bankInfo.accountNumber : '',
         bankCode: bankInfo && bankInfo.bankCode ? bankInfo.bankCode : '',
         accountName: bankInfo && bankInfo.accountName ? bankInfo.accountName : '',
       })
+    }
+
+    if (documents) {
+      let document = this.props?.documents?.find((document) => document.category === "government_id");
+      if (document) {
+        this.setState({ documentType: document.type })
+      }
     }
   }
 

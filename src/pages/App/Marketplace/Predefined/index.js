@@ -125,8 +125,7 @@ class Predefined extends React.Component {
   };
 
   handleSelectMethod = (event) => {
-    console.log(event.target.id);
-    this.setState({ selectedMethod: event.target.id });
+    this.setState({ selectedMethod: event.currentTarget.id });
   };
 
   //handles displaying the confirmation modal for the investment
@@ -763,9 +762,8 @@ class Predefined extends React.Component {
                   {fundingSource.map((method) => (
                     <div
                       id={method.value}
-                      className={`position-relative d-flex p-3 mb-2 ${
-                        selectedMethod === method.value ? "selected" : ""
-                      } payment-method`}
+                      className={`position-relative d-flex p-3 mb-2 ${selectedMethod === method.value ? "selected" : ""
+                        } payment-method`}
                       onClick={this.handleSelectMethod}
                     >
                       {selectedMethod === method.value && (

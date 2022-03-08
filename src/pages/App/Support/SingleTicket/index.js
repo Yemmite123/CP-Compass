@@ -133,7 +133,7 @@ class SingleTicket extends React.Component {
     const errorObject = serializeErrors(error);
 
     return (
-      <div className="single-ticket-page">
+      <div className="single-ticket-page h-100 d-flex flex-column">
         {showImageModal && (
           <Modal onClose={this.toggleImageModal}>
             <img src={image} alt="attachment" className="img-fluid" />
@@ -149,7 +149,7 @@ class SingleTicket extends React.Component {
             {ticket && ticket.title}
           </h3>
         </div>
-        <div className="message-container border-top rounded-top border-left border-right">
+        <div className="message-container border-top border-bottom rounded-top border-left border-right" style={{ flex: "1" }}>
           {messages &&
             messages.length > 0 &&
             messages.map((message) => (
@@ -160,7 +160,7 @@ class SingleTicket extends React.Component {
               />
             ))}
         </div>
-        <div className=" border rounded-bottom message-area pl-3 py-1 pr-3">
+        {ticket?.status !== "resolved" && <div className=" border rounded-bottom message-area pl-3 py-1 pr-3">
           <div className="d-flex w-100">
             <form onSubmit={this.submitMessage}>
               <textarea
@@ -245,6 +245,7 @@ class SingleTicket extends React.Component {
               ))}
           </div>
         </div>
+        }
         <p className="text-error text-left">
           {errorObject && errorObject["attachment.0"]}
         </p>

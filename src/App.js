@@ -14,7 +14,7 @@ import NewPassword from '#/pages/Login/NewPassword';
 import EventComponent from './components/EventComponent';
 import './style/styles.scss';
 
-const App = ({authorized, isStaff}) => {
+const App = ({ authorized, isStaff }) => {
 
   return (
     <PersistGate persistor={persistor} loading={null}>
@@ -40,7 +40,13 @@ const App = ({authorized, isStaff}) => {
             <NewPassword />
           </Route>
           <Route path="/app">
-            {!authorized || isStaff ? <Redirect to="/login" /> : <EventComponent Component={Preloader} />}
+            {!authorized || isStaff ? (() => {
+              if (window.location.href.includes("blog")) {
+                window.sessionStorage.setItem("blogPost", window.location.href);
+              }
+              return <Redirect to="/login" />
+            })()
+              : <EventComponent Component={Preloader} />}
           </Route>
           <Route path="*">
             <NotFound />
@@ -52,7 +58,7 @@ const App = ({authorized, isStaff}) => {
 }
 
 const mapStateToProps = (state) => {
-  const { 
+  const {
     app: { profile: { userProfile: { data } } },
     user: { authorized, isStaff },
   } = state;
