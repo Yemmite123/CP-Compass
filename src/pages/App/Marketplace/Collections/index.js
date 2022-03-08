@@ -124,6 +124,7 @@ class Collections extends React.Component {
   //handles displaying the confirmation modal for the investment
   handleComfirmation = (e) => {
     e.preventDefault();
+    const minInvestmentValue = this.props.minInvestment[0]?.current;
     this.setState({ errors: null, entryError: null });
 
     console.log("validatiao");
@@ -135,6 +136,13 @@ class Collections extends React.Component {
       ) {
         return this.setState({ errors: { target: "enter a valid amount" } });
       }
+    if (this.state.target < minInvestmentValue) {
+      return this.setState({
+        errors: {
+          target: "The minimum investment value is ₦" + minInvestmentValue,
+        },
+      });
+    }
 
     if (this.state.amount)
       if (
@@ -1051,6 +1059,7 @@ const mapStateToProps = (state) => {
       profile: {
         userProfile: { data },
       },
+      config,
     },
   } = state;
 
@@ -1073,6 +1082,7 @@ const mapStateToProps = (state) => {
     walletDetails,
     isBvnActive: data && data.bvn ? true : false,
     isApproved: data && data.isApproved === 1 ? true : false,
+    minInvestment: config?.data?.investmentConfig,
   };
 };
 

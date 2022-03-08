@@ -80,10 +80,12 @@ class Withdraw extends React.Component {
     const data = this.state;
     const required = ["amount"];
     const errors = validateFields(data, required);
-
-    if (Number(this.state.textInputAmount) < 5000) {
+    const minWithdrawal = this.props.withdrawalFee[2].current;
+    if (Number(this.state.textInputAmount) < minWithdrawal) {
       return this.setState({
-        errors: { amount: "Does not meet minimum withdrawal of ₦5000" },
+        errors: {
+          amount: `Does not meet minimum withdrawal of ₦${minWithdrawal}`,
+        },
       });
     }
 
@@ -188,8 +190,10 @@ class Withdraw extends React.Component {
       banks &&
       banks.find((bank) => bank.code === bankDetails.bankCode);
     const errorObject = serializeErrors(error);
+
     return (
       <div className="withdraw-page">
+        {console.log(this.props.withdrawalFee)}
         {showComfirmationModal && (
           <Modal onClose={this.toggleConfirmationModal}>
             <div className="text-right pb-3">

@@ -133,7 +133,7 @@ class Predefined extends React.Component {
   handleComfirmation = (e) => {
     e.preventDefault();
     this.setState({ errors: null, entryError: null });
-
+    const minInvestmentValue = this.props.minInvestment[0]?.current;
     if (this.state.target)
       if (
         !Math.floor(Number(this.state.target)) ||
@@ -141,6 +141,13 @@ class Predefined extends React.Component {
       ) {
         return this.setState({ errors: { target: "enter a valid amount" } });
       }
+    if (this.state.target < minInvestmentValue) {
+      return this.setState({
+        errors: {
+          target: "The minimum investment value is ₦" + minInvestmentValue,
+        },
+      });
+    }
 
     if (this.state.amount)
       if (
@@ -289,7 +296,7 @@ class Predefined extends React.Component {
     }
 
     if (isNaN(this.state.amount)) {
-      return this.setState({ errors: { amounr: "enter a valid number" } });
+      return this.setState({ errors: { amount: "enter a valid number" } });
     }
 
     if (Object.keys(errors).length > 0) {
@@ -451,6 +458,7 @@ class Predefined extends React.Component {
       walletDetails,
       calcLoading,
       investError,
+      minInvestment,
     } = this.props;
     const {
       location: { state },
@@ -458,7 +466,8 @@ class Predefined extends React.Component {
     const errorObject = investError
       ? serializeErrors(investError)
       : serializeErrors(error);
-
+    const minInvestmentValue = minInvestment[0]?.current;
+    console.log(errors);
     return (
       <div className="predefined-page">
         {confirmationModal && (
@@ -1009,6 +1018,9 @@ class Predefined extends React.Component {
                   errors ? errors.target : errorObject && errorObject["target"]
                 }
               />
+              {/* <small style={{ color: "#8b0000" }}>
+                The mimimum investment is ₦{minInvestmentValue}
+              </small> */}
             </div>
             <div className="mt-3">
               <p>When do you want to start?</p>
@@ -1117,6 +1129,7 @@ const mapStateToProps = (state) => {
     investError,
     walletDetails,
     interestRate: config?.data?.investmentConfig,
+    minInvestment: config?.data?.investmentConfig,
     isBvnActive: data && data.bvn ? true : false,
     isApproved: data && data.isApproved === 1 ? true : false,
   };
