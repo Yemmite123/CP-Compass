@@ -100,12 +100,8 @@ class SingleInvestment extends React.Component {
     if (!investment)
       return;
 
-      console.log(investment?.endDate)
-      console.log(moment(investment?.endDate).format("YYYY MMM dddd"))
-      console.log(moment(investment?.endDate).utc().format("YYYY MMM dddd"))
-      
     this.setState({ inputTitle: investment?.title });
-    this.setState({ inputTargetDate: moment(investment?.endDate).utc().toDate() });
+    this.setState({ inputTargetDate: moment(investment?.endDate).toDate() });
     this.setState({ inputFrequency: investment?.frequency });
     this.setState({ inputFrequencyAmount: investment?.installment.toString() });
   }
@@ -220,12 +216,12 @@ class SingleInvestment extends React.Component {
 
 
     const info = {
-      startDate: moment(this.props.investment.startDate).utc().format(),
+      startDate: moment(moment(this.props.investment.startDate).toDate()).format(),
       endDate: this.props.investment.endDate
-                ? moment(this.props.investment.endDate).utc().format()
-                  : moment(this.state.targetDate)
-                ? moment(this.state.targetDate).utc().format()
-                    : "",
+        ? moment(moment(this.props.investment.endDate).toDate()).format()
+        : moment(this.state.targetDate)
+          ? moment(moment(this.state.targetDate).toDate()).format()
+          : "",
       frequency: this.state.frequency.toLowerCase(),
       targetAmount: this.props.investment.targetAmount,
     };
@@ -362,6 +358,7 @@ class SingleInvestment extends React.Component {
   };
 
   handleChangeDate = (item, date) => {
+    console.log(date);
     this.setState({ inputTargetDate: date });
     this.setState({ [item]: date });
   };
@@ -1071,7 +1068,7 @@ class SingleInvestment extends React.Component {
                         style={{ fontSize: "16px" }}
                       >
                         {investment && investment.startDate
-                          ? moment(investment.startDate).format("MMM D, YYYY")
+                          ? moment(moment(investment.startDate).toDate()).format("MMM D, YYYY")
                           : "N/A"}
                       </h5>
                     </div>
@@ -1084,7 +1081,7 @@ class SingleInvestment extends React.Component {
                         style={{ fontSize: "16px" }}
                       >
                         {investment && investment.endDate
-                          ? moment(investment.endDate).format("MMM D, YYYY")
+                          ? moment(moment(investment.endDate).toDate()).format("MMM D, YYYY")
                           : "No end date"}
                       </h5>
                     </div>
