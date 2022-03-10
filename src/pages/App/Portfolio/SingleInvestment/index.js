@@ -100,6 +100,10 @@ class SingleInvestment extends React.Component {
     if (!investment)
       return;
 
+      console.log(investment?.endDate)
+      console.log(moment(investment?.endDate).format("YYYY MMM dddd"))
+      console.log(moment(investment?.endDate).utc().format("YYYY MMM dddd"))
+      
     this.setState({ inputTitle: investment?.title });
     this.setState({ inputTargetDate: moment(investment?.endDate).utc().toDate() });
     this.setState({ inputFrequency: investment?.frequency });
@@ -218,9 +222,10 @@ class SingleInvestment extends React.Component {
     const info = {
       startDate: moment(this.props.investment.startDate).utc().format(),
       endDate: this.props.investment.endDate
-            ? moment(this.props.investment.endDate).utc().format()
-            : moment(this.state.targetDate),
-
+                ? moment(this.props.investment.endDate).utc().format()
+                  : moment(this.state.targetDate)
+                ? moment(this.state.targetDate).utc().format()
+                    : "",
       frequency: this.state.frequency.toLowerCase(),
       targetAmount: this.props.investment.targetAmount,
     };
@@ -235,8 +240,8 @@ class SingleInvestment extends React.Component {
       title: inputTitle,
       targetAmount: this.props.investment.targetAmount,
       currency: "NGN",
-      startDate: moment(this.props.investment.startDate).format("YYYY-MM-DD"),
-      endDate: moment(inputTargetDate).format("YYYY-MM-DD"),
+      startDate: moment(this.props.investment.startDate).utc().format(),
+      endDate: moment(inputTargetDate).utc().format(),
       frequency: inputFrequency,
       amount: Number(formatCurrencyToString(inputFrequencyAmount)),
     };
