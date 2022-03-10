@@ -240,8 +240,8 @@ class SingleInvestment extends React.Component {
       title: inputTitle,
       targetAmount: this.props.investment.targetAmount,
       currency: "NGN",
-      startDate: moment(this.props.investment.startDate).utc().format(),
-      endDate: moment(inputTargetDate).utc().format(),
+      startDate: moment(this.props.investment.startDate).format("YYYY-MM-DD"),
+      endDate: moment(inputTargetDate).format("YYYY-MM-DD"),
       frequency: inputFrequency,
       amount: Number(formatCurrencyToString(inputFrequencyAmount)),
     };
