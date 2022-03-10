@@ -101,7 +101,7 @@ class SingleInvestment extends React.Component {
       return;
 
     this.setState({ inputTitle: investment?.title });
-    this.setState({ inputTargetDate: moment(investment?.endDate?.split("T")[0]).toDate() });
+    this.setState({ inputTargetDate: moment(investment?.endDate).utc().toDate() });
     this.setState({ inputFrequency: investment?.frequency });
     this.setState({ inputFrequencyAmount: investment?.installment.toString() });
   }
@@ -216,12 +216,11 @@ class SingleInvestment extends React.Component {
 
 
     const info = {
-      startDate: moment(this.props.investment.startDate).format("YYYY-MM-DD"),
+      startDate: moment(this.props.investment.startDate).utc().format(),
       endDate: this.props.investment.endDate
-        ? moment(this.props.investment.endDate).format("YYYY-MM-DD")
-        : this.state.targetDate
-          ? moment(this.state.targetDate).format("YYYY-MM-DD")
-          : "",
+            ? moment(this.props.investment.endDate).utc().format()
+            : moment(this.state.targetDate),
+
       frequency: this.state.frequency.toLowerCase(),
       targetAmount: this.props.investment.targetAmount,
     };
