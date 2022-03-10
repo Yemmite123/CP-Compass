@@ -30,7 +30,7 @@ const CommentItem = ({ comment, onLike, onUnLike, onReply, likes, ...props }) =>
           <p className="mb-0">{comment?.comment}</p>
           <div className="d-flex align-items-center mt-2 flex-wrap">
             <div>
-              <p className="mr-3 mb-0 text-l-small text-grey">{moment(comment?.created_at).utc().fromNow()}</p>
+              <p className="mr-3 mb-0 text-l-small text-grey">{moment(moment(comment?.created_at).toDate()).fromNow()}</p>
             </div>
             <div className="d-flex">
               <img src={checkLike(likes, comment.id) ? LikeBlueIcon : LikeIcon} alt="like" className="img-fluid mr-2 cursor-pointer" onClick={() => checkLike(likes, comment.id) ? handleUnLikeComment(comment.id) : handleLikeComment(comment.id)} />
@@ -55,7 +55,7 @@ const CommentItem = ({ comment, onLike, onUnLike, onReply, likes, ...props }) =>
                 <p className="font-weight-bold mb-0">{reply?.user?.firstName} {reply?.user?.lastName}</p>
                 <p className="mb-0">{reply?.comment}</p>
                 <div className="d-flex align-items-center mt-2">
-                  <p className="mr-3 mb-0 text-l-small text-grey">{moment(reply?.created_at).utc().fromNow()}</p>
+                  <p className="mr-3 mb-0 text-l-small text-grey">{moment(moment(reply?.created_at).toDate()).fromNow()}</p>
                   <img src={checkLike(likes, reply.id) ? LikeBlueIcon : LikeIcon} alt="like" className="img-fluid mr-2 cursor-pointer" onClick={() => checkLike(likes, reply.id) ? handleUnLikeComment(reply.id) : handleLikeComment(reply.id)} />
                   <p className="mr-3 mb-0 text-l-small text-grey">{reply?.__meta__.likes_count} Like(s)</p>
                 </div>

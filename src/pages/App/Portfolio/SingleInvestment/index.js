@@ -960,7 +960,7 @@ class SingleInvestment extends React.Component {
                     Next Deposit Date -{" "}
                     <b>
                       {investment && investment.nextPaymentDate
-                        ? moment(investment.nextPaymentDate).format(
+                        ? moment(moment(investment.nextPaymentDate).toDate()).format(
                           "MMM D, YYYY"
                         )
                         : "Not Available"}

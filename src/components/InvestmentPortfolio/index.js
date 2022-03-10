@@ -24,7 +24,7 @@ const InvestmentPortfolio = ({ item, navigateToItem, ...props }) => {
           </div>
           <div>
             <p className="text-grey text-small font-light mb-0">Next payment date</p>
-            <p className="text-black">{item &&  item?.nextPaymentDate ?  moment(item?.nextPaymentDate).format('YYYY-MM-DD') : 'unavailable' }</p>
+            <p className="text-black">{item &&  item?.nextPaymentDate ?  moment(moment(item?.nextPaymentDate).toDate()).format('YYYY-MM-DD') : 'unavailable' }</p>
           </div>
         </div>
         <div className="col-md-6 progress-section">

@@ -166,7 +166,6 @@ class Calculator extends React.Component {
                     placeholder="Set target date"
                     name="targetDate"
                     value={targetDate}
-                    formatMonth={(locale, date) => moment(date).format("MMMM")}
                     error={errors ? errors.targetDate : (errorObject && errorObject['endDate'])}
                     min={new Date()}
                   />

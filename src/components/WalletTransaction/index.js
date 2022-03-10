@@ -34,7 +34,7 @@ const WalletTransaction = ({ transaction, onClose, multiple }) => {
             </div>
             <div className="text-right">
               <p className="font-weight-bold  text-small">
-                {moment(moment.utc(transaction.paidAt ? transaction.created_at : transaction.initializedAt).toDate()).local().format('ddd Do MMM, YYYY HH:mm')}
+                {moment(moment(transaction.paidAt ? transaction.created_at : transaction.initializedAt).toDate()).format('ddd Do MMM, YYYY HH:mm')}
               </p>
             </div>
           </div>

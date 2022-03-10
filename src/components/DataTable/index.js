@@ -21,7 +21,7 @@ const DataTable = (props) => {
                 {item.title}
               </td>
               <td> <span className='description'> {item.description.length > 35 ? `${item.description.substring(0, 35)}...` : item.description}</span></td>
-              <td>{moment(item.created_at).format('MMM D, YYYY')}</td>
+              <td>{moment(moment(item.created_at).toDate()).format('MMM D, YYYY')}</td>
               <td><span className={`status-${item.status} p-1 text-small px-3 text-center d-block`}>{item.status}</span></td>
             </tr>
           ))

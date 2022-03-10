@@ -63,7 +63,7 @@ class MessageItem extends React.Component {
               }
 
             </div>
-            <p className="text-xs text-grey mt-1">{message && moment(message.created_at).format('hh:mm A MMM D, YYYY')}</p>
+            <p className="text-xs text-grey mt-1">{message && moment(moment(message.created_at).toDate()).format('hh:mm A MMM D, YYYY')}</p>
           </div>
         </div>
       </div>
