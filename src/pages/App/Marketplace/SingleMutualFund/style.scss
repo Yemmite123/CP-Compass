@@ -61,7 +61,8 @@
 
   .fund-image {
     position: relative;
-    width: 100%;
+    aspect-ratio: 16 / 9;
+    max-width: 100%;
     object-fit: cover;
     background-color: #F9FAFC;
   }
