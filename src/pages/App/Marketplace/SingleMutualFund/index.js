@@ -15,7 +15,10 @@ import { closeOffCanvas, refineOptions } from '#/utils';
 import { countryCodes } from '#/utils/countryCode';
 import DateBox from '#/components/DateBox';
 import OffCanvas from "#/components/OffCanvas";
-import { openOffCanvas, validateEmail } from "#/utils";
+import {
+  openOffCanvas, validateEmail, formatCurrencyToString,
+  formatStringToCurrency,
+} from "#/utils";
 
 import './style.scss';
 class SingleMutualFund extends React.Component {
@@ -25,7 +28,9 @@ class SingleMutualFund extends React.Component {
     countryCode: '+234',
     errors: {},
     payload: {},
-    dateOfBirth: ''
+    dateOfBirth: '',
+    subscriptionAmountInput: ""
+
   }
   descriptionRef = React.createRef();
 
@@ -48,6 +53,20 @@ class SingleMutualFund extends React.Component {
     this.setState({
       dateOfBirth: new Date(this.props.profile.dateOfBirth.split('T')[0])
     })
+  }
+
+  handleChange = (event) => {
+    const { name } = event.target;
+    let value = event.target.value;
+
+    console.log(formatStringToCurrency(value));
+    console.log(name)
+
+    if (name === "subscriptionAmount") {
+      if (isNaN(formatCurrencyToString(value))) return;
+
+      this.setState({ subscriptionAmountInput: formatCurrencyToString(value) })
+    }
   }
 
   handleChangeDate = (item, date) => {
@@ -86,17 +105,22 @@ class SingleMutualFund extends React.Component {
         errors += 1;
         return this.setState({ errors: { accountNumber: 'account number cannot be less or greater that 10 characters' } });
       }
+      if (element.name !== '' && element.name === "subscriptionAmount" && !(Number(element.value))) {
+        errors += 1;
+        return this.setState({ errors: { subscriptionAmount: "amount cannot be zero" } });
+      }
     });
 
     Array.prototype.forEach.call(formElements, (element) => {
       if (this.state.dateOfBirth !== '' && element.name !== '') {
         return payload = {
-          ...payload, [element.name]: element.value, DateOfBirth: moment(this.state.dateOfBirth).format('YYYY-MM-DD')
+          ...payload, [element.name]: element.name === "subscriptionAmount" ? formatCurrencyToString(element.value) : element.value, DateOfBirth: moment(this.state.dateOfBirth).format('YYYY-MM-DD')
         }
       }
+
       if (element.name !== '') {
         return payload = {
-          ...payload, [element.name]: element.value
+          ...payload, [element.name]: element.name === "subscriptionAmount" ? formatCurrencyToString(element.value) : element.value
         }
       }
     });
@@ -118,7 +142,7 @@ class SingleMutualFund extends React.Component {
 
   render() {
     const { fund, loading, mailLoading, error, profile } = this.props;
-    const { showForm, errors, dateOfBirth, countryCode } = this.state;
+    const { showForm, errors, subscriptionAmountInput, dateOfBirth, countryCode } = this.state;
     const filename = fund.document ? fund.document[0].substring(fund.document[0].lastIndexOf('/') + 1) : '';
 
     return (
@@ -194,6 +218,8 @@ class SingleMutualFund extends React.Component {
                                     label={item.title}
                                     id={item.name.toLowerCase()}
                                     required
+                                    onChange={this.handleChange}
+                                    value={item.name === "subscriptionAmount" ? formatStringToCurrency(subscriptionAmountInput) : undefined}
                                     boxClasses="mt-3 active"
                                     defaultValue={
                                       ['accountNumber'].includes(item.name)
