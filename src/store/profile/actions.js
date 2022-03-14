@@ -657,7 +657,7 @@ export const joinSegment = (payload) => {
           if ([200, 201].includes(response.status)) {
             dispatch(joinSegmentSuccess(response.data));
 
-            axios.get(`${CONFIG.BASE_URL}/segments?page=1&limit=20`, {
+            axios.get(`${CONFIG.BASE_URL}/segments/others?page=1&limit=20`, {
               headers: {
                 Authorization: token,
                 "Content-Type": "application/json",

@@ -101,7 +101,7 @@ class SingleInvestment extends React.Component {
       return;
 
     this.setState({ inputTitle: investment?.title });
-    this.setState({ inputTargetDate: moment(investment?.endDate).toDate() });
+    this.setState({ inputTargetDate: investment?.endDate ? moment(investment?.endDate).toDate() : null });
     this.setState({ inputFrequency: investment?.frequency });
     this.setState({ inputFrequencyAmount: investment?.installment.toString() });
   }

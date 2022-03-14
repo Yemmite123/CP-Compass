@@ -440,7 +440,13 @@ export const formatCurrency = (amount) => {
 //adds the commas
 export const formatStringToCurrency = (amount) => {
   amount = amount.replace(/^/, "₦");
-  return amount.replace(/\B(?=(\d{3})+(?!\d))/g, "$&,");
+  amount = amount.replace(/\B(?=(\d{3})+(?!\d))/g, "$&,");
+  if (amount.indexOf(".") != -1) {
+    amount = amount.substring(0, amount.indexOf(".") + 3);
+    return amount;
+  }
+
+  return amount;
 };
 
 // removes commas

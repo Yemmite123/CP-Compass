@@ -869,22 +869,15 @@ class Custom extends React.Component {
                           }}
                         />
                       )}
-                      <div
-                        className="d-flex mr-3"
-
-                      >
+                      <div className="d-flex mr-3">
                         <img
                           src={require(`#/assets/icons/${method.imgUrl}.svg`)}
                           alt="icon"
                         />
                       </div>
                       <div
-
-                        className={` d-flex p-3 mb-2 ${selectedMethod === method.value ? "selected" : ""
-                          } payment-method`}
                       >
                         <h6
-
                           className="text-left mb-0 font-bolder
                         "
                         >
@@ -893,10 +886,7 @@ class Custom extends React.Component {
                         {method.value === "card" ? (
                           cards &&
                           cards.cards.length > 0 && (
-                            <p
-                              className="text-grey mb-0"
-
-                            >
+                            <p className="text-grey mb-0">
                               {cards.cards[0].brand} ending in{" "}
                               <span className="text-blue">
                                 {" "}

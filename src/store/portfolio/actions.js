@@ -107,6 +107,7 @@ export const fetchSingleInvestment = (id) => {
           token: response.headers.authorization
         }))
         if ([200, 201].includes(response.status)) {
+          console.log(response)
           dispatch(fetchSingleInvestmentSuccess(response.data.data));
         }
       })
