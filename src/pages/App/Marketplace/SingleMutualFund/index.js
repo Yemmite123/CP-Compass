@@ -105,7 +105,7 @@ class SingleMutualFund extends React.Component {
         errors += 1;
         return this.setState({ errors: { accountNumber: 'account number cannot be less or greater that 10 characters' } });
       }
-      if (element.name !== '' && element.name === "subscriptionAmount" && !(Number(element.value))) {
+      if (element.name !== '' && element.name === "subscriptionAmount" && !(Number(formatCurrencyToString(element.value)))) {
         errors += 1;
         return this.setState({ errors: { subscriptionAmount: "amount cannot be zero" } });
       }

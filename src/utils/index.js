@@ -452,7 +452,6 @@ export const formatStringToCurrency = (amount) => {
 // removes commas
 export const formatCurrencyToString = (amount) => {
   amount = amount.replace("₦", "");
-
   return amount.replace(/\,/g, "");
 };
 
