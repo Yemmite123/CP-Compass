@@ -145,7 +145,7 @@ class Tickets extends React.Component {
           <div className="px-3 h-100 d-flex flex-column flex-grow-1">
             <div className="mt-3 mb-2">
               <h3 className="font-bolder text-blue">Create Ticket</h3>
-              <p>Describe an Issue you need to support with</p>
+              <p>Describe an Issue you need support with</p>
             </div>
 
             <div className="mt-3">
@@ -174,7 +174,11 @@ class Tickets extends React.Component {
                   placeholder="Compose a message..."
                   className="p-2 w-100 border-faint border-radius-default"
                 />
-                {errors?.issue ? <p style={{color: "#d34242"}}>{errors.issue}</p>: "" }
+                {errors?.issue ? (
+                  <p style={{ color: "#d34242" }}>{errors.issue}</p>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
             <div className="mt-3">
@@ -228,35 +232,42 @@ class Tickets extends React.Component {
           </button>
         </div>
         <div className="text-right mt-2">
-          {tickets && tickets.length > 0 ? <form onSubmit={this.handleSubmitSearch}>
-            <div className="position-relative d-inline">
-              <div className="d-inline search">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="14"
-                  height="14"
-                  fill="currentColor"
-                  class="bi bi-search"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                </svg>
+          {tickets && tickets.length > 0 ? (
+            <form onSubmit={this.handleSubmitSearch}>
+              <div className="position-relative d-inline">
+                <div className="d-inline search">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    fill="currentColor"
+                    class="bi bi-search"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                  </svg>
+                </div>
+                <input
+                  name="search"
+                  type="text"
+                  placeholder="Search Users by Name, Email or Date"
+                  className="border-0 text-blue pl-4 p-2 col-lg-5 bg-light border-radius-default mb-3"
+                  value={search}
+                  onChange={this.handleChange}
+                  style={{ fontSize: 14 }}
+                />
               </div>
-              <input
-                name="search"
-                type="text"
-                placeholder="Search Users by Name, Email or Date"
-                className="border-0 text-blue pl-4 p-2 col-lg-5 bg-light border-radius-default mb-3"
-                value={search}
-                onChange={this.handleChange}
-                style={{ fontSize: 14 }}
-              />
-            </div>
-          </form> : <></>
-          }
+            </form>
+          ) : (
+            <></>
+          )}
         </div>
 
-        <div className={`mt-2 card ${!(tickets && tickets.length > 0) ? "empty" : ""}`}>
+        <div
+          className={`mt-2 card ${
+            !(tickets && tickets.length > 0) ? "empty" : ""
+          }`}
+        >
           {loading && (
             <div className="text-center p-4">
               <div className="spinner-border spinner-border-primary text-primary spinner-border-md mr-2"></div>
@@ -289,7 +300,7 @@ class Tickets extends React.Component {
                   alt="no-tickets"
                   className="img-fluid"
                 />
-                <p className="" style={{color: "rgba(229, 229, 229, 1)"}}>
+                <p className="" style={{ color: "rgba(229, 229, 229, 1)" }}>
                   {search !== "".trim()
                     ? "No ticket history matches this search"
                     : "You have no tickets yet"}
