@@ -13,6 +13,7 @@ import ForgotPasswordConfirmation from '#/pages/Login/ForgotPasswordConfirmation
 import NewPassword from '#/pages/Login/NewPassword';
 import EventComponent from './components/EventComponent';
 import './style/styles.scss';
+import PasswordLinkExpired from './pages/Login/PasswordLinkExpired';
 
 const App = ({ authorized, isStaff }) => {
 
@@ -38,6 +39,9 @@ const App = ({ authorized, isStaff }) => {
           </Route>
           <Route path="/reset-password/:token">
             <NewPassword />
+          </Route>
+          <Route path="/link-expired">
+            <PasswordLinkExpired />
           </Route>
           <Route path="/app">
             {!authorized || isStaff ? (() => {

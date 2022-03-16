@@ -10,6 +10,8 @@ import { validateFields, isPasswordEqual, serializeErrors } from '#/utils';
 import AuthNav from '#/components/AuthNav';
 import Alert from '#/components/Alert';
 import './style.scss';
+import CONFIG from '#/config';
+import axios from 'axios';
 
 class NewPassword extends React.Component {
 
@@ -22,6 +24,20 @@ class NewPassword extends React.Component {
     showSignal: false,
   }
 
+  componentDidMount() {
+    (async () => {
+      try {
+        const { params: { token } } = this.props.match
+        const response = await axios.get(`${CONFIG.BASE_URL}/auth/reset-token/verify/${token}`)
+        if (![200, 201].includes(response.status)) {
+          this.props.history.push('/link-expired')
+        }
+      } catch (error) {
+        this.props.history.push('/link-expired')
+      }
+
+    })()
+  }
 
   handleChange = (event) => {
     const { errors } = this.state;
