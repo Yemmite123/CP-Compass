@@ -447,6 +447,7 @@ export const formatStringToCurrency = (amount) => {
   }
 
   return amount;
+
 };
 
 // removes commas
