@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import moment from "moment";
 import { getActionLoadingState } from "#/store/selectors";
-import { addEmploymentDetails } from "#/store/profile/actions";
+import { addEmploymentDetails, getUserProfile } from "#/store/profile/actions";
 import actionTypes from "#/store/profile/actionTypes";
 import Alert from "#/components/Alert";
 import Modal from "#/components/Modal";
@@ -43,9 +43,14 @@ class EmploymentDetails extends React.Component {
     this.setValues();
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.data !== this.props.data) {
+      this.props.getUserProfile();
+    }
+  }
   setValues = () => {
     const { userInfo } = this.props;
-    
+
     if (userInfo) {
       this.setState({
         qualification:
@@ -117,7 +122,6 @@ class EmploymentDetails extends React.Component {
 
     this.setState({ errors: null });
 
-
     const hasNoQualification = status === "retired" || status === "student";
     const data = this.state;
     console.log(data);
@@ -127,7 +131,6 @@ class EmploymentDetails extends React.Component {
     if (Object.keys(errors).length > 0) {
       return this.setState({ errors });
     }
-
 
     let payload = {
       qualification,
@@ -142,8 +145,14 @@ class EmploymentDetails extends React.Component {
       countryCode,
     };
 
-    if (status === 'self-employed') {
-      payload = { status, qualification, companyName, companyAddress, companyType };
+    if (status === "self-employed") {
+      payload = {
+        status,
+        qualification,
+        companyName,
+        companyAddress,
+        companyType,
+      };
     }
     if (hasNoQualification) {
       payload = { status };
@@ -201,7 +210,7 @@ class EmploymentDetails extends React.Component {
           <h2 className="section-header">Employment Details</h2>
           <p className="section-description">We’d like to know what you do.</p>
           <form onSubmit={this.handleSubmit} className="section-form">
-            {status.toLowerCase() !== "retired" && status !== "student" &&
+            {status.toLowerCase() !== "retired" && status !== "student" && (
               <SelectBox
                 boxClasses="active"
                 name="qualification"
@@ -216,7 +225,7 @@ class EmploymentDetails extends React.Component {
                     : errorObject && errorObject["qualification"]
                 }
               />
-            }
+            )}
             <SelectBox
               boxClasses="active"
               name="status"
@@ -229,58 +238,72 @@ class EmploymentDetails extends React.Component {
                 errors ? errors.status : errorObject && errorObject["status"]
               }
             />
-            {status.toLowerCase() === "employed" && <Textbox
-              name="occupation"
-              label="Occupation"
-              placeholder="Occupation"
-              value={occupation}
-              onChange={this.handleChange}
-              error={
-                errors
-                  ? errors.occupation
-                  : errorObject && errorObject["occupation"]
-              }
-            />}
-            {status.toLowerCase() === "employed" && <DateBox
-              name="appointmentDate"
-              label="Appointment Date"
-              value={appointmentDate}
-              type="date"
-              max={moment().toDate()}
-              onChange={(date) =>
-                this.handleChangeDate("appointmentDate", date)
-              }
-              error={
-                errors
-                  ? errors.appointmentDate
-                  : errorObject && errorObject["appointmentDate"]
-              }
-            />}
-            {(status.toLowerCase() === "employed" || status.toLowerCase() === "self-employed" || status.toLowerCase() === "self employed") && <Textbox
-              name="companyName"
-              label="Company Name"
-              placeholder="Company Name"
-              value={companyName}
-              onChange={this.handleChange}
-              error={
-                errors
-                  ? errors.companyName
-                  : errorObject && errorObject["companyName"]
-              }
-            />}
-            {(status.toLowerCase() === "employed" || status.toLowerCase() === "self-employed" || status.toLowerCase() === "self employed") && <Textbox
-              name="companyAddress"
-              label="Company Address"
-              placeholder="Company Address"
-              value={companyAddress}
-              onChange={this.handleChange}
-              error={
-                errors
-                  ? errors.companyAddress
-                  : errorObject && errorObject["companyAddress"]
-              }
-            />}
-            {(status.toLowerCase() === "employed" || status.toLowerCase() === "self-employed" || status.toLowerCase() === "self employed") &&
+            {status.toLowerCase() === "employed" && (
+              <Textbox
+                name="occupation"
+                label="Occupation"
+                placeholder="Occupation"
+                value={occupation}
+                onChange={this.handleChange}
+                error={
+                  errors
+                    ? errors.occupation
+                    : errorObject && errorObject["occupation"]
+                }
+              />
+            )}
+            {status.toLowerCase() === "employed" && (
+              <DateBox
+                name="appointmentDate"
+                label="Appointment Date"
+                value={appointmentDate}
+                type="date"
+                max={moment().toDate()}
+                onChange={(date) =>
+                  this.handleChangeDate("appointmentDate", date)
+                }
+                error={
+                  errors
+                    ? errors.appointmentDate
+                    : errorObject && errorObject["appointmentDate"]
+                }
+              />
+            )}
+            {(status.toLowerCase() === "employed" ||
+              status.toLowerCase() === "self-employed" ||
+              status.toLowerCase() === "self employed") && (
+              <Textbox
+                name="companyName"
+                label="Company Name"
+                placeholder="Company Name"
+                value={companyName}
+                onChange={this.handleChange}
+                error={
+                  errors
+                    ? errors.companyName
+                    : errorObject && errorObject["companyName"]
+                }
+              />
+            )}
+            {(status.toLowerCase() === "employed" ||
+              status.toLowerCase() === "self-employed" ||
+              status.toLowerCase() === "self employed") && (
+              <Textbox
+                name="companyAddress"
+                label="Company Address"
+                placeholder="Company Address"
+                value={companyAddress}
+                onChange={this.handleChange}
+                error={
+                  errors
+                    ? errors.companyAddress
+                    : errorObject && errorObject["companyAddress"]
+                }
+              />
+            )}
+            {(status.toLowerCase() === "employed" ||
+              status.toLowerCase() === "self-employed" ||
+              status.toLowerCase() === "self employed") && (
               <SelectBox
                 boxClasses="active"
                 name="companyType"
@@ -294,37 +317,42 @@ class EmploymentDetails extends React.Component {
                     ? errors.companyType
                     : errorObject && errorObject["companyType"]
                 }
-              />}
-            {status.toLowerCase() === "employed" && <PhoneTextBox
-              boxClasses="active"
-              placeholder="Phone Number"
-              options={countryCodes}
-              onChangeSelect={this.handleChange}
-              selectName="countryCode"
-              defaultValue={countryCode}
-              name="officialPhoneNumber"
-              label="Official Phone Number"
-              type="phone"
-              value={officialPhoneNumber}
-              onChange={this.handleChange}
-              error={
-                errors
-                  ? errors.officialPhoneNumber
-                  : errorObject && errorObject["officialPhoneNumber"]
-              }
-            />}
-            {status.toLowerCase() === "employed" && <Textbox
-              name="officialEmailAddress"
-              label="Official Email Address"
-              placeholder="Official Email Address"
-              value={officialEmailAddress}
-              onChange={this.handleChange}
-              error={
-                errors
-                  ? errors.officialEmailAddress
-                  : errorObject && errorObject["officialEmailAddress"]
-              }
-            />}
+              />
+            )}
+            {status.toLowerCase() === "employed" && (
+              <PhoneTextBox
+                boxClasses="active"
+                placeholder="Phone Number"
+                options={countryCodes}
+                onChangeSelect={this.handleChange}
+                selectName="countryCode"
+                defaultValue={countryCode}
+                name="officialPhoneNumber"
+                label="Official Phone Number"
+                type="phone"
+                value={officialPhoneNumber}
+                onChange={this.handleChange}
+                error={
+                  errors
+                    ? errors.officialPhoneNumber
+                    : errorObject && errorObject["officialPhoneNumber"]
+                }
+              />
+            )}
+            {status.toLowerCase() === "employed" && (
+              <Textbox
+                name="officialEmailAddress"
+                label="Official Email Address"
+                placeholder="Official Email Address"
+                value={officialEmailAddress}
+                onChange={this.handleChange}
+                error={
+                  errors
+                    ? errors.officialEmailAddress
+                    : errorObject && errorObject["officialEmailAddress"]
+                }
+              />
+            )}
             <div className="section-form__button-area">
               {error && typeof error === "string" && (
                 <p className="text-error text-left">{error}</p>
@@ -366,6 +394,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addEmploymentDetails: (payload) => dispatch(addEmploymentDetails(payload)),
+    getUserProfile: () => dispatch(getUserProfile()),
   };
 };
 

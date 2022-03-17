@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import moment from "moment";
 import { connect } from "react-redux";
 import { getActionLoadingState } from "#/store/selectors";
-import { addNextOfKinDetails } from "#/store/profile/actions";
+import { addNextOfKinDetails, getUserProfile } from "#/store/profile/actions";
 import actionTypes from "#/store/profile/actionTypes";
 import Alert from "#/components/Alert";
 import Modal from "#/components/Modal";
@@ -41,7 +41,11 @@ class NextOfKin extends React.Component {
   componentDidMount() {
     this.setValues();
   }
-
+  componentDidUpdate(prevProps) {
+    if (prevProps.data !== this.props.data) {
+      this.props.getUserProfile();
+    }
+  }
   setValues = () => {
     const { userInfo } = this.props;
     if (userInfo) {
@@ -73,7 +77,7 @@ class NextOfKin extends React.Component {
 
   handleChange = (event) => {
     const { name, value } = event.target;
-    console.log(value)
+    console.log(value);
     this.setState({ [name]: value });
   };
 
@@ -200,7 +204,6 @@ class NextOfKin extends React.Component {
             />
             <Textbox
               onChange={this.handleChange}
-
               boxClasses="active"
               type="text"
               label="Last Name"
@@ -235,7 +238,6 @@ class NextOfKin extends React.Component {
             />
             <SelectBox
               boxClasses="active"
-
               name="relationship"
               label="Relationship"
               value={relationship}
@@ -273,7 +275,11 @@ class NextOfKin extends React.Component {
               selectName="countryCode"
               defaultValue={countryCode}
               type="number"
-              error={errors ? errors.phoneNumber : (errorObject && errorObject['phone'])}
+              error={
+                errors
+                  ? errors.phoneNumber
+                  : errorObject && errorObject["phone"]
+              }
             />
 
             <Textbox
@@ -361,6 +367,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addNextOfKinDetails: (payload) => dispatch(addNextOfKinDetails(payload)),
+    getUserProfile: () => dispatch(getUserProfile()),
   };
 };
 

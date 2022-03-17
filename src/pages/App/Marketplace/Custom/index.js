@@ -234,21 +234,21 @@ class Custom extends React.Component {
     //this.resetFields()
     this.state.addEndDate
       ? this.props.calculateInvestment(info).then((data) => {
-        this.setState(
-          {
-            installment: data.installment,
-            expectedTotalReturns: data.expectedTotalReturns,
-          },
-          () => {
-            this.toggleConfirmationModal();
-            closeOffCanvas(`offcanvas-${state?.investment.id}`);
-          }
-        );
-      })
+          this.setState(
+            {
+              installment: data.installment,
+              expectedTotalReturns: data.expectedTotalReturns,
+            },
+            () => {
+              this.toggleConfirmationModal();
+              closeOffCanvas(`offcanvas-${state?.investment.id}`);
+            }
+          );
+        })
       : (() => {
-        closeOffCanvas(`offcanvas-${state?.investment.id}`);
-        this.toggleConfirmationModal();
-      })();
+          closeOffCanvas(`offcanvas-${state?.investment.id}`);
+          this.toggleConfirmationModal();
+        })();
   };
 
   //move to enterering transaction pin
@@ -289,21 +289,21 @@ class Custom extends React.Component {
       this.state;
     const payload = this.state.addEndDate
       ? {
-        title,
-        targetAmount: formatCurrencyToString(target),
-        currency: "NGN",
-        startDate: moment(startDate).format("YYYY-MM-DD"),
-        endDate: moment(targetDate).format("YYYY-MM-DD"),
-        frequency: frequency.toLowerCase(),
-      }
+          title,
+          targetAmount: formatCurrencyToString(target),
+          currency: "NGN",
+          startDate: moment(startDate).format("YYYY-MM-DD"),
+          endDate: moment(targetDate).format("YYYY-MM-DD"),
+          frequency: frequency.toLowerCase(),
+        }
       : {
-        title,
-        targetAmount: formatCurrencyToString(target),
-        currency: "NGN",
-        startDate: moment(startDate).format("YYYY-MM-DD"),
-        amount: formatCurrencyToString(frequencyAmount),
-        frequency: frequency.toLowerCase(),
-      };
+          title,
+          targetAmount: formatCurrencyToString(target),
+          currency: "NGN",
+          startDate: moment(startDate).format("YYYY-MM-DD"),
+          amount: formatCurrencyToString(frequencyAmount),
+          frequency: frequency.toLowerCase(),
+        };
     const data = { type: "custom", payload, id: state?.investment.id };
 
     bookNewInvestment(data).then((data) => {
@@ -417,27 +417,27 @@ class Custom extends React.Component {
     };
     const payload = this.state.addEndDate
       ? {
-        title,
-        targetAmount: formatCurrencyToString(target),
-        currency: "NGN",
-        startDate: moment(startDate).format("YYYY-MM-DD"),
-        endDate: moment(targetDate).format("YYYY-MM-DD"),
-        frequency: frequency.toLowerCase(),
-        payment,
-        initialAmount: formatCurrencyToString(amount),
-        autoCharge,
-      }
+          title,
+          targetAmount: formatCurrencyToString(target),
+          currency: "NGN",
+          startDate: moment(startDate).format("YYYY-MM-DD"),
+          endDate: moment(targetDate).format("YYYY-MM-DD"),
+          frequency: frequency.toLowerCase(),
+          payment,
+          initialAmount: formatCurrencyToString(amount),
+          autoCharge,
+        }
       : {
-        title,
-        targetAmount: formatCurrencyToString(target),
-        currency: "NGN",
-        startDate: moment(startDate).format("YYYY-MM-DD"),
-        frequency: frequency.toLowerCase(),
-        payment,
-        amount: formatCurrencyToString(frequencyAmount),
-        initialAmount: formatCurrencyToString(amount),
-        autoCharge,
-      };
+          title,
+          targetAmount: formatCurrencyToString(target),
+          currency: "NGN",
+          startDate: moment(startDate).format("YYYY-MM-DD"),
+          frequency: frequency.toLowerCase(),
+          payment,
+          amount: formatCurrencyToString(frequencyAmount),
+          initialAmount: formatCurrencyToString(amount),
+          autoCharge,
+        };
     const data = { type: "custom", payload, id: state?.investment.id };
 
     bookInvestmentWithPay(data).then((data) => {
@@ -695,7 +695,7 @@ class Custom extends React.Component {
                 <div className="px-3 mt-4">
                   <p className="text-black mb-0">
                     Your custom investment has been created and you can top it
-                    off and more from your portfolio page.
+                    up from your portfolio page.
                   </p>
                   {/* <button className="btn btn-sm btn-primary btn-block mt-3" onClick={this.handleSuccess}>
                     Go to marketplace
@@ -853,8 +853,9 @@ class Custom extends React.Component {
                   {fundingSource.map((method) => (
                     <div
                       id={method.value}
-                      className={`position-relative d-flex p-3 mb-2 ${selectedMethod === method.value ? "selected" : ""
-                        } payment-method`}
+                      className={`position-relative d-flex p-3 mb-2 ${
+                        selectedMethod === method.value ? "selected" : ""
+                      } payment-method`}
                       onClick={this.handleSelectMethod}
                     >
                       {selectedMethod === method.value && (
@@ -875,8 +876,7 @@ class Custom extends React.Component {
                           alt="icon"
                         />
                       </div>
-                      <div
-                      >
+                      <div>
                         <h6
                           className="text-left mb-0 font-bolder
                         "

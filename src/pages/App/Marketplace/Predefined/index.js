@@ -611,7 +611,7 @@ class Predefined extends React.Component {
                 </div>
                 <div className="px-3 mt-4">
                   <p className="text-black mb-0">{`Your  ${title} investment has been created
-                    and you can top it up and more from your portfolio page.`}</p>
+                    and you can top it up from your portfolio page.`}</p>
                   <button
                     className="btn btn-sm btn-primary btn-block mt-3"
                     onClick={this.handleSuccess}
@@ -771,8 +771,9 @@ class Predefined extends React.Component {
                   {fundingSource.map((method) => (
                     <div
                       id={method.value}
-                      className={`position-relative d-flex p-3 mb-2 ${selectedMethod === method.value ? "selected" : ""
-                        } payment-method`}
+                      className={`position-relative d-flex p-3 mb-2 ${
+                        selectedMethod === method.value ? "selected" : ""
+                      } payment-method`}
                       onClick={this.handleSelectMethod}
                     >
                       {selectedMethod === method.value && (

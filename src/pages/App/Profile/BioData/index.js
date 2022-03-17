@@ -2,7 +2,11 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getActionLoadingState } from "#/store/selectors";
-import { addBioData, addProfilePhoto } from "#/store/profile/actions";
+import {
+  addBioData,
+  addProfilePhoto,
+  getUserProfile,
+} from "#/store/profile/actions";
 import actionTypes from "#/store/profile/actionTypes";
 import Alert from "#/components/Alert";
 import Modal from "#/components/Modal";
@@ -44,7 +48,11 @@ class BioData extends React.Component {
   componentDidMount() {
     this.setValues();
   }
-
+  componentDidUpdate(prevProps) {
+    if (prevProps.data !== this.props.data) {
+      this.props.getUserProfile();
+    }
+  }
   handleChangeDate = (item, date) => {
     this.setState({ [item]: date });
   };
@@ -458,6 +466,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addBioData: (payload) => dispatch(addBioData(payload)),
     addProfilePhoto: (payload) => dispatch(addProfilePhoto(payload)),
+    getUserProfile: () => dispatch(getUserProfile()),
   };
 };
 
