@@ -29,10 +29,12 @@ class NewPassword extends React.Component {
       try {
         const { params: { token } } = this.props.match
         const response = await axios.get(`${CONFIG.BASE_URL}/auth/reset-token/verify/${token}`)
+        console.log(response)
         if (![200, 201].includes(response.status)) {
           this.props.history.push('/link-expired')
         }
       } catch (error) {
+        console.log(error);
         this.props.history.push('/link-expired')
       }
 

@@ -9,24 +9,35 @@ import AuthNav from '#/components/AuthNav';
 
 class PasswordLinkExpired extends React.Component {
 
-    componentDidMount() {
-        setTimeout(() => {
-            this.props.history.push("/forgot-password")
-        }, 5000)
-    }
+    // componentDidMount() {
+    //     setTimeout(() => {
+    //         this.props.history.push("/forgot-password")
+    //     }, 5000)
+    // }
 
     render() {
 
         return (
             <div className="forgot-password-page text-center">
                 <AuthNav />
-                <div className="">
+                <div className="box">
                     <div className="container">
                         <div>
+                            <img
+                                width={84}
+                                src={require("#/assets/icons/calender.png")}
+                                alt="bank"
+                                className="pb-3"
+                            />
                             <h4 className="mt-4 font-bolder text-blue">
-                                Password Reset Expired
+                                Link Expired
                             </h4>
-                            {/* <p className='font-small'>Please input your registered email to reset your password</p> */}
+                            <p className='font-small'>The link to the password has either expired or has been used</p>
+                            <Link to="/login" className="btn py-3 btn-primary w-100 mt-4">
+
+                                Go to login page
+
+                            </Link>
                         </div>
                     </div>
                 </div>
